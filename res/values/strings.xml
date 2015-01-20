@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">OrientationFaker</string>
+    <string name="status">Status</string>
+    <string name="status_running">Running</string>
+    <string name="status_waiting">Waiting</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="startup">Startup on Boot</string>
+    <string name="orientation_mode">Orientation mode</string>
+    <string name="allways_portrait">Allways Portrait</string>
+    <string name="allways_landscape">Allways Landscape</string>
+    <string name="allways_reverse_portrait">Allways Reverse Portrait</string>
+    <string name="allways_reverse_landscape">Allways Reverse Landscape</string>
+
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <Preference
+        android:summary="@string/status_waiting"
+        android:title="@string/status" android:key="status"/>
+    <Preference android:title="@string/start" android:key="start"/>
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:title="@string/startup" android:key="startup"/>
+
+    <ListPreference
+        android:defaultValue="portrait"
+        android:entries="@array/entries"
+        android:entryValues="@array/entry_values"
+        android:title="@string/orientation_mode" android:key="mode"/>
+
+</PreferenceScreen>

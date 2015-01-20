@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="entries">
+        <item>@string/allways_portrait</item>
+        <item>@string/allways_landscape</item>
+        <item>@string/allways_reverse_portrait</item>
+        <item>@string/allways_reverse_landscape</item>
+    </string-array>
+    <string-array name="entry_values">
+        <item>portrait</item>
+        <item>landscape</item>
+        <item>r_portrait</item>
+        <item>r_landscape</item>
+    </string-array>
+
+</resources>
