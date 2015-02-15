@@ -1,3 +1,7 @@
+/**
+ * Copyright(C) 2014 大前良介(OHMAE Ryosuke)
+ */
+
 package net.mm2d.android.orientationfaker;
 
 import android.content.BroadcastReceiver;
@@ -8,11 +12,11 @@ import android.preference.PreferenceManager;
 
 public class BootupReceiver extends BroadcastReceiver {
 
-	@Override
-	public void onReceive(Context context, Intent intent) {
-		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-		if (pref.getBoolean("startup", false)) {
-			context.startService(new Intent(context, MainService.class));
-		}
-	}
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        if (pref.getBoolean("startup", false)) {
+            context.startService(new Intent(context, MainService.class));
+        }
+    }
 }
