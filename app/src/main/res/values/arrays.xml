@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string-array name="entries">
         <item>@string/allways_portrait</item>
         <item>@string/allways_landscape</item>
@@ -13,5 +12,4 @@
         <item>r_portrait</item>
         <item>r_landscape</item>
     </string-array>
-
 </resources>

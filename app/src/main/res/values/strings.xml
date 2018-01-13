@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">OrientationFaker</string>
     <string name="status">Status</string>
     <string name="status_running">Running</string>
@@ -13,5 +12,4 @@
     <string name="allways_landscape">Allways Landscape</string>
     <string name="allways_reverse_portrait">Allways Reverse Portrait</string>
     <string name="allways_reverse_landscape">Allways Reverse Landscape</string>
-
 </resources>

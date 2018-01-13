@@ -1,5 +1,8 @@
-/**
- * Copyright(C) 2014 大前良介(OHMAE Ryosuke)
+/*
+ * Copyright (c) 2014 大前良介 (OHMAE Ryosuke)
+ *
+ * This software is released under the MIT License.
+ * http://opensource.org/licenses/MIT
  */
 
 package net.mm2d.android.orientationfaker;
@@ -47,9 +50,9 @@ public class MainService extends Service {
         layoutParam = new WindowManager.LayoutParams(0, 0, 0, 0,
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-                | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                        | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                        | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                        | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 PixelFormat.TRANSLUCENT);
         layoutParam.gravity = Gravity.TOP;
         layoutParam.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
@@ -59,11 +62,11 @@ public class MainService extends Service {
         final NotificationManager notificationManager = (NotificationManager) this
                 .getSystemService(NOTIFICATION_SERVICE);
         final Notification notification = new NotificationCompat.Builder(getApplicationContext())
-        .setContentTitle(getText(R.string.app_name))
-        .setSmallIcon(R.drawable.ic_launcher)
-        .setOngoing(true)
-        .setContentIntent(p)
-        .build();
+                .setContentTitle(getText(R.string.app_name))
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setOngoing(true)
+                .setContentIntent(p)
+                .build();
         notificationManager.notify(R.string.app_name, notification);
     }
 
@@ -81,7 +84,10 @@ public class MainService extends Service {
 
     @SuppressLint("InlinedApi")
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public int onStartCommand(
+            Intent intent,
+            int flags,
+            int startId) {
         final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         final String temp = pref.getString("mode", "portrait");
         if ("portrait".equals(temp)) {

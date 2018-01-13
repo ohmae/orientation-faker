@@ -1,5 +1,8 @@
-/**
- * Copyright(C) 2014 大前良介(OHMAE Ryosuke)
+/*
+ * Copyright (c) 2014 大前良介 (OHMAE Ryosuke)
+ *
+ * This software is released under the MIT License.
+ * http://opensource.org/licenses/MIT
  */
 
 package net.mm2d.android.orientationfaker;
@@ -15,7 +18,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 
 public class MainActivity extends PreferenceActivity
-implements OnSharedPreferenceChangeListener, OnPreferenceClickListener {
+        implements OnSharedPreferenceChangeListener, OnPreferenceClickListener {
     private Preference status;
     private Preference start;
     private ListPreference mode;
@@ -32,7 +35,7 @@ implements OnSharedPreferenceChangeListener, OnPreferenceClickListener {
         mode = (ListPreference) this.findPreference("mode");
         start.setOnPreferenceClickListener(this);
         this.getPreferenceScreen().getSharedPreferences()
-        .registerOnSharedPreferenceChangeListener(this);
+                .registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -47,11 +50,13 @@ implements OnSharedPreferenceChangeListener, OnPreferenceClickListener {
     protected void onDestroy() {
         super.onDestroy();
         this.getPreferenceScreen().getSharedPreferences()
-        .unregisterOnSharedPreferenceChangeListener(this);
+                .unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onSharedPreferenceChanged(
+            SharedPreferences sharedPreferences,
+            String key) {
         if ("mode".equals(key)) {
             setSummary();
             updateSetting();

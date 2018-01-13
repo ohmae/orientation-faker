@@ -1,23 +1,52 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+def applicationName = "OrientationFacker"
+def versionMajor = 0
+def versionMinor = 0
+def versionPatch = 1
 
 android {
-    compileSdkVersion 17
+    compileSdkVersion 26
     buildToolsVersion "27.0.2"
 
     defaultConfig {
         applicationId "net.mm2d.android.orientationfaker"
-        minSdkVersion 5
-        targetSdkVersion 21
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+        vectorDrawables.useSupportLibrary = true
     }
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     buildTypes {
+        debug {
+            debuggable true
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "d"
+            manifestPlaceholders = [app_name: "Dubug"]
+        }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [app_name: "@string/app_name"]
+        }
+    }
+    applicationVariants.all { variant ->
+        if (variant.buildType.name != "release") {
+            return
+        }
+        variant.outputs.all {
+            outputFileName = "${applicationName}-${versionName}.apk"
         }
     }
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:18.0.0'
+    compile 'com.android.support:support-v4:26.1.0'
 }
