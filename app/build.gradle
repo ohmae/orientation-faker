@@ -8,13 +8,13 @@ def versionMinor = 0
 def versionPatch = 1
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "27.0.2"
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "net.mm2d.android.orientationfaker"
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         vectorDrawables.useSupportLibrary = true
@@ -47,6 +47,16 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url 'https://ohmae.github.com/maven'
+    }
+}
+
 dependencies {
-    compile 'com.android.support:support-v4:26.1.0'
+    implementation 'com.android.support:support-v4:27.0.2'
+    implementation 'net.mm2d:log:0.0.1'
+    implementation 'net.mm2d:log-android:0.0.1'
+    implementation 'com.android.support:appcompat-v7:27.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 }

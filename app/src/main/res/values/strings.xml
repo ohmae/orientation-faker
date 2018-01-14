@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OrientationFaker</string>
+    <string name="app_name">Orientation Faker</string>
     <string name="status">Status</string>
     <string name="status_running">Running</string>
     <string name="status_waiting">Waiting</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
-    <string name="startup">Startup on Boot</string>
+    <string name="resident">Resident</string>
+    <string name="resident_description">To be resident from device startup</string>
     <string name="orientation_mode">Orientation mode</string>
-    <string name="allways_portrait">Allways Portrait</string>
-    <string name="allways_landscape">Allways Landscape</string>
-    <string name="allways_reverse_portrait">Allways Reverse Portrait</string>
-    <string name="allways_reverse_landscape">Allways Reverse Landscape</string>
+    <string name="notification_channel_name">@string/app_name</string>
+    <string name="unspecified">unspecified</string>
+    <string name="portrait">portrait</string>
+    <string name="landscape">landscape</string>
+    <string name="reverse_portrait">!portrait</string>
+    <string name="reverse_landscape">!landscape</string>
+    <string name="settings">settings</string>
 </resources>
