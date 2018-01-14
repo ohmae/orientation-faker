@@ -7,24 +7,48 @@
 
 package net.mm2d.android.orientationfaker;
 
-import android.content.pm.ActivityInfo;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import net.mm2d.android.orientationfaker.OrientationIdManager.OrientationId;
 import net.mm2d.android.orientationfaker.settings.Settings;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author <a href="mailto:ryo@mm2d.net">大前良介 (OHMAE Ryosuke)</a>
  */
 public class MainActivity extends AppCompatActivity {
+    private static final String ACTION_UPDATE = "ACTION_UPDATE";
     private Settings mSettings;
     private OrientationHelper mOrientationHelper;
     private TextView mStatusDescription;
     private CheckBox mResidentCheckBox;
-    private View[] mIcons = new View[5];
+    private List<Pair<Integer, View>> mButtonArray = new ArrayList<>();
+
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+            setStatusDescription();
+            setOrientationIcon();
+        }
+    };
+
+    public static void notifyUpdate(@NonNull final Context context) {
+        LocalBroadcastManager.getInstance(context)
+                .sendBroadcast(new Intent(ACTION_UPDATE));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,50 +57,47 @@ public class MainActivity extends AppCompatActivity {
         mOrientationHelper = OrientationHelper.getInstance(this);
         mSettings = new Settings(this);
         if (mSettings.shouldResident()) {
-            mOrientationHelper.setOrientation(mSettings.getOrientation());
+            MainService.start(this);
         }
         mStatusDescription = findViewById(R.id.status_description);
         mResidentCheckBox = findViewById(R.id.resident_check_box);
         mResidentCheckBox.setClickable(false);
 
-        findViewById(R.id.status).setOnClickListener(v -> toggleOrientation());
+        findViewById(R.id.status).setOnClickListener(v -> toggleStatus());
         findViewById(R.id.resident).setOnClickListener(v -> toggleResident());
         setStatusDescription();
         setResidentCheckBox();
         setUpOrientationIcons();
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this)
+                .unregisterReceiver(mReceiver);
     }
 
     private void setUpOrientationIcons() {
-        mIcons[0] = findViewById(R.id.button_unspecified);
-        mIcons[0].setOnClickListener(v -> {
-            setOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-        });
-        mIcons[1] = findViewById(R.id.button_portrait);
-        mIcons[1].setOnClickListener(v -> {
-            setOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        });
-        mIcons[2] = findViewById(R.id.button_landscape);
-        mIcons[2].setOnClickListener(v -> {
-            setOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        });
-        mIcons[3] = findViewById(R.id.button_reverse_portrait);
-        mIcons[3].setOnClickListener(v -> {
-            setOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
-        });
-        mIcons[4] = findViewById(R.id.button_reverse_landscape);
-        mIcons[4].setOnClickListener(v -> {
-            setOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
-        });
+        for (final OrientationId id : OrientationIdManager.getList()) {
+            final View button = findViewById(id.getViewId());
+            mButtonArray.add(new Pair<>(id.getOrientation(), button));
+            button.setOnClickListener(v -> setOrientation(id.getOrientation()));
+        }
         setOrientationIcon();
     }
 
-    private void toggleOrientation() {
+    private void toggleStatus() {
         if (mOrientationHelper.isEnabled()) {
-            mOrientationHelper.cancel();
+            MainService.stop(this);
+            if (mSettings.shouldResident()) {
+                mSettings.setResident(false);
+                setResidentCheckBox();
+            }
         } else {
-            mOrientationHelper.setOrientation(mSettings.getOrientation());
+            MainService.start(this);
         }
-        setStatusDescription();
     }
 
     private void setStatusDescription() {
@@ -88,6 +109,9 @@ public class MainActivity extends AppCompatActivity {
     private void toggleResident() {
         mSettings.setResident(!mSettings.shouldResident());
         setResidentCheckBox();
+        if (mSettings.shouldResident() && !mOrientationHelper.isEnabled()) {
+            MainService.start(this);
+        }
     }
 
     private void setResidentCheckBox() {
@@ -98,30 +122,18 @@ public class MainActivity extends AppCompatActivity {
         mSettings.setOrientation(orientation);
         setOrientationIcon();
         if (mOrientationHelper.isEnabled()) {
-            mOrientationHelper.setOrientation(orientation);
+            MainService.start(this);
         }
     }
 
     private void setOrientationIcon() {
-        for(final View icon : mIcons) {
-            icon.setBackgroundResource(R.drawable.bg_icon);
+        final Integer orientation = mSettings.getOrientation();
+        for (final Pair<Integer, View> pair : mButtonArray) {
+            if (orientation.equals(pair.first)) {
+                pair.second.setBackgroundResource(R.drawable.bg_icon_selected);
+            } else {
+                pair.second.setBackgroundResource(R.drawable.bg_icon);
+            }
         }
-        getActiveIcon().setBackgroundResource(R.drawable.bg_icon_selected);
-    }
-
-    private View getActiveIcon() {
-        switch (mSettings.getOrientation()) {
-            case ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED:
-                return mIcons[0];
-            case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
-                return mIcons[1];
-            case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
-                return mIcons[2];
-            case ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT:
-                return mIcons[3];
-            case ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE:
-                return mIcons[4];
-        }
-        return mIcons[0];
     }
 }

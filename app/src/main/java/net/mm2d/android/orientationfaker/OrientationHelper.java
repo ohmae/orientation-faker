@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
+import net.mm2d.android.orientationfaker.settings.Settings;
+
 /**
  * @author <a href="mailto:ryo@mm2d.net">大前良介 (OHMAE Ryosuke)</a>
  */
@@ -34,12 +36,14 @@ public class OrientationHelper {
     }
 
     private Context mContext;
+    private Settings mSettings;
     private View mView;
     private WindowManager mWindowManager;
     private LayoutParams mLayoutParam;
 
     private OrientationHelper(@NonNull final Context context) {
         mContext = context.getApplicationContext();
+        mSettings = new Settings(mContext);
         mView = new View(mContext);
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         mLayoutParam = new WindowManager.LayoutParams(0, 0, 0, 0,
@@ -61,6 +65,10 @@ public class OrientationHelper {
         return VERSION.SDK_INT >= VERSION_CODES.O ? LayoutParams.TYPE_APPLICATION_OVERLAY : LayoutParams.TYPE_SYSTEM_ALERT;
     }
 
+    public void updateOrientation() {
+        setOrientation(mSettings.getOrientation());
+    }
+
     public void setOrientation(final int orientation) {
         mLayoutParam.screenOrientation = orientation;
         if (isEnabled()) {
@@ -68,13 +76,11 @@ public class OrientationHelper {
         } else {
             mWindowManager.addView(mView, mLayoutParam);
         }
-        NotificationHelper.update(mContext);
     }
 
     public void cancel() {
         if (isEnabled()) {
             mWindowManager.removeView(mView);
         }
-        NotificationHelper.cancel(mContext);
     }
 }

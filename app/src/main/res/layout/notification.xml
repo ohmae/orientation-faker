@@ -22,6 +22,7 @@
             android:gravity="center_horizontal"
             android:paddingTop="10dp"
             android:text="@string/unspecified"
+            android:textColor="@color/text_notification"
             android:textSize="10sp"
             />
 
@@ -35,6 +36,7 @@
             android:gravity="center_horizontal"
             android:paddingTop="10dp"
             android:text="@string/portrait"
+            android:textColor="@color/text_notification"
             android:textSize="10sp"
             />
 
@@ -48,6 +50,7 @@
             android:gravity="center_horizontal"
             android:paddingTop="10dp"
             android:text="@string/landscape"
+            android:textColor="@color/text_notification"
             android:textSize="10sp"
             />
 
@@ -61,6 +64,7 @@
             android:gravity="center_horizontal"
             android:paddingTop="10dp"
             android:text="@string/reverse_portrait"
+            android:textColor="@color/text_notification"
             android:textSize="10sp"
             />
 
@@ -74,6 +78,7 @@
             android:gravity="center_horizontal"
             android:paddingTop="10dp"
             android:text="@string/reverse_landscape"
+            android:textColor="@color/text_notification"
             android:textSize="10sp"
             />
 
@@ -87,6 +92,7 @@
             android:gravity="center_horizontal"
             android:paddingTop="10dp"
             android:text="@string/settings"
+            android:textColor="@color/text_notification"
             android:textSize="10sp"
             />
     </LinearLayout>

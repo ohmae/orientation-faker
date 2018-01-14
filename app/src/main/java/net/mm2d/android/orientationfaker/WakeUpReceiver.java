@@ -25,7 +25,6 @@ public class WakeUpReceiver extends BroadcastReceiver {
         if (!settings.shouldResident()) {
             return;
         }
-        OrientationHelper.getInstance(context)
-                .setOrientation(settings.getOrientation());
+        MainService.start(context);
     }
 }

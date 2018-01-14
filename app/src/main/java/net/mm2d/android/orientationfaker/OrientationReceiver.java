@@ -30,7 +30,6 @@ public class OrientationReceiver extends BroadcastReceiver {
         final int orientation = intent.getIntExtra(EXTRA_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         final Settings settings = new Settings(context);
         settings.setOrientation(orientation);
-        OrientationHelper.getInstance(context)
-                .setOrientation(settings.getOrientation());
+        MainService.start(context);
     }
 }
