@@ -4,11 +4,8 @@
     <string name="status">Status</string>
     <string name="status_running">Running</string>
     <string name="status_waiting">Waiting</string>
-    <string name="start">Start</string>
-    <string name="stop">Stop</string>
     <string name="resident">Resident</string>
     <string name="resident_description">To be resident from device startup</string>
-    <string name="orientation_mode">Orientation mode</string>
     <string name="notification_channel_name">@string/app_name</string>
     <string name="unspecified">unspecified</string>
     <string name="portrait">portrait</string>

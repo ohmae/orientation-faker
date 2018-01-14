@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Orientation Faker</string>
+    <string name="status">状態</string>
+    <string name="status_running">実行中</string>
+    <string name="status_waiting">待機中</string>
+    <string name="resident">常駐</string>
+    <string name="resident_description">デバイス起動時から常駐します</string>
+    <string name="notification_channel_name">@string/app_name</string>
+    <string name="unspecified">未指定</string>
+    <string name="portrait">縦</string>
+    <string name="landscape">横</string>
+    <string name="reverse_portrait">逆縦</string>
+    <string name="reverse_landscape">逆横</string>
+    <string name="settings">設定</string>
+    <string name="license">ライセンス</string>
+</resources>
