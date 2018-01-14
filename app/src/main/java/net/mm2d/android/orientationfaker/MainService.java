@@ -17,6 +17,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import net.mm2d.android.orientationfaker.notification.NotificationHelper;
+import net.mm2d.android.orientationfaker.orientation.OrientationHelper;
+import net.mm2d.android.orientationfaker.orientation.OverlayPermissionHelper;
+
 public class MainService extends Service {
     private static final String ACTION_START = "ACTION_START";
     private static final String ACTION_STOP = "ACTION_STOP";

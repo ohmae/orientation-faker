@@ -5,7 +5,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.android.orientationfaker;
+package net.mm2d.android.orientationfaker.notification;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -20,7 +20,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
-import net.mm2d.android.orientationfaker.OrientationIdManager.OrientationId;
+import net.mm2d.android.orientationfaker.MainActivity;
+import net.mm2d.android.orientationfaker.R;
+import net.mm2d.android.orientationfaker.orientation.OrientationIdManager;
+import net.mm2d.android.orientationfaker.orientation.OrientationIdManager.OrientationId;
+import net.mm2d.android.orientationfaker.orientation.OrientationReceiver;
 import net.mm2d.android.orientationfaker.settings.Settings;
 
 /**

@@ -45,7 +45,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".OrientationReceiver"
+            android:name=".orientation.OrientationReceiver"
             >
             <intent-filter>
                 <action android:name="net.mm2d.android.orientationfaker.ACTION_ORIENTATION"/>

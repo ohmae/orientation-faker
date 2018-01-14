@@ -5,9 +5,11 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.android.orientationfaker;
+package net.mm2d.android.orientationfaker.orientation;
 
 import android.content.pm.ActivityInfo;
+
+import net.mm2d.android.orientationfaker.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

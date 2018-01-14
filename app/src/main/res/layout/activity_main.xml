@@ -7,10 +7,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:orientation="vertical"
         >
 
@@ -21,6 +17,10 @@
             android:background="?android:attr/selectableItemBackground"
             android:paddingBottom="@dimen/vertical_margin"
             android:paddingTop="@dimen/vertical_margin"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin"
             >
 
             <TextView
@@ -51,6 +51,10 @@
             android:background="?android:attr/selectableItemBackground"
             android:paddingBottom="@dimen/vertical_margin"
             android:paddingTop="@dimen/vertical_margin"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin"
             >
 
             <TextView
@@ -165,6 +169,10 @@
             android:background="?android:attr/selectableItemBackground"
             android:paddingBottom="@dimen/vertical_margin"
             android:paddingTop="@dimen/vertical_margin"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin"
             >
 
             <TextView

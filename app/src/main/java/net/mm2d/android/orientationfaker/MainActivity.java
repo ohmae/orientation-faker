@@ -22,7 +22,10 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import net.mm2d.android.orientationfaker.OrientationIdManager.OrientationId;
+import net.mm2d.android.orientationfaker.orientation.OrientationHelper;
+import net.mm2d.android.orientationfaker.orientation.OrientationIdManager;
+import net.mm2d.android.orientationfaker.orientation.OrientationIdManager.OrientationId;
+import net.mm2d.android.orientationfaker.orientation.OverlayPermissionHelper;
 import net.mm2d.android.orientationfaker.settings.Settings;
 
 import java.util.ArrayList;

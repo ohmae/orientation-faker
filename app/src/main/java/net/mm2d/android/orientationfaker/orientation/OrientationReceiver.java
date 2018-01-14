@@ -5,7 +5,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.android.orientationfaker;
+package net.mm2d.android.orientationfaker.orientation;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,14 +13,15 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.text.TextUtils;
 
+import net.mm2d.android.orientationfaker.MainService;
 import net.mm2d.android.orientationfaker.settings.Settings;
 
 /**
  * @author <a href="mailto:ryo@mm2d.net">大前良介 (OHMAE Ryosuke)</a>
  */
 public class OrientationReceiver extends BroadcastReceiver {
-    static final String ACTION_ORIENTATION = "net.mm2d.android.orientationfaker.ACTION_ORIENTATION";
-    static final String EXTRA_ORIENTATION = "EXTRA_ORIENTATION";
+    public static final String ACTION_ORIENTATION = "net.mm2d.android.orientationfaker.ACTION_ORIENTATION";
+    public static final String EXTRA_ORIENTATION = "EXTRA_ORIENTATION";
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
