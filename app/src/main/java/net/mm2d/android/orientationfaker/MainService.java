@@ -51,17 +51,29 @@ public class MainService extends Service {
 
     @Override
     public int onStartCommand(@Nullable final Intent intent, final int flags, final int startId) {
-        if (intent != null && TextUtils.equals(intent.getAction(), ACTION_STOP)) {
-            OrientationHelper.getInstance(this).cancel();
-            NotificationHelper.stopForeground(this);
-            MainActivity.notifyUpdate(this);
-            stopSelf();
+        if (!OverlayPermissionHelper.canDrawOverlays(this)) {
+            stop();
             return START_NOT_STICKY;
         }
+        if (intent != null && TextUtils.equals(intent.getAction(), ACTION_STOP)) {
+            stop();
+            return START_NOT_STICKY;
+        }
+        start();
+        return START_STICKY;
+    }
+
+    private void start() {
         OrientationHelper.getInstance(this)
                 .updateOrientation();
         NotificationHelper.startForeground(this);
         MainActivity.notifyUpdate(this);
-        return START_STICKY;
+    }
+
+    private void stop() {
+        OrientationHelper.getInstance(this).cancel();
+        NotificationHelper.stopForeground(this);
+        MainActivity.notifyUpdate(this);
+        stopSelf();
     }
 }

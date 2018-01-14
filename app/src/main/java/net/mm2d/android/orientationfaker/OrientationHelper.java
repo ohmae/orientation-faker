@@ -35,17 +35,16 @@ public class OrientationHelper {
         return sInstance;
     }
 
-    private Context mContext;
     private Settings mSettings;
     private View mView;
     private WindowManager mWindowManager;
     private LayoutParams mLayoutParam;
 
     private OrientationHelper(@NonNull final Context context) {
-        mContext = context.getApplicationContext();
-        mSettings = new Settings(mContext);
-        mView = new View(mContext);
-        mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        final Context context1 = context.getApplicationContext();
+        mSettings = new Settings(context1);
+        mView = new View(context1);
+        mWindowManager = (WindowManager) context1.getSystemService(Context.WINDOW_SERVICE);
         mLayoutParam = new WindowManager.LayoutParams(0, 0, 0, 0,
                 getType(),
                 LayoutParams.FLAG_NOT_FOCUSABLE

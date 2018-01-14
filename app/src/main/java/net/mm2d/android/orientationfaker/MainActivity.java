@@ -12,6 +12,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.util.Pair;
@@ -31,11 +33,13 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity {
     private static final String ACTION_UPDATE = "ACTION_UPDATE";
+    private static final int REQUEST_CODE = 101;
     private Settings mSettings;
     private OrientationHelper mOrientationHelper;
     private TextView mStatusDescription;
     private CheckBox mResidentCheckBox;
     private List<Pair<Integer, View>> mButtonArray = new ArrayList<>();
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -56,9 +60,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mOrientationHelper = OrientationHelper.getInstance(this);
         mSettings = new Settings(this);
-        if (mSettings.shouldResident()) {
-            MainService.start(this);
-        }
         mStatusDescription = findViewById(R.id.status_description);
         mResidentCheckBox = findViewById(R.id.resident_check_box);
         mResidentCheckBox.setClickable(false);
@@ -70,6 +71,26 @@ public class MainActivity extends AppCompatActivity {
         setUpOrientationIcons();
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE));
+
+        if (mSettings.shouldResident()) {
+            MainService.start(this);
+        } else if (!OverlayPermissionHelper.canDrawOverlays(this)) {
+            MainService.stop(this);
+        }
+        checkPermission();
+    }
+
+    private void checkPermission() {
+        OverlayPermissionHelper.requestOverlayPermissionIfNeed(this, REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        if (requestCode == REQUEST_CODE) {
+            mHandler.postDelayed(this::checkPermission, 1000);
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
