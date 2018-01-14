@@ -9,8 +9,10 @@ This is an app to fix the orientation of the screen in a specific orientation re
 However, in order for the application to display unexpected display, operation may become impossible or a crash may occur.
 Please use at your own risk.
 
-# Screenshots
+# Install
+[Google Play](https://play.google.com/store/apps/details?id=net.mm2d.android.orientationfaker)
 
+# Screenshots
 |||
 |-|-|
 |![](readme/1.png)|![](readme/2.png)|
