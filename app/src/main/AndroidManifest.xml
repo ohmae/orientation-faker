@@ -3,6 +3,7 @@
           package="net.mm2d.android.orientationfaker">
 
     <permission android:name="net.mm2d.android.orientationfaker.permission"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
