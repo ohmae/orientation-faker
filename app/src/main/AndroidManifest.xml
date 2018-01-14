@@ -22,6 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".LicenseActivity"
+            android:label="@string/license"
+            >
+        </activity>
+
         <service
             android:name=".MainService"
             android:enabled="true"
@@ -40,7 +46,7 @@
         </receiver>
         <receiver
             android:name=".OrientationReceiver"
-            android:permission="">
+            >
             <intent-filter>
                 <action android:name="net.mm2d.android.orientationfaker.ACTION_ORIENTATION"/>
             </intent-filter>

@@ -16,4 +16,5 @@
     <string name="reverse_portrait">!portrait</string>
     <string name="reverse_landscape">!landscape</string>
     <string name="settings">settings</string>
+    <string name="license">License</string>
 </resources>

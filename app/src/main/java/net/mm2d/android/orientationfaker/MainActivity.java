@@ -66,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.status).setOnClickListener(v -> toggleStatus());
         findViewById(R.id.resident).setOnClickListener(v -> toggleResident());
+        findViewById(R.id.license).setOnClickListener(v -> {
+            startActivity(new Intent(this, LicenseActivity.class));
+        });
         setStatusDescription();
         setResidentCheckBox();
         setUpOrientationIcons();
