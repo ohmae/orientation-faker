@@ -35,10 +35,10 @@ public class OrientationHelper {
         return sInstance;
     }
 
-    private Settings mSettings;
-    private View mView;
-    private WindowManager mWindowManager;
-    private LayoutParams mLayoutParam;
+    private final Settings mSettings;
+    private final View mView;
+    private final WindowManager mWindowManager;
+    private final LayoutParams mLayoutParam;
 
     private OrientationHelper(@NonNull final Context context) {
         final Context context1 = context.getApplicationContext();
@@ -68,7 +68,7 @@ public class OrientationHelper {
         setOrientation(mSettings.getOrientation());
     }
 
-    public void setOrientation(final int orientation) {
+    private void setOrientation(final int orientation) {
         mLayoutParam.screenOrientation = orientation;
         if (isEnabled()) {
             mWindowManager.updateViewLayout(mView, mLayoutParam);

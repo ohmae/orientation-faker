@@ -41,10 +41,9 @@ public class MainActivity extends AppCompatActivity {
     private OrientationHelper mOrientationHelper;
     private TextView mStatusDescription;
     private CheckBox mResidentCheckBox;
-    private List<Pair<Integer, View>> mButtonArray = new ArrayList<>();
-    private Handler mHandler = new Handler(Looper.getMainLooper());
-
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+    private final List<Pair<Integer, View>> mButtonArray = new ArrayList<>();
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, final Intent intent) {
             setStatusDescription();
@@ -69,9 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.status).setOnClickListener(v -> toggleStatus());
         findViewById(R.id.resident).setOnClickListener(v -> toggleResident());
-        findViewById(R.id.license).setOnClickListener(v -> {
-            startActivity(new Intent(this, LicenseActivity.class));
-        });
+        findViewById(R.id.license).setOnClickListener(v ->
+                startActivity(new Intent(this, LicenseActivity.class)));
         setStatusDescription();
         setResidentCheckBox();
         setUpOrientationIcons();

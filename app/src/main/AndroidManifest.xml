@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="net.mm2d.android.orientationfaker">
 
+    <permission android:name="net.mm2d.android.orientationfaker.permission"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
@@ -31,8 +32,8 @@
         <service
             android:name=".MainService"
             android:enabled="true"
-            android:exported="true">
-        </service>
+            android:exported="true"
+            android:permission="net.mm2d.android.orientationfaker.permission"/>
 
         <receiver android:name=".WakeUpReceiver">
             <intent-filter>
@@ -46,6 +47,7 @@
         </receiver>
         <receiver
             android:name=".orientation.OrientationReceiver"
+            android:permission="net.mm2d.android.orientationfaker.permission"
             >
             <intent-filter>
                 <action android:name="net.mm2d.android.orientationfaker.ACTION_ORIENTATION"/>
