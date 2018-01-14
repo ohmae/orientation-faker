@@ -1,9 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.firebase.firebase-crash'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 def applicationName = "OrientationFacker"
-def versionMajor = 0
+def versionMajor = 1
 def versionMinor = 0
 def versionPatch = 1
 
@@ -18,6 +19,7 @@ android {
         versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         vectorDrawables.useSupportLibrary = true
+        buildConfigField "long", "BUILD_TIME", "${System.currentTimeMillis()}L"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -54,9 +56,12 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.android.support:support-v4:27.0.2'
     implementation 'net.mm2d:log:0.0.1'
     implementation 'net.mm2d:log-android:0.0.1'
+    implementation 'com.android.support:support-v4:27.0.2'
     implementation 'com.android.support:appcompat-v7:27.0.2'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.google.firebase:firebase-core:11.8.0'
+    implementation 'com.google.firebase:firebase-crash:11.8.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

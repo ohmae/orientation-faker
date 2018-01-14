@@ -14,4 +14,5 @@
     <string name="reverse_landscape">!landscape</string>
     <string name="settings">settings</string>
     <string name="license">License</string>
+    <string name="version">Version</string>
 </resources>

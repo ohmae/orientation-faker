@@ -18,6 +18,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         mStatusDescription = findViewById(R.id.status_description);
         mResidentCheckBox = findViewById(R.id.resident_check_box);
         mResidentCheckBox.setClickable(false);
+        ((TextView) findViewById(R.id.version_description)).setText(makeVersionInfo());
 
         findViewById(R.id.status).setOnClickListener(v -> toggleStatus());
         findViewById(R.id.resident).setOnClickListener(v -> toggleResident());
@@ -160,5 +162,13 @@ public class MainActivity extends AppCompatActivity {
                 pair.second.setBackgroundResource(R.drawable.bg_icon);
             }
         }
+    }
+
+    private String makeVersionInfo() {
+        if (BuildConfig.DEBUG) {
+            return BuildConfig.VERSION_NAME + " # "
+                    + DateFormat.format("yyyy/M/d kk:mm:ss", BuildConfig.BUILD_TIME);
+        }
+        return BuildConfig.VERSION_NAME;
     }
 }
