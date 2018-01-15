@@ -30,7 +30,7 @@ android {
             debuggable true
             applicationIdSuffix = ".debug"
             versionNameSuffix = "d"
-            manifestPlaceholders = [app_name: "Dubug"]
+            manifestPlaceholders = [app_name: "D:Orientation Faker"]
         }
         release {
             shrinkResources true
