@@ -16,11 +16,11 @@
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:paddingBottom="@dimen/vertical_margin"
-            android:paddingTop="@dimen/vertical_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/vertical_margin"
             >
 
             <TextView
@@ -42,6 +42,16 @@
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 />
 
+            <Switch
+                android:id="@+id/status_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:clickable="false"
+                />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -50,11 +60,11 @@
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:paddingBottom="@dimen/vertical_margin"
-            android:paddingTop="@dimen/vertical_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/vertical_margin"
             >
 
             <TextView
@@ -83,6 +93,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:clickable="false"
                 />
 
         </RelativeLayout>
@@ -168,11 +179,11 @@
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:paddingBottom="@dimen/vertical_margin"
-            android:paddingTop="@dimen/vertical_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/vertical_margin"
             >
 
             <TextView
@@ -191,11 +202,11 @@
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:paddingBottom="@dimen/vertical_margin"
-            android:paddingTop="@dimen/vertical_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/vertical_margin"
             >
 
             <TextView

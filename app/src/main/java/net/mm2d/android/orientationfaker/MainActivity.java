@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import net.mm2d.android.orientationfaker.orientation.OrientationHelper;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private Settings mSettings;
     private OrientationHelper mOrientationHelper;
     private TextView mStatusDescription;
+    private Switch mStatusSwitch;
     private CheckBox mResidentCheckBox;
     private final List<Pair<Integer, View>> mButtonArray = new ArrayList<>();
     private final Handler mHandler = new Handler(Looper.getMainLooper());
@@ -64,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
         mOrientationHelper = OrientationHelper.getInstance(this);
         mSettings = new Settings(this);
         mStatusDescription = findViewById(R.id.status_description);
+        mStatusSwitch = findViewById(R.id.status_switch);
         mResidentCheckBox = findViewById(R.id.resident_check_box);
-        mResidentCheckBox.setClickable(false);
         ((TextView) findViewById(R.id.version_description)).setText(makeVersionInfo());
 
         findViewById(R.id.status).setOnClickListener(v -> toggleStatus());
@@ -77,11 +79,10 @@ public class MainActivity extends AppCompatActivity {
         setUpOrientationIcons();
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE));
-
-        if (mSettings.shouldResident()) {
-            MainService.start(this);
-        } else if (!OverlayPermissionHelper.canDrawOverlays(this)) {
+        if (!OverlayPermissionHelper.canDrawOverlays(this)) {
             MainService.stop(this);
+        } else if (mSettings.shouldResident()) {
+            MainService.start(this);
         }
         checkPermission();
     }
@@ -128,9 +129,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setStatusDescription() {
-        final int stringRes = mOrientationHelper.isEnabled() ?
-                R.string.status_running : R.string.status_waiting;
-        mStatusDescription.setText(stringRes);
+        final boolean enabled = mOrientationHelper.isEnabled();
+        mStatusSwitch.setChecked(enabled);
+        mStatusDescription.setText(enabled ? R.string.status_running : R.string.status_waiting);
     }
 
     private void toggleResident() {
