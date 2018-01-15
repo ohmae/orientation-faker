@@ -6,7 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 def applicationName = "OrientationFacker"
 def versionMajor = 2
 def versionMinor = 0
-def versionPatch = 0
+def versionPatch = 1
 
 android {
     compileSdkVersion 27
@@ -63,5 +63,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:11.8.0'
     implementation 'com.google.firebase:firebase-crash:11.8.0'
 }
+
+setProperty("FirebaseServiceAccountFilePath",
+        rootProject.rootDir.parentFile.absolutePath + "/firebase-crashreporting-orientationfaker.json")
 
 apply plugin: 'com.google.gms.google-services'

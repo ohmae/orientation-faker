@@ -13,9 +13,9 @@ Please use at your own risk.
 [Google Play](https://play.google.com/store/apps/details?id=net.mm2d.android.orientationfaker)
 
 # Screenshots
-|||
-|-|-|
-|![](readme/1.png)|![](readme/2.png)|
+||||
+|-|-|-|
+|![](readme/1.png)|![](readme/2.png)|![](readme/3.png)|
 
 ## Author
 大前 良介 (OHMAE Ryosuke)
