@@ -63,9 +63,9 @@ public class NotificationHelper {
         final RemoteViews remoteViews = createRemoteViews(context, orientation);
         return new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle(context.getText(R.string.app_name))
+                .setCustomContentView(remoteViews)
                 .setSmallIcon(OrientationIdManager.getIconIdFromOrientation(orientation))
                 .setOngoing(true)
-                .setCustomContentView(remoteViews)
                 .build();
     }
 
