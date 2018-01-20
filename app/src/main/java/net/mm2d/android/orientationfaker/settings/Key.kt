@@ -5,13 +5,13 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.android.orientationfaker.settings;
+package net.mm2d.android.orientationfaker.settings
 
 /**
- * @author <a href="mailto:ryo@mm2d.net">大前良介 (OHMAE Ryosuke)</a>
+ * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
-enum Key {
+internal enum class Key {
     SETTINGS_VERSION,
     ORIENTATION,
-    RESIDENT,
+    RESIDENT
 }

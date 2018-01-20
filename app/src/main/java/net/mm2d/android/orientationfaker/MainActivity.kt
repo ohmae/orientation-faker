@@ -1,0 +1,159 @@
+/*
+ * Copyright (c) 2014 大前良介 (OHMAE Ryosuke)
+ *
+ * This software is released under the MIT License.
+ * http://opensource.org/licenses/MIT
+ */
+
+package net.mm2d.android.orientationfaker
+
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.support.v4.content.LocalBroadcastManager
+import android.support.v4.util.Pair
+import android.support.v7.app.AppCompatActivity
+import android.text.format.DateFormat
+import android.view.View
+import kotlinx.android.synthetic.main.activity_main.*
+import net.mm2d.android.orientationfaker.orientation.OrientationHelper
+import net.mm2d.android.orientationfaker.orientation.OrientationIdManager
+import net.mm2d.android.orientationfaker.orientation.OverlayPermissionHelper
+import net.mm2d.android.orientationfaker.settings.Settings
+import java.util.*
+
+/**
+ * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
+ */
+class MainActivity : AppCompatActivity() {
+    private val settings by lazy {
+        Settings(this)
+    }
+    private val orientationHelper by lazy {
+        OrientationHelper.getInstance(this)
+    }
+    private val buttonList = ArrayList<Pair<Int, View>>()
+    private val handler = Handler(Looper.getMainLooper())
+    private val receiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            setStatusDescription()
+            setOrientationIcon()
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        version_description.text = makeVersionInfo()
+
+        status.setOnClickListener { toggleStatus() }
+        resident.setOnClickListener { toggleResident() }
+        license.setOnClickListener { startActivity(Intent(this, LicenseActivity::class.java)) }
+        setStatusDescription()
+        setResidentCheckBox()
+        setUpOrientationIcons()
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(receiver, IntentFilter(ACTION_UPDATE))
+        if (!OverlayPermissionHelper.canDrawOverlays(this)) {
+            MainService.stop(this)
+        } else if (settings.shouldResident()) {
+            MainService.start(this)
+        }
+        checkPermission()
+    }
+
+    private fun checkPermission() {
+        OverlayPermissionHelper.requestOverlayPermissionIfNeed(this, REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        if (requestCode == REQUEST_CODE) {
+            handler.postDelayed({ this.checkPermission() }, 1000)
+            return
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LocalBroadcastManager.getInstance(this)
+                .unregisterReceiver(receiver)
+    }
+
+    private fun setUpOrientationIcons() {
+        for (id in OrientationIdManager.list) {
+            val button = findViewById<View>(id.viewId)
+            buttonList.add(Pair(id.orientation, button))
+            button.setOnClickListener { setOrientation(id.orientation) }
+        }
+        setOrientationIcon()
+    }
+
+    private fun toggleStatus() {
+        if (orientationHelper.isEnabled) {
+            MainService.stop(this)
+            if (settings.shouldResident()) {
+                settings.setResident(false)
+                setResidentCheckBox()
+            }
+        } else {
+            MainService.start(this)
+        }
+    }
+
+    private fun setStatusDescription() {
+        val enabled = orientationHelper.isEnabled
+        statusSwitch.isChecked = enabled
+        statusDescription.setText(if (enabled) R.string.status_running else R.string.status_waiting)
+    }
+
+    private fun toggleResident() {
+        settings.setResident(!settings.shouldResident())
+        setResidentCheckBox()
+        if (settings.shouldResident() && !orientationHelper.isEnabled) {
+            MainService.start(this)
+        }
+    }
+
+    private fun setResidentCheckBox() {
+        residentCheckBox.isChecked = settings.shouldResident()
+    }
+
+    private fun setOrientation(orientation: Int) {
+        settings.orientation = orientation
+        setOrientationIcon()
+        if (orientationHelper.isEnabled) {
+            MainService.start(this)
+        }
+    }
+
+    private fun setOrientationIcon() {
+        val orientation = settings.orientation
+        for (pair in buttonList) {
+            pair.second?.run {
+                setBackgroundResource(if (orientation == pair.first) R.drawable.bg_icon_selected else R.drawable.bg_icon)
+            }
+        }
+    }
+
+    private fun makeVersionInfo(): String {
+        return if (BuildConfig.DEBUG) {
+            (BuildConfig.VERSION_NAME + " # "
+                    + DateFormat.format("yyyy/M/d kk:mm:ss", BuildConfig.BUILD_TIME))
+        } else BuildConfig.VERSION_NAME
+    }
+
+    companion object {
+        private const val ACTION_UPDATE = "ACTION_UPDATE"
+        private const val REQUEST_CODE = 101
+
+        fun notifyUpdate(context: Context) {
+            LocalBroadcastManager.getInstance(context)
+                    .sendBroadcast(Intent(ACTION_UPDATE))
+        }
+    }
+}

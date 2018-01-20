@@ -32,7 +32,7 @@
                 />
 
             <TextView
-                android:id="@+id/status_description"
+                android:id="@+id/statusDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -43,7 +43,7 @@
                 />
 
             <Switch
-                android:id="@+id/status_switch"
+                android:id="@+id/statusSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -87,7 +87,7 @@
                 />
 
             <CheckBox
-                android:id="@+id/resident_check_box"
+                android:id="@+id/residentCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
