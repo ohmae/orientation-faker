@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         OverlayPermissionHelper.requestOverlayPermissionIfNeed(this, REQUEST_CODE)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE) {
             handler.postDelayed({ checkPermission() }, 1000)
             return
