@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         if (requestCode == REQUEST_CODE) {
-            handler.postDelayed({ this.checkPermission() }, 1000)
+            handler.postDelayed({ checkPermission() }, 1000)
             return
         }
         super.onActivityResult(requestCode, resultCode, data)
