@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/license"
+        android:orderInCategory="100"
+        android:title="@string/license"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/play_store"
+        android:orderInCategory="101"
+        android:title="@string/play_store"
+        app:showAsAction="never"
+        />
+</menu>

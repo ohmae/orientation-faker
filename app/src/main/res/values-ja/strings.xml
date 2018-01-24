@@ -14,6 +14,5 @@
     <string name="reverse_landscape">逆横</string>
     <string name="settings">設定</string>
     <string name="license">ライセンス</string>
-    <string name="store">Google Playストア</string>
-    <string name="store_message">評価、ご意見、ご要望をお待ちしております</string>
+    <string name="play_store">Google Playストア</string>
 </resources>

@@ -17,6 +17,8 @@ import android.support.v4.util.Pair
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.text.format.DateFormat
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import net.mm2d.android.orientationfaker.orientation.OrientationHelper
@@ -53,8 +55,6 @@ class MainActivity : AppCompatActivity() {
 
         status.setOnClickListener { toggleStatus() }
         resident.setOnClickListener { toggleResident() }
-        license.setOnClickListener { startActivity(Intent(this, LicenseActivity::class.java)) }
-        store.setOnClickListener { openGooglePlay(this) }
         setStatusDescription()
         setResidentCheckBox()
         setUpOrientationIcons()
@@ -84,6 +84,19 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         LocalBroadcastManager.getInstance(this)
                 .unregisterReceiver(receiver)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId) {
+            R.id.license -> startActivity(Intent(this, LicenseActivity::class.java))
+            R.id.play_store -> openGooglePlay(this)
+        }
+        return true
     }
 
     private fun setUpOrientationIcons() {
