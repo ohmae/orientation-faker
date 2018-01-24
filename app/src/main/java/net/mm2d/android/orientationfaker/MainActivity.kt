@@ -7,16 +7,15 @@
 
 package net.mm2d.android.orientationfaker
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v4.util.Pair
 import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.text.format.DateFormat
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,6 +23,7 @@ import net.mm2d.android.orientationfaker.orientation.OrientationHelper
 import net.mm2d.android.orientationfaker.orientation.OrientationIdManager
 import net.mm2d.android.orientationfaker.orientation.OverlayPermissionHelper
 import net.mm2d.android.orientationfaker.settings.Settings
+import net.mm2d.log.Log
 import java.util.*
 
 /**
@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         status.setOnClickListener { toggleStatus() }
         resident.setOnClickListener { toggleResident() }
         license.setOnClickListener { startActivity(Intent(this, LicenseActivity::class.java)) }
+        store.setOnClickListener { openGooglePlay(this) }
         setStatusDescription()
         setResidentCheckBox()
         setUpOrientationIcons()
@@ -148,12 +149,37 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+        private const val PACKAGE_NAME = "net.mm2d.android.orientationfaker"
         private const val ACTION_UPDATE = "ACTION_UPDATE"
         private const val REQUEST_CODE = 101
 
         fun notifyUpdate(context: Context) {
             LocalBroadcastManager.getInstance(context)
                     .sendBroadcast(Intent(ACTION_UPDATE))
+        }
+
+        private fun openUri(context: Context, uri: String?): Boolean {
+            if (TextUtils.isEmpty(uri)) {
+                return false
+            }
+            try {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+                intent.addCategory(Intent.CATEGORY_BROWSABLE)
+                context.startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                Log.w(e)
+                return false
+            }
+            return true
+        }
+
+        private fun openGooglePlay(context: Context, packageName: String): Boolean {
+            return openUri(context, "market://details?id=" + packageName) ||
+                    openUri(context, "https://play.google.com/store/apps/details?id=" + packageName)
+        }
+
+        private fun openGooglePlay(context: Context): Boolean {
+            return openGooglePlay(context, PACKAGE_NAME)
         }
     }
 }
