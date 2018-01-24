@@ -6,7 +6,7 @@ apply plugin: 'io.fabric'
 def applicationName = "OrientationFaker"
 def versionMajor = 2
 def versionMinor = 0
-def versionPatch = 5
+def versionPatch = 6
 
 android {
     compileSdkVersion 27
