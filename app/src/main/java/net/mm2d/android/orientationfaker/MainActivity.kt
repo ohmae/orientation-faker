@@ -48,7 +48,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        version_description.text = makeVersionInfo()
+        supportActionBar?.title = getString(R.string.app_name)
+        supportActionBar?.subtitle = makeVersionInfo()
 
         status.setOnClickListener { toggleStatus() }
         resident.setOnClickListener { toggleResident() }
@@ -142,10 +143,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun makeVersionInfo(): String {
-        return if (BuildConfig.DEBUG) {
-            (BuildConfig.VERSION_NAME + " # "
-                    + DateFormat.format("yyyy/M/d kk:mm:ss", BuildConfig.BUILD_TIME))
-        } else BuildConfig.VERSION_NAME
+        return "Ver." + BuildConfig.VERSION_NAME +
+        if (BuildConfig.DEBUG) " # " + DateFormat.format("yyyy/M/d kk:mm:ss", BuildConfig.BUILD_TIME)
+        else ""
     }
 
     companion object {

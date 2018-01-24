@@ -14,7 +14,6 @@
     <string name="reverse_landscape">!landscape</string>
     <string name="settings">settings</string>
     <string name="license">License</string>
-    <string name="version">Version</string>
     <string name="store">Google Play Store</string>
     <string name="store_message">Waiting for evaluation, comments and requests</string>
 </resources>
