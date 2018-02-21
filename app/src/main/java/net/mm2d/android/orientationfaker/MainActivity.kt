@@ -100,10 +100,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpOrientationIcons() {
-        for (id in OrientationIdManager.list) {
-            val button = findViewById<View>(id.viewId)
-            buttonList.add(Pair(id.orientation, button))
-            button.setOnClickListener { setOrientation(id.orientation) }
+        OrientationIdManager.list.forEach {
+            val orientation = it.orientation
+            val button = findViewById<View>(it.viewId)
+            buttonList.add(Pair(orientation, button))
+            button.setOnClickListener { setOrientation(orientation) }
         }
         setOrientationIcon()
     }

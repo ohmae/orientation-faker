@@ -8,11 +8,14 @@
 package net.mm2d.android.orientationfaker.orientation
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import android.widget.Toast
+import net.mm2d.android.orientationfaker.R
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
@@ -29,6 +32,10 @@ object OverlayPermissionHelper {
         }
         val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                 Uri.parse("package:" + activity.packageName))
-        activity.startActivityForResult(intent, requestCode)
+        try {
+            activity.startActivityForResult(intent, requestCode)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(activity, R.string.toast_could_not_open_setting, Toast.LENGTH_LONG).show()
+        }
     }
 }
