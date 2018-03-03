@@ -19,6 +19,9 @@ import net.mm2d.android.orientationfaker.notification.NotificationHelper
 import net.mm2d.android.orientationfaker.orientation.OrientationHelper
 import net.mm2d.android.orientationfaker.orientation.OverlayPermissionHelper
 
+/**
+ * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
+ */
 class MainService : Service() {
     override fun onBind(intent: Intent): IBinder? {
         throw UnsupportedOperationException("Not yet implemented")

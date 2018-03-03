@@ -12,6 +12,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_license.*
 
+/**
+ * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
+ */
 class LicenseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
