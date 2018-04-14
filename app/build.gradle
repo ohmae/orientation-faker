@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'io.fabric'
 
 def applicationName = "OrientationFaker"
 def versionMajor = 2
@@ -63,11 +62,4 @@ dependencies {
     implementation 'net.mm2d:log:0.0.1'
     implementation 'net.mm2d:log-android:0.0.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
-        transitive = true
-    }
-    implementation 'com.google.firebase:firebase-core:12.0.1'
 }
-
-apply plugin: 'com.google.gms.google-services'
