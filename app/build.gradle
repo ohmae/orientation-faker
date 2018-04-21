@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 def applicationName = "OrientationFaker"
 def versionMajor = 2
 def versionMinor = 0
-def versionPatch = 7
+def versionPatch = 8
 
 android {
     compileSdkVersion 27
@@ -59,7 +59,7 @@ repositories {
 dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'net.mm2d:log:0.0.1'
-    implementation 'net.mm2d:log-android:0.0.1'
+    implementation 'net.mm2d:log:0.0.2'
+    implementation 'net.mm2d:log-android:0.0.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
