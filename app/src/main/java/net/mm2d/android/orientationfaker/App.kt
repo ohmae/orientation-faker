@@ -8,7 +8,9 @@
 package net.mm2d.android.orientationfaker
 
 import android.app.Application
-
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
+import android.os.StrictMode.VmPolicy
 import net.mm2d.android.orientationfaker.settings.Settings
 import net.mm2d.log.AndroidLogInitializer
 import net.mm2d.log.Log
@@ -21,6 +23,26 @@ class App : Application() {
         super.onCreate()
         Log.setInitializer(AndroidLogInitializer.get())
         Log.initialize(BuildConfig.DEBUG, true)
+        setStrictMode()
         Settings.initialize(this)
+    }
+
+    private fun setStrictMode() {
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(ThreadPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .penaltyDropBox()
+                    .penaltyDialog()
+                    .build())
+            StrictMode.setVmPolicy(VmPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .penaltyDropBox()
+                    .build())
+        } else {
+            StrictMode.setThreadPolicy(ThreadPolicy.LAX)
+            StrictMode.setVmPolicy(VmPolicy.LAX)
+        }
     }
 }
