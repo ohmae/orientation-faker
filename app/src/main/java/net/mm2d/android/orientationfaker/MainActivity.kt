@@ -33,7 +33,7 @@ import java.util.*
  */
 class MainActivity : AppCompatActivity() {
     private val settings by lazy {
-        Settings(this)
+        Settings.get()
     }
     private val orientationHelper by lazy {
         OrientationHelper.getInstance(this)

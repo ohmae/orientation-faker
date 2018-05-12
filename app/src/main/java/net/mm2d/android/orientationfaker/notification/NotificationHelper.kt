@@ -52,7 +52,7 @@ object NotificationHelper {
     }
 
     private fun makeNotification(context: Context): Notification {
-        val orientation = Settings(context).orientation
+        val orientation = Settings.get().orientation
         return NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle(context.getText(R.string.app_name))
                 .setCustomContentView(createRemoteViews(context, orientation))

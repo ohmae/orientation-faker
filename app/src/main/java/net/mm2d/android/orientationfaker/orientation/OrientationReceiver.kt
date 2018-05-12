@@ -25,7 +25,7 @@ class OrientationReceiver : BroadcastReceiver() {
             return
         }
         val orientation = intent.getIntExtra(EXTRA_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-        Settings(context).orientation = orientation
+        Settings.get().orientation = orientation
         MainService.start(context)
     }
 
