@@ -65,8 +65,8 @@ class Settings private constructor(context: Context) {
          */
         fun initialize(context: Context) {
             Completable.fromAction {
+                SettingsStorage.initialize(context)
                 lock.withLock {
-                    SettingsStorage.initialize(context)
                     settings = Settings(context)
                     condition.signalAll()
                 }
