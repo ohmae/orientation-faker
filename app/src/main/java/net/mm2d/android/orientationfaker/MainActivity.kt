@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId) {
+        when (item?.itemId) {
             R.id.license -> startActivity(Intent(this, LicenseActivity::class.java))
             R.id.play_store -> openGooglePlay(this)
         }
@@ -158,8 +158,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun makeVersionInfo(): String {
         return "Ver." + BuildConfig.VERSION_NAME +
-        if (BuildConfig.DEBUG) " # " + DateFormat.format("yyyy/M/d kk:mm:ss", BuildConfig.BUILD_TIME)
-        else ""
+                if (BuildConfig.DEBUG) " # " + DateFormat.format("yyyy/M/d kk:mm:ss", BuildConfig.BUILD_TIME)
+                else ""
     }
 
     companion object {

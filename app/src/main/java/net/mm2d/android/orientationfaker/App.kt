@@ -11,6 +11,8 @@ import android.app.Application
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
+import io.reactivex.exceptions.UndeliverableException
+import io.reactivex.plugins.RxJavaPlugins
 import net.mm2d.android.orientationfaker.settings.Settings
 import net.mm2d.log.AndroidLogInitializer
 import net.mm2d.log.Log
@@ -24,6 +26,12 @@ class App : Application() {
         Log.setInitializer(AndroidLogInitializer.get())
         Log.initialize(BuildConfig.DEBUG, true)
         setStrictMode()
+        RxJavaPlugins.setErrorHandler { e ->
+            when (e) {
+                is UndeliverableException -> Log.w(e.cause)
+                else -> Log.w(e)
+            }
+        }
         Settings.initialize(this)
     }
 
