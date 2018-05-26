@@ -21,6 +21,7 @@ import net.mm2d.log.android.AndroidLogInitializer
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
+@Suppress("unused")
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
