@@ -20,7 +20,7 @@ import android.text.format.DateFormat
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.layout_main.*
 import net.mm2d.android.orientationfaker.orientation.OrientationHelper
 import net.mm2d.android.orientationfaker.orientation.OrientationIdManager
 import net.mm2d.android.orientationfaker.orientation.OverlayPermissionHelper
