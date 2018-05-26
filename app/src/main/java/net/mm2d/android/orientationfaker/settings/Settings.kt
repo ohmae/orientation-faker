@@ -13,6 +13,7 @@ import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.log.Log
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.Condition
 import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
@@ -52,7 +53,9 @@ class Settings private constructor(context: Context) {
                     if (BuildConfig.DEBUG) {
                         Log.e("!!!!!!!!!! BLOCK !!!!!!!!!!")
                     }
-                    condition.await()
+                    if (!condition.await(1, TimeUnit.SECONDS)) {
+                        throw IllegalStateException("Settings initialization timeout")
+                    }
                 }
                 return settings as Settings
             }
@@ -64,15 +67,18 @@ class Settings private constructor(context: Context) {
          * @param context コンテキスト
          */
         fun initialize(context: Context) {
-            Completable.fromAction {
-                SettingsStorage.initialize(context)
-                lock.withLock {
-                    settings = Settings(context)
-                    condition.signalAll()
-                }
-            }
+            Completable.fromAction { initializeInner(context) }
                     .subscribeOn(Schedulers.io())
                     .subscribe()
+        }
+
+        private fun initializeInner(context: Context) {
+            val storage = SettingsStorage(context)
+            Maintainer.maintain(storage)
+            lock.withLock {
+                settings = Settings(context)
+                condition.signalAll()
+            }
         }
 
         private fun verifyOrientation(orientation: Int): Int {

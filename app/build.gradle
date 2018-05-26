@@ -59,10 +59,10 @@ repositories {
 dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'net.mm2d:log:0.0.2'
-    implementation 'net.mm2d:log-android:0.0.2'
+    implementation 'net.mm2d:log:0.0.3'
+    implementation 'net.mm2d:log-android:0.0.3'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.10'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.13'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
 }

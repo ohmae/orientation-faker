@@ -188,8 +188,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         private fun openGooglePlay(context: Context, packageName: String): Boolean {
-            return openUri(context, "market://details?id=" + packageName) ||
-                    openUri(context, "https://play.google.com/store/apps/details?id=" + packageName)
+            return openUri(context, "market://details?id=$packageName") ||
+                    openUri(context, "https://play.google.com/store/apps/details?id=$packageName")
         }
 
         private fun openGooglePlay(context: Context): Boolean {
