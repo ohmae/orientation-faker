@@ -33,8 +33,8 @@ internal object Maintainer {
      * @param storage SettingsStorage
      */
     private fun writeDefaultValue(storage: SettingsStorage, overwrite: Boolean) {
-        storage.writeInt(Key.ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-        storage.writeBoolean(Key.RESIDENT, false)
+        storage.writeInt(Key.ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED, overwrite)
+        storage.writeBoolean(Key.RESIDENT, false, overwrite)
     }
 
     private fun getSettingsVersion(storage: SettingsStorage): Int {
