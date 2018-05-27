@@ -24,6 +24,17 @@ internal object Maintainer {
             migrateFrom0(storage)
         }
         storage.writeInt(Key.SETTINGS_VERSION, SETTINGS_VERSION)
+        writeDefaultValue(storage, false)
+    }
+
+    /**
+     * デフォルト値の書き込みを行う
+     *
+     * @param storage SettingsStorage
+     */
+    private fun writeDefaultValue(storage: SettingsStorage, overwrite: Boolean) {
+        storage.writeInt(Key.ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED, overwrite)
+        storage.writeBoolean(Key.RESIDENT, false, overwrite)
     }
 
     private fun getSettingsVersion(storage: SettingsStorage): Int {

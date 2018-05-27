@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -10,6 +11,7 @@
         android:layout_height="56dp"
         android:background="@color/bg_notification"
         android:orientation="horizontal"
+        tools:ignore="UselessParent"
         >
 
         <TextView
@@ -24,6 +26,7 @@
             android:text="@string/unspecified"
             android:textColor="@color/text_notification"
             android:textSize="10sp"
+            tools:ignore="SmallSp"
             />
 
         <TextView
@@ -38,6 +41,7 @@
             android:text="@string/portrait"
             android:textColor="@color/text_notification"
             android:textSize="10sp"
+            tools:ignore="SmallSp"
             />
 
         <TextView
@@ -52,6 +56,7 @@
             android:text="@string/landscape"
             android:textColor="@color/text_notification"
             android:textSize="10sp"
+            tools:ignore="SmallSp"
             />
 
         <TextView
@@ -66,6 +71,7 @@
             android:text="@string/reverse_portrait"
             android:textColor="@color/text_notification"
             android:textSize="10sp"
+            tools:ignore="SmallSp"
             />
 
         <TextView
@@ -80,6 +86,7 @@
             android:text="@string/reverse_landscape"
             android:textColor="@color/text_notification"
             android:textSize="10sp"
+            tools:ignore="SmallSp"
             />
 
         <TextView
@@ -94,6 +101,7 @@
             android:text="@string/settings"
             android:textColor="@color/text_notification"
             android:textSize="10sp"
+            tools:ignore="SmallSp"
             />
     </LinearLayout>
 </FrameLayout>

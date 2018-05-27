@@ -20,7 +20,7 @@ import net.mm2d.android.orientationfaker.settings.Settings
 class WakeUpReceiver : BroadcastReceiver() {
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context, intent: Intent) {
-        if (!Settings(context).shouldResident()) {
+        if (!Settings.get().shouldResident()) {
             return
         }
         MainService.start(context)

@@ -15,23 +15,7 @@ import android.preference.PreferenceManager
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 internal class SettingsStorage(context: Context) {
-    private object PreferencesHolder {
-        private var sPreferences: SharedPreferences? = null
-
-        @Synchronized
-        internal operator fun get(context: Context): SharedPreferences {
-            if (sPreferences == null) {
-                sPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-            }
-            return sPreferences!!
-        }
-    }
-
-    private val sharedPreferences: SharedPreferences
-
-    init {
-        sharedPreferences = PreferencesHolder.get(context)
-    }
+    private val sharedPreferences: SharedPreferences = PreferencesHolder.get(context)
 
     /**
      * SharedPreferencesのインスタンスを返す。
@@ -77,6 +61,20 @@ internal class SettingsStorage(context: Context) {
     }
 
     /**
+     * boolean値を書き込む。
+     *
+     * @param key       Key
+     * @param value     書き込む値
+     * @param overwrite true:値を上書きする、false:値がない場合のみ書き込む
+     */
+    fun writeBoolean(key: Key, value: Boolean, overwrite: Boolean) {
+        if (!overwrite && contains(key)) {
+            return
+        }
+        writeBoolean(key, value)
+    }
+
+    /**
      * boolean値を読み出す。
      *
      * @param key          Key
@@ -97,6 +95,20 @@ internal class SettingsStorage(context: Context) {
         sharedPreferences.edit()
                 .putInt(key.name, value)
                 .apply()
+    }
+
+    /**
+     * int値を書き込む。
+     *
+     * @param key       Key
+     * @param value     書き込む値
+     * @param overwrite true:値を上書きする、false:値がない場合のみ書き込む
+     */
+    fun writeInt(key: Key, value: Int, overwrite: Boolean) {
+        if (!overwrite && contains(key)) {
+            return
+        }
+        writeInt(key, value)
     }
 
     /**
@@ -123,6 +135,20 @@ internal class SettingsStorage(context: Context) {
     }
 
     /**
+     * long値を書き込む。
+     *
+     * @param key       Key
+     * @param value     書き込む値
+     * @param overwrite true:値を上書きする、false:値がない場合のみ書き込む
+     */
+    fun writeLong(key: Key, value: Long, overwrite: Boolean) {
+        if (!overwrite && contains(key)) {
+            return
+        }
+        writeLong(key, value)
+    }
+
+    /**
      * long値を読み出す。
      *
      * @param key          Key
@@ -146,6 +172,20 @@ internal class SettingsStorage(context: Context) {
     }
 
     /**
+     * String値を書き込む。
+     *
+     * @param key       Key
+     * @param value     書き込む値
+     * @param overwrite true:値を上書きする、false:値がない場合のみ書き込む
+     */
+    fun writeString(key: Key, value: String, overwrite: Boolean) {
+        if (!overwrite && contains(key)) {
+            return
+        }
+        writeString(key, value)
+    }
+
+    /**
      * String値を読み出す。
      *
      * @param key          Key
@@ -156,14 +196,15 @@ internal class SettingsStorage(context: Context) {
         return sharedPreferences.getString(key.name, defaultValue)
     }
 
-    companion object {
-        /**
-         * SharedPreferencesのインスタンスを作成し初期化する。
-         *
-         * @param context コンテキスト
-         */
-        fun initialize(context: Context) {
-            Maintainer.maintain(SettingsStorage(context))
+    private object PreferencesHolder {
+        private var sPreferences: SharedPreferences? = null
+
+        @Synchronized
+        internal operator fun get(context: Context): SharedPreferences {
+            if (sPreferences == null) {
+                sPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            }
+            return sPreferences!!
         }
     }
 }

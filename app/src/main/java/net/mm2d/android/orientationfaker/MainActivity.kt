@@ -20,7 +20,7 @@ import android.text.format.DateFormat
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.layout_main.*
 import net.mm2d.android.orientationfaker.orientation.OrientationHelper
 import net.mm2d.android.orientationfaker.orientation.OrientationIdManager
 import net.mm2d.android.orientationfaker.orientation.OverlayPermissionHelper
@@ -33,7 +33,7 @@ import java.util.*
  */
 class MainActivity : AppCompatActivity() {
     private val settings by lazy {
-        Settings(this)
+        Settings.get()
     }
     private val orientationHelper by lazy {
         OrientationHelper.getInstance(this)
@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId) {
+        when (item?.itemId) {
             R.id.license -> startActivity(Intent(this, LicenseActivity::class.java))
             R.id.play_store -> openGooglePlay(this)
         }
@@ -158,8 +158,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun makeVersionInfo(): String {
         return "Ver." + BuildConfig.VERSION_NAME +
-        if (BuildConfig.DEBUG) " # " + DateFormat.format("yyyy/M/d kk:mm:ss", BuildConfig.BUILD_TIME)
-        else ""
+                if (BuildConfig.DEBUG) " # " + DateFormat.format("yyyy/M/d kk:mm:ss", BuildConfig.BUILD_TIME)
+                else ""
     }
 
     companion object {
@@ -188,8 +188,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         private fun openGooglePlay(context: Context, packageName: String): Boolean {
-            return openUri(context, "market://details?id=" + packageName) ||
-                    openUri(context, "https://play.google.com/store/apps/details?id=" + packageName)
+            return openUri(context, "market://details?id=$packageName") ||
+                    openUri(context, "https://play.google.com/store/apps/details?id=$packageName")
         }
 
         private fun openGooglePlay(context: Context): Boolean {
