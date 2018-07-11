@@ -128,6 +128,7 @@ internal class SettingsStorage(context: Context) {
      * @param key   Key
      * @param value 書き込む値
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     fun writeLong(key: Key, value: Long) {
         sharedPreferences.edit()
                 .putLong(key.name, value)
@@ -141,6 +142,7 @@ internal class SettingsStorage(context: Context) {
      * @param value     書き込む値
      * @param overwrite true:値を上書きする、false:値がない場合のみ書き込む
      */
+    @Suppress("unused")
     fun writeLong(key: Key, value: Long, overwrite: Boolean) {
         if (!overwrite && contains(key)) {
             return
@@ -155,6 +157,7 @@ internal class SettingsStorage(context: Context) {
      * @param defaultValue デフォルト値
      * @return 読み出したlong値
      */
+    @Suppress("unused")
     fun readLong(key: Key, defaultValue: Long): Long {
         return sharedPreferences.getLong(key.name, defaultValue)
     }
@@ -165,6 +168,7 @@ internal class SettingsStorage(context: Context) {
      * @param key   Key
      * @param value 書き込む値
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     fun writeString(key: Key, value: String) {
         sharedPreferences.edit()
                 .putString(key.name, value)
@@ -178,6 +182,7 @@ internal class SettingsStorage(context: Context) {
      * @param value     書き込む値
      * @param overwrite true:値を上書きする、false:値がない場合のみ書き込む
      */
+    @Suppress("unused")
     fun writeString(key: Key, value: String, overwrite: Boolean) {
         if (!overwrite && contains(key)) {
             return
@@ -192,6 +197,7 @@ internal class SettingsStorage(context: Context) {
      * @param defaultValue デフォルト値
      * @return 読み出したString値
      */
+    @Suppress("unused")
     fun readString(key: Key, defaultValue: String?): String? {
         return sharedPreferences.getString(key.name, defaultValue)
     }
