@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Screen Orientation Control</string>
+    <string name="app_name">Orientation Control</string>
     <string name="status">Status</string>
     <string name="status_running">Running</string>
     <string name="status_waiting">Waiting</string>
