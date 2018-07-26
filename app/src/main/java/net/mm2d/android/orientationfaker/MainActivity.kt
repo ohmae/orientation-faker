@@ -58,8 +58,7 @@ class MainActivity : AppCompatActivity() {
         setStatusDescription()
         setResidentCheckBox()
         setUpOrientationIcons()
-        LocalBroadcastManager.getInstance(this)
-                .registerReceiver(receiver, IntentFilter(ACTION_UPDATE))
+        registerReceiver()
         if (!OverlayPermissionHelper.canDrawOverlays(this)) {
             MainService.stop(this)
         } else if (settings.shouldResident()) {
@@ -82,6 +81,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        unregisterReceiver()
+    }
+
+    private fun registerReceiver() {
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(receiver, IntentFilter(ACTION_UPDATE))
+    }
+
+    private fun unregisterReceiver() {
         LocalBroadcastManager.getInstance(this)
                 .unregisterReceiver(receiver)
     }
