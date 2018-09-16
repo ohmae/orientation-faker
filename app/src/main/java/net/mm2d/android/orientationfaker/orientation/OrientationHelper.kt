@@ -17,7 +17,6 @@ import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.view.WindowManager.LayoutParams
-
 import net.mm2d.android.orientationfaker.settings.Settings
 
 /**
@@ -78,10 +77,7 @@ class OrientationHelper private constructor(context: Context) {
         private var instance: OrientationHelper? = null
 
         fun getInstance(context: Context): OrientationHelper {
-            if (instance == null) {
-                instance = OrientationHelper(context)
-            }
-            return instance!!
+            return instance ?: OrientationHelper(context).also { instance = it }
         }
     }
 }

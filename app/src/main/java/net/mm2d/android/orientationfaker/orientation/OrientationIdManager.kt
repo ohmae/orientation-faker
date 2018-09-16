@@ -15,7 +15,7 @@ import java.util.*
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 object OrientationIdManager {
-    data class OrientationId internal constructor(val orientation: Int, val viewId: Int, val iconId: Int)
+    data class OrientationId(val orientation: Int, val viewId: Int, val iconId: Int)
 
     val list: List<OrientationId> = Collections.unmodifiableList(ArrayList(Arrays.asList(
             OrientationId(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED, R.id.button_unspecified, R.drawable.ic_unspecified),

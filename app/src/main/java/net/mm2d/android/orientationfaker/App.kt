@@ -27,7 +27,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         if (LeakCanary.isInAnalyzerProcess(this)) {
-            return;
+            return
         }
         LeakCanary.install(this)
         Log.setInitializer(AndroidLogInitializer.getSingleThread())
