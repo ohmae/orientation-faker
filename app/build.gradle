@@ -49,13 +49,6 @@ android {
     }
 }
 
-repositories {
-    maven {
-        url 'https://ohmae.github.com/maven'
-    }
-    mavenCentral()
-}
-
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.0.0'
