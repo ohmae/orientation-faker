@@ -12,9 +12,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
-import android.support.annotation.RequiresApi
-import android.support.v4.app.NotificationCompat
 import android.widget.RemoteViews
+import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import net.mm2d.android.orientationfaker.MainActivity
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.R.*

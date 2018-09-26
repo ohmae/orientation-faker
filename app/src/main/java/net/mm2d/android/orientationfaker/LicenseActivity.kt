@@ -8,8 +8,8 @@
 package net.mm2d.android.orientationfaker
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_license.*
 
 /**
