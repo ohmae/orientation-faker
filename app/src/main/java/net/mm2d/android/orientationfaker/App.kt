@@ -7,10 +7,10 @@
 
 package net.mm2d.android.orientationfaker
 
-import android.app.Application
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
+import androidx.multidex.MultiDexApplication
 import com.squareup.leakcanary.LeakCanary
 import io.reactivex.exceptions.OnErrorNotImplementedException
 import io.reactivex.exceptions.UndeliverableException
@@ -23,7 +23,7 @@ import net.mm2d.log.android.AndroidLogInitializer
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 @Suppress("unused")
-class App : Application() {
+class App : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         if (LeakCanary.isInAnalyzerProcess(this)) {

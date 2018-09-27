@@ -18,6 +18,7 @@ android {
         versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         resConfigs "en", "ja"
+        multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         buildConfigField "long", "BUILD_TIME", "${System.currentTimeMillis()}L"
     }
@@ -50,6 +51,7 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.multidex:multidex:2.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'net.mm2d:log:0.1.0'
