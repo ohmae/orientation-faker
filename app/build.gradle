@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 def applicationName = "OrientationFaker"
 def versionMajor = 2
 def versionMinor = 0
-def versionPatch = 21
+def versionPatch = 22
 
 android {
     compileSdkVersion 28
