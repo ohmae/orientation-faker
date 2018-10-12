@@ -33,9 +33,9 @@ object NotificationHelper {
     @RequiresApi(VERSION_CODES.O)
     private fun createChannel(context: Context) {
         val name = context.getString(R.string.notification_channel_name)
-        val channel = NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_LOW).apply {
-            enableLights(false)
-            enableVibration(false)
+        val channel = NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_LOW).also {
+            it.enableLights(false)
+            it.enableVibration(false)
         }
         getNotificationManager(context)?.also {
             if (it.getNotificationChannel(OLD_CHANNEL_ID) != null) {
@@ -71,27 +71,27 @@ object NotificationHelper {
     }
 
     private fun createRemoteViews(context: Context, orientation: Int): RemoteViews {
-        return RemoteViews(context.packageName, layout.notification).apply {
+        return RemoteViews(context.packageName, layout.notification).also { views ->
             OrientationIdManager.list.forEach {
-                setOnClickPendingIntent(it.viewId, createOrientationIntent(context, it.orientation))
-                setInt(it.viewId, "setBackgroundResource",
+                views.setOnClickPendingIntent(it.viewId, createOrientationIntent(context, it.orientation))
+                views.setInt(it.viewId, "setBackgroundResource",
                         if (orientation == it.orientation) drawable.bg_icon_selected else drawable.bg_icon)
             }
-            setOnClickPendingIntent(id.button_settings, createActivityIntent(context))
+            views.setOnClickPendingIntent(id.button_settings, createActivityIntent(context))
         }
     }
 
     private fun createOrientationIntent(context: Context, orientation: Int): PendingIntent {
-        val intent = Intent(OrientationReceiver.ACTION_ORIENTATION).apply {
-            putExtra(OrientationReceiver.EXTRA_ORIENTATION, orientation)
-            setClass(context, OrientationReceiver::class.java)
+        val intent = Intent(OrientationReceiver.ACTION_ORIENTATION).also {
+            it.putExtra(OrientationReceiver.EXTRA_ORIENTATION, orientation)
+            it.setClass(context, OrientationReceiver::class.java)
         }
         return PendingIntent.getBroadcast(context, orientation, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     private fun createActivityIntent(context: Context): PendingIntent {
-        val intent = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        val intent = Intent(context, MainActivity::class.java).also {
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
         return PendingIntent.getActivity(context, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
