@@ -100,6 +100,8 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.license -> LicenseActivity.start(this)
+            R.id.source_code -> openSourceCode(this)
+            R.id.privacy_policy -> openPrivacyPolicy(this)
             R.id.play_store -> openGooglePlay(this)
         }
         return true
@@ -163,7 +165,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun makeVersionInfo(): String {
-        return "Ver." + BuildConfig.VERSION_NAME +
+        return BuildConfig.VERSION_NAME +
                 if (BuildConfig.DEBUG) " # " + DateFormat.format("yyyy/M/d kk:mm:ss", BuildConfig.BUILD_TIME)
                 else ""
     }
@@ -172,6 +174,8 @@ class MainActivity : AppCompatActivity() {
         private const val PACKAGE_NAME = "net.mm2d.android.orientationfaker"
         private const val ACTION_UPDATE = "ACTION_UPDATE"
         private const val REQUEST_CODE = 101
+        private const val PRIVACY_POLICY_URL = "https://github.com/ohmae/orientation-faker/blob/develop/PRIVACY-POLICY.md"
+        private const val GITHUB_URL = "https://github.com/ohmae/orientation-faker/"
 
         fun notifyUpdate(context: Context) {
             LocalBroadcastManager.getInstance(context)
@@ -200,6 +204,14 @@ class MainActivity : AppCompatActivity() {
 
         private fun openGooglePlay(context: Context): Boolean {
             return openGooglePlay(context, PACKAGE_NAME)
+        }
+
+        private fun openPrivacyPolicy(context: Context) {
+            openUri(context, PRIVACY_POLICY_URL)
+        }
+
+        private fun openSourceCode(context: Context) {
+            openUri(context, GITHUB_URL)
         }
     }
 }
