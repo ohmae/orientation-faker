@@ -20,7 +20,11 @@ class LicenseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_license)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            setTitle(R.string.license)
+            setDisplayHomeAsUpEnabled(true)
+        }
         webView.loadUrl("file:///android_asset/license.html")
     }
 

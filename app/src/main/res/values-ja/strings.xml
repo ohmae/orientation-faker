@@ -13,7 +13,7 @@
     <string name="reverse_portrait">逆縦</string>
     <string name="reverse_landscape">逆横</string>
     <string name="settings">設定</string>
-    <string name="license">ライセンス</string>
+    <string name="license">オープンソース ライセンス</string>
     <string name="play_store">Google Playストア</string>
     <string name="toast_could_not_open_setting">システムの設定画面を開けません</string>
 </resources>

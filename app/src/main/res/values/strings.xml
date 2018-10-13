@@ -15,7 +15,7 @@
     <string name="reverse_portrait">!portrait</string>
     <string name="reverse_landscape">!landscape</string>
     <string name="settings">settings</string>
-    <string name="license">License</string>
+    <string name="license">Open Source Licenses</string>
     <string name="play_store">Google Play Store</string>
     <string name="toast_could_not_open_setting">Could not open system setting</string>
 </resources>
