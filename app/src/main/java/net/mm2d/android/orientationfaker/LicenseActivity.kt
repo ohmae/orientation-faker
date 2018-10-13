@@ -7,6 +7,8 @@
 
 package net.mm2d.android.orientationfaker
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +27,8 @@ class LicenseActivity : AppCompatActivity() {
             setTitle(R.string.license)
             setDisplayHomeAsUpEnabled(true)
         }
+        webView.settings.setSupportZoom(false)
+        webView.settings.displayZoomControls = false
         webView.loadUrl("file:///android_asset/license.html")
     }
 
@@ -34,5 +38,11 @@ class LicenseActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    companion object {
+        fun start(context: Context) {
+            context.startActivity(Intent(context, LicenseActivity::class.java))
+        }
     }
 }

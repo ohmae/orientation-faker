@@ -50,10 +50,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.title = getString(R.string.app_name)
-        supportActionBar?.subtitle = makeVersionInfo()
-
         status.setOnClickListener { toggleStatus() }
         resident.setOnClickListener { toggleResident() }
+        version_description.text = makeVersionInfo()
         setStatusDescription()
         setResidentCheckBox()
         setUpOrientationIcons()
@@ -100,7 +99,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.license -> startActivity(Intent(this, LicenseActivity::class.java))
+            R.id.license -> LicenseActivity.start(this)
             R.id.play_store -> openGooglePlay(this)
         }
         return true

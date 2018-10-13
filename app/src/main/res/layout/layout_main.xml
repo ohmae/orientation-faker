@@ -12,12 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-        android:paddingBottom="@dimen/vertical_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/vertical_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/vertical_margin"
         >
 
         <androidx.appcompat.widget.SwitchCompat
@@ -35,10 +35,10 @@
             android:id="@+id/status_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/statusSwitch"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_alignStart="@id/statusSwitch"
+            android:layout_alignLeft="@id/statusSwitch"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:text="@string/status"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             />
@@ -47,11 +47,11 @@
             android:id="@+id/statusDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/statusSwitch"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignStart="@id/statusSwitch"
             android:layout_below="@+id/status_title"
+            android:layout_alignStart="@id/statusSwitch"
+            android:layout_alignLeft="@id/statusSwitch"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:text="@string/status_running"
             android:textAppearance="@style/TextAppearance.AppCompat"
             />
@@ -63,12 +63,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-        android:paddingBottom="@dimen/vertical_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/vertical_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/vertical_margin"
         >
 
         <CheckBox
@@ -85,10 +85,10 @@
             android:id="@+id/resident_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/residentCheckBox"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_alignStart="@id/residentCheckBox"
+            android:layout_alignLeft="@id/residentCheckBox"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:text="@string/resident"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             />
@@ -97,11 +97,11 @@
             android:id="@+id/resident_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/residentCheckBox"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignStart="@id/residentCheckBox"
             android:layout_below="@+id/resident_title"
+            android:layout_alignStart="@id/residentCheckBox"
+            android:layout_alignLeft="@id/residentCheckBox"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:text="@string/resident_description"
             android:textAppearance="@style/TextAppearance.AppCompat"
             />
@@ -111,8 +111,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_marginBottom="@dimen/vertical_margin"
         android:layout_marginTop="@dimen/vertical_margin"
+        android:layout_marginBottom="@dimen/vertical_margin"
         android:orientation="horizontal"
         >
 
@@ -187,4 +187,44 @@
             />
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/vertical_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/vertical_margin"
+        >
+
+        <TextView
+            android:id="@+id/version_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/version"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            />
+
+        <TextView
+            android:id="@+id/version_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/version_title"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            tools:text="1.1.1"
+            />
+
+    </RelativeLayout>
 </LinearLayout>
