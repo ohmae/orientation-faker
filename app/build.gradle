@@ -55,6 +55,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.multidex:multidex:2.0.0'
     implementation 'androidx.core:core-ktx:1.0.0'
+    implementation 'androidx.browser:browser:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'net.mm2d:log:0.1.0'
     implementation 'net.mm2d:log-android:0.1.0'
