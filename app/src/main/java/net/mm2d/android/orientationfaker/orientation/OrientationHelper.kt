@@ -68,7 +68,7 @@ class OrientationHelper private constructor(context: Context) {
 
     fun cancel() {
         if (isEnabled) {
-            windowManager.removeView(view)
+            windowManager.removeViewImmediate(view)
         }
     }
 
