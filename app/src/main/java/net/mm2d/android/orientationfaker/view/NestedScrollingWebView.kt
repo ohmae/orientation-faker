@@ -34,8 +34,8 @@ class NestedScrollingWebView
     private val helper: NestedScrollingChildHelper = NestedScrollingChildHelper(this)
     private val touchSlop: Int
     private val buffer = IntArray(2)
-    private var startY: Float = 0.toFloat()
-    private var prevY: Float = 0.toFloat()
+    private var startY: Float = 0f
+    private var prevY: Float = 0f
     private var scrolling: Boolean = false
     private var appBarLayout: AppBarLayout? = null
     private var behavior: Behavior? = null
