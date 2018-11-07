@@ -46,14 +46,14 @@ class MainService : Service() {
 
     private fun start() {
         OrientationHelper.getInstance(this)
-                .updateOrientation()
+            .updateOrientation()
         MainActivity.notifyUpdate(this)
     }
 
     private fun stop() {
         NotificationHelper.stopForeground(this)
         OrientationHelper.getInstance(this)
-                .cancel()
+            .cancel()
         MainActivity.notifyUpdate(this)
         stopSelf()
     }

@@ -42,13 +42,15 @@ class OrientationHelper private constructor(context: Context) {
         settings = Settings.get()
         view = View(appContext)
         windowManager = appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        layoutParams = WindowManager.LayoutParams(0, 0, 0, 0,
-                type,
-                LayoutParams.FLAG_NOT_FOCUSABLE
-                        or LayoutParams.FLAG_NOT_TOUCHABLE
-                        or LayoutParams.FLAG_NOT_TOUCH_MODAL
-                        or LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                PixelFormat.TRANSLUCENT)
+        layoutParams = WindowManager.LayoutParams(
+            0, 0, 0, 0,
+            type,
+            LayoutParams.FLAG_NOT_FOCUSABLE
+                    or LayoutParams.FLAG_NOT_TOUCHABLE
+                    or LayoutParams.FLAG_NOT_TOUCH_MODAL
+                    or LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            PixelFormat.TRANSLUCENT
+        )
         layoutParams.gravity = Gravity.TOP
         layoutParams.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }

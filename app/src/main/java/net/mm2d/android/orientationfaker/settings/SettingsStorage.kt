@@ -34,8 +34,8 @@ internal class SettingsStorage(context: Context) {
      */
     fun clear() {
         sharedPreferences.edit()
-                .clear()
-                .apply()
+            .clear()
+            .apply()
     }
 
     /**
@@ -56,8 +56,8 @@ internal class SettingsStorage(context: Context) {
      */
     fun writeBoolean(key: Key, value: Boolean) {
         sharedPreferences.edit()
-                .putBoolean(key.name, value)
-                .apply()
+            .putBoolean(key.name, value)
+            .apply()
     }
 
     /**
@@ -93,8 +93,8 @@ internal class SettingsStorage(context: Context) {
      */
     fun writeInt(key: Key, value: Int) {
         sharedPreferences.edit()
-                .putInt(key.name, value)
-                .apply()
+            .putInt(key.name, value)
+            .apply()
     }
 
     /**
@@ -131,8 +131,8 @@ internal class SettingsStorage(context: Context) {
     @Suppress("MemberVisibilityCanBePrivate")
     fun writeLong(key: Key, value: Long) {
         sharedPreferences.edit()
-                .putLong(key.name, value)
-                .apply()
+            .putLong(key.name, value)
+            .apply()
     }
 
     /**
@@ -171,8 +171,8 @@ internal class SettingsStorage(context: Context) {
     @Suppress("MemberVisibilityCanBePrivate")
     fun writeString(key: Key, value: String) {
         sharedPreferences.edit()
-                .putString(key.name, value)
-                .apply()
+            .putString(key.name, value)
+            .apply()
     }
 
     /**

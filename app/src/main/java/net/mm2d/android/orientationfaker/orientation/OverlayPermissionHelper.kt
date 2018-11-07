@@ -30,12 +30,15 @@ object OverlayPermissionHelper {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.canDrawOverlays(activity)) {
             return
         }
-        val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:" + activity.packageName))
+        val intent = Intent(
+            Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+            Uri.parse("package:" + activity.packageName)
+        )
         try {
             activity.startActivityForResult(intent, requestCode)
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(activity, R.string.toast_could_not_open_setting, Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, R.string.toast_could_not_open_setting, Toast.LENGTH_LONG)
+                .show()
         }
     }
 }

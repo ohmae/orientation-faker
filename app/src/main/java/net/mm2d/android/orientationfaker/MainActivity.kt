@@ -84,12 +84,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun registerReceiver() {
         LocalBroadcastManager.getInstance(this)
-                .registerReceiver(receiver, IntentFilter(ACTION_UPDATE))
+            .registerReceiver(receiver, IntentFilter(ACTION_UPDATE))
     }
 
     private fun unregisterReceiver() {
         LocalBroadcastManager.getInstance(this)
-                .unregisterReceiver(receiver)
+            .unregisterReceiver(receiver)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -166,7 +166,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun makeVersionInfo(): String {
         return BuildConfig.VERSION_NAME +
-                if (BuildConfig.DEBUG) " # " + DateFormat.format("yyyy/M/d kk:mm:ss", BuildConfig.BUILD_TIME)
+                if (BuildConfig.DEBUG) " # " + DateFormat.format(
+                    "yyyy/M/d kk:mm:ss",
+                    BuildConfig.BUILD_TIME
+                )
                 else ""
     }
 
@@ -174,12 +177,13 @@ class MainActivity : AppCompatActivity() {
         private const val PACKAGE_NAME = "net.mm2d.android.orientationfaker"
         private const val ACTION_UPDATE = "ACTION_UPDATE"
         private const val REQUEST_CODE = 101
-        private const val PRIVACY_POLICY_URL = "https://github.com/ohmae/orientation-faker/blob/develop/PRIVACY-POLICY.md"
+        private const val PRIVACY_POLICY_URL =
+            "https://github.com/ohmae/orientation-faker/blob/develop/PRIVACY-POLICY.md"
         private const val GITHUB_URL = "https://github.com/ohmae/orientation-faker/"
 
         fun notifyUpdate(context: Context) {
             LocalBroadcastManager.getInstance(context)
-                    .sendBroadcast(Intent(ACTION_UPDATE))
+                .sendBroadcast(Intent(ACTION_UPDATE))
         }
 
         private fun openUri(context: Context, uri: String?): Boolean {

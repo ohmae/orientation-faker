@@ -50,16 +50,20 @@ class App : MultiDexApplication() {
 
     private fun setStrictMode() {
         if (BuildConfig.DEBUG) {
-            StrictMode.setThreadPolicy(ThreadPolicy.Builder()
+            StrictMode.setThreadPolicy(
+                ThreadPolicy.Builder()
                     .detectAll()
                     .penaltyLog()
                     .penaltyDropBox()
-                    .build())
-            StrictMode.setVmPolicy(VmPolicy.Builder()
+                    .build()
+            )
+            StrictMode.setVmPolicy(
+                VmPolicy.Builder()
                     .detectAll()
                     .penaltyLog()
                     .penaltyDropBox()
-                    .build())
+                    .build()
+            )
         } else {
             StrictMode.setThreadPolicy(ThreadPolicy.LAX)
             StrictMode.setVmPolicy(VmPolicy.LAX)
