@@ -33,11 +33,11 @@ object NotificationHelper {
     @RequiresApi(VERSION_CODES.O)
     private fun createChannel(context: Context) {
         val name = context.getString(R.string.notification_channel_name)
-        val channel =
-            NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_LOW).also {
-                it.enableLights(false)
-                it.enableVibration(false)
-            }
+        val importance = NotificationManager.IMPORTANCE_LOW
+        val channel = NotificationChannel(CHANNEL_ID, name, importance).also {
+            it.enableLights(false)
+            it.enableVibration(false)
+        }
         getNotificationManager(context)?.also {
             if (it.getNotificationChannel(OLD_CHANNEL_ID) != null) {
                 it.deleteNotificationChannel(OLD_CHANNEL_ID)
