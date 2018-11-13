@@ -1,8 +1,8 @@
 # OrientationFaker
-[![license](https://img.shields.io/github/license/ohmae/OrientationFaker.svg)](./LICENSE)
-[![GitHub release](https://img.shields.io/github/release/ohmae/OrientationFaker.svg)](https://github.com/ohmae/OrientationFaker/releases)
-[![GitHub issues](https://img.shields.io/github/issues/ohmae/OrientationFaker.svg)](https://github.com/ohmae/OrientationFaker/issues)
-[![GitHub closed issues](https://img.shields.io/github/issues-closed/ohmae/OrientationFaker.svg)](https://github.com/ohmae/OrientationFaker/issues?q=is%3Aissue+is%3Aclosed)
+[![license](https://img.shields.io/github/license/ohmae/orientation-faker.svg)](./LICENSE)
+[![GitHub release](https://img.shields.io/github/release/ohmae/orientation-faker.svg)](https://github.com/ohmae/orientation-faker/releases)
+[![GitHub issues](https://img.shields.io/github/issues/ohmae/orientation-faker.svg)](https://github.com/ohmae/orientation-faker/issues)
+[![GitHub closed issues](https://img.shields.io/github/issues-closed/ohmae/orientation-faker.svg)](https://github.com/ohmae/orientation-faker/issues?q=is%3Aissue+is%3Aclosed)
 
 This is an app to fix the orientation of the screen in a specific orientation regardless of the setting of the displayed application.
 
