@@ -12,12 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-        android:paddingBottom="@dimen/vertical_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/vertical_margin"
+        android:paddingBottom="@dimen/margin_sample_vertical"
+        android:paddingEnd="@dimen/margin_menu_horizontal"
+        android:paddingLeft="@dimen/margin_menu_horizontal"
+        android:paddingRight="@dimen/margin_menu_horizontal"
+        android:paddingStart="@dimen/margin_menu_horizontal"
+        android:paddingTop="@dimen/margin_sample_vertical"
         >
 
         <androidx.appcompat.widget.SwitchCompat
@@ -63,12 +63,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-        android:paddingBottom="@dimen/vertical_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/vertical_margin"
+        android:paddingBottom="@dimen/margin_sample_vertical"
+        android:paddingEnd="@dimen/margin_menu_horizontal"
+        android:paddingLeft="@dimen/margin_menu_horizontal"
+        android:paddingRight="@dimen/margin_menu_horizontal"
+        android:paddingStart="@dimen/margin_menu_horizontal"
+        android:paddingTop="@dimen/margin_sample_vertical"
         >
 
         <CheckBox
@@ -112,10 +112,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#000000"
-        android:paddingBottom="@dimen/vertical_margin"
-        android:paddingLeft="@dimen/horizontal_margin"
-        android:paddingRight="@dimen/horizontal_margin"
-        android:paddingTop="@dimen/vertical_margin"
+        android:paddingBottom="@dimen/margin_sample_vertical"
+        android:paddingLeft="@dimen/margin_sample_horizontal"
+        android:paddingRight="@dimen/margin_sample_horizontal"
+        android:paddingTop="@dimen/margin_sample_vertical"
         >
 
         <include layout="@layout/notification"/>
@@ -126,12 +126,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-        android:paddingBottom="@dimen/vertical_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/vertical_margin"
+        android:paddingBottom="@dimen/margin_sample_vertical"
+        android:paddingEnd="@dimen/margin_menu_horizontal"
+        android:paddingLeft="@dimen/margin_menu_horizontal"
+        android:paddingRight="@dimen/margin_menu_horizontal"
+        android:paddingStart="@dimen/margin_menu_horizontal"
+        android:paddingTop="@dimen/margin_sample_vertical"
         >
 
         <TextView

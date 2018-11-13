@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="vertical_margin">16dp</dimen>
-    <dimen name="horizontal_margin">8dp</dimen>
+    <dimen name="margin_menu_horizontal">16dp</dimen>
+    <dimen name="margin_sample_vertical">16dp</dimen>
+    <dimen name="margin_sample_horizontal">8dp</dimen>
     <dimen name="notification_height">56dp</dimen>
     <dimen name="text_icon">10dp</dimen>
 </resources>
