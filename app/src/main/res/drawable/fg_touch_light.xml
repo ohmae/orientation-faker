@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:drawable="@color/bg_notification_selected_pressed"
+        android:drawable="@color/touch_light"
         android:state_pressed="true"
         />
     <item
-        android:drawable="@color/bg_notification_selected"
+        android:drawable="@android:color/transparent"
         android:state_pressed="false"
         />
 </selector>

@@ -9,4 +9,8 @@
     <color name="bg_notification_selected">#448AFF</color>
     <color name="bg_notification_selected_pressed">#72a7ff</color>
     <color name="text_notification">#ffffff</color>
+    <color name="touch_light">#1A000000</color>
+    <color name="touch_dark">#1AFFFFFF</color>
+    <color name="ripple_light">#33000000</color>
+    <color name="ripple_dark">#33FFFFFF</color>
 </resources>

@@ -1,107 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_notification"
+    android:orientation="horizontal"
+    tools:ignore="UselessParent"
     >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@color/bg_notification"
-        android:orientation="horizontal"
-        tools:ignore="UselessParent"
+    <FrameLayout
+        android:id="@+id/button_unspecified"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/notification_height"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:foreground="@drawable/fg_touch_dark"
         >
 
         <TextView
-            android:id="@+id/button_unspecified"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:drawableTop="@drawable/ic_unspecified"
-            android:gravity="center_horizontal"
-            android:paddingTop="10dp"
             android:text="@string/unspecified"
             android:textColor="@color/text_notification"
-            android:textSize="10sp"
-            tools:ignore="SmallSp"
+            android:textSize="@dimen/text_icon"
+            tools:ignore="SmallSp,SpUsage"
             />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/button_portrait"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/notification_height"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:foreground="@drawable/fg_touch_dark"
+        >
 
         <TextView
-            android:id="@+id/button_portrait"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:drawableTop="@drawable/ic_portrait"
             android:gravity="center_horizontal"
-            android:paddingTop="10dp"
             android:text="@string/portrait"
             android:textColor="@color/text_notification"
-            android:textSize="10sp"
-            tools:ignore="SmallSp"
+            android:textSize="@dimen/text_icon"
+            tools:ignore="SmallSp,SpUsage"
             />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/button_landscape"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/notification_height"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:foreground="@drawable/fg_touch_dark"
+        >
 
         <TextView
-            android:id="@+id/button_landscape"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:drawableTop="@drawable/ic_landscape"
             android:gravity="center_horizontal"
-            android:paddingTop="10dp"
             android:text="@string/landscape"
             android:textColor="@color/text_notification"
-            android:textSize="10sp"
-            tools:ignore="SmallSp"
+            android:textSize="@dimen/text_icon"
+            tools:ignore="SmallSp,SpUsage"
             />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/button_reverse_portrait"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/notification_height"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:foreground="@drawable/fg_touch_dark"
+        >
 
         <TextView
-            android:id="@+id/button_reverse_portrait"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:drawableTop="@drawable/ic_reverse_portrait"
             android:gravity="center_horizontal"
-            android:paddingTop="10dp"
             android:text="@string/reverse_portrait"
             android:textColor="@color/text_notification"
-            android:textSize="10sp"
-            tools:ignore="SmallSp"
+            android:textSize="@dimen/text_icon"
+            tools:ignore="SmallSp,SpUsage"
             />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/button_reverse_landscape"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/notification_height"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:foreground="@drawable/fg_touch_dark"
+        >
 
         <TextView
-            android:id="@+id/button_reverse_landscape"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:drawableTop="@drawable/ic_reverse_landscape"
             android:gravity="center_horizontal"
-            android:paddingTop="10dp"
             android:text="@string/reverse_landscape"
             android:textColor="@color/text_notification"
-            android:textSize="10sp"
-            tools:ignore="SmallSp"
+            android:textSize="@dimen/text_icon"
+            tools:ignore="SmallSp,SpUsage"
             />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/button_settings"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/notification_height"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:foreground="@drawable/fg_touch_dark"
+        >
 
         <TextView
-            android:id="@+id/button_settings"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:drawableTop="@drawable/ic_settings"
             android:gravity="center_horizontal"
-            android:paddingTop="10dp"
             android:text="@string/settings"
             android:textColor="@color/text_notification"
-            android:textSize="10sp"
-            tools:ignore="SmallSp"
+            android:textSize="@dimen/text_icon"
+            tools:ignore="SmallSp,SpUsage"
             />
-    </LinearLayout>
-</FrameLayout>
+    </FrameLayout>
+</LinearLayout>

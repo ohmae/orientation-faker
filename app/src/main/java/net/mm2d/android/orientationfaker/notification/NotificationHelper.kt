@@ -15,9 +15,9 @@ import android.os.Build.VERSION_CODES
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import net.mm2d.android.orientationfaker.MainActivity
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.android.orientationfaker.R.*
 import net.mm2d.android.orientationfaker.orientation.OrientationIdManager
 import net.mm2d.android.orientationfaker.orientation.OrientationReceiver
 import net.mm2d.android.orientationfaker.settings.Settings
@@ -72,18 +72,20 @@ object NotificationHelper {
     }
 
     private fun createRemoteViews(context: Context, orientation: Int): RemoteViews {
-        return RemoteViews(context.packageName, layout.notification).also { views ->
+        val selected = ContextCompat.getColor(context, R.color.bg_notification_selected)
+        val transparent = ContextCompat.getColor(context, android.R.color.transparent)
+        return RemoteViews(context.packageName, R.layout.notification).also { views ->
             OrientationIdManager.list.forEach {
                 views.setOnClickPendingIntent(
                     it.viewId,
                     createOrientationIntent(context, it.orientation)
                 )
                 views.setInt(
-                    it.viewId, "setBackgroundResource",
-                    if (orientation == it.orientation) drawable.bg_icon_selected else drawable.bg_icon
+                    it.viewId, "setBackgroundColor",
+                    if (orientation == it.orientation) selected else transparent
                 )
             }
-            views.setOnClickPendingIntent(id.button_settings, createActivityIntent(context))
+            views.setOnClickPendingIntent(R.id.button_settings, createActivityIntent(context))
         }
     }
 

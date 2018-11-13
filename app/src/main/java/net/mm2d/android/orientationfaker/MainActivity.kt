@@ -18,8 +18,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlinx.android.synthetic.main.layout_main.*
+import kotlinx.android.synthetic.main.notification.*
 import net.mm2d.android.orientationfaker.orientation.OrientationHelper
 import net.mm2d.android.orientationfaker.orientation.OrientationIdManager
 import net.mm2d.android.orientationfaker.orientation.OverlayPermissionHelper
@@ -115,6 +117,7 @@ class MainActivity : AppCompatActivity() {
             button.setOnClickListener { setOrientation(orientation) }
         }
         setOrientationIcon()
+        button_settings.visibility = View.GONE
     }
 
     private fun toggleStatus() {
@@ -157,9 +160,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setOrientationIcon() {
         val orientation = settings.orientation
+        val selected = ContextCompat.getColor(this, R.color.bg_notification_selected)
+        val transparent = ContextCompat.getColor(this, android.R.color.transparent)
         for (pair in buttonList) {
             pair.second.run {
-                setBackgroundResource(if (orientation == pair.first) R.drawable.bg_icon_selected else R.drawable.bg_icon)
+                setBackgroundColor(if (orientation == pair.first) selected else transparent)
             }
         }
     }

@@ -12,12 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/vertical_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingBottom="@dimen/vertical_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/vertical_margin"
         >
 
         <androidx.appcompat.widget.SwitchCompat
@@ -35,10 +35,10 @@
             android:id="@+id/status_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/statusSwitch"
             android:layout_alignLeft="@id/statusSwitch"
-            android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignStart="@id/statusSwitch"
             android:text="@string/status"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             />
@@ -47,11 +47,11 @@
             android:id="@+id/statusDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/status_title"
-            android:layout_alignStart="@id/statusSwitch"
             android:layout_alignLeft="@id/statusSwitch"
-            android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignStart="@id/statusSwitch"
+            android:layout_below="@+id/status_title"
             android:text="@string/status_running"
             android:textAppearance="@style/TextAppearance.AppCompat"
             />
@@ -63,12 +63,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/vertical_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingBottom="@dimen/vertical_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/vertical_margin"
         >
 
         <CheckBox
@@ -85,10 +85,10 @@
             android:id="@+id/resident_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/residentCheckBox"
             android:layout_alignLeft="@id/residentCheckBox"
-            android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignStart="@id/residentCheckBox"
             android:text="@string/resident"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             />
@@ -97,118 +97,51 @@
             android:id="@+id/resident_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/resident_title"
-            android:layout_alignStart="@id/residentCheckBox"
             android:layout_alignLeft="@id/residentCheckBox"
-            android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignStart="@id/residentCheckBox"
+            android:layout_below="@+id/resident_title"
             android:text="@string/resident_description"
             android:textAppearance="@style/TextAppearance.AppCompat"
             />
 
     </RelativeLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginTop="@dimen/vertical_margin"
-        android:layout_marginBottom="@dimen/vertical_margin"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        android:paddingBottom="@dimen/vertical_margin"
+        android:paddingLeft="@dimen/horizontal_margin"
+        android:paddingRight="@dimen/horizontal_margin"
+        android:paddingTop="@dimen/vertical_margin"
         >
 
-        <TextView
-            android:id="@+id/button_unspecified"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_icon"
-            android:drawableTop="@drawable/ic_unspecified"
-            android:gravity="center_horizontal"
-            android:paddingTop="10dp"
-            android:text="@string/unspecified"
-            android:textSize="10sp"
-            tools:ignore="SmallSp"
-            />
-
-        <TextView
-            android:id="@+id/button_portrait"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_icon"
-            android:drawableTop="@drawable/ic_portrait"
-            android:gravity="center_horizontal"
-            android:paddingTop="10dp"
-            android:text="@string/portrait"
-            android:textSize="10sp"
-            tools:ignore="SmallSp"
-            />
-
-        <TextView
-            android:id="@+id/button_landscape"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_icon"
-            android:drawableTop="@drawable/ic_landscape"
-            android:gravity="center_horizontal"
-            android:paddingTop="10dp"
-            android:text="@string/landscape"
-            android:textSize="10sp"
-            tools:ignore="SmallSp"
-            />
-
-        <TextView
-            android:id="@+id/button_reverse_portrait"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_icon"
-            android:drawableTop="@drawable/ic_reverse_portrait"
-            android:gravity="center_horizontal"
-            android:paddingTop="10dp"
-            android:text="@string/reverse_portrait"
-            android:textSize="10sp"
-            tools:ignore="SmallSp"
-            />
-
-        <TextView
-            android:id="@+id/button_reverse_landscape"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_icon"
-            android:drawableTop="@drawable/ic_reverse_landscape"
-            android:gravity="center_horizontal"
-            android:paddingTop="10dp"
-            android:text="@string/reverse_landscape"
-            android:textSize="10sp"
-            tools:ignore="SmallSp"
-            />
-
-    </LinearLayout>
+        <include layout="@layout/notification"/>
+    </FrameLayout>
 
     <RelativeLayout
         android:id="@+id/version"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/vertical_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingBottom="@dimen/vertical_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/vertical_margin"
         >
 
         <TextView
             android:id="@+id/version_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
             android:text="@string/version"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             />
@@ -217,11 +150,11 @@
             android:id="@+id/version_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/version_title"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/version_title"
             android:textAppearance="@style/TextAppearance.AppCompat"
             tools:text="1.1.1"
             />
