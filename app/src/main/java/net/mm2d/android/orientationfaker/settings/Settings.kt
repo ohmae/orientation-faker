@@ -58,11 +58,11 @@ class Settings private constructor(context: Context) {
                     if (BuildConfig.DEBUG) {
                         Log.e("!!!!!!!!!! BLOCK !!!!!!!!!!")
                     }
-                    if (!condition.await(1, TimeUnit.SECONDS)) {
+                    if (!condition.await(4, TimeUnit.SECONDS)) {
                         throw IllegalStateException("Settings initialization timeout")
                     }
                 }
-                return settings as Settings
+                return settings!!
             }
         }
 
