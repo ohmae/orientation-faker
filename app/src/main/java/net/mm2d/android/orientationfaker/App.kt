@@ -16,6 +16,8 @@ import io.reactivex.exceptions.OnErrorNotImplementedException
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import net.mm2d.android.orientationfaker.settings.Settings
+import net.mm2d.android.orientationfaker.tabs.CustomTabsBinder
+import net.mm2d.android.orientationfaker.tabs.CustomTabsHelper
 import net.mm2d.log.Log
 import net.mm2d.log.android.AndroidLogInitializer
 
@@ -35,6 +37,8 @@ class App : MultiDexApplication() {
         setStrictMode()
         RxJavaPlugins.setErrorHandler { logError(it) }
         Settings.initialize(this)
+        CustomTabsHelper.init(this)
+        registerActivityLifecycleCallbacks(CustomTabsBinder())
     }
 
     private fun logError(e: Throwable) {

@@ -12,12 +12,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.TextUtils
 import android.text.format.DateFormat
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlinx.android.synthetic.main.layout_main.*
@@ -26,6 +26,7 @@ import net.mm2d.android.orientationfaker.orientation.OrientationHelper
 import net.mm2d.android.orientationfaker.orientation.OrientationIdManager
 import net.mm2d.android.orientationfaker.orientation.OverlayPermissionHelper
 import net.mm2d.android.orientationfaker.settings.Settings
+import net.mm2d.android.orientationfaker.tabs.CustomTabsHelper
 import net.mm2d.log.Log
 import java.util.*
 
@@ -190,10 +191,7 @@ class MainActivity : AppCompatActivity() {
                 .sendBroadcast(Intent(ACTION_UPDATE))
         }
 
-        private fun openUri(context: Context, uri: String?): Boolean {
-            if (TextUtils.isEmpty(uri)) {
-                return false
-            }
+        private fun openUri(context: Context, uri: String): Boolean {
             try {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
                 intent.addCategory(Intent.CATEGORY_BROWSABLE)
@@ -205,9 +203,24 @@ class MainActivity : AppCompatActivity() {
             return true
         }
 
+        private fun openCustomTabs(context: Context, uri: String): Boolean {
+            try {
+                val intent = CustomTabsIntent.Builder(CustomTabsHelper.session)
+                    .setShowTitle(true)
+                    .setToolbarColor(ContextCompat.getColor(context, R.color.primary))
+                    .build()
+                intent.intent.setPackage(CustomTabsHelper.packageNameToBind)
+                intent.launchUrl(context, Uri.parse(uri))
+            } catch (e: ActivityNotFoundException) {
+                Log.w(e)
+                return false
+            }
+            return true
+        }
+
         private fun openGooglePlay(context: Context, packageName: String): Boolean {
             return openUri(context, "market://details?id=$packageName") ||
-                    openUri(context, "https://play.google.com/store/apps/details?id=$packageName")
+                    openCustomTabs(context, "https://play.google.com/store/apps/details?id=$packageName")
         }
 
         private fun openGooglePlay(context: Context): Boolean {
@@ -215,11 +228,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         private fun openPrivacyPolicy(context: Context) {
-            openUri(context, PRIVACY_POLICY_URL)
+            openCustomTabs(context, PRIVACY_POLICY_URL)
         }
 
         private fun openSourceCode(context: Context) {
-            openUri(context, GITHUB_URL)
+            openCustomTabs(context, GITHUB_URL)
         }
     }
 }
