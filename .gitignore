@@ -6,11 +6,13 @@
 /.idea/copyright
 /.idea/dictionaries
 /.idea/misc.xml
+/.idea/modules.xml
 /.idea/gradle.xml
 /.idea/workspace.xml
 /.idea/libraries
 /build
 /captures
+.externalNativeBuild
 .DS_Store
 .DS_Store?
 ._*
