@@ -13,7 +13,6 @@ import android.content.pm.ActivityInfo
 import android.graphics.PixelFormat
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
-import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.view.WindowManager.LayoutParams
@@ -51,16 +50,11 @@ class OrientationHelper private constructor(context: Context) {
                     or LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             PixelFormat.TRANSLUCENT
         )
-        layoutParams.gravity = Gravity.TOP
         layoutParams.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
 
     fun updateOrientation() {
-        setOrientation(settings.orientation)
-    }
-
-    private fun setOrientation(orientation: Int) {
-        layoutParams.screenOrientation = orientation
+        layoutParams.screenOrientation = settings.orientation
         if (isEnabled) {
             windowManager.updateViewLayout(view, layoutParams)
         } else {
