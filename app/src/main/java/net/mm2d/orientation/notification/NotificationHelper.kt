@@ -18,8 +18,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.MainActivity
-import net.mm2d.orientation.orientation.OrientationIdManager
-import net.mm2d.orientation.orientation.OrientationReceiver
+import net.mm2d.orientation.control.OrientationIdManager
+import net.mm2d.orientation.control.OrientationReceiver
 import net.mm2d.orientation.settings.Settings
 
 /**

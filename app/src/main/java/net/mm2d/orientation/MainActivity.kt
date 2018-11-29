@@ -25,9 +25,9 @@ import kotlinx.android.synthetic.main.layout_main.*
 import kotlinx.android.synthetic.main.notification.*
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.orientation.orientation.OrientationHelper
-import net.mm2d.orientation.orientation.OrientationIdManager
-import net.mm2d.orientation.orientation.OverlayPermissionHelper
+import net.mm2d.orientation.control.OrientationHelper
+import net.mm2d.orientation.control.OrientationIdManager
+import net.mm2d.orientation.control.OverlayPermissionHelper
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.LaunchUtils
 import java.util.*

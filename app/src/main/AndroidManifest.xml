@@ -62,7 +62,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="net.mm2d.orientation.orientation.OrientationReceiver"
+            android:name="net.mm2d.orientation.control.OrientationReceiver"
             android:permission="${applicationId}.permission"
             >
             <intent-filter>

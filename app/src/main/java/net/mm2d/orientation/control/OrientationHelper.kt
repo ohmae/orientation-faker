@@ -5,7 +5,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.orientation.orientation
+package net.mm2d.orientation.control
 
 import android.annotation.SuppressLint
 import android.content.Context
