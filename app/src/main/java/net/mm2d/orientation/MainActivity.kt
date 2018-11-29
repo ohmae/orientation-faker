@@ -5,7 +5,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.android.orientationfaker
+package net.mm2d.orientation
 
 import android.content.*
 import android.net.Uri
@@ -22,12 +22,14 @@ import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlinx.android.synthetic.main.layout_main.*
 import kotlinx.android.synthetic.main.notification.*
-import net.mm2d.android.orientationfaker.orientation.OrientationHelper
-import net.mm2d.android.orientationfaker.orientation.OrientationIdManager
-import net.mm2d.android.orientationfaker.orientation.OverlayPermissionHelper
-import net.mm2d.android.orientationfaker.settings.Settings
-import net.mm2d.android.orientationfaker.tabs.CustomTabsHelper
+import net.mm2d.android.orientationfaker.BuildConfig
+import net.mm2d.android.orientationfaker.R
 import net.mm2d.log.Log
+import net.mm2d.orientation.orientation.OrientationHelper
+import net.mm2d.orientation.orientation.OrientationIdManager
+import net.mm2d.orientation.orientation.OverlayPermissionHelper
+import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.tabs.CustomTabsHelper
 import java.util.*
 
 /**

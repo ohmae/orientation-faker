@@ -5,14 +5,14 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.android.orientationfaker
+package net.mm2d.orientation
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 
-import net.mm2d.android.orientationfaker.settings.Settings
+import net.mm2d.orientation.settings.Settings
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)

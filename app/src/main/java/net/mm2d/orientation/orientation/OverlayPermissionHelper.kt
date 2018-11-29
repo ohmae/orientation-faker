@@ -5,7 +5,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.android.orientationfaker.orientation
+package net.mm2d.orientation.orientation
 
 import android.app.Activity
 import android.content.ActivityNotFoundException

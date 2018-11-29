@@ -5,7 +5,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.android.orientationfaker.settings
+package net.mm2d.orientation.settings
 
 import android.content.pm.ActivityInfo
 
