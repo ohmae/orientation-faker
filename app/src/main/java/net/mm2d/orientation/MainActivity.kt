@@ -7,8 +7,10 @@
 
 package net.mm2d.orientation
 
-import android.content.*
-import android.net.Uri
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -17,19 +19,17 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlinx.android.synthetic.main.layout_main.*
 import kotlinx.android.synthetic.main.notification.*
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.log.Log
 import net.mm2d.orientation.orientation.OrientationHelper
 import net.mm2d.orientation.orientation.OrientationIdManager
 import net.mm2d.orientation.orientation.OverlayPermissionHelper
 import net.mm2d.orientation.settings.Settings
-import net.mm2d.orientation.tabs.CustomTabsHelper
+import net.mm2d.orientation.util.LaunchUtils
 import java.util.*
 
 /**
@@ -105,9 +105,9 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.license -> LicenseActivity.start(this)
-            R.id.source_code -> openSourceCode(this)
-            R.id.privacy_policy -> openPrivacyPolicy(this)
-            R.id.play_store -> openGooglePlay(this)
+            R.id.source_code -> LaunchUtils.openSourceCode(this)
+            R.id.privacy_policy -> LaunchUtils.openPrivacyPolicy(this)
+            R.id.play_store -> LaunchUtils.openGooglePlay(this)
         }
         return true
     }
@@ -180,61 +180,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val PACKAGE_NAME = "net.mm2d.android.orientationfaker"
         private const val ACTION_UPDATE = "ACTION_UPDATE"
         private const val REQUEST_CODE = 101
-        private const val PRIVACY_POLICY_URL =
-            "https://github.com/ohmae/orientation-faker/blob/develop/PRIVACY-POLICY.md"
-        private const val GITHUB_URL =
-            "https://github.com/ohmae/orientation-faker/"
 
         fun notifyUpdate(context: Context) {
             LocalBroadcastManager.getInstance(context)
                 .sendBroadcast(Intent(ACTION_UPDATE))
-        }
-
-        private fun openUri(context: Context, uri: String): Boolean {
-            try {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
-                intent.addCategory(Intent.CATEGORY_BROWSABLE)
-                context.startActivity(intent)
-            } catch (e: ActivityNotFoundException) {
-                Log.w(e)
-                return false
-            }
-            return true
-        }
-
-        private fun openCustomTabs(context: Context, uri: String): Boolean {
-            try {
-                val intent = CustomTabsIntent.Builder(CustomTabsHelper.session)
-                    .setShowTitle(true)
-                    .setToolbarColor(ContextCompat.getColor(context, R.color.primary))
-                    .build()
-                intent.intent.setPackage(CustomTabsHelper.packageNameToBind)
-                intent.launchUrl(context, Uri.parse(uri))
-            } catch (e: ActivityNotFoundException) {
-                Log.w(e)
-                return false
-            }
-            return true
-        }
-
-        private fun openGooglePlay(context: Context, packageName: String): Boolean {
-            return openUri(context, "market://details?id=$packageName") ||
-                    openCustomTabs(context, "https://play.google.com/store/apps/details?id=$packageName")
-        }
-
-        private fun openGooglePlay(context: Context): Boolean {
-            return openGooglePlay(context, PACKAGE_NAME)
-        }
-
-        private fun openPrivacyPolicy(context: Context) {
-            openCustomTabs(context, PRIVACY_POLICY_URL)
-        }
-
-        private fun openSourceCode(context: Context) {
-            openCustomTabs(context, GITHUB_URL)
         }
     }
 }
