@@ -51,27 +51,17 @@ internal class SettingsStorage(context: Context) {
     /**
      * boolean値を書き込む。
      *
-     * @param key   Key
-     * @param value 書き込む値
-     */
-    fun writeBoolean(key: Key, value: Boolean) {
-        sharedPreferences.edit()
-            .putBoolean(key.name, value)
-            .apply()
-    }
-
-    /**
-     * boolean値を書き込む。
-     *
      * @param key       Key
      * @param value     書き込む値
      * @param overwrite true:値を上書きする、false:値がない場合のみ書き込む
      */
-    fun writeBoolean(key: Key, value: Boolean, overwrite: Boolean) {
+    fun writeBoolean(key: Key, value: Boolean, overwrite: Boolean = true) {
         if (!overwrite && contains(key)) {
             return
         }
-        writeBoolean(key, value)
+        sharedPreferences.edit()
+            .putBoolean(key.name, value)
+            .apply()
     }
 
     /**
@@ -88,27 +78,17 @@ internal class SettingsStorage(context: Context) {
     /**
      * int値を書き込む。
      *
-     * @param key   Key
-     * @param value 書き込む値
-     */
-    fun writeInt(key: Key, value: Int) {
-        sharedPreferences.edit()
-            .putInt(key.name, value)
-            .apply()
-    }
-
-    /**
-     * int値を書き込む。
-     *
      * @param key       Key
      * @param value     書き込む値
      * @param overwrite true:値を上書きする、false:値がない場合のみ書き込む
      */
-    fun writeInt(key: Key, value: Int, overwrite: Boolean) {
+    fun writeInt(key: Key, value: Int, overwrite: Boolean = true) {
         if (!overwrite && contains(key)) {
             return
         }
-        writeInt(key, value)
+        sharedPreferences.edit()
+            .putInt(key.name, value)
+            .apply()
     }
 
     /**
@@ -125,29 +105,18 @@ internal class SettingsStorage(context: Context) {
     /**
      * long値を書き込む。
      *
-     * @param key   Key
-     * @param value 書き込む値
-     */
-    @Suppress("MemberVisibilityCanBePrivate")
-    fun writeLong(key: Key, value: Long) {
-        sharedPreferences.edit()
-            .putLong(key.name, value)
-            .apply()
-    }
-
-    /**
-     * long値を書き込む。
-     *
      * @param key       Key
      * @param value     書き込む値
      * @param overwrite true:値を上書きする、false:値がない場合のみ書き込む
      */
     @Suppress("unused")
-    fun writeLong(key: Key, value: Long, overwrite: Boolean) {
+    fun writeLong(key: Key, value: Long, overwrite: Boolean = true) {
         if (!overwrite && contains(key)) {
             return
         }
-        writeLong(key, value)
+        sharedPreferences.edit()
+            .putLong(key.name, value)
+            .apply()
     }
 
     /**
@@ -165,29 +134,18 @@ internal class SettingsStorage(context: Context) {
     /**
      * String値を書き込む。
      *
-     * @param key   Key
-     * @param value 書き込む値
-     */
-    @Suppress("MemberVisibilityCanBePrivate")
-    fun writeString(key: Key, value: String) {
-        sharedPreferences.edit()
-            .putString(key.name, value)
-            .apply()
-    }
-
-    /**
-     * String値を書き込む。
-     *
      * @param key       Key
      * @param value     書き込む値
      * @param overwrite true:値を上書きする、false:値がない場合のみ書き込む
      */
     @Suppress("unused")
-    fun writeString(key: Key, value: String, overwrite: Boolean) {
+    fun writeString(key: Key, value: String, overwrite: Boolean = true) {
         if (!overwrite && contains(key)) {
             return
         }
-        writeString(key, value)
+        sharedPreferences.edit()
+            .putString(key.name, value)
+            .apply()
     }
 
     /**
