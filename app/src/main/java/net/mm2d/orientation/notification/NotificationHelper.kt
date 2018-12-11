@@ -65,6 +65,7 @@ object NotificationHelper {
         return NotificationCompat.Builder(context, CHANNEL_ID)
             .setDefaults(0)
             .setContentTitle(context.getText(R.string.app_name))
+            .setVisibility(NotificationCompat.VISIBILITY_SECRET)
             .setCustomContentView(createRemoteViews(context, orientation))
             .setSmallIcon(OrientationIdManager.getIconIdFromOrientation(orientation))
             .setOngoing(true)
