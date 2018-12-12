@@ -14,9 +14,9 @@ import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.os.IBinder
 import android.text.TextUtils
-import net.mm2d.orientation.notification.NotificationHelper
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.control.OverlayPermissionHelper
+import net.mm2d.orientation.notification.NotificationHelper
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
