@@ -12,6 +12,8 @@ package net.mm2d.orientation.settings
  */
 internal enum class Key {
     SETTINGS_VERSION,
+    APP_VERSION_AT_INSTALL,
+    APP_VERSION_AT_LAST_LAUNCHED,
     ORIENTATION,
     RESIDENT
 }

@@ -18,18 +18,6 @@ internal class SettingsStorage(context: Context) {
     private val sharedPreferences: SharedPreferences = PreferencesHolder.get(context)
 
     /**
-     * SharedPreferencesのインスタンスを返す。
-     *
-     * Maintainerで必要な場合のみ利用する。
-     * それ以外では使用しないこと。
-     *
-     * @return SharedPreferences
-     */
-    val preferences: SharedPreferences
-        @Deprecated("")
-        get() = sharedPreferences
-
-    /**
      * 書き込まれている内容を消去する。
      */
     fun clear() {

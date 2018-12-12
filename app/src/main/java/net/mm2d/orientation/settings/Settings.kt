@@ -22,9 +22,9 @@ import kotlin.concurrent.withLock
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
-class Settings private constructor(context: Context) {
-    private val storage: SettingsStorage = SettingsStorage(context)
-
+class Settings private constructor(
+    private val storage: SettingsStorage
+) {
     var orientation: Int
         get() = verifyOrientation(
             storage.readInt(
@@ -81,7 +81,7 @@ class Settings private constructor(context: Context) {
             val storage = SettingsStorage(context)
             Maintainer.maintain(storage)
             lock.withLock {
-                settings = Settings(context)
+                settings = Settings(storage)
                 condition.signalAll()
             }
         }
