@@ -3,14 +3,9 @@
     <color name="primary">#202020</color>
     <color name="primaryDark">#000000</color>
     <color name="accent">#2196f3</color>
+    <color name="fg_notification">#ffffff</color>
     <color name="bg_notification">#263238</color>
-    <color name="bg_notification_pressed">#40ffffff</color>
-    <color name="bg_notification_ripple">#80ffffff</color>
     <color name="bg_notification_selected">#448AFF</color>
-    <color name="bg_notification_selected_pressed">#72a7ff</color>
-    <color name="text_notification">#ffffff</color>
-    <color name="touch_light">#1A000000</color>
     <color name="touch_dark">#1AFFFFFF</color>
-    <color name="ripple_light">#33000000</color>
     <color name="ripple_dark">#33FFFFFF</color>
 </resources>
