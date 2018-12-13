@@ -36,7 +36,7 @@ class App : MultiDexApplication() {
         Log.setInitializer(AndroidLogInitializer.getSingleThread())
         Log.initialize(BuildConfig.DEBUG, true)
         setStrictMode()
-        RxJavaPlugins.setErrorHandler { logError(it) }
+        RxJavaPlugins.setErrorHandler(::logError)
         Settings.initialize(this)
         CustomTabsHelper.init(this)
         registerActivityLifecycleCallbacks(CustomTabsBinder())
