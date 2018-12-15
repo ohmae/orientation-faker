@@ -50,6 +50,10 @@ class Settings private constructor(
         get() = storage.readInt(Key.COLOR_BACKGROUND_SELECTED, Default.color.backgroundSelected)
         set(value) = storage.writeInt(Key.COLOR_BACKGROUND_SELECTED, value)
 
+    var notifyPublic: Boolean
+        get() = storage.readBoolean(Key.NOTIFY_PUBLIC, true)
+        set(value) = storage.writeBoolean(Key.NOTIFY_PUBLIC, value)
+
     fun resetTheme() {
         foregroundColor = Default.color.foreground
         backgroundColor = Default.color.background

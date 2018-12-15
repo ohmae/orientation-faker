@@ -61,11 +61,15 @@ object NotificationHelper {
     }
 
     private fun makeNotification(context: Context): Notification {
-        val orientation = Settings.get().orientation
+        val settings = Settings.get()
+        val orientation = settings.orientation
+        val visibility =
+            if (settings.notifyPublic) NotificationCompat.VISIBILITY_PUBLIC
+            else NotificationCompat.VISIBILITY_SECRET
         return NotificationCompat.Builder(context, CHANNEL_ID)
             .setDefaults(0)
             .setContentTitle(context.getText(R.string.app_name))
-            .setVisibility(NotificationCompat.VISIBILITY_SECRET)
+            .setVisibility(visibility)
             .setCustomContentView(createRemoteViews(context, orientation))
             .setSmallIcon(OrientationIdManager.getIconIdFromOrientation(orientation))
             .setOngoing(true)

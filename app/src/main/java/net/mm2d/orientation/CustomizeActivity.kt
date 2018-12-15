@@ -42,6 +42,7 @@ class CustomizeActivity
         notificationSample = NotificationSample(this)
         setUpSample()
         setUpOrientationIcons()
+        setUpNotificationType()
         UpdateRouter.register(receiver)
     }
 
@@ -131,6 +132,27 @@ class CustomizeActivity
         }
     }
 
+    private fun setUpNotificationType() {
+        notification_type.setOnClickListener { toggleLockScreen() }
+        applyNotificationTypeStatus()
+    }
+
+    private fun applyNotificationTypeStatus() {
+        val showInLockScreen = settings.notifyPublic
+        notification_type_switch.isChecked = showInLockScreen
+        notification_type_description.setText(
+            if (showInLockScreen) R.string.notification_type_description_on
+            else R.string.notification_type_description_off
+        )
+    }
+
+    private fun toggleLockScreen() {
+        settings.notifyPublic = !settings.notifyPublic
+        applyNotificationTypeStatus()
+        if (orientationHelper.isEnabled) {
+            MainService.start(this)
+        }
+    }
     companion object {
         fun start(context: Context) {
             context.startActivity(Intent(context, CustomizeActivity::class.java))

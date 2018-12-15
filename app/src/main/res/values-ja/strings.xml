@@ -22,6 +22,10 @@
     <string name="customize">カスタマイズ</string>
     <string name="customize_description">通知のカラーテーマを変更できます</string>
     <string name="version">バージョン</string>
+    <string name="notification_type">通知の情報種別</string>
+    <string name="notification_type_description_on">公開情報として通知する</string>
+    <string name="notification_type_description_off">シークレット情報として通知する</string>
+
     <string name="toast_could_not_open_setting">システムの設定画面を開けません</string>
     <string name="dialog_title_reset_theme">確認</string>
     <string name="dialog_message_reset_theme">テーマをリセットします。\nよろしいですか？</string>

@@ -24,8 +24,11 @@
     <string name="customize">Customize</string>
     <string name="customize_description">customize the color theme of the notification</string>
     <string name="version">Version</string>
-    <string name="toast_could_not_open_setting">Could not open system setting</string>
+    <string name="notification_type">Notification information type</string>
+    <string name="notification_type_description_on">Notify as public content</string>
+    <string name="notification_type_description_off">Notify as secret content</string>
 
+    <string name="toast_could_not_open_setting">Could not open system setting</string>
     <string name="dialog_title_reset_theme">Confirmation</string>
     <string name="dialog_message_reset_theme">Would you like to reset theme?</string>
     <string name="theme">Theme</string>
