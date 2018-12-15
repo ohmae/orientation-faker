@@ -49,5 +49,9 @@ internal object Maintainer {
     private fun writeDefaultValue(storage: SettingsStorage, overwrite: Boolean) {
         storage.writeInt(Key.ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED, overwrite)
         storage.writeBoolean(Key.RESIDENT, false, overwrite)
+        storage.writeInt(Key.COLOR_FOREGROUND, Default.color.foreground)
+        storage.writeInt(Key.COLOR_BACKGROUND, Default.color.background)
+        storage.writeInt(Key.COLOR_FOREGROUND_SELECTED, Default.color.foregroundSelected)
+        storage.writeInt(Key.COLOR_BACKGROUND_SELECTED, Default.color.backgroundSelected)
     }
 }

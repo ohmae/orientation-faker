@@ -34,6 +34,29 @@ class Settings private constructor(
         )
         set(orientation) = storage.writeInt(Key.ORIENTATION, verifyOrientation(orientation))
 
+    var foregroundColor: Int
+        get() = storage.readInt(Key.COLOR_FOREGROUND, Default.color.foreground)
+        set(value) = storage.writeInt(Key.COLOR_FOREGROUND, value)
+
+    var backgroundColor: Int
+        get() = storage.readInt(Key.COLOR_BACKGROUND, Default.color.background)
+        set(value) = storage.writeInt(Key.COLOR_BACKGROUND, value)
+
+    var foregroundColorSelected: Int
+        get() = storage.readInt(Key.COLOR_FOREGROUND_SELECTED, Default.color.foregroundSelected)
+        set(value) = storage.writeInt(Key.COLOR_FOREGROUND_SELECTED, value)
+
+    var backgroundColorSelected: Int
+        get() = storage.readInt(Key.COLOR_BACKGROUND_SELECTED, Default.color.backgroundSelected)
+        set(value) = storage.writeInt(Key.COLOR_BACKGROUND_SELECTED, value)
+
+    fun resetTheme() {
+        foregroundColor = Default.color.foreground
+        backgroundColor = Default.color.background
+        foregroundColorSelected = Default.color.foregroundSelected
+        backgroundColorSelected = Default.color.backgroundSelected
+    }
+
     fun setResident(resident: Boolean) {
         storage.writeBoolean(Key.RESIDENT, resident)
     }
@@ -46,6 +69,27 @@ class Settings private constructor(
         private var settings: Settings? = null
         private val lock: Lock = ReentrantLock()
         private val condition: Condition = lock.newCondition()!!
+
+        /**
+         * アプリ起動時に一度だけコールされ、初期化を行う。
+         *
+         * @param context コンテキスト
+         */
+        fun initialize(context: Context) {
+            Completable.fromAction { initializeInner(context) }
+                .subscribeOn(Schedulers.io())
+                .subscribe()
+        }
+
+        private fun initializeInner(context: Context) {
+            Default.init(context)
+            val storage = SettingsStorage(context)
+            Maintainer.maintain(storage)
+            lock.withLock {
+                settings = Settings(storage)
+                condition.signalAll()
+            }
+        }
 
         /**
          * Settingsのインスタンスを返す。
@@ -63,26 +107,6 @@ class Settings private constructor(
                     }
                 }
                 return settings!!
-            }
-        }
-
-        /**
-         * アプリ起動時に一度だけコールされ、初期化を行う。
-         *
-         * @param context コンテキスト
-         */
-        fun initialize(context: Context) {
-            Completable.fromAction { initializeInner(context) }
-                .subscribeOn(Schedulers.io())
-                .subscribe()
-        }
-
-        private fun initializeInner(context: Context) {
-            val storage = SettingsStorage(context)
-            Maintainer.maintain(storage)
-            lock.withLock {
-                settings = Settings(storage)
-                condition.signalAll()
             }
         }
 
