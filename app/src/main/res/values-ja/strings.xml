@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">回転制御</string>
+    <string name="ok">OK</string>
+    <string name="cancel">キャンセル</string>
     <string name="status">状態</string>
     <string name="status_running">実行中</string>
     <string name="status_waiting">待機中</string>
@@ -17,6 +19,16 @@
     <string name="source_code">ソースコード</string>
     <string name="privacy_policy">プライバシーポリシー</string>
     <string name="play_store">Google Playストア</string>
+    <string name="customize">カスタマイズ</string>
+    <string name="customize_message">通知のカラーテーマを変更できます</string>
     <string name="version">バージョン</string>
     <string name="toast_could_not_open_setting">システムの設定画面を開けません</string>
+    <string name="dialog_title_reset_theme">確認</string>
+    <string name="dialog_message_reset_theme">テーマをリセットします。\nよろしいですか？</string>
+    <string name="theme">テーマ</string>
+    <string name="reset_theme">テーマをリセット</string>
+    <string name="foreground_color">前景色</string>
+    <string name="background_color">背景色</string>
+    <string name="selected_foreground_color">選択前景色</string>
+    <string name="selected_background_color">選択背景色</string>
 </resources>
