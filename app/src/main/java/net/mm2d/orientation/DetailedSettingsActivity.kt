@@ -16,7 +16,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.layout_customize.*
+import kotlinx.android.synthetic.main.layout_detailed_settings.*
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.color.chooser.ColorChooserDialog
 import net.mm2d.orientation.control.OrientationHelper
@@ -39,7 +39,7 @@ class DetailedSettingsActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_customize)
+        setContentView(R.layout.activity_detailed_settings)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         notificationSample = NotificationSample(this)
         setUpSample()
