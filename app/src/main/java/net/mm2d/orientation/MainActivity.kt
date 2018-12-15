@@ -51,12 +51,12 @@ class MainActivity : AppCompatActivity() {
         notificationSample = NotificationSample(this)
         status.setOnClickListener { toggleStatus() }
         resident.setOnClickListener { toggleResident() }
+        detailed_setting.setOnClickListener { DetailedSettingsActivity.start(this) }
         version_description.text = makeVersionInfo()
         setStatusDescription()
         setResidentCheckBox()
         setUpOrientationIcons()
         UpdateRouter.register(receiver)
-        customize.setOnClickListener { CustomizeActivity.start(this) }
         if (!OverlayPermissionHelper.canDrawOverlays(this)) {
             MainService.stop(this)
         } else if (settings.shouldResident()) {

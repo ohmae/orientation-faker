@@ -22,7 +22,7 @@ import net.mm2d.color.chooser.ColorChooserDialog
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.settings.Settings
 
-class CustomizeActivity
+class DetailedSettingsActivity
     : AppCompatActivity(), ResetThemeDialog.Callback, ColorChooserDialog.Callback {
     private val settings by lazy {
         Settings.get()
@@ -161,7 +161,7 @@ class CustomizeActivity
     }
     companion object {
         fun start(context: Context) {
-            context.startActivity(Intent(context, CustomizeActivity::class.java))
+            context.startActivity(Intent(context, DetailedSettingsActivity::class.java))
         }
     }
 }

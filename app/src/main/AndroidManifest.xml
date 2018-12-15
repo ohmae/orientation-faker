@@ -42,7 +42,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             />
         <activity
-            android:name="net.mm2d.orientation.CustomizeActivity"/>
+            android:name="net.mm2d.orientation.DetailedSettingsActivity"/>
 
         <service
             android:name="net.mm2d.orientation.MainService"

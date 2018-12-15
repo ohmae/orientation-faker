@@ -19,8 +19,8 @@
     <string name="source_code">ソースコード</string>
     <string name="privacy_policy">プライバシーポリシー</string>
     <string name="play_store">Google Playストア</string>
-    <string name="customize">カスタマイズ</string>
-    <string name="customize_description">通知のカラーテーマを変更できます</string>
+    <string name="detailed_settings">詳細設定</string>
+    <string name="detailed_settings_description">通知のテーマや詳細な動作設定</string>
     <string name="version">バージョン</string>
     <string name="notification_type">通知の情報種別</string>
     <string name="notification_type_description_on">公開情報として通知する</string>
