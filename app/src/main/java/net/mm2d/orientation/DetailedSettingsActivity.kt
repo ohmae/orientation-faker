@@ -44,7 +44,7 @@ class DetailedSettingsActivity
         notificationSample = NotificationSample(this)
         setUpSample()
         setUpOrientationIcons()
-        setUpNotificationType()
+        setUpNotificationPrivacy()
         UpdateRouter.register(receiver)
     }
 
@@ -134,31 +134,32 @@ class DetailedSettingsActivity
         }
     }
 
-    private fun setUpNotificationType() {
+    private fun setUpNotificationPrivacy() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            notification_type.visibility = View.GONE
+            notification_privacy.visibility = View.GONE
         } else {
-            notification_type.setOnClickListener { toggleNotificationType() }
-            applyNotificationTypeStatus()
+            notification_privacy.setOnClickListener { toggleNotificationPrivacy() }
+            applyNotificationPrivacy()
         }
     }
 
-    private fun applyNotificationTypeStatus() {
+    private fun applyNotificationPrivacy() {
         val notifySecret = settings.notifySecret
-        notification_type_switch.isChecked = notifySecret
-        notification_type_description.setText(
-            if (notifySecret) R.string.notification_type_description_on
-            else R.string.notification_type_description_off
+        notification_privacy_switch.isChecked = notifySecret
+        notification_privacy_description.setText(
+            if (notifySecret) R.string.notification_privacy_on
+            else R.string.notification_privacy_off
         )
     }
 
-    private fun toggleNotificationType() {
+    private fun toggleNotificationPrivacy() {
         settings.notifySecret = !settings.notifySecret
-        applyNotificationTypeStatus()
+        applyNotificationPrivacy()
         if (orientationHelper.isEnabled) {
             MainService.start(this)
         }
     }
+
     companion object {
         fun start(context: Context) {
             context.startActivity(Intent(context, DetailedSettingsActivity::class.java))

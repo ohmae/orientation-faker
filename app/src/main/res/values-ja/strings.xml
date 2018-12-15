@@ -22,9 +22,9 @@
     <string name="detailed_settings">詳細設定</string>
     <string name="detailed_settings_description">通知のテーマや詳細な動作設定</string>
     <string name="version">バージョン</string>
-    <string name="notification_type">通知の公開レベル</string>
-    <string name="notification_type_description_on">秘匿情報として通知する</string>
-    <string name="notification_type_description_off">公開情報として通知する</string>
+    <string name="notification_privacy">通知の公開レベル</string>
+    <string name="notification_privacy_on">秘匿情報として通知する</string>
+    <string name="notification_privacy_off">公開情報として通知する</string>
 
     <string name="toast_could_not_open_setting">システムの設定画面を開けません</string>
     <string name="dialog_title_reset_theme">確認</string>

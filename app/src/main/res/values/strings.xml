@@ -24,9 +24,9 @@
     <string name="detailed_settings">Detailed Settings</string>
     <string name="detailed_settings_description">Theme and detailed behavior settings of notification</string>
     <string name="version">Version</string>
-    <string name="notification_type">Notification privacy</string>
-    <string name="notification_type_description_on">Notify as secret content</string>
-    <string name="notification_type_description_off">Notify as public content</string>
+    <string name="notification_privacy">Notification privacy</string>
+    <string name="notification_privacy_on">Notify as secret content</string>
+    <string name="notification_privacy_off">Notify as public content</string>
 
     <string name="toast_could_not_open_setting">Could not open system setting</string>
     <string name="dialog_title_reset_theme">Confirmation</string>
