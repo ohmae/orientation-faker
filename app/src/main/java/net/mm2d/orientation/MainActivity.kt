@@ -10,27 +10,20 @@ package net.mm2d.orientation
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.format.DateFormat
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlinx.android.synthetic.main.layout_main.*
-import kotlinx.android.synthetic.main.notification.*
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.OrientationHelper
-import net.mm2d.orientation.control.OrientationIdManager
 import net.mm2d.orientation.control.OverlayPermissionHelper
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.LaunchUtils
-import java.util.*
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
@@ -42,26 +35,28 @@ class MainActivity : AppCompatActivity() {
     private val orientationHelper by lazy {
         OrientationHelper.getInstance(this)
     }
-    private val buttonList = ArrayList<Pair<Int, View>>()
     private val handler = Handler(Looper.getMainLooper())
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             setStatusDescription()
-            setOrientationIcon()
+            notificationSample.update()
         }
     }
+    private lateinit var notificationSample: NotificationSample
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.title = getString(R.string.app_name)
+        notificationSample = NotificationSample(this)
         status.setOnClickListener { toggleStatus() }
         resident.setOnClickListener { toggleResident() }
         version_description.text = makeVersionInfo()
         setStatusDescription()
         setResidentCheckBox()
         setUpOrientationIcons()
-        registerReceiver()
+        UpdateRouter.register(receiver)
+        customize.setOnClickListener { CustomizeActivity.start(this) }
         if (!OverlayPermissionHelper.canDrawOverlays(this)) {
             MainService.stop(this)
         } else if (settings.shouldResident()) {
@@ -84,17 +79,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver()
+        UpdateRouter.unregister(receiver)
     }
 
-    private fun registerReceiver() {
-        LocalBroadcastManager.getInstance(this)
-            .registerReceiver(receiver, IntentFilter(ACTION_UPDATE))
-    }
-
-    private fun unregisterReceiver() {
-        LocalBroadcastManager.getInstance(this)
-            .unregisterReceiver(receiver)
+    override fun onResume() {
+        super.onResume()
+        notificationSample.update()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -113,14 +103,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpOrientationIcons() {
-        OrientationIdManager.list.forEach {
-            val orientation = it.orientation
-            val button = findViewById<View>(it.viewId)
-            buttonList.add(Pair(orientation, button))
-            button.setOnClickListener { setOrientation(orientation) }
+        notificationSample.buttonList.forEach { view ->
+            view.button.setOnClickListener { setOrientation(view.orientation) }
         }
-        setOrientationIcon()
-        button_settings.visibility = View.GONE
+        notificationSample.update()
     }
 
     private fun toggleStatus() {
@@ -155,20 +141,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setOrientation(orientation: Int) {
         settings.orientation = orientation
-        setOrientationIcon()
+        notificationSample.update()
         if (orientationHelper.isEnabled) {
             MainService.start(this)
-        }
-    }
-
-    private fun setOrientationIcon() {
-        val orientation = settings.orientation
-        val selected = ContextCompat.getColor(this, R.color.bg_notification_selected)
-        val transparent = ContextCompat.getColor(this, android.R.color.transparent)
-        for (pair in buttonList) {
-            pair.second.run {
-                setBackgroundColor(if (orientation == pair.first) selected else transparent)
-            }
         }
     }
 
@@ -180,12 +155,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val ACTION_UPDATE = "ACTION_UPDATE"
         private const val REQUEST_CODE = 101
-
-        fun notifyUpdate(context: Context) {
-            LocalBroadcastManager.getInstance(context)
-                .sendBroadcast(Intent(ACTION_UPDATE))
-        }
     }
 }

@@ -38,6 +38,7 @@ class App : MultiDexApplication() {
         setStrictMode()
         RxJavaPlugins.setErrorHandler(::logError)
         Settings.initialize(this)
+        UpdateRouter.initialize(this)
         CustomTabsHelper.init(this)
         registerActivityLifecycleCallbacks(CustomTabsBinder())
     }
