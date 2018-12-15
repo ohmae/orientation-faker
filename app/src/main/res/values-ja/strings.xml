@@ -20,7 +20,7 @@
     <string name="privacy_policy">プライバシーポリシー</string>
     <string name="play_store">Google Playストア</string>
     <string name="customize">カスタマイズ</string>
-    <string name="customize_message">通知のカラーテーマを変更できます</string>
+    <string name="customize_description">通知のカラーテーマを変更できます</string>
     <string name="version">バージョン</string>
     <string name="toast_could_not_open_setting">システムの設定画面を開けません</string>
     <string name="dialog_title_reset_theme">確認</string>

@@ -22,7 +22,7 @@
     <string name="privacy_policy">Privacy policy</string>
     <string name="play_store">Google Play store</string>
     <string name="customize">Customize</string>
-    <string name="customize_message">customize the color theme of the notification</string>
+    <string name="customize_description">customize the color theme of the notification</string>
     <string name="version">Version</string>
     <string name="toast_could_not_open_setting">Could not open system setting</string>
 

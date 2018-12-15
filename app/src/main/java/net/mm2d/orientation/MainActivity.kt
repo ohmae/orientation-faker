@@ -123,8 +123,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setStatusDescription() {
         val enabled = orientationHelper.isEnabled
-        statusSwitch.isChecked = enabled
-        statusDescription.setText(if (enabled) R.string.status_running else R.string.status_waiting)
+        status_switch.isChecked = enabled
+        status_description.setText(if (enabled) R.string.status_running else R.string.status_waiting)
     }
 
     private fun toggleResident() {
@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setResidentCheckBox() {
-        residentCheckBox.isChecked = settings.shouldResident()
+        resident_switch.isChecked = settings.shouldResident()
     }
 
     private fun setOrientation(orientation: Int) {
