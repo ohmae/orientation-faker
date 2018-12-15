@@ -11,8 +11,10 @@ import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.layout_customize.*
 import net.mm2d.android.orientationfaker.R
@@ -133,8 +135,12 @@ class CustomizeActivity
     }
 
     private fun setUpNotificationType() {
-        notification_type.setOnClickListener { toggleLockScreen() }
-        applyNotificationTypeStatus()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            notification_type.visibility = View.GONE
+        } else {
+            notification_type.setOnClickListener { toggleLockScreen() }
+            applyNotificationTypeStatus()
+        }
     }
 
     private fun applyNotificationTypeStatus() {
