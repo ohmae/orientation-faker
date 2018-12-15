@@ -10,12 +10,12 @@ package net.mm2d.orientation.notification
 import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.MainActivity
 import net.mm2d.orientation.control.OrientationIdManager
@@ -73,18 +73,26 @@ object NotificationHelper {
     }
 
     private fun createRemoteViews(context: Context, orientation: Int): RemoteViews {
-        val selected = ContextCompat.getColor(context, R.color.bg_notification_selected)
-        val transparent = ContextCompat.getColor(context, android.R.color.transparent)
+        val settings = Settings.get()
+        val foreground = settings.foregroundColor
+        val selectedForeground = settings.foregroundColorSelected
+        val selectedBackground = settings.backgroundColorSelected
         return RemoteViews(context.packageName, R.layout.notification).also { views ->
+            views.setInt(R.id.notification, "setBackgroundColor", settings.backgroundColor)
             OrientationIdManager.list.forEach {
                 views.setOnClickPendingIntent(
                     it.viewId,
                     createOrientationIntent(context, it.orientation)
                 )
-                views.setInt(
-                    it.viewId, "setBackgroundColor",
-                    if (orientation == it.orientation) selected else transparent
-                )
+                if (orientation == it.orientation) {
+                    views.setInt(it.viewId, "setBackgroundColor", selectedBackground)
+                    views.setInt(it.iconViewId, "setColorFilter", selectedForeground)
+                    views.setTextColor(it.titleViewId, selectedForeground)
+                } else {
+                    views.setInt(it.viewId, "setBackgroundColor", Color.TRANSPARENT)
+                    views.setInt(it.iconViewId, "setColorFilter", foreground)
+                    views.setTextColor(it.titleViewId, foreground)
+                }
             }
             views.setOnClickPendingIntent(R.id.button_settings, createActivityIntent(context))
         }
