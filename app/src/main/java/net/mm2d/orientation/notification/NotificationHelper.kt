@@ -64,8 +64,8 @@ object NotificationHelper {
         val settings = Settings.get()
         val orientation = settings.orientation
         val visibility =
-            if (settings.notifyPublic) NotificationCompat.VISIBILITY_PUBLIC
-            else NotificationCompat.VISIBILITY_SECRET
+            if (settings.notifySecret) NotificationCompat.VISIBILITY_SECRET
+            else NotificationCompat.VISIBILITY_PUBLIC
         return NotificationCompat.Builder(context, CHANNEL_ID)
             .setDefaults(0)
             .setContentTitle(context.getText(R.string.app_name))

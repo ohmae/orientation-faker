@@ -138,22 +138,22 @@ class DetailedSettingsActivity
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             notification_type.visibility = View.GONE
         } else {
-            notification_type.setOnClickListener { toggleLockScreen() }
+            notification_type.setOnClickListener { toggleNotificationType() }
             applyNotificationTypeStatus()
         }
     }
 
     private fun applyNotificationTypeStatus() {
-        val showInLockScreen = settings.notifyPublic
-        notification_type_switch.isChecked = showInLockScreen
+        val notifySecret = settings.notifySecret
+        notification_type_switch.isChecked = notifySecret
         notification_type_description.setText(
-            if (showInLockScreen) R.string.notification_type_description_on
+            if (notifySecret) R.string.notification_type_description_on
             else R.string.notification_type_description_off
         )
     }
 
-    private fun toggleLockScreen() {
-        settings.notifyPublic = !settings.notifyPublic
+    private fun toggleNotificationType() {
+        settings.notifySecret = !settings.notifySecret
         applyNotificationTypeStatus()
         if (orientationHelper.isEnabled) {
             MainService.start(this)

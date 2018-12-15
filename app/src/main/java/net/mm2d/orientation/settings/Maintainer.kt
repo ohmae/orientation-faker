@@ -53,6 +53,6 @@ internal object Maintainer {
         storage.writeInt(Key.COLOR_BACKGROUND, Default.color.background)
         storage.writeInt(Key.COLOR_FOREGROUND_SELECTED, Default.color.foregroundSelected)
         storage.writeInt(Key.COLOR_BACKGROUND_SELECTED, Default.color.backgroundSelected)
-        storage.writeBoolean(Key.NOTIFY_PUBLIC, true)
+        storage.writeBoolean(Key.NOTIFY_SECRET, false)
     }
 }
