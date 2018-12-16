@@ -5,7 +5,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.android.orientationfaker.tabs
+package net.mm2d.orientation.tabs
 
 import android.app.Activity
 import android.app.Application.ActivityLifecycleCallbacks

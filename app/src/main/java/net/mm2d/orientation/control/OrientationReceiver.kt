@@ -5,7 +5,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.android.orientationfaker.orientation
+package net.mm2d.orientation.control
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -13,8 +13,8 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.text.TextUtils
 
-import net.mm2d.android.orientationfaker.MainService
-import net.mm2d.android.orientationfaker.settings.Settings
+import net.mm2d.orientation.MainService
+import net.mm2d.orientation.settings.Settings
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)

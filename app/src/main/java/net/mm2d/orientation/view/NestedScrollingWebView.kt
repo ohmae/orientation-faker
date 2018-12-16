@@ -5,7 +5,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.android.orientationfaker.view
+package net.mm2d.orientation.view
 
 import android.annotation.SuppressLint
 import android.content.Context

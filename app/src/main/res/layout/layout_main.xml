@@ -16,7 +16,7 @@
         >
 
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/statusSwitch"
+            android:id="@+id/status_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_menu_horizontal"
@@ -38,15 +38,15 @@
             android:layout_marginTop="@dimen/margin_menu_vertical"
             android:text="@string/status"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            app:layout_constraintEnd_toStartOf="@+id/statusSwitch"
+            app:layout_constraintEnd_toStartOf="@+id/status_switch"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/statusSwitch"
+            app:layout_constraintRight_toLeftOf="@+id/status_switch"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
 
         <TextView
-            android:id="@+id/statusDescription"
+            android:id="@+id/status_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_menu_vertical"
@@ -55,9 +55,9 @@
             android:text="@string/status_running"
             android:textAppearance="@style/TextAppearance.AppCompat"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/statusSwitch"
+            app:layout_constraintEnd_toStartOf="@+id/status_switch"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/statusSwitch"
+            app:layout_constraintRight_toLeftOf="@+id/status_switch"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/status_title"
             />
@@ -71,8 +71,8 @@
         android:background="?android:attr/selectableItemBackground"
         >
 
-        <CheckBox
-            android:id="@+id/residentCheckBox"
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/resident_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_menu_horizontal"
@@ -93,9 +93,9 @@
             android:layout_marginTop="@dimen/margin_menu_vertical"
             android:text="@string/resident"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            app:layout_constraintEnd_toStartOf="@+id/residentCheckBox"
+            app:layout_constraintEnd_toStartOf="@+id/resident_switch"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/residentCheckBox"
+            app:layout_constraintRight_toLeftOf="@+id/resident_switch"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
@@ -110,9 +110,9 @@
             android:text="@string/resident_description"
             android:textAppearance="@style/TextAppearance.AppCompat"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/residentCheckBox"
+            app:layout_constraintEnd_toStartOf="@+id/resident_switch"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/residentCheckBox"
+            app:layout_constraintRight_toLeftOf="@+id/resident_switch"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/resident_title"
             />
@@ -131,6 +131,44 @@
 
         <include layout="@layout/notification"/>
     </FrameLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/detailed_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        >
+
+        <TextView
+            android:id="@+id/detailed_setting_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_menu_horizontal"
+            android:layout_marginStart="@dimen/margin_menu_horizontal"
+            android:layout_marginTop="@dimen/margin_menu_vertical"
+            android:text="@string/detailed_settings"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/detailed_setting_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_menu_vertical"
+            android:layout_marginLeft="@dimen/margin_menu_horizontal"
+            android:layout_marginStart="@dimen/margin_menu_horizontal"
+            android:text="@string/detailed_settings_description"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detailed_setting_title"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/version"

@@ -3,22 +3,45 @@
     <string name="app_name">Orientation Control</string>
     <string name="leak_canary_display_activity_label"
         tools:ignore="MissingTranslation">Orientation Control</string>
-    <string name="status">Status</string>
-    <string name="status_running">Running</string>
-    <string name="status_waiting">Waiting</string>
-    <string name="resident">Resident</string>
-    <string name="resident_description">To be resident from device startup</string>
+
     <string name="notification_channel_name">@string/app_name</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
     <string name="unspecified">unspecified</string>
     <string name="portrait">portrait</string>
     <string name="landscape">landscape</string>
     <string name="reverse_portrait">!portrait</string>
     <string name="reverse_landscape">!landscape</string>
     <string name="settings">settings</string>
+
+    <string name="status">Status</string>
+    <string name="status_running">Running</string>
+    <string name="status_waiting">Waiting</string>
+    <string name="resident">Auto start</string>
+    <string name="resident_description">To be resident from device startup</string>
+    <string name="detailed_settings">Detailed Settings</string>
+    <string name="detailed_settings_description">Theme and detailed behavior settings of notification</string>
+    <string name="version">Version</string>
+
+    <string name="theme">Theme</string>
+    <string name="reset_theme">Reset theme</string>
+    <string name="foreground_color">foreground</string>
+    <string name="background_color">background</string>
+    <string name="selected_foreground_color">*foreground</string>
+    <string name="selected_background_color">*background</string>
+    <string name="notification_privacy">Notification privacy</string>
+    <string name="notification_privacy_on">Notify as secret content</string>
+    <string name="notification_privacy_off">Notify as public content</string>
+
+    <string name="dialog_title_reset_theme">Confirmation</string>
+    <string name="dialog_message_reset_theme">Would you like to reset theme?</string>
+
+    <string name="toast_could_not_open_setting">Could not open system setting</string>
+
     <string name="license">Open source licenses</string>
     <string name="source_code">Source code</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="play_store">Google Play store</string>
-    <string name="version">Version</string>
-    <string name="toast_could_not_open_setting">Could not open system setting</string>
 </resources>

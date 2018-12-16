@@ -5,7 +5,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.android.orientationfaker.tabs
+package net.mm2d.orientation.tabs
 
 import android.content.Context
 import android.content.Intent

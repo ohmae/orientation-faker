@@ -5,7 +5,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.android.orientationfaker
+package net.mm2d.orientation
 
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
@@ -15,11 +15,12 @@ import com.squareup.leakcanary.LeakCanary
 import io.reactivex.exceptions.OnErrorNotImplementedException
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
-import net.mm2d.android.orientationfaker.settings.Settings
-import net.mm2d.android.orientationfaker.tabs.CustomTabsBinder
-import net.mm2d.android.orientationfaker.tabs.CustomTabsHelper
+import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.log.Log
 import net.mm2d.log.android.AndroidLogInitializer
+import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.tabs.CustomTabsBinder
+import net.mm2d.orientation.tabs.CustomTabsHelper
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
@@ -35,8 +36,9 @@ class App : MultiDexApplication() {
         Log.setInitializer(AndroidLogInitializer.getSingleThread())
         Log.initialize(BuildConfig.DEBUG, true)
         setStrictMode()
-        RxJavaPlugins.setErrorHandler { logError(it) }
+        RxJavaPlugins.setErrorHandler(::logError)
         Settings.initialize(this)
+        UpdateRouter.initialize(this)
         CustomTabsHelper.init(this)
         registerActivityLifecycleCallbacks(CustomTabsBinder())
     }
