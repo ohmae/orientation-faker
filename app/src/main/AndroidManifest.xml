@@ -38,13 +38,14 @@
             android:launchMode="singleTask"
             />
         <activity
+            android:name="net.mm2d.orientation.DetailedSettingsActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|keyboard"
+            android:label="@string/detailed_settings"
+            />
+        <activity
             android:name="net.mm2d.orientation.LicenseActivity"
             android:label="@string/license"
             android:theme="@style/AppTheme.NoActionBar"
-            />
-        <activity
-            android:name="net.mm2d.orientation.DetailedSettingsActivity"
-            android:label="@string/detailed_settings"
             />
 
         <service
