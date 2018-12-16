@@ -41,16 +41,18 @@ class DetailedSettingsActivity
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detailed_settings)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        notificationSample = NotificationSample(this)
-        setUpSample()
-        setUpOrientationIcons()
-        setUpNotificationPrivacy()
+        setUpViews()
         UpdateRouter.register(receiver)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         UpdateRouter.unregister(receiver)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        notificationSample.update()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -61,11 +63,17 @@ class DetailedSettingsActivity
         return super.onOptionsItemSelected(item)
     }
 
+    private fun setUpViews() {
+        notificationSample = NotificationSample(this)
+        setUpSample()
+        setUpOrientationIcons()
+        setUpNotificationPrivacy()
+    }
+
     private fun setUpOrientationIcons() {
         notificationSample.buttonList.forEach { view ->
             view.button.setOnClickListener { updateOrientation(view.orientation) }
         }
-        notificationSample.update()
     }
 
     private fun updateOrientation(orientation: Int) {

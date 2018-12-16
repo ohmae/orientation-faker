@@ -48,14 +48,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.title = getString(R.string.app_name)
-        notificationSample = NotificationSample(this)
-        status.setOnClickListener { toggleStatus() }
-        resident.setOnClickListener { toggleResident() }
-        detailed_setting.setOnClickListener { DetailedSettingsActivity.start(this) }
-        version_description.text = makeVersionInfo()
-        applyStatus()
-        applyResident()
-        setUpOrientationIcons()
+        setUpViews()
         UpdateRouter.register(receiver)
         if (!OverlayPermissionHelper.canDrawOverlays(this)) {
             MainService.stop(this)
@@ -87,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         notificationSample.update()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
@@ -102,11 +95,21 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    private fun setUpViews() {
+        notificationSample = NotificationSample(this)
+        status.setOnClickListener { toggleStatus() }
+        resident.setOnClickListener { toggleResident() }
+        detailed_setting.setOnClickListener { DetailedSettingsActivity.start(this) }
+        version_description.text = makeVersionInfo()
+        applyStatus()
+        applyResident()
+        setUpOrientationIcons()
+    }
+
     private fun setUpOrientationIcons() {
         notificationSample.buttonList.forEach { view ->
             view.button.setOnClickListener { updateOrientation(view.orientation) }
         }
-        notificationSample.update()
     }
 
     private fun toggleStatus() {
