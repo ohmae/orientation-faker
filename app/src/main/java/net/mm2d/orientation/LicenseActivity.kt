@@ -30,10 +30,7 @@ class LicenseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_license)
         setSupportActionBar(toolbar)
-        supportActionBar?.apply {
-            setTitle(R.string.license)
-            setDisplayHomeAsUpEnabled(true)
-        }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         webView.settings.setSupportZoom(false)
         webView.settings.displayZoomControls = false
         webView.webViewClient = object : WebViewClient() {
