@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            setStatusDescription()
+            applyStatus()
             notificationSample.update()
         }
     }
@@ -53,8 +53,8 @@ class MainActivity : AppCompatActivity() {
         resident.setOnClickListener { toggleResident() }
         detailed_setting.setOnClickListener { DetailedSettingsActivity.start(this) }
         version_description.text = makeVersionInfo()
-        setStatusDescription()
-        setResidentCheckBox()
+        applyStatus()
+        applyResident()
         setUpOrientationIcons()
         UpdateRouter.register(receiver)
         if (!OverlayPermissionHelper.canDrawOverlays(this)) {
@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpOrientationIcons() {
         notificationSample.buttonList.forEach { view ->
-            view.button.setOnClickListener { setOrientation(view.orientation) }
+            view.button.setOnClickListener { updateOrientation(view.orientation) }
         }
         notificationSample.update()
     }
@@ -114,14 +114,14 @@ class MainActivity : AppCompatActivity() {
             MainService.stop(this)
             if (settings.shouldResident()) {
                 settings.setResident(false)
-                setResidentCheckBox()
+                applyResident()
             }
         } else {
             MainService.start(this)
         }
     }
 
-    private fun setStatusDescription() {
+    private fun applyStatus() {
         val enabled = orientationHelper.isEnabled
         status_switch.isChecked = enabled
         status_description.setText(if (enabled) R.string.status_running else R.string.status_waiting)
@@ -129,17 +129,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun toggleResident() {
         settings.setResident(!settings.shouldResident())
-        setResidentCheckBox()
+        applyResident()
         if (settings.shouldResident() && !orientationHelper.isEnabled) {
             MainService.start(this)
         }
     }
 
-    private fun setResidentCheckBox() {
+    private fun applyResident() {
         resident_switch.isChecked = settings.shouldResident()
     }
 
-    private fun setOrientation(orientation: Int) {
+    private fun updateOrientation(orientation: Int) {
         settings.orientation = orientation
         notificationSample.update()
         if (orientationHelper.isEnabled) {

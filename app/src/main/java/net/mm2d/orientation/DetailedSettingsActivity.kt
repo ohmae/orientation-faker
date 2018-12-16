@@ -63,12 +63,12 @@ class DetailedSettingsActivity
 
     private fun setUpOrientationIcons() {
         notificationSample.buttonList.forEach { view ->
-            view.button.setOnClickListener { setOrientation(view.orientation) }
+            view.button.setOnClickListener { updateOrientation(view.orientation) }
         }
         notificationSample.update()
     }
 
-    private fun setOrientation(orientation: Int) {
+    private fun updateOrientation(orientation: Int) {
         settings.orientation = orientation
         notificationSample.update()
         if (orientationHelper.isEnabled) {
