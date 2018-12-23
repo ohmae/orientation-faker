@@ -152,12 +152,7 @@ class DetailedSettingsActivity
     }
 
     private fun applyNotificationPrivacy() {
-        val notifySecret = settings.notifySecret
-        notification_privacy_switch.isChecked = notifySecret
-        notification_privacy_description.setText(
-            if (notifySecret) R.string.notification_privacy_on
-            else R.string.notification_privacy_off
-        )
+        notification_privacy.isChecked = settings.notifySecret
     }
 
     private fun toggleNotificationPrivacy() {

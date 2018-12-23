@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
     private fun setUpViews() {
         notificationSample = NotificationSample(this)
         status.setOnClickListener { toggleStatus() }
-        resident.setOnClickListener { toggleResident() }
+        auto_start.setOnClickListener { toggleResident() }
         detailed_setting.setOnClickListener { DetailedSettingsActivity.start(this) }
         version_description.text = makeVersionInfo()
         applyStatus()
@@ -125,9 +125,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun applyStatus() {
-        val enabled = orientationHelper.isEnabled
-        status_switch.isChecked = enabled
-        status_description.setText(if (enabled) R.string.status_running else R.string.status_waiting)
+        status.isChecked = orientationHelper.isEnabled
     }
 
     private fun toggleResident() {
@@ -139,7 +137,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun applyResident() {
-        resident_switch.isChecked = settings.shouldResident()
+        auto_start.isChecked = settings.shouldResident()
     }
 
     private fun updateOrientation(orientation: Int) {

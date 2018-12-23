@@ -17,8 +17,9 @@
     <string name="status">状態</string>
     <string name="status_running">実行中</string>
     <string name="status_waiting">待機中</string>
-    <string name="resident">自動起動</string>
-    <string name="resident_description">デバイス起動時から常駐します</string>
+    <string name="auto_start">自動起動</string>
+    <string name="auto_start_description_on">デバイス起動時に自動起動します</string>
+    <string name="auto_start_description_off">自動起動しません</string>
     <string name="detailed_settings">詳細設定</string>
     <string name="detailed_settings_description">通知のテーマや詳細な動作設定</string>
     <string name="version">バージョン</string>
