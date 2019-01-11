@@ -24,19 +24,21 @@ internal object Maintainer {
             storage.writeInt(Key.APP_VERSION_AT_LAST_LAUNCHED, BuildConfig.VERSION_CODE)
         }
 
-        val currentVersion = storage.readInt(Key.SETTINGS_VERSION, -1)
-        if (currentVersion == SETTINGS_VERSION) {
-            return
+        storage.readInt(Key.SETTINGS_VERSION, -1).let {
+            when {
+                it < 1 -> {
+                    storage.clear()
+                    storage.writeInt(Key.APP_VERSION_AT_INSTALL, BuildConfig.VERSION_CODE, false)
+                }
+                it == 1 ->
+                    // 2.0.0-2.1.2の間が不明のため、2.1.2として書き込む
+                    storage.writeInt(Key.APP_VERSION_AT_INSTALL, 20102, false)
+                it == SETTINGS_VERSION ->
+                    return
+            }
         }
         storage.writeInt(Key.SETTINGS_VERSION, SETTINGS_VERSION)
-
-        if (currentVersion < 1) {
-            storage.clear()
-            storage.writeInt(Key.APP_VERSION_AT_INSTALL, BuildConfig.VERSION_CODE, false)
-        } else if (currentVersion == 1) {
-            // 2.0.0-2.1.2の間が不明のため、2.1.2として書き込む
-            storage.writeInt(Key.APP_VERSION_AT_INSTALL, 20102, false)
-        }
+        storage.writeInt(Key.APP_VERSION_AT_LAST_LAUNCHED, BuildConfig.VERSION_CODE)
 
         writeDefaultValue(storage, false)
     }
