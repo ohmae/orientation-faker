@@ -20,7 +20,7 @@ import net.mm2d.orientation.settings.Settings
 class WakeUpReceiver : BroadcastReceiver() {
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context, intent: Intent) {
-        if (!Settings.get().shouldResident()) {
+        if (!Settings.get().shouldAutoStart()) {
             return
         }
         MainService.start(context)

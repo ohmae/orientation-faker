@@ -61,11 +61,11 @@ class Settings private constructor(
         backgroundColorSelected = Default.color.backgroundSelected
     }
 
-    fun setResident(resident: Boolean) {
-        storage.writeBoolean(Key.RESIDENT, resident)
+    fun setAutoStart(autoStart: Boolean) {
+        storage.writeBoolean(Key.RESIDENT, autoStart)
     }
 
-    fun shouldResident(): Boolean {
+    fun shouldAutoStart(): Boolean {
         return storage.readBoolean(Key.RESIDENT, false)
     }
 
