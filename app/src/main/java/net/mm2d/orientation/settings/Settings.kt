@@ -12,7 +12,7 @@ import android.content.pm.ActivityInfo
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import net.mm2d.android.orientationfaker.BuildConfig
-import net.mm2d.log.Log
+import net.mm2d.log.Logger
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.Condition
 import java.util.concurrent.locks.Lock
@@ -104,7 +104,7 @@ class Settings private constructor(
             lock.withLock {
                 while (settings == null) {
                     if (BuildConfig.DEBUG) {
-                        Log.e("!!!!!!!!!! BLOCK !!!!!!!!!!")
+                        Logger.e("!!!!!!!!!! BLOCK !!!!!!!!!!")
                     }
                     if (!condition.await(4, TimeUnit.SECONDS)) {
                         throw IllegalStateException("Settings initialization timeout")

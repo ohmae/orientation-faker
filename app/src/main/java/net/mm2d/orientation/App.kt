@@ -16,8 +16,8 @@ import io.reactivex.exceptions.OnErrorNotImplementedException
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import net.mm2d.android.orientationfaker.BuildConfig
-import net.mm2d.log.Log
-import net.mm2d.log.android.AndroidLogInitializer
+import net.mm2d.log.Logger
+import net.mm2d.log.android.AndroidSenders
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.tabs.CustomTabsBinder
 import net.mm2d.orientation.tabs.CustomTabsHelper
@@ -33,8 +33,7 @@ class App : MultiDexApplication() {
             return
         }
         LeakCanary.install(this)
-        Log.setInitializer(AndroidLogInitializer.getSingleThread())
-        Log.initialize(BuildConfig.DEBUG, true)
+        setUpLogger()
         setStrictMode()
         RxJavaPlugins.setErrorHandler(::logError)
         Settings.initialize(this)
@@ -46,12 +45,22 @@ class App : MultiDexApplication() {
     private fun logError(e: Throwable) {
         when (e) {
             is UndeliverableException
-            -> Log.w(null, "UndeliverableException:", e.cause)
+            -> Logger.w("UndeliverableException:", e.cause)
             is OnErrorNotImplementedException
-            -> Log.w(null, "OnErrorNotImplementedException:", e.cause)
+            -> Logger.w("OnErrorNotImplementedException:", e.cause)
             else
-            -> Log.w(e)
+            -> Logger.w(e)
         }
+    }
+
+    private fun setUpLogger() {
+        if (!BuildConfig.DEBUG) {
+            return
+        }
+        Logger.setSender(AndroidSenders.create())
+        Logger.setLogLevel(Logger.VERBOSE)
+        AndroidSenders.appendCaller(true)
+        AndroidSenders.appendThread(true)
     }
 
     private fun setStrictMode() {
