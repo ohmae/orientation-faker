@@ -9,6 +9,7 @@ package net.mm2d.orientation.settings
 
 import android.content.Context
 import android.content.pm.ActivityInfo
+import android.os.Looper
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import net.mm2d.android.orientationfaker.BuildConfig
@@ -101,18 +102,21 @@ class Settings private constructor(
          * 初期化が完了していなければブロックされる。
          */
         fun get(): Settings {
+            val timeout = if (isMainThread()) 4L else 40L
             lock.withLock {
                 while (settings == null) {
                     if (BuildConfig.DEBUG) {
                         Logger.e("!!!!!!!!!! BLOCK !!!!!!!!!!")
                     }
-                    if (!condition.await(4, TimeUnit.SECONDS)) {
+                    if (!condition.await(timeout, TimeUnit.SECONDS)) {
                         throw IllegalStateException("Settings initialization timeout")
                     }
                 }
                 return settings!!
             }
         }
+
+        private fun isMainThread() = Looper.getMainLooper().thread == Thread.currentThread()
 
         private fun verifyOrientation(orientation: Int): Int {
             return when (orientation) {
