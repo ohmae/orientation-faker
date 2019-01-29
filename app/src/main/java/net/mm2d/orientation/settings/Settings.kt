@@ -11,6 +11,9 @@ import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Looper
 import io.reactivex.Completable
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.log.Logger
@@ -96,18 +99,32 @@ class Settings private constructor(
             }
         }
 
+        fun doOnGet(task: (Settings) -> Unit): Disposable {
+            return Single.fromCallable { get() }
+                .subscribeOn(Schedulers.single())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(task) {
+                    Thread.currentThread()
+                        .uncaughtExceptionHandler
+                        .uncaughtException(Thread.currentThread(), it)
+                }
+        }
+
         /**
          * Settingsのインスタンスを返す。
          *
          * 初期化が完了していなければブロックされる。
          */
         fun get(): Settings {
-            val timeout = if (isMainThread()) 4L else 40L
+            settings?.let {
+                return it
+            }
             lock.withLock {
                 while (settings == null) {
                     if (BuildConfig.DEBUG) {
                         Logger.e("!!!!!!!!!! BLOCK !!!!!!!!!!")
                     }
+                    val timeout = if (isMainThread()) 4L else 40L
                     if (!condition.await(timeout, TimeUnit.SECONDS)) {
                         throw IllegalStateException("Settings initialization timeout")
                     }

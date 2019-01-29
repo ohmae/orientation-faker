@@ -62,26 +62,28 @@ class MainService : Service() {
         private const val ACTION_STOP = "ACTION_STOP"
 
         fun start(context: Context) {
-            startService(context, Intent(context, MainService::class.java).apply {
-                action = ACTION_START
-            })
+            startService(context, ACTION_START)
         }
 
         fun stop(context: Context) {
             if (!OrientationHelper.getInstance(context).isEnabled) {
                 return
             }
-            startService(context, Intent(context, MainService::class.java).apply {
-                action = ACTION_STOP
-            })
+            startService(context, ACTION_STOP)
         }
 
-        private fun startService(context: Context, intent: Intent) {
+        private fun startService(context: Context, action: String) {
+            val intent = makeIntent(context, action)
             if (VERSION.SDK_INT >= VERSION_CODES.O) {
                 context.startForegroundService(intent)
             } else {
                 context.startService(intent)
             }
         }
+
+        private fun makeIntent(context: Context, action: String) =
+            Intent(context, MainService::class.java).also {
+                it.action = action
+            }
     }
 }

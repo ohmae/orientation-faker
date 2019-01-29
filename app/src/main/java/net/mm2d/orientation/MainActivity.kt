@@ -52,8 +52,12 @@ class MainActivity : AppCompatActivity() {
         UpdateRouter.register(receiver)
         if (!OverlayPermissionHelper.canDrawOverlays(this)) {
             MainService.stop(this)
-        } else if (settings.shouldAutoStart()) {
-            MainService.start(this)
+        } else {
+            Settings.doOnGet {
+                if (it.shouldAutoStart()) {
+                    MainService.start(this)
+                }
+            }
         }
         checkPermission()
     }
@@ -101,9 +105,11 @@ class MainActivity : AppCompatActivity() {
         auto_start.setOnClickListener { toggleAutoStart() }
         detailed_setting.setOnClickListener { DetailedSettingsActivity.start(this) }
         version_description.text = makeVersionInfo()
-        applyStatus()
-        applyAutoStart()
         setUpOrientationIcons()
+        applyStatus()
+        Settings.doOnGet {
+            applyAutoStart()
+        }
     }
 
     private fun setUpOrientationIcons() {

@@ -28,8 +28,10 @@ class OrientationReceiver : BroadcastReceiver() {
             EXTRA_ORIENTATION,
             ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         )
-        Settings.get().orientation = orientation
-        MainService.start(context)
+        Settings.doOnGet {
+            it.orientation = orientation
+            MainService.start(context)
+        }
     }
 
     companion object {

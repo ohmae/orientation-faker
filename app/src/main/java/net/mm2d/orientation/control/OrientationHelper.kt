@@ -22,7 +22,6 @@ import net.mm2d.orientation.settings.Settings
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 class OrientationHelper private constructor(context: Context) {
-    private val settings: Settings
     private val view: View
     private val windowManager: WindowManager
     private val layoutParams: LayoutParams
@@ -38,7 +37,6 @@ class OrientationHelper private constructor(context: Context) {
 
     init {
         val appContext = context.applicationContext
-        settings = Settings.get()
         view = View(appContext)
         windowManager = appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         layoutParams = WindowManager.LayoutParams(
@@ -54,7 +52,7 @@ class OrientationHelper private constructor(context: Context) {
     }
 
     fun updateOrientation() {
-        layoutParams.screenOrientation = settings.orientation
+        layoutParams.screenOrientation = Settings.get().orientation
         if (isEnabled) {
             windowManager.updateViewLayout(view, layoutParams)
         } else {
