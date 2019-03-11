@@ -9,10 +9,14 @@ package net.mm2d.orientation.settings
 
 import android.content.Context
 import android.content.pm.ActivityInfo
+import android.os.Looper
 import io.reactivex.Completable
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import net.mm2d.android.orientationfaker.BuildConfig
-import net.mm2d.log.Log
+import net.mm2d.log.Logger
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.Condition
 import java.util.concurrent.locks.Lock
@@ -61,11 +65,11 @@ class Settings private constructor(
         backgroundColorSelected = Default.color.backgroundSelected
     }
 
-    fun setResident(resident: Boolean) {
-        storage.writeBoolean(Key.RESIDENT, resident)
+    fun setAutoStart(autoStart: Boolean) {
+        storage.writeBoolean(Key.RESIDENT, autoStart)
     }
 
-    fun shouldResident(): Boolean {
+    fun shouldAutoStart(): Boolean {
         return storage.readBoolean(Key.RESIDENT, false)
     }
 
@@ -95,24 +99,41 @@ class Settings private constructor(
             }
         }
 
+        fun doOnGet(task: (Settings) -> Unit): Disposable {
+            return Single.fromCallable { get() }
+                .subscribeOn(Schedulers.single())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(task) {
+                    Thread.currentThread()
+                        .uncaughtExceptionHandler
+                        .uncaughtException(Thread.currentThread(), it)
+                }
+        }
+
         /**
          * Settingsのインスタンスを返す。
          *
          * 初期化が完了していなければブロックされる。
          */
         fun get(): Settings {
+            settings?.let {
+                return it
+            }
             lock.withLock {
                 while (settings == null) {
                     if (BuildConfig.DEBUG) {
-                        Log.e("!!!!!!!!!! BLOCK !!!!!!!!!!")
+                        Logger.e("!!!!!!!!!! BLOCK !!!!!!!!!!")
                     }
-                    if (!condition.await(4, TimeUnit.SECONDS)) {
+                    val timeout = if (isMainThread()) 4L else 40L
+                    if (!condition.await(timeout, TimeUnit.SECONDS)) {
                         throw IllegalStateException("Settings initialization timeout")
                     }
                 }
                 return settings!!
             }
         }
+
+        private fun isMainThread() = Looper.getMainLooper().thread == Thread.currentThread()
 
         private fun verifyOrientation(orientation: Int): Int {
             return when (orientation) {

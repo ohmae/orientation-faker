@@ -48,19 +48,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.title = getString(R.string.app_name)
-        notificationSample = NotificationSample(this)
-        status.setOnClickListener { toggleStatus() }
-        resident.setOnClickListener { toggleResident() }
-        detailed_setting.setOnClickListener { DetailedSettingsActivity.start(this) }
-        version_description.text = makeVersionInfo()
-        applyStatus()
-        applyResident()
-        setUpOrientationIcons()
+        setUpViews()
         UpdateRouter.register(receiver)
         if (!OverlayPermissionHelper.canDrawOverlays(this)) {
             MainService.stop(this)
-        } else if (settings.shouldResident()) {
-            MainService.start(this)
+        } else {
+            Settings.doOnGet {
+                if (it.shouldAutoStart()) {
+                    MainService.start(this)
+                }
+            }
         }
         checkPermission()
     }
@@ -87,7 +84,7 @@ class MainActivity : AppCompatActivity() {
         notificationSample.update()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
@@ -102,19 +99,31 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    private fun setUpViews() {
+        notificationSample = NotificationSample(this)
+        status.setOnClickListener { toggleStatus() }
+        auto_start.setOnClickListener { toggleAutoStart() }
+        detailed_setting.setOnClickListener { DetailedSettingsActivity.start(this) }
+        version_description.text = makeVersionInfo()
+        setUpOrientationIcons()
+        applyStatus()
+        Settings.doOnGet {
+            applyAutoStart()
+        }
+    }
+
     private fun setUpOrientationIcons() {
         notificationSample.buttonList.forEach { view ->
             view.button.setOnClickListener { updateOrientation(view.orientation) }
         }
-        notificationSample.update()
     }
 
     private fun toggleStatus() {
         if (orientationHelper.isEnabled) {
             MainService.stop(this)
-            if (settings.shouldResident()) {
-                settings.setResident(false)
-                applyResident()
+            if (settings.shouldAutoStart()) {
+                settings.setAutoStart(false)
+                applyAutoStart()
             }
         } else {
             MainService.start(this)
@@ -122,21 +131,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun applyStatus() {
-        val enabled = orientationHelper.isEnabled
-        status_switch.isChecked = enabled
-        status_description.setText(if (enabled) R.string.status_running else R.string.status_waiting)
+        status.isChecked = orientationHelper.isEnabled
     }
 
-    private fun toggleResident() {
-        settings.setResident(!settings.shouldResident())
-        applyResident()
-        if (settings.shouldResident() && !orientationHelper.isEnabled) {
+    private fun toggleAutoStart() {
+        settings.setAutoStart(!settings.shouldAutoStart())
+        applyAutoStart()
+        if (settings.shouldAutoStart() && !orientationHelper.isEnabled) {
             MainService.start(this)
         }
     }
 
-    private fun applyResident() {
-        resident_switch.isChecked = settings.shouldResident()
+    private fun applyAutoStart() {
+        auto_start.isChecked = settings.shouldAutoStart()
     }
 
     private fun updateOrientation(orientation: Int) {

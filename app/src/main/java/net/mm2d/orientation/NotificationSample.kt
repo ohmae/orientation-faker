@@ -35,21 +35,22 @@ class NotificationSample(activity: Activity) {
     }
 
     fun update() {
-        val settings = Settings.get()
-        val orientation = settings.orientation
-        val foreground = settings.foregroundColor
-        background.setBackgroundColor(settings.backgroundColor)
-        val selectedForeground = settings.foregroundColorSelected
-        val selectedBackground = settings.backgroundColorSelected
-        buttonList.forEach {
-            if (it.orientation == orientation) {
-                it.button.setBackgroundColor(selectedBackground)
-                it.icon.setColorFilter(selectedForeground)
-                it.title.setTextColor(selectedForeground)
-            } else {
-                it.button.setBackgroundColor(Color.TRANSPARENT)
-                it.icon.setColorFilter(foreground)
-                it.title.setTextColor(foreground)
+        Settings.doOnGet { settings ->
+            val orientation = settings.orientation
+            val foreground = settings.foregroundColor
+            background.setBackgroundColor(settings.backgroundColor)
+            val selectedForeground = settings.foregroundColorSelected
+            val selectedBackground = settings.backgroundColorSelected
+            buttonList.forEach {
+                if (it.orientation == orientation) {
+                    it.button.setBackgroundColor(selectedBackground)
+                    it.icon.setColorFilter(selectedForeground)
+                    it.title.setTextColor(selectedForeground)
+                } else {
+                    it.button.setBackgroundColor(Color.TRANSPARENT)
+                    it.icon.setColorFilter(foreground)
+                    it.title.setTextColor(foreground)
+                }
             }
         }
     }

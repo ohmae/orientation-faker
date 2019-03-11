@@ -14,7 +14,7 @@ import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.log.Log
+import net.mm2d.log.Logger
 import net.mm2d.orientation.tabs.CustomTabsHelper
 
 /**
@@ -33,7 +33,7 @@ object LaunchUtils {
             intent.addCategory(Intent.CATEGORY_BROWSABLE)
             context.startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            Log.w(e)
+            Logger.w(e)
             return false
         }
         return true
@@ -48,7 +48,7 @@ object LaunchUtils {
             intent.intent.setPackage(CustomTabsHelper.packageNameToBind)
             intent.launchUrl(context, Uri.parse(uri))
         } catch (e: ActivityNotFoundException) {
-            Log.w(e)
+            Logger.w(e)
             return false
         }
         return true
@@ -56,7 +56,10 @@ object LaunchUtils {
 
     private fun openGooglePlay(context: Context, packageName: String): Boolean {
         return openUri(context, "market://details?id=$packageName") ||
-                openCustomTabs(context, "https://play.google.com/store/apps/details?id=$packageName")
+                openCustomTabs(
+                    context,
+                    "https://play.google.com/store/apps/details?id=$packageName"
+                )
     }
 
     fun openGooglePlay(context: Context): Boolean {
