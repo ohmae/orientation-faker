@@ -39,7 +39,7 @@ class OrientationHelper private constructor(context: Context) {
         val appContext = context.applicationContext
         view = View(appContext)
         windowManager = appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        layoutParams = WindowManager.LayoutParams(
+        layoutParams = LayoutParams(
             0, 0, 0, 0,
             type,
             LayoutParams.FLAG_NOT_FOCUSABLE
