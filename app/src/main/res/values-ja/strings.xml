@@ -33,6 +33,10 @@
     <string name="notification_privacy">通知の公開レベル</string>
     <string name="notification_privacy_on">秘匿情報として通知する</string>
     <string name="notification_privacy_off">公開情報として通知する</string>
+    <string name="system_notification">通知設定</string>
+    <string name="system_notification_description">システムの通知設定を開きます</string>
+    <string name="system_app">アプリ情報</string>
+    <string name="system_app_description">システムのアプリ情報を開きます</string>
 
     <string name="dialog_title_reset_theme">確認</string>
     <string name="dialog_message_reset_theme">テーマをリセットします。\nよろしいですか？</string>

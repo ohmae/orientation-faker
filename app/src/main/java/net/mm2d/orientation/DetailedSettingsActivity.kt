@@ -11,12 +11,14 @@ import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.layout_detailed_settings.*
+import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.color.chooser.ColorChooserDialog
 import net.mm2d.orientation.control.OrientationHelper
@@ -68,6 +70,7 @@ class DetailedSettingsActivity
         setUpSample()
         setUpOrientationIcons()
         setUpNotificationPrivacy()
+        setUpSystemSetting()
     }
 
     private fun setUpOrientationIcons() {
@@ -163,7 +166,29 @@ class DetailedSettingsActivity
         }
     }
 
+    private fun setUpSystemSetting() {
+        system_app.setOnClickListener {
+            startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS).also {
+                it.data = Uri.parse("package:" + BuildConfig.APPLICATION_ID)
+                it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            })
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            system_notification.visibility = View.GONE
+            return
+        }
+        system_notification.setOnClickListener {
+            startActivity(Intent(ACTION_APP_NOTIFICATION_SETTINGS).also {
+                it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                it.putExtra("app_package", BuildConfig.APPLICATION_ID)
+                it.putExtra("app_uid", applicationInfo.uid)
+                it.putExtra("android.provider.extra.APP_PACKAGE", BuildConfig.APPLICATION_ID)
+            })
+        }
+    }
+
     companion object {
+        private const val ACTION_APP_NOTIFICATION_SETTINGS = "android.settings.APP_NOTIFICATION_SETTINGS"
         fun start(context: Context) {
             context.startActivity(Intent(context, DetailedSettingsActivity::class.java))
         }

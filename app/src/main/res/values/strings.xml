@@ -33,6 +33,10 @@
     <string name="notification_privacy">Notification privacy</string>
     <string name="notification_privacy_on">Notify as secret content</string>
     <string name="notification_privacy_off">Notify as public content</string>
+    <string name="system_notification">Notification Settings</string>
+    <string name="system_notification_description">Open system notification settings</string>
+    <string name="system_app">App Info</string>
+    <string name="system_app_description">Open system app info</string>
 
     <string name="dialog_title_reset_theme">Confirmation</string>
     <string name="dialog_message_reset_theme">Would you like to reset theme?</string>
