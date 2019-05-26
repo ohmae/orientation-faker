@@ -6,10 +6,12 @@
 /.idea/copyright
 /.idea/dictionaries
 /.idea/misc.xml
-/.idea/modules.xml
 /.idea/gradle.xml
 /.idea/workspace.xml
 /.idea/libraries
+/.idea/modules.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
 /build
 /captures
 .externalNativeBuild
