@@ -52,7 +52,14 @@ class OrientationHelper private constructor(context: Context) {
     }
 
     fun updateOrientation() {
-        layoutParams.screenOrientation = Settings.get().orientation
+        val settings = Settings.get()
+        layoutParams.screenOrientation = settings.orientation.let {
+            if (it == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED && settings.useFullSensor) {
+                ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
+            } else {
+                it
+            }
+        }
         if (isEnabled) {
             windowManager.updateViewLayout(view, layoutParams)
         } else {

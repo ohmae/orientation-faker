@@ -83,6 +83,12 @@ object NotificationHelper {
         val selectedBackground = settings.backgroundColorSelected
         return RemoteViews(context.packageName, R.layout.notification).also { views ->
             views.setInt(R.id.notification, "setBackgroundColor", settings.backgroundColor)
+            views.setTextViewText(
+                R.id.title_unspecified,
+                context.getText(
+                    if (settings.useFullSensor) R.string.force_auto else R.string.unspecified
+                )
+            )
             OrientationIdManager.list.forEach {
                 views.setOnClickPendingIntent(
                     it.viewId,

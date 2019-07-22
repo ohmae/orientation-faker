@@ -58,6 +58,10 @@ class Settings private constructor(
         get() = storage.readBoolean(Key.NOTIFY_SECRET, false)
         set(value) = storage.writeBoolean(Key.NOTIFY_SECRET, value)
 
+    var useFullSensor: Boolean
+        get() = storage.readBoolean(Key.USE_FULL_SENSOR, false)
+        set(value) = storage.writeBoolean(Key.USE_FULL_SENSOR, value)
+
     fun resetTheme() {
         foregroundColor = Default.color.foreground
         backgroundColor = Default.color.background

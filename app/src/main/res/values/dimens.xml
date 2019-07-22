@@ -7,4 +7,7 @@
     <dimen name="margin_sample_horizontal">8dp</dimen>
     <dimen name="notification_height">56dp</dimen>
     <dimen name="text_icon">10dp</dimen>
+    <dimen name="text_title">16sp</dimen>
+    <dimen name="text_color_title">12sp</dimen>
+    <dimen name="text_description">12sp</dimen>
 </resources>

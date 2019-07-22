@@ -67,6 +67,7 @@ class DetailedSettingsActivity
         notificationSample = NotificationSample(this)
         setUpSample()
         setUpOrientationIcons()
+        setUpUseFullSensor()
         setUpNotificationPrivacy()
         setUpSystemSetting()
     }
@@ -137,6 +138,24 @@ class DetailedSettingsActivity
         sample_background.setColorFilter(settings.backgroundColor)
         sample_foreground_selected.setColorFilter(settings.foregroundColorSelected)
         sample_background_selected.setColorFilter(settings.backgroundColorSelected)
+        notificationSample.update()
+        if (orientationHelper.isEnabled) {
+            MainService.start(this)
+        }
+    }
+
+    private fun setUpUseFullSensor() {
+        use_full_sensor.setOnClickListener { toggleUseFullSensor() }
+        applyUseFullSensor()
+    }
+
+    private fun applyUseFullSensor() {
+        use_full_sensor.isChecked = settings.useFullSensor
+    }
+
+    private fun toggleUseFullSensor() {
+        settings.useFullSensor = !settings.useFullSensor
+        applyUseFullSensor()
         notificationSample.update()
         if (orientationHelper.isEnabled) {
             MainService.start(this)

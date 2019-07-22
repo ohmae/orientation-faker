@@ -8,6 +8,7 @@
     <string name="cancel">Cancel</string>
 
     <string name="unspecified">unspecified</string>
+    <string name="force_auto">force auto</string>
     <string name="portrait">portrait</string>
     <string name="landscape">landscape</string>
     <string name="reverse_portrait">!portrait</string>
@@ -30,6 +31,9 @@
     <string name="background_color">background</string>
     <string name="selected_foreground_color">*foreground</string>
     <string name="selected_background_color">*background</string>
+    <string name="use_full_sensor">Forced automatic rotation</string>
+    <string name="use_full_sensor_on">Enable forced automatic rotation</string>
+    <string name="use_full_sensor_off">Follow the displayed app</string>
     <string name="notification_privacy">Notification privacy</string>
     <string name="notification_privacy_on">Notify as secret content</string>
     <string name="notification_privacy_off">Notify as public content</string>
