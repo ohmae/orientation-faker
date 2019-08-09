@@ -44,6 +44,9 @@
 
     <string name="dialog_title_reset_theme">Confirmation</string>
     <string name="dialog_message_reset_theme">Would you like to reset theme?</string>
+    <string name="dialog_title_permission">Permission required</string>
+    <string name="dialog_message_permission">To use this app, need to allow \"display over other apps\".\nGo edition devices may not be able to grant permission. In that case, you cannot use this app, so please uninstall this app.</string>
+    <string name="dialog_button_open_settings">Go settings</string>
 
     <string name="toast_could_not_open_setting">Could not open system setting</string>
 

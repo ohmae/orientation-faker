@@ -44,6 +44,9 @@
 
     <string name="dialog_title_reset_theme">確認</string>
     <string name="dialog_message_reset_theme">テーマをリセットします。\nよろしいですか？</string>
+    <string name="dialog_title_permission">許可が必要です</string>
+    <string name="dialog_message_permission">「他のアプリの上に重ねて表示」の許可が必要です。\nGoエディションの端末では許可を与えられない可能性があります。その場合このアプリを使用することはできません。アンインストールしてください</string>
+    <string name="dialog_button_open_settings">設定を開く</string>
 
     <string name="toast_could_not_open_setting">システムの設定画面を開けません</string>
 
