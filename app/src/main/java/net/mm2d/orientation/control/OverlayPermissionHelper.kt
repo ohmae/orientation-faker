@@ -33,7 +33,7 @@ object OverlayPermissionHelper {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.canDrawOverlays(activity)) {
             return
         }
-        if (Build.VERSION.SDK_INT >= 29 &&
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
             activity.packageManager.hasSystemFeature(PackageManager.FEATURE_RAM_LOW)
         ) {
             AlertDialog.Builder(activity)
