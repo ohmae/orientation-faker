@@ -30,10 +30,10 @@ class MainService : Service() {
         NotificationHelper.startForeground(this)
         if (shouldStop(intent)) {
             stop()
-            return Service.START_NOT_STICKY
+            return START_NOT_STICKY
         }
         start()
-        return Service.START_STICKY
+        return START_STICKY
     }
 
     private fun shouldStop(intent: Intent?): Boolean {

@@ -58,9 +58,9 @@ object OrientationIdManager {
             R.id.icon_reverse_landscape,
             R.id.title_reverse_landscape
         ),
-        OrientationId(
+        OrientationId( // 設定ボタン用Fakeパラメータ
             -2, // ActivityInfo.SCREEN_ORIENTATION_UNSET
-            R.drawable.ic_reverse_landscape,
+            R.drawable.ic_settings,
             R.id.button_settings,
             R.id.icon_settings,
             R.id.title_settings

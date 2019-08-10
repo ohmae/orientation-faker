@@ -6,6 +6,5 @@
     <color name="fg_notification">#ffffff</color>
     <color name="bg_notification">#212121</color>
     <color name="bg_notification_selected">#448AFF</color>
-    <color name="touch_dark">#1AFFFFFF</color>
     <color name="ripple_dark">#33FFFFFF</color>
 </resources>

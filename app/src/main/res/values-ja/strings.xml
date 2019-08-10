@@ -8,6 +8,7 @@
     <string name="cancel">キャンセル</string>
 
     <string name="unspecified">未指定</string>
+    <string name="force_auto">強制自動</string>
     <string name="portrait">縦</string>
     <string name="landscape">横</string>
     <string name="reverse_portrait">逆縦</string>
@@ -30,12 +31,22 @@
     <string name="background_color">背景色</string>
     <string name="selected_foreground_color">選択前景色</string>
     <string name="selected_background_color">選択背景色</string>
+    <string name="use_full_sensor">強制自動回転</string>
+    <string name="use_full_sensor_on">強制的に自動回転させます</string>
+    <string name="use_full_sensor_off">表示されているアプリに従います</string>
     <string name="notification_privacy">通知の公開レベル</string>
     <string name="notification_privacy_on">秘匿情報として通知する</string>
     <string name="notification_privacy_off">公開情報として通知する</string>
+    <string name="system_notification">通知設定</string>
+    <string name="system_notification_description">システムの通知設定を開きます</string>
+    <string name="system_app">アプリ情報</string>
+    <string name="system_app_description">システムのアプリ情報を開きます</string>
 
     <string name="dialog_title_reset_theme">確認</string>
     <string name="dialog_message_reset_theme">テーマをリセットします。\nよろしいですか？</string>
+    <string name="dialog_title_permission">許可が必要です</string>
+    <string name="dialog_message_permission">「他のアプリの上に重ねて表示」の許可が必要です。\nGoエディションの端末では許可を与えられない可能性があります。その場合このアプリを使用することはできません。アンインストールしてください</string>
+    <string name="dialog_button_open_settings">設定を開く</string>
 
     <string name="toast_could_not_open_setting">システムの設定画面を開けません</string>
 

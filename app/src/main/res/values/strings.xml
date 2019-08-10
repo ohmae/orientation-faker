@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Orientation Control</string>
 
     <string name="notification_channel_name">@string/app_name</string>
@@ -8,6 +8,7 @@
     <string name="cancel">Cancel</string>
 
     <string name="unspecified">unspecified</string>
+    <string name="force_auto">force auto</string>
     <string name="portrait">portrait</string>
     <string name="landscape">landscape</string>
     <string name="reverse_portrait">!portrait</string>
@@ -30,12 +31,22 @@
     <string name="background_color">background</string>
     <string name="selected_foreground_color">*foreground</string>
     <string name="selected_background_color">*background</string>
+    <string name="use_full_sensor">Forced automatic rotation</string>
+    <string name="use_full_sensor_on">Enable forced automatic rotation</string>
+    <string name="use_full_sensor_off">Follow the displayed app</string>
     <string name="notification_privacy">Notification privacy</string>
     <string name="notification_privacy_on">Notify as secret content</string>
     <string name="notification_privacy_off">Notify as public content</string>
+    <string name="system_notification">Notification Settings</string>
+    <string name="system_notification_description">Open system notification settings</string>
+    <string name="system_app">App Info</string>
+    <string name="system_app_description">Open system app info</string>
 
     <string name="dialog_title_reset_theme">Confirmation</string>
     <string name="dialog_message_reset_theme">Would you like to reset theme?</string>
+    <string name="dialog_title_permission">Permission required</string>
+    <string name="dialog_message_permission">To use this app, need to allow \"display over other apps\".\nGo edition devices may not be able to grant permission. In that case, you cannot use this app, so please uninstall this app.</string>
+    <string name="dialog_button_open_settings">Go settings</string>
 
     <string name="toast_could_not_open_setting">Could not open system setting</string>
 

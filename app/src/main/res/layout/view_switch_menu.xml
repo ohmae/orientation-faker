@@ -8,12 +8,11 @@
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
     >
 
-    <androidx.appcompat.widget.SwitchCompat
+    <Switch
         android:id="@+id/menu_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_menu_horizontal"
-        android:layout_marginRight="@dimen/margin_menu_horizontal"
         android:background="@null"
         android:clickable="false"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,10 +25,10 @@
         android:id="@+id/menu_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_menu_horizontal"
         android:layout_marginStart="@dimen/margin_menu_horizontal"
         android:layout_marginTop="@dimen/margin_menu_vertical"
         android:text="@string/status"
+        android:textSize="@dimen/text_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintEnd_toStartOf="@+id/menu_switch"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -43,9 +42,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_menu_vertical"
-        android:layout_marginLeft="@dimen/margin_menu_horizontal"
         android:layout_marginStart="@dimen/margin_menu_horizontal"
         android:text="@string/status_running"
+        android:textSize="@dimen/text_description"
         android:textAppearance="@style/TextAppearance.AppCompat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/menu_switch"

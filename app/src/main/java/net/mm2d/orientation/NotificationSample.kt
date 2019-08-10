@@ -52,6 +52,9 @@ class NotificationSample(activity: Activity) {
                     it.title.setTextColor(foreground)
                 }
             }
+            buttonList[0].title.setText(
+                if (settings.useFullSensor) R.string.force_auto else R.string.unspecified
+            )
         }
     }
 
