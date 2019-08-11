@@ -156,9 +156,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun makeVersionInfo(): String {
         return BuildConfig.VERSION_NAME +
-                if (BuildConfig.DEBUG)
-                    " # " + DateFormat.format("yyyy/M/d kk:mm:ss", BuildConfig.BUILD_TIME)
-                else ""
+            if (BuildConfig.DEBUG)
+                " # " + DateFormat.format("yyyy/M/d kk:mm:ss", BuildConfig.BUILD_TIME)
+            else ""
     }
 
     companion object {

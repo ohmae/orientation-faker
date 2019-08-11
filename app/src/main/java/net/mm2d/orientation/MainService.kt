@@ -12,16 +12,22 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
+import android.os.SystemClock
 import android.text.TextUtils
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.control.OverlayPermissionHelper
 import net.mm2d.orientation.notification.NotificationHelper
+import net.mm2d.orientation.review.ReviewActivity
+import java.util.concurrent.TimeUnit
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 class MainService : Service() {
+    private val handler = Handler(Looper.getMainLooper())
     override fun onBind(intent: Intent): IBinder? {
         throw UnsupportedOperationException("Not yet implemented")
     }
@@ -44,9 +50,9 @@ class MainService : Service() {
     }
 
     private fun start() {
-        OrientationHelper.getInstance(this)
-            .updateOrientation()
+        OrientationHelper.getInstance(this).updateOrientation()
         UpdateRouter.send()
+        showReviewRequestIfNeed()
     }
 
     private fun stop() {
@@ -57,7 +63,20 @@ class MainService : Service() {
         stopSelf()
     }
 
+    private fun showReviewRequestIfNeed() {
+        if (SystemClock.uptimeMillis() < UPTIME_MINIMUM) {
+            return
+        }
+        handler.postDelayed({
+            if (OrientationHelper.getInstance(this).isEnabled) {
+                ReviewActivity.startIfNeed(this)
+            }
+        }, REVIEW_DELAY)
+    }
+
     companion object {
+        private val UPTIME_MINIMUM = TimeUnit.MINUTES.toMillis(2)
+        private const val REVIEW_DELAY = 2000L
         private const val ACTION_START = "ACTION_START"
         private const val ACTION_STOP = "ACTION_STOP"
 

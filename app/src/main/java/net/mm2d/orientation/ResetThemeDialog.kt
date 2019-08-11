@@ -41,7 +41,7 @@ class ResetThemeDialog : DialogFragment() {
             if (fragmentManager.findFragmentByTag(TAG) != null) {
                 return
             }
-            ResetThemeDialog().show(fragmentManager, TAG/**/)
+            ResetThemeDialog().show(fragmentManager, TAG)
         }
     }
 }

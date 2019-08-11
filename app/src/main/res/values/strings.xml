@@ -48,6 +48,11 @@
     <string name="dialog_message_permission">To use this app, need to allow \"display over other apps\".\nGo edition devices may not be able to grant permission. In that case, you cannot use this app, so please uninstall this app.</string>
     <string name="dialog_button_open_settings">Go settings</string>
 
+    <string name="dialog_title_review">Are you satisfied?</string>
+    <string name="dialog_message_review">If you are satisfied, please cheer me up by 5-stars review.\nIf there is a problem, please report me</string>
+    <string name="dialog_button_review">Review</string>
+    <string name="dialog_button_send_mail">Report</string>
+
     <string name="toast_could_not_open_setting">Could not open system setting</string>
 
     <string name="license">Open source licenses</string>

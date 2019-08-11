@@ -62,6 +62,30 @@ class Settings private constructor(
         get() = storage.readBoolean(Key.USE_FULL_SENSOR, false)
         set(value) = storage.writeBoolean(Key.USE_FULL_SENSOR, value)
 
+    var firstUseTime: Long
+        get() = storage.readLong(Key.TIME_FIRST_USE, 0L)
+        set(value) = storage.writeLong(Key.TIME_FIRST_USE, value)
+
+    var firstReviewTime: Long
+        get() = storage.readLong(Key.TIME_FIRST_USE, 0L)
+        set(value) = storage.writeLong(Key.TIME_FIRST_USE, value)
+
+    var orientationChangeCount: Int
+        get() = storage.readInt(Key.COUNT_ORIENTATION_CHANGED, 0)
+        set(value) = storage.writeInt(Key.COUNT_ORIENTATION_CHANGED, value)
+
+    var reviewCancelCount: Int
+        get() = storage.readInt(Key.COUNT_REVIEW_DIALOG_CANCELED, 0)
+        set(value) = storage.writeInt(Key.COUNT_REVIEW_DIALOG_CANCELED, value)
+
+    var reviewed: Boolean
+        get() = storage.readBoolean(Key.REVIEW_REVIEWED, false)
+        set(value) = storage.writeBoolean(Key.REVIEW_REVIEWED, value)
+
+    var reported: Boolean
+        get() = storage.readBoolean(Key.REVIEW_REPORTED, false)
+        set(value) = storage.writeBoolean(Key.REVIEW_REPORTED, value)
+
     fun resetTheme() {
         foregroundColor = Default.color.foreground
         backgroundColor = Default.color.background

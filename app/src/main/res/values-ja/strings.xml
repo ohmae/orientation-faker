@@ -48,6 +48,11 @@
     <string name="dialog_message_permission">「他のアプリの上に重ねて表示」の許可が必要です。\nGoエディションの端末では許可を与えられない可能性があります。その場合このアプリを使用することはできません。アンインストールしてください</string>
     <string name="dialog_button_open_settings">設定を開く</string>
 
+    <string name="dialog_title_review">ご満足いただけましたか？</string>
+    <string name="dialog_message_review">問題なければ５つ星評価で応援ください\n問題があれば報告いただけますと幸いです</string>
+    <string name="dialog_button_review">評価する</string>
+    <string name="dialog_button_send_mail">問題報告</string>
+
     <string name="toast_could_not_open_setting">システムの設定画面を開けません</string>
 
     <string name="license">オープンソースライセンス</string>
