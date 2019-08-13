@@ -22,6 +22,7 @@ import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.control.OverlayPermissionHelper
+import net.mm2d.orientation.review.ReviewRequest
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.LaunchUtils
 
@@ -132,6 +133,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyStatus() {
         status.isChecked = orientationHelper.isEnabled
+        ReviewRequest.requestReviewIfNeed(this)
     }
 
     private fun toggleAutoStart() {

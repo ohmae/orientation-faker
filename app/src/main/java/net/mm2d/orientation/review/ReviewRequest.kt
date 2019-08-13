@@ -7,29 +7,45 @@
 
 package net.mm2d.orientation.review
 
-import android.content.Context
-import android.os.Handler
-import android.os.Looper
-import android.os.SystemClock
+import androidx.fragment.app.FragmentActivity
 import net.mm2d.orientation.control.OrientationHelper
+import net.mm2d.orientation.settings.Settings
 import java.util.concurrent.TimeUnit
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 object ReviewRequest {
-    private const val REVIEW_DELAY = 1000L
-    private val UPTIME_MINIMUM = TimeUnit.MINUTES.toMillis(2)
-    private val handler by lazy { Handler(Looper.getMainLooper()) }
+    private const val ORIENTATION_CHANGE_COUNT = 10
+    private val INTERVAL_FIRST_REVIEW = TimeUnit.DAYS.toMillis(20)
+    private val INTERVAL_SECOND_REVIEW = TimeUnit.DAYS.toMillis(40)
 
-    fun requestReviewIfNeed(context: Context) {
-        if (SystemClock.uptimeMillis() < UPTIME_MINIMUM) {
+    fun requestReviewIfNeed(activity: FragmentActivity) {
+        val settings = Settings.get()
+        if (settings.reported || settings.reviewed) {
             return
         }
-        handler.postDelayed({
-            if (OrientationHelper.getInstance(context).isEnabled) {
-                ReviewActivity.startIfNeed(context)
-            }
-        }, REVIEW_DELAY)
+        if (settings.orientationChangeCount < ORIENTATION_CHANGE_COUNT) {
+            return
+        }
+        if (settings.reviewCancelCount >= 2) {
+            return
+        }
+        if (settings.reviewCancelCount == 0 &&
+            System.currentTimeMillis() - settings.firstUseTime < INTERVAL_FIRST_REVIEW
+        ) {
+            return
+        }
+        if (settings.reviewCancelCount == 1 &&
+            System.currentTimeMillis() - settings.firstReviewTime < INTERVAL_SECOND_REVIEW
+        ) {
+            return
+        }
+        if (settings.reviewCancelCount == 0) {
+            settings.firstReviewTime = System.currentTimeMillis()
+        }
+        if (OrientationHelper.getInstance(activity).isEnabled) {
+            ReviewDialog.showDialog(activity)
+        }
     }
 }

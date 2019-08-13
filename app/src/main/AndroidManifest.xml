@@ -47,13 +47,6 @@
             android:label="@string/license"
             android:theme="@style/AppTheme.NoActionBar"
             />
-        <activity
-            android:name="net.mm2d.orientation.review.ReviewActivity"
-            android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|keyboard"
-            android:autoRemoveFromRecents="true"
-            android:excludeFromRecents="true"
-            android:theme="@style/AppTheme.Transparent"
-            />
 
         <service
             android:name="net.mm2d.orientation.MainService"
