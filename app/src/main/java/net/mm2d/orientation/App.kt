@@ -11,7 +11,6 @@ import android.app.Application
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
-import com.squareup.leakcanary.LeakCanary
 import io.reactivex.exceptions.OnErrorNotImplementedException
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
@@ -29,10 +28,6 @@ import net.mm2d.orientation.tabs.CustomTabsHelper
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return
-        }
-        LeakCanary.install(this)
         setUpLogger()
         setStrictMode()
         RxJavaPlugins.setErrorHandler(::logError)
