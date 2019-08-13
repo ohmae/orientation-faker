@@ -56,7 +56,8 @@ class ReviewActivity : AppCompatActivity() {
         private fun start(context: Context) {
             try {
                 val intent = Intent(context, ReviewActivity::class.java).also {
-                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    it.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 }
                 context.startActivity(intent)
             } catch (e: Exception) {

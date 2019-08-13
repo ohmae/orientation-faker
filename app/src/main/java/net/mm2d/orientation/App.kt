@@ -40,6 +40,7 @@ class App : Application() {
         UpdateRouter.initialize(this)
         CustomTabsHelper.init(this)
         registerActivityLifecycleCallbacks(CustomTabsBinder())
+        KeepAlive.ensureResident(this)
     }
 
     private fun logError(e: Throwable) {

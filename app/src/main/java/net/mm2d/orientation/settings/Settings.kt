@@ -134,7 +134,7 @@ class Settings private constructor(
                 .subscribe(task) {
                     Thread.currentThread()
                         .uncaughtExceptionHandler
-                        .uncaughtException(Thread.currentThread(), it)
+                        ?.uncaughtException(Thread.currentThread(), it)
                 }
         }
 
