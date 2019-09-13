@@ -47,13 +47,13 @@ class ReviewDialog : DialogFragment() {
             .create()
     }
 
-    override fun onCancel(dialog: DialogInterface?) {
+    override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
         settings.reviewCancelCount++
 
     }
 
-    override fun onDismiss(dialog: DialogInterface?) {
+    override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         activity?.finish()
     }
