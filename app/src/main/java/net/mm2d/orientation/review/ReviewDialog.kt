@@ -62,7 +62,7 @@ class ReviewDialog : DialogFragment() {
         private const val TAG = "ReviewDialog"
 
         fun showDialog(activity: FragmentActivity) {
-            val fragmentManager = activity.supportFragmentManager ?: return
+            val fragmentManager = activity.supportFragmentManager
             if (fragmentManager.findFragmentByTag(TAG) != null) {
                 return
             }

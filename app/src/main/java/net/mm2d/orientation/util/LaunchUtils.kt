@@ -42,14 +42,17 @@ object LaunchUtils {
         return true
     }
 
-    fun openCustomTabs(context: Context, uri: String): Boolean {
+    fun openCustomTabs(context: Context, uri: String): Boolean =
+        openCustomTabs(context, Uri.parse(uri))
+
+    fun openCustomTabs(context: Context, uri: Uri): Boolean {
         try {
             val intent = CustomTabsIntent.Builder(CustomTabsHelper.session)
                 .setShowTitle(true)
                 .setToolbarColor(ContextCompat.getColor(context, R.color.primary))
                 .build()
             intent.intent.setPackage(CustomTabsHelper.packageNameToBind)
-            intent.launchUrl(context, Uri.parse(uri))
+            intent.launchUrl(context, uri)
         } catch (e: ActivityNotFoundException) {
             Logger.w(e)
             return false

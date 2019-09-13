@@ -37,7 +37,7 @@ class ResetThemeDialog : DialogFragment() {
         private const val TAG = "ResetThemeDialog"
 
         fun show(activity: FragmentActivity) {
-            val fragmentManager = activity.supportFragmentManager ?: return
+            val fragmentManager = activity.supportFragmentManager
             if (fragmentManager.findFragmentByTag(TAG) != null) {
                 return
             }

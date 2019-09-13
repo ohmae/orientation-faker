@@ -104,7 +104,7 @@ class Settings private constructor(
     companion object {
         private var settings: Settings? = null
         private val lock: Lock = ReentrantLock()
-        private val condition: Condition = lock.newCondition()!!
+        private val condition: Condition = lock.newCondition()
 
         /**
          * アプリ起動時に一度だけコールされ、初期化を行う。
@@ -153,9 +153,7 @@ class Settings private constructor(
                         Logger.e("!!!!!!!!!! BLOCK !!!!!!!!!!")
                     }
                     val timeout = if (isMainThread()) 4L else 40L
-                    if (!condition.await(timeout, TimeUnit.SECONDS)) {
-                        throw IllegalStateException("Settings initialization timeout")
-                    }
+                    check(condition.await(timeout, TimeUnit.SECONDS)) { "Settings initialization timeout" }
                 }
                 return settings!!
             }
