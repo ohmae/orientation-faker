@@ -11,8 +11,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.text.TextUtils
-
 import net.mm2d.orientation.MainService
 import net.mm2d.orientation.settings.Settings
 
@@ -21,7 +19,7 @@ import net.mm2d.orientation.settings.Settings
  */
 class OrientationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (!TextUtils.equals(intent.action, ACTION_ORIENTATION)) {
+        if (intent.action != ACTION_ORIENTATION) {
             return
         }
         val orientation = intent.getIntExtra(
