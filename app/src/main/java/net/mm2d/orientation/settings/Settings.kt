@@ -62,6 +62,10 @@ class Settings private constructor(
         get() = storage.readBoolean(Key.USE_FULL_SENSOR, false)
         set(value) = storage.writeBoolean(Key.USE_FULL_SENSOR, value)
 
+    var reviewIntervalRandomFactor: Long
+        get() = storage.readLong(Key.REVIEW_INTERVAL_RANDOM_FACTOR, 0L)
+        set(value) = storage.writeLong(Key.REVIEW_INTERVAL_RANDOM_FACTOR, value)
+
     var firstUseTime: Long
         get() = storage.readLong(Key.TIME_FIRST_USE, 0L)
         set(value) = storage.writeLong(Key.TIME_FIRST_USE, value)
@@ -153,7 +157,9 @@ class Settings private constructor(
                         Logger.e("!!!!!!!!!! BLOCK !!!!!!!!!!")
                     }
                     val timeout = if (isMainThread()) 4L else 40L
-                    check(condition.await(timeout, TimeUnit.SECONDS)) { "Settings initialization timeout" }
+                    check(condition.await(timeout, TimeUnit.SECONDS)) {
+                        "Settings initialization timeout"
+                    }
                 }
                 return settings!!
             }

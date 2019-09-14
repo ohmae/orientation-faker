@@ -16,6 +16,7 @@ import android.os.Build.VERSION_CODES
 import android.view.View
 import android.view.WindowManager
 import android.view.WindowManager.LayoutParams
+import net.mm2d.orientation.review.ReviewRequest
 import net.mm2d.orientation.settings.Settings
 
 /**
@@ -52,10 +53,8 @@ class OrientationHelper private constructor(context: Context) {
     }
 
     fun updateOrientation() {
+        ReviewRequest.initializeIfNeed()
         val settings = Settings.get()
-        if (settings.firstUseTime == 0L) {
-            settings.firstUseTime = System.currentTimeMillis()
-        }
         val orientation = settings.orientation.let {
             if (it == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED && settings.useFullSensor) {
                 ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
