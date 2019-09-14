@@ -49,7 +49,7 @@
     <string name="dialog_button_open_settings">設定を開く</string>
 
     <string name="dialog_title_review">ご満足いただけましたか？</string>
-    <string name="dialog_message_review">問題なければ５つ星評価で応援ください\n問題があれば報告いただけますと幸いです</string>
+    <string name="dialog_message_review">５つ星評価で応援をお願いします\n問題があれば報告いただけますと幸いです</string>
     <string name="dialog_button_review">評価する</string>
     <string name="dialog_button_send_mail">問題報告</string>
 
