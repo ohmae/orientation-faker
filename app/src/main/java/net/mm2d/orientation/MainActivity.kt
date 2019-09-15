@@ -13,10 +13,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings.System
 import android.text.format.DateFormat
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle.State
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_main.*
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
@@ -37,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         OrientationHelper.getInstance(this)
     }
     private val handler = Handler(Looper.getMainLooper())
+    private val checkSystemSettingsTask = Runnable { checkSystemSettings() }
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             applyStatus()
@@ -83,6 +89,24 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         notificationSample.update()
+        handler.removeCallbacks(checkSystemSettingsTask)
+        handler.post(checkSystemSettingsTask)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(checkSystemSettingsTask)
+    }
+
+    private fun checkSystemSettings() {
+        if (lifecycle.currentState != State.RESUMED) {
+            return
+        }
+        val fixed = System.getInt(contentResolver, System.ACCELEROMETER_ROTATION) == 0
+        if (fixed != caution.isVisible) {
+            caution.visibility = if (fixed) View.VISIBLE else View.GONE
+        }
+        handler.postDelayed(checkSystemSettingsTask, CHECK_INTERVAL)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -165,5 +189,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val REQUEST_CODE = 101
+        private const val CHECK_INTERVAL = 5000L
     }
 }
