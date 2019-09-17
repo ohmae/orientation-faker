@@ -74,7 +74,7 @@ object CustomTabsHelper : CustomTabsServiceConnection() {
     var session: CustomTabsSession? = null
         private set
 
-    fun init(context: Context) {
+    fun initialize(context: Context) {
         this.context = context.applicationContext
     }
 

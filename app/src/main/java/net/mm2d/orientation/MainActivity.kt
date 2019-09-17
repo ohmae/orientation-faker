@@ -38,9 +38,6 @@ class MainActivity : AppCompatActivity() {
     private val settings by lazy {
         Settings.get()
     }
-    private val orientationHelper by lazy {
-        OrientationHelper.getInstance(this)
-    }
     private val handler = Handler(Looper.getMainLooper())
     private val checkSystemSettingsTask = Runnable { checkSystemSettings() }
     private val receiver = object : BroadcastReceiver() {
@@ -144,7 +141,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun toggleStatus() {
-        if (orientationHelper.isEnabled) {
+        if (OrientationHelper.isEnabled) {
             MainService.stop(this)
             if (settings.shouldAutoStart()) {
                 settings.setAutoStart(false)
@@ -156,14 +153,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun applyStatus() {
-        status.isChecked = orientationHelper.isEnabled
+        status.isChecked = OrientationHelper.isEnabled
         ReviewRequest.requestReviewIfNeed(this)
     }
 
     private fun toggleAutoStart() {
         settings.setAutoStart(!settings.shouldAutoStart())
         applyAutoStart()
-        if (settings.shouldAutoStart() && !orientationHelper.isEnabled) {
+        if (settings.shouldAutoStart() && !OrientationHelper.isEnabled) {
             MainService.start(this)
         }
     }
@@ -175,7 +172,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateOrientation(orientation: Int) {
         settings.orientation = orientation
         notificationSample.update()
-        if (orientationHelper.isEnabled) {
+        if (OrientationHelper.isEnabled) {
             MainService.start(this)
         }
     }

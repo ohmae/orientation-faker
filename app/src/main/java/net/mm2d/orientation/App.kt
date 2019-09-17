@@ -17,6 +17,7 @@ import io.reactivex.plugins.RxJavaPlugins
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.log.Logger
 import net.mm2d.log.android.AndroidSenders
+import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.tabs.CustomTabsBinder
 import net.mm2d.orientation.tabs.CustomTabsHelper
@@ -33,9 +34,10 @@ class App : Application() {
         RxJavaPlugins.setErrorHandler(::logError)
         Settings.initialize(this)
         UpdateRouter.initialize(this)
-        CustomTabsHelper.init(this)
+        CustomTabsHelper.initialize(this)
         registerActivityLifecycleCallbacks(CustomTabsBinder())
         KeepAlive.ensureResident(this)
+        OrientationHelper.initialize(this)
     }
 
     private fun logError(e: Throwable) {

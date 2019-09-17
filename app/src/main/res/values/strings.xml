@@ -55,6 +55,7 @@
     <string name="dialog_button_send_mail">Report</string>
 
     <string name="toast_could_not_open_setting">Could not open system setting</string>
+    <string name="toast_system_settings">Please change the system setting to auto-rotate</string>
 
     <string name="license">Open source licenses</string>
     <string name="source_code">Source code</string>

@@ -55,7 +55,7 @@ object ReviewRequest {
         if (settings.reviewCancelCount == 0) {
             settings.firstReviewTime = now
         }
-        if (OrientationHelper.getInstance(activity).isEnabled) {
+        if (OrientationHelper.isEnabled) {
             ReviewDialog.showDialog(activity)
         }
     }

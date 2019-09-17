@@ -43,14 +43,13 @@ class MainService : Service() {
     }
 
     private fun start() {
-        OrientationHelper.getInstance(this).updateOrientation()
+        OrientationHelper.updateOrientation()
         UpdateRouter.send()
     }
 
     private fun stop() {
         NotificationHelper.stopForeground(this)
-        OrientationHelper.getInstance(this)
-            .cancel()
+        OrientationHelper.cancel()
         UpdateRouter.send()
         stopSelf()
     }
@@ -64,7 +63,7 @@ class MainService : Service() {
         }
 
         fun stop(context: Context) {
-            if (!OrientationHelper.getInstance(context).isEnabled) {
+            if (!OrientationHelper.isEnabled) {
                 return
             }
             startService(context, ACTION_STOP)

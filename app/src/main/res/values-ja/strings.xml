@@ -55,6 +55,7 @@
     <string name="dialog_button_send_mail">問題報告</string>
 
     <string name="toast_could_not_open_setting">システムの設定画面を開けません</string>
+    <string name="toast_system_settings">システム設定を自動回転に変更してください</string>
 
     <string name="license">オープンソースライセンス</string>
     <string name="source_code">ソースコード</string>
