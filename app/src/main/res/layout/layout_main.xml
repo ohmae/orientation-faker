@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:animateLayoutChanges="true"
     >
 
     <net.mm2d.orientation.view.SwitchMenuView
@@ -42,6 +43,23 @@
 
         <include layout="@layout/notification"/>
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/caution"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_caution"
+        android:drawableStart="@drawable/ic_caution"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+        android:text="@string/caution"
+        android:textColor="@color/fg_caution"
+        android:textSize="@dimen/text_caution"
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/detailed_setting"

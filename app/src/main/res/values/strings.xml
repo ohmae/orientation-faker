@@ -24,7 +24,7 @@
     <string name="detailed_settings">Detailed Settings</string>
     <string name="detailed_settings_description">Theme and detailed behavior settings of notification</string>
     <string name="version">Version</string>
-    <string name="caution">Please change the system setting to auto-rotate</string>
+    <string name="caution">Please change the system setting to auto-rotate. Reverse setting may not be possible</string>
 
     <string name="theme">Theme</string>
     <string name="reset_theme">Reset theme</string>
