@@ -62,5 +62,6 @@ internal object Maintainer {
         storage.writeInt(Key.COUNT_REVIEW_DIALOG_CANCELED, 0)
         storage.writeBoolean(Key.REVIEW_REPORTED, false)
         storage.writeBoolean(Key.REVIEW_REVIEWED, false)
+        storage.writeBoolean(Key.AUTO_ROTATE_WARNING, true)
     }
 }

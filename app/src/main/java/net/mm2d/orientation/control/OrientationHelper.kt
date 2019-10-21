@@ -88,6 +88,9 @@ object OrientationHelper {
         ) {
             return
         }
+        if (!Settings.get().autoRotateWarning) {
+            return
+        }
         if (System.getInt(context.contentResolver, System.ACCELEROMETER_ROTATION) == 0) {
             Toast.makeText(context, R.string.toast_system_settings, Toast.LENGTH_LONG).show()
         }

@@ -32,6 +32,9 @@
     <string name="background_color">background</string>
     <string name="selected_foreground_color">*foreground</string>
     <string name="selected_background_color">*background</string>
+    <string name="auto_rotate_warning">System setting warning</string>
+    <string name="auto_rotate_warning_on">Show warning if system setting is not auto-rotate</string>
+    <string name="auto_rotate_warning_off">Don\'t show warning if system setting is not auto-rotate</string>
     <string name="use_full_sensor">Forced automatic rotation</string>
     <string name="use_full_sensor_on">Enable forced automatic rotation</string>
     <string name="use_full_sensor_off">Follow the displayed app</string>

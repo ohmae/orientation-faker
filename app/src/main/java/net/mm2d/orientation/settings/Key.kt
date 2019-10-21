@@ -29,4 +29,5 @@ internal enum class Key {
     COLOR_BACKGROUND_SELECTED,
     NOTIFY_SECRET,
     USE_FULL_SENSOR,
+    AUTO_ROTATE_WARNING,
 }

@@ -197,6 +197,17 @@
     </FrameLayout>
 
     <net.mm2d.orientation.view.SwitchMenuView
+        android:id="@+id/auto_rotate_warning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        app:checked="true"
+        app:descriptionOff="@string/auto_rotate_warning_off"
+        app:descriptionOn="@string/auto_rotate_warning_on"
+        app:title="@string/auto_rotate_warning"
+        />
+
+    <net.mm2d.orientation.view.SwitchMenuView
         android:id="@+id/use_full_sensor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

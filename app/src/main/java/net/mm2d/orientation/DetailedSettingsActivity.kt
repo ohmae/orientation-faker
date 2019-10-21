@@ -64,6 +64,7 @@ class DetailedSettingsActivity
         notificationSample = NotificationSample(this)
         setUpSample()
         setUpOrientationIcons()
+        setUpAutoRotateWarning()
         setUpUseFullSensor()
         setUpNotificationPrivacy()
         setUpSystemSetting()
@@ -139,6 +140,20 @@ class DetailedSettingsActivity
         if (OrientationHelper.isEnabled) {
             MainService.start(this)
         }
+    }
+
+    private fun setUpAutoRotateWarning() {
+        auto_rotate_warning.setOnClickListener { toggleAutoRotateWarning() }
+        applyAutoRotateWarning()
+    }
+
+    private fun applyAutoRotateWarning() {
+        auto_rotate_warning.isChecked = settings.autoRotateWarning
+    }
+
+    private fun toggleAutoRotateWarning() {
+        settings.autoRotateWarning = !settings.autoRotateWarning
+        applyAutoRotateWarning()
     }
 
     private fun setUpUseFullSensor() {

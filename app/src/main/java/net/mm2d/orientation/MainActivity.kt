@@ -21,7 +21,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle.State
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_main.*
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
@@ -97,6 +96,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkSystemSettings() {
         if (lifecycle.currentState != State.RESUMED) {
+            return
+        }
+        if (!settings.autoRotateWarning) {
+            caution.visibility = View.GONE
             return
         }
         val fixed = System.getInt(contentResolver, System.ACCELEROMETER_ROTATION) == 0
