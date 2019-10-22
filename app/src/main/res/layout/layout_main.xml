@@ -59,6 +59,7 @@
         android:text="@string/caution"
         android:textColor="@color/fg_caution"
         android:textSize="@dimen/text_caution"
+        android:visibility="gone"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
