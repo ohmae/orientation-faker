@@ -17,7 +17,7 @@
         android:paddingTop="@dimen/margin_sample_vertical"
         >
 
-        <include layout="@layout/notification"/>
+        <include layout="@layout/notification" />
     </FrameLayout>
 
     <TextView

@@ -15,6 +15,6 @@
         tools:ignore="UselessParent"
         >
 
-        <include layout="@layout/layout_detailed_settings"/>
+        <include layout="@layout/layout_detailed_settings" />
     </ScrollView>
 </LinearLayout>

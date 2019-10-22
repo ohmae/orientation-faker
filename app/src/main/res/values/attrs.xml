@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SwitchMenuView">
-        <attr name="title" format="string"/>
-        <attr name="descriptionOn" format="string"/>
-        <attr name="descriptionOff" format="string"/>
-        <attr name="checked" format="boolean"/>
+        <attr name="title" format="string" />
+        <attr name="descriptionOn" format="string" />
+        <attr name="descriptionOff" format="string" />
+        <attr name="checked" format="boolean" />
     </declare-styleable>
 </resources>
