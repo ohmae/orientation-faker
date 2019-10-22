@@ -17,7 +17,7 @@ import kotlin.random.Random
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 object ReviewRequest {
-    private const val ORIENTATION_CHANGE_COUNT = 10
+    private const val ORIENTATION_CHANGE_COUNT = 5
     private val INTERVAL_FIRST_REVIEW = TimeUnit.DAYS.toMillis(21)
     private val INTERVAL_SECOND_REVIEW = TimeUnit.DAYS.toMillis(42)
     private val INTERVAL_RANDOM_RANGE = TimeUnit.DAYS.toMillis(14)
