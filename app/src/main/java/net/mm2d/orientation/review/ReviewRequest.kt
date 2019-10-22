@@ -32,6 +32,9 @@ object ReviewRequest {
     }
 
     fun requestReviewIfNeed(activity: FragmentActivity) {
+        if (!OrientationHelper.isEnabled) {
+            return
+        }
         if (activity.lifecycle.currentState != Lifecycle.State.RESUMED) {
             return
         }
@@ -59,8 +62,6 @@ object ReviewRequest {
         if (settings.reviewCancelCount == 0) {
             settings.firstReviewTime = now
         }
-        if (OrientationHelper.isEnabled) {
-            ReviewDialog.showDialog(activity)
-        }
+        ReviewDialog.showDialog(activity)
     }
 }
