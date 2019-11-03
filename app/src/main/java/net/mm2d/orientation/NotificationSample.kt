@@ -12,6 +12,7 @@ import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import kotlinx.android.synthetic.main.notification.*
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.OrientationIdManager
 import net.mm2d.orientation.settings.Settings
@@ -28,7 +29,7 @@ class NotificationSample(activity: Activity) {
             activity.findViewById(it.titleViewId)
         )
     }
-    private val background = activity.findViewById<View>(R.id.notification)
+    private val background = activity.notification
 
     init {
         buttonList[buttonList.lastIndex].button.visibility = View.GONE
