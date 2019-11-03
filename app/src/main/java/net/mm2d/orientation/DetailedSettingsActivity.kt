@@ -64,6 +64,7 @@ class DetailedSettingsActivity
         notificationSample = NotificationSample(this)
         setUpSample()
         setUpOrientationIcons()
+        setUpUseBlankIcon()
         setUpAutoRotateWarning()
         setUpUseFullSensor()
         setUpNotificationPrivacy()
@@ -137,6 +138,23 @@ class DetailedSettingsActivity
         sample_foreground_selected.setColorFilter(settings.foregroundColorSelected)
         sample_background_selected.setColorFilter(settings.backgroundColorSelected)
         notificationSample.update()
+        if (OrientationHelper.isEnabled) {
+            MainService.start(this)
+        }
+    }
+
+    private fun setUpUseBlankIcon() {
+        use_blank_icon_for_notification.setOnClickListener { toggleUseBlankIcon() }
+        applyUseBlankIcon()
+    }
+
+    private fun applyUseBlankIcon() {
+        use_blank_icon_for_notification.isChecked = settings.shouldUseBlankIconForNotification
+    }
+
+    private fun toggleUseBlankIcon() {
+        settings.shouldUseBlankIconForNotification = !settings.shouldUseBlankIconForNotification
+        applyUseBlankIcon()
         if (OrientationHelper.isEnabled) {
             MainService.start(this)
         }

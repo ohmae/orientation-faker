@@ -94,6 +94,10 @@ class Settings private constructor(
         get() = storage.readBoolean(Key.REVIEW_REPORTED, false)
         set(value) = storage.writeBoolean(Key.REVIEW_REPORTED, value)
 
+    var shouldUseBlankIconForNotification: Boolean
+        get() = storage.readBoolean(Key.USE_BLANK_ICON_FOR_NOTIFICATION, false)
+        set(value) = storage.writeBoolean(Key.USE_BLANK_ICON_FOR_NOTIFICATION, value)
+
     fun resetTheme() {
         foregroundColor = Default.color.foreground
         backgroundColor = Default.color.background

@@ -32,6 +32,9 @@
     <string name="background_color">背景色</string>
     <string name="selected_foreground_color">選択前景色</string>
     <string name="selected_background_color">選択背景色</string>
+    <string name="use_blank_icon_for_notification">ステータスバーのアイコンを透明にする</string>
+    <string name="use_blank_icon_for_notification_on">ステータスバーに透明なアイコンを表示します</string>
+    <string name="use_blank_icon_for_notification_off">ステータスバーに状態を表すアイコンを表示します</string>
     <string name="auto_rotate_warning">システム設定警告</string>
     <string name="auto_rotate_warning_on">システム設定が自動回転になっていない場合、警告を表示します</string>
     <string name="auto_rotate_warning_off">システム設定が自動回転になっていなくても、警告を表示しません</string>

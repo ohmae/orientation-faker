@@ -30,4 +30,5 @@ internal enum class Key {
     NOTIFY_SECRET,
     USE_FULL_SENSOR,
     AUTO_ROTATE_WARNING,
+    USE_BLANK_ICON_FOR_NOTIFICATION,
 }

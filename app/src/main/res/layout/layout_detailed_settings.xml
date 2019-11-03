@@ -197,6 +197,17 @@
     </FrameLayout>
 
     <net.mm2d.orientation.view.SwitchMenuView
+        android:id="@+id/use_blank_icon_for_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        app:checked="true"
+        app:descriptionOff="@string/use_blank_icon_for_notification_off"
+        app:descriptionOn="@string/use_blank_icon_for_notification_on"
+        app:title="@string/use_blank_icon_for_notification"
+        />
+
+    <net.mm2d.orientation.view.SwitchMenuView
         android:id="@+id/auto_rotate_warning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
