@@ -102,11 +102,13 @@ class MainActivity : AppCompatActivity() {
             caution.visibility = View.GONE
             return
         }
-        val fixed = System.getInt(contentResolver, System.ACCELEROMETER_ROTATION) == 0
-        if (fixed != caution.isVisible) {
-            caution.visibility = if (fixed) View.VISIBLE else View.GONE
+        kotlin.runCatching {
+            val fixed = System.getInt(contentResolver, System.ACCELEROMETER_ROTATION) == 0
+            if (fixed != caution.isVisible) {
+                caution.visibility = if (fixed) View.VISIBLE else View.GONE
+            }
+            handler.postDelayed(checkSystemSettingsTask, CHECK_INTERVAL)
         }
-        handler.postDelayed(checkSystemSettingsTask, CHECK_INTERVAL)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
