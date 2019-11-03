@@ -24,6 +24,7 @@
     <string name="detailed_settings">詳細設定</string>
     <string name="detailed_settings_description">通知のテーマや詳細な動作設定</string>
     <string name="version">バージョン</string>
+    <string name="caution">システム設定を自動回転に変更してください。逆向き設定ができない可能性があります</string>
 
     <string name="theme">テーマ</string>
     <string name="reset_theme">テーマをリセット</string>
@@ -31,6 +32,12 @@
     <string name="background_color">背景色</string>
     <string name="selected_foreground_color">選択前景色</string>
     <string name="selected_background_color">選択背景色</string>
+    <string name="use_blank_icon_for_notification">ステータスバーのアイコンを透明にする</string>
+    <string name="use_blank_icon_for_notification_on">ステータスバーに透明なアイコンを表示します</string>
+    <string name="use_blank_icon_for_notification_off">ステータスバーに状態を表すアイコンを表示します</string>
+    <string name="auto_rotate_warning">システム設定警告</string>
+    <string name="auto_rotate_warning_on">システム設定が自動回転になっていない場合、警告を表示します</string>
+    <string name="auto_rotate_warning_off">システム設定が自動回転になっていなくても、警告を表示しません</string>
     <string name="use_full_sensor">強制自動回転</string>
     <string name="use_full_sensor_on">強制的に自動回転させます</string>
     <string name="use_full_sensor_off">表示されているアプリに従います</string>
@@ -48,7 +55,13 @@
     <string name="dialog_message_permission">「他のアプリの上に重ねて表示」の許可が必要です。\nGoエディションの端末では許可を与えられない可能性があります。その場合このアプリを使用することはできません。アンインストールしてください</string>
     <string name="dialog_button_open_settings">設定を開く</string>
 
+    <string name="dialog_title_review">ご満足いただけましたか？</string>
+    <string name="dialog_message_review">５つ星評価で応援をお願いします\n問題があれば報告いただけますと幸いです</string>
+    <string name="dialog_button_review">評価する</string>
+    <string name="dialog_button_send_mail">問題報告</string>
+
     <string name="toast_could_not_open_setting">システムの設定画面を開けません</string>
+    <string name="toast_system_settings">システム設定を自動回転に変更してください</string>
 
     <string name="license">オープンソースライセンス</string>
     <string name="source_code">ソースコード</string>

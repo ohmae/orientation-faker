@@ -13,15 +13,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings.System
 import android.text.format.DateFormat
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle.State
 import kotlinx.android.synthetic.main.layout_main.*
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.control.OverlayPermissionHelper
+import net.mm2d.orientation.review.ReviewRequest
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.LaunchUtils
 
@@ -32,10 +37,8 @@ class MainActivity : AppCompatActivity() {
     private val settings by lazy {
         Settings.get()
     }
-    private val orientationHelper by lazy {
-        OrientationHelper.getInstance(this)
-    }
     private val handler = Handler(Looper.getMainLooper())
+    private val checkSystemSettingsTask = Runnable { checkSystemSettings() }
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             applyStatus()
@@ -82,6 +85,30 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         notificationSample.update()
+        handler.removeCallbacks(checkSystemSettingsTask)
+        handler.post(checkSystemSettingsTask)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(checkSystemSettingsTask)
+    }
+
+    private fun checkSystemSettings() {
+        if (lifecycle.currentState != State.RESUMED) {
+            return
+        }
+        if (!settings.autoRotateWarning) {
+            caution.visibility = View.GONE
+            return
+        }
+        kotlin.runCatching {
+            val fixed = System.getInt(contentResolver, System.ACCELEROMETER_ROTATION) == 0
+            if (fixed != caution.isVisible) {
+                caution.visibility = if (fixed) View.VISIBLE else View.GONE
+            }
+            handler.postDelayed(checkSystemSettingsTask, CHECK_INTERVAL)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -119,7 +146,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun toggleStatus() {
-        if (orientationHelper.isEnabled) {
+        if (OrientationHelper.isEnabled) {
             MainService.stop(this)
             if (settings.shouldAutoStart()) {
                 settings.setAutoStart(false)
@@ -131,13 +158,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun applyStatus() {
-        status.isChecked = orientationHelper.isEnabled
+        status.isChecked = OrientationHelper.isEnabled
+        ReviewRequest.requestReviewIfNeed(this)
     }
 
     private fun toggleAutoStart() {
         settings.setAutoStart(!settings.shouldAutoStart())
         applyAutoStart()
-        if (settings.shouldAutoStart() && !orientationHelper.isEnabled) {
+        if (settings.shouldAutoStart() && !OrientationHelper.isEnabled) {
             MainService.start(this)
         }
     }
@@ -149,19 +177,20 @@ class MainActivity : AppCompatActivity() {
     private fun updateOrientation(orientation: Int) {
         settings.orientation = orientation
         notificationSample.update()
-        if (orientationHelper.isEnabled) {
+        if (OrientationHelper.isEnabled) {
             MainService.start(this)
         }
     }
 
     private fun makeVersionInfo(): String {
         return BuildConfig.VERSION_NAME +
-                if (BuildConfig.DEBUG)
-                    " # " + DateFormat.format("yyyy/M/d kk:mm:ss", BuildConfig.BUILD_TIME)
-                else ""
+            if (BuildConfig.DEBUG)
+                " # " + DateFormat.format("yyyy/M/d kk:mm:ss", BuildConfig.BUILD_TIME)
+            else ""
     }
 
     companion object {
         private const val REQUEST_CODE = 101
+        private const val CHECK_INTERVAL = 5000L
     }
 }

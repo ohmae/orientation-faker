@@ -15,14 +15,13 @@ import androidx.browser.customtabs.CustomTabsCallback
 import androidx.browser.customtabs.CustomTabsClient
 import androidx.browser.customtabs.CustomTabsServiceConnection
 import androidx.browser.customtabs.CustomTabsSession
-import java.util.*
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 @SuppressLint("StaticFieldLeak")
 object CustomTabsHelper : CustomTabsServiceConnection() {
-    private val PREFERRED_PACKAGES = Arrays.asList(
+    private val PREFERRED_PACKAGES = listOf(
         "com.android.chrome", // Chrome
         "org.mozilla.firefox", // Firefox
         "com.microsoft.emmx", // Microsoft Edge
@@ -75,7 +74,7 @@ object CustomTabsHelper : CustomTabsServiceConnection() {
     var session: CustomTabsSession? = null
         private set
 
-    fun init(context: Context) {
+    fun initialize(context: Context) {
         this.context = context.applicationContext
     }
 

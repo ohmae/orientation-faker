@@ -15,6 +15,6 @@
         tools:ignore="UselessParent"
         >
 
-        <include layout="@layout/layout_main"/>
+        <include layout="@layout/layout_main" />
     </ScrollView>
 </LinearLayout>

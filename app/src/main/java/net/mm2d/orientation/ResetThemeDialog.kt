@@ -22,8 +22,8 @@ class ResetThemeDialog : DialogFragment() {
         fun resetTheme()
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return AlertDialog.Builder(context!!)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+        AlertDialog.Builder(context!!)
             .setTitle(R.string.dialog_title_reset_theme)
             .setMessage(R.string.dialog_message_reset_theme)
             .setPositiveButton(R.string.ok) { _, _ ->
@@ -31,17 +31,16 @@ class ResetThemeDialog : DialogFragment() {
             }
             .setNegativeButton(R.string.cancel, null)
             .create()
-    }
 
     companion object {
         private const val TAG = "ResetThemeDialog"
 
         fun show(activity: FragmentActivity) {
-            val fragmentManager = activity.supportFragmentManager ?: return
+            val fragmentManager = activity.supportFragmentManager
             if (fragmentManager.findFragmentByTag(TAG) != null) {
                 return
             }
-            ResetThemeDialog().show(fragmentManager, TAG/**/)
+            ResetThemeDialog().show(fragmentManager, TAG)
         }
     }
 }

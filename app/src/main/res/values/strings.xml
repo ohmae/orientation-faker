@@ -24,6 +24,7 @@
     <string name="detailed_settings">Detailed Settings</string>
     <string name="detailed_settings_description">Theme and detailed behavior settings of notification</string>
     <string name="version">Version</string>
+    <string name="caution">Please change the system setting to auto-rotate. Reverse setting may not be possible</string>
 
     <string name="theme">Theme</string>
     <string name="reset_theme">Reset theme</string>
@@ -31,6 +32,12 @@
     <string name="background_color">background</string>
     <string name="selected_foreground_color">*foreground</string>
     <string name="selected_background_color">*background</string>
+    <string name="use_blank_icon_for_notification">Make the status bar icon transparent</string>
+    <string name="use_blank_icon_for_notification_on">Display transparent icon in the status bar</string>
+    <string name="use_blank_icon_for_notification_off">Display icon that reflects the status in the status bar</string>
+    <string name="auto_rotate_warning">System setting warning</string>
+    <string name="auto_rotate_warning_on">Show warning if system setting is not auto-rotate</string>
+    <string name="auto_rotate_warning_off">Don\'t show warning if system setting is not auto-rotate</string>
     <string name="use_full_sensor">Forced automatic rotation</string>
     <string name="use_full_sensor_on">Enable forced automatic rotation</string>
     <string name="use_full_sensor_off">Follow the displayed app</string>
@@ -48,7 +55,13 @@
     <string name="dialog_message_permission">To use this app, need to allow \"display over other apps\".\nGo edition devices may not be able to grant permission. In that case, you cannot use this app, so please uninstall this app.</string>
     <string name="dialog_button_open_settings">Go settings</string>
 
+    <string name="dialog_title_review">Are you satisfied?</string>
+    <string name="dialog_message_review">Please cheer me up by 5-stars review.\nIf there is a problem, please report it to me</string>
+    <string name="dialog_button_review">Review</string>
+    <string name="dialog_button_send_mail">Report</string>
+
     <string name="toast_could_not_open_setting">Could not open system setting</string>
+    <string name="toast_system_settings">Please change the system setting to auto-rotate</string>
 
     <string name="license">Open source licenses</string>
     <string name="source_code">Source code</string>

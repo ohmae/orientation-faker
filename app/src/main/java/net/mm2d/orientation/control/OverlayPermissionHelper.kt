@@ -33,22 +33,23 @@ object OverlayPermissionHelper {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.canDrawOverlays(activity)) {
             return
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
-            activity.packageManager.hasSystemFeature(PackageManager.FEATURE_RAM_LOW)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q ||
+            !activity.packageManager.hasSystemFeature(PackageManager.FEATURE_RAM_LOW)
         ) {
-            AlertDialog.Builder(activity)
-                .setTitle(R.string.dialog_title_permission)
-                .setMessage(R.string.dialog_message_permission)
-                .setPositiveButton(R.string.dialog_button_open_settings) { _, _ ->
-                    requestOverlayPermission(activity, requestCode)
-                }
-                .setNegativeButton(R.string.cancel) { _, _ ->
-                    activity.finish()
-                }
-                .setOnCancelListener { activity.finish() }
-                .show()
+            requestOverlayPermission(activity, requestCode)
+            return
         }
-        requestOverlayPermission(activity, requestCode)
+        AlertDialog.Builder(activity)
+            .setTitle(R.string.dialog_title_permission)
+            .setMessage(R.string.dialog_message_permission)
+            .setPositiveButton(R.string.dialog_button_open_settings) { _, _ ->
+                requestOverlayPermission(activity, requestCode)
+            }
+            .setNegativeButton(R.string.cancel) { _, _ ->
+                activity.finish()
+            }
+            .setOnCancelListener { activity.finish() }
+            .show()
     }
 
     @RequiresApi(Build.VERSION_CODES.M)

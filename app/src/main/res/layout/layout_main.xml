@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
     android:orientation="vertical"
     >
 
@@ -34,14 +35,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#000000"
-        android:paddingBottom="@dimen/margin_sample_vertical"
         android:paddingLeft="@dimen/margin_sample_horizontal"
-        android:paddingRight="@dimen/margin_sample_horizontal"
         android:paddingTop="@dimen/margin_sample_vertical"
+        android:paddingRight="@dimen/margin_sample_horizontal"
+        android:paddingBottom="@dimen/margin_sample_vertical"
         >
 
-        <include layout="@layout/notification"/>
+        <include layout="@layout/notification" />
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/caution"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_caution"
+        android:drawableStart="@drawable/ic_caution"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+        android:text="@string/caution"
+        android:textColor="@color/fg_caution"
+        android:textSize="@dimen/text_caution"
+        android:visibility="gone"
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/detailed_setting"
@@ -57,8 +76,8 @@
             android:layout_marginStart="@dimen/margin_menu_horizontal"
             android:layout_marginTop="@dimen/margin_menu_vertical"
             android:text="@string/detailed_settings"
-            android:textSize="@dimen/text_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="@dimen/text_title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -68,11 +87,11 @@
             android:id="@+id/detailed_setting_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_menu_vertical"
             android:layout_marginStart="@dimen/margin_menu_horizontal"
+            android:layout_marginBottom="@dimen/margin_menu_vertical"
             android:text="@string/detailed_settings_description"
-            android:textSize="@dimen/text_description"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="@dimen/text_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,8 +114,8 @@
             android:layout_marginStart="@dimen/margin_menu_horizontal"
             android:layout_marginTop="@dimen/margin_menu_vertical"
             android:text="@string/version"
-            android:textSize="@dimen/text_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="@dimen/text_title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -106,10 +125,10 @@
             android:id="@+id/version_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_menu_vertical"
             android:layout_marginStart="@dimen/margin_menu_horizontal"
-            android:textSize="@dimen/text_description"
+            android:layout_marginBottom="@dimen/margin_menu_vertical"
             android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="@dimen/text_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"

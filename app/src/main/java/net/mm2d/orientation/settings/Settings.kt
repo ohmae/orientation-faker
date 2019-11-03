@@ -58,9 +58,45 @@ class Settings private constructor(
         get() = storage.readBoolean(Key.NOTIFY_SECRET, false)
         set(value) = storage.writeBoolean(Key.NOTIFY_SECRET, value)
 
+    var autoRotateWarning: Boolean
+        get() = storage.readBoolean(Key.AUTO_ROTATE_WARNING, true)
+        set(value) = storage.writeBoolean(Key.AUTO_ROTATE_WARNING, value)
+
     var useFullSensor: Boolean
         get() = storage.readBoolean(Key.USE_FULL_SENSOR, false)
         set(value) = storage.writeBoolean(Key.USE_FULL_SENSOR, value)
+
+    var reviewIntervalRandomFactor: Long
+        get() = storage.readLong(Key.REVIEW_INTERVAL_RANDOM_FACTOR, 0L)
+        set(value) = storage.writeLong(Key.REVIEW_INTERVAL_RANDOM_FACTOR, value)
+
+    var firstUseTime: Long
+        get() = storage.readLong(Key.TIME_FIRST_USE, 0L)
+        set(value) = storage.writeLong(Key.TIME_FIRST_USE, value)
+
+    var firstReviewTime: Long
+        get() = storage.readLong(Key.TIME_FIRST_USE, 0L)
+        set(value) = storage.writeLong(Key.TIME_FIRST_USE, value)
+
+    var orientationChangeCount: Int
+        get() = storage.readInt(Key.COUNT_ORIENTATION_CHANGED, 0)
+        set(value) = storage.writeInt(Key.COUNT_ORIENTATION_CHANGED, value)
+
+    var reviewCancelCount: Int
+        get() = storage.readInt(Key.COUNT_REVIEW_DIALOG_CANCELED, 0)
+        set(value) = storage.writeInt(Key.COUNT_REVIEW_DIALOG_CANCELED, value)
+
+    var reviewed: Boolean
+        get() = storage.readBoolean(Key.REVIEW_REVIEWED, false)
+        set(value) = storage.writeBoolean(Key.REVIEW_REVIEWED, value)
+
+    var reported: Boolean
+        get() = storage.readBoolean(Key.REVIEW_REPORTED, false)
+        set(value) = storage.writeBoolean(Key.REVIEW_REPORTED, value)
+
+    var shouldUseBlankIconForNotification: Boolean
+        get() = storage.readBoolean(Key.USE_BLANK_ICON_FOR_NOTIFICATION, false)
+        set(value) = storage.writeBoolean(Key.USE_BLANK_ICON_FOR_NOTIFICATION, value)
 
     fun resetTheme() {
         foregroundColor = Default.color.foreground
@@ -80,7 +116,7 @@ class Settings private constructor(
     companion object {
         private var settings: Settings? = null
         private val lock: Lock = ReentrantLock()
-        private val condition: Condition = lock.newCondition()!!
+        private val condition: Condition = lock.newCondition()
 
         /**
          * アプリ起動時に一度だけコールされ、初期化を行う。
@@ -110,7 +146,7 @@ class Settings private constructor(
                 .subscribe(task) {
                     Thread.currentThread()
                         .uncaughtExceptionHandler
-                        .uncaughtException(Thread.currentThread(), it)
+                        ?.uncaughtException(Thread.currentThread(), it)
                 }
         }
 
@@ -129,8 +165,8 @@ class Settings private constructor(
                         Logger.e("!!!!!!!!!! BLOCK !!!!!!!!!!")
                     }
                     val timeout = if (isMainThread()) 4L else 40L
-                    if (!condition.await(timeout, TimeUnit.SECONDS)) {
-                        throw IllegalStateException("Settings initialization timeout")
+                    check(condition.await(timeout, TimeUnit.SECONDS)) {
+                        "Settings initialization timeout"
                     }
                 }
                 return settings!!

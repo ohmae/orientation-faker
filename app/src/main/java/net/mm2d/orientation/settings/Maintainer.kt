@@ -56,5 +56,12 @@ internal object Maintainer {
         storage.writeInt(Key.COLOR_FOREGROUND_SELECTED, Default.color.foregroundSelected)
         storage.writeInt(Key.COLOR_BACKGROUND_SELECTED, Default.color.backgroundSelected)
         storage.writeBoolean(Key.NOTIFY_SECRET, false)
+        storage.writeLong(Key.TIME_FIRST_USE, 0L)
+        storage.writeLong(Key.TIME_FIRST_REVIEW, 0L)
+        storage.writeInt(Key.COUNT_ORIENTATION_CHANGED, 0)
+        storage.writeInt(Key.COUNT_REVIEW_DIALOG_CANCELED, 0)
+        storage.writeBoolean(Key.REVIEW_REPORTED, false)
+        storage.writeBoolean(Key.REVIEW_REVIEWED, false)
+        storage.writeBoolean(Key.AUTO_ROTATE_WARNING, true)
     }
 }
