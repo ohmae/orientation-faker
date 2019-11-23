@@ -11,4 +11,5 @@
     <dimen name="text_color_title">12sp</dimen>
     <dimen name="text_description">12sp</dimen>
     <dimen name="text_caution">12sp</dimen>
+    <dimen name="text_button">18sp</dimen>
 </resources>

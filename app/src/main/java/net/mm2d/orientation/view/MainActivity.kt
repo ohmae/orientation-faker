@@ -163,7 +163,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun applyStatus() {
-        status.isChecked = OrientationHelper.isEnabled
+        if (OrientationHelper.isEnabled) {
+            status_button.setText(R.string.status_stop)
+            status_button.setBackgroundResource(R.drawable.bg_stop_button)
+            status_description.setText(R.string.status_running)
+        } else {
+            status_button.setText(R.string.status_start)
+            status_button.setBackgroundResource(R.drawable.bg_start_button)
+            status_description.setText(R.string.status_waiting)
+        }
         ReviewRequest.requestReviewIfNeed(this)
     }
 

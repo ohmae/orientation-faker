@@ -18,6 +18,8 @@
     <string name="status">状態</string>
     <string name="status_running">実行中</string>
     <string name="status_waiting">待機中</string>
+    <string name="status_start">START</string>
+    <string name="status_stop">STOP</string>
     <string name="auto_start">自動起動</string>
     <string name="auto_start_description_on">デバイス起動時に自動起動します</string>
     <string name="auto_start_description_off">自動起動しません</string>

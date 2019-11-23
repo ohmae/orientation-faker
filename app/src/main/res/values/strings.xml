@@ -18,6 +18,8 @@
     <string name="status">Status</string>
     <string name="status_running">Running</string>
     <string name="status_waiting">Waiting</string>
+    <string name="status_start">START</string>
+    <string name="status_stop">STOP</string>
     <string name="auto_start">Auto start</string>
     <string name="auto_start_description_on">Start automatically at device startup</string>
     <string name="auto_start_description_off">Do not start automatically</string>

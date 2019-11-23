@@ -9,28 +9,6 @@
     android:orientation="vertical"
     >
 
-    <net.mm2d.orientation.view.view.SwitchMenuView
-        android:id="@+id/status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        app:checked="false"
-        app:descriptionOff="@string/status_waiting"
-        app:descriptionOn="@string/status_running"
-        app:title="@string/status"
-        />
-
-    <net.mm2d.orientation.view.view.SwitchMenuView
-        android:id="@+id/auto_start"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        app:checked="false"
-        app:descriptionOff="@string/auto_start_description_off"
-        app:descriptionOn="@string/auto_start_description_on"
-        app:title="@string/auto_start"
-        />
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,6 +21,73 @@
 
         <include layout="@layout/notification" />
     </FrameLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        >
+
+        <Button
+            android:id="@+id/status_button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_menu_horizontal"
+            android:background="@drawable/bg_start_button"
+            android:clickable="false"
+            android:text="@string/status_start"
+            android:textSize="@dimen/text_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/status_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_menu_horizontal"
+            android:layout_marginTop="@dimen/margin_menu_vertical"
+            android:text="@string/status"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="@dimen/text_title"
+            app:layout_constraintEnd_toStartOf="@id/status_button"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/status_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/status_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_menu_horizontal"
+            android:layout_marginBottom="@dimen/margin_menu_vertical"
+            android:text="@string/status_running"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="@dimen/text_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/status_button"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/status_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/status_title"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <net.mm2d.orientation.view.view.SwitchMenuView
+        android:id="@+id/auto_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        app:checked="false"
+        app:descriptionOff="@string/auto_start_description_off"
+        app:descriptionOn="@string/auto_start_description_on"
+        app:title="@string/auto_start"
+        />
 
     <TextView
         android:id="@+id/caution"
