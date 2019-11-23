@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.view.dialog.ReviewDialog
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 

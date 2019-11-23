@@ -5,7 +5,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.orientation.review
+package net.mm2d.orientation.view.dialog
 
 import android.app.Dialog
 import android.content.DialogInterface
@@ -66,7 +66,8 @@ class ReviewDialog : DialogFragment() {
             if (fragmentManager.findFragmentByTag(TAG) != null) {
                 return
             }
-            ReviewDialog().show(fragmentManager, TAG)
+            ReviewDialog()
+                .show(fragmentManager, TAG)
         }
     }
 }

@@ -9,7 +9,7 @@
     android:orientation="vertical"
     >
 
-    <net.mm2d.orientation.view.SwitchMenuView
+    <net.mm2d.orientation.view.view.SwitchMenuView
         android:id="@+id/status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         app:title="@string/status"
         />
 
-    <net.mm2d.orientation.view.SwitchMenuView
+    <net.mm2d.orientation.view.view.SwitchMenuView
         android:id="@+id/auto_start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

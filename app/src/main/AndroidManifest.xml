@@ -23,7 +23,7 @@
         <activity-alias
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:targetActivity="net.mm2d.orientation.MainActivity"
+            android:targetActivity="net.mm2d.orientation.view.MainActivity"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -33,30 +33,30 @@
         </activity-alias>
 
         <activity
-            android:name="net.mm2d.orientation.MainActivity"
+            android:name="net.mm2d.orientation.view.MainActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|keyboard"
             android:launchMode="singleTask"
             />
         <activity
-            android:name="net.mm2d.orientation.DetailedSettingsActivity"
+            android:name="net.mm2d.orientation.view.DetailedSettingsActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|keyboard"
             android:label="@string/detailed_settings"
             />
         <activity
-            android:name="net.mm2d.orientation.LicenseActivity"
+            android:name="net.mm2d.orientation.view.LicenseActivity"
             android:label="@string/license"
             android:theme="@style/AppTheme.NoActionBar"
             />
 
         <service
-            android:name="net.mm2d.orientation.MainService"
+            android:name="net.mm2d.orientation.service.MainService"
             android:enabled="true"
             android:exported="true"
             android:permission="${applicationId}.permission"
             />
 
         <receiver
-            android:name="net.mm2d.orientation.WakeUpReceiver"
+            android:name="net.mm2d.orientation.service.WakeUpReceiver"
             android:enabled="true"
             android:exported="true"
             >

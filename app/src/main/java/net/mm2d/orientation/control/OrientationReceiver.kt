@@ -11,7 +11,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import net.mm2d.orientation.MainService
+import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.Settings
 
 /**

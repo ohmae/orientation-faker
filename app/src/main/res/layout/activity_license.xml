@@ -23,10 +23,10 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <net.mm2d.orientation.view.NestedScrollingWebView
+    <net.mm2d.orientation.view.view.NestedScrollingWebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="net.mm2d.orientation.view.NestedScrollingWebView$Behavior"
+        app:layout_behavior="net.mm2d.orientation.view.view.NestedScrollingWebView$Behavior"
         />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

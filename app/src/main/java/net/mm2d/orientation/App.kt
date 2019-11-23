@@ -18,9 +18,11 @@ import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.log.Logger
 import net.mm2d.log.android.AndroidSenders
 import net.mm2d.orientation.control.OrientationHelper
+import net.mm2d.orientation.service.KeepAlive
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.tabs.CustomTabsBinder
 import net.mm2d.orientation.tabs.CustomTabsHelper
+import net.mm2d.orientation.util.UpdateRouter
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)

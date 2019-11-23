@@ -5,7 +5,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.orientation.notification
+package net.mm2d.orientation.view.notification
 
 import android.app.*
 import android.content.Context
@@ -17,10 +17,10 @@ import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.orientation.MainActivity
 import net.mm2d.orientation.control.OrientationIdManager
 import net.mm2d.orientation.control.OrientationReceiver
 import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.view.MainActivity
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)

@@ -196,7 +196,7 @@
             />
     </FrameLayout>
 
-    <net.mm2d.orientation.view.SwitchMenuView
+    <net.mm2d.orientation.view.view.SwitchMenuView
         android:id="@+id/use_blank_icon_for_notification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -207,7 +207,7 @@
         app:title="@string/use_blank_icon_for_notification"
         />
 
-    <net.mm2d.orientation.view.SwitchMenuView
+    <net.mm2d.orientation.view.view.SwitchMenuView
         android:id="@+id/auto_rotate_warning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -218,7 +218,7 @@
         app:title="@string/auto_rotate_warning"
         />
 
-    <net.mm2d.orientation.view.SwitchMenuView
+    <net.mm2d.orientation.view.view.SwitchMenuView
         android:id="@+id/use_full_sensor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -229,7 +229,7 @@
         app:title="@string/use_full_sensor"
         />
 
-    <net.mm2d.orientation.view.SwitchMenuView
+    <net.mm2d.orientation.view.view.SwitchMenuView
         android:id="@+id/notification_privacy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

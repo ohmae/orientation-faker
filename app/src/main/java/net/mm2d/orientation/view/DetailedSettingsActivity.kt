@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2018 大前良介 (OHMAE Ryosuke)
+ * Copyright (c) 2019 大前良介 (OHMAE Ryosuke)
  *
  * This software is released under the MIT License.
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.orientation
+package net.mm2d.orientation.view
 
 import android.app.Activity
 import android.content.BroadcastReceiver
@@ -20,7 +20,10 @@ import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.color.chooser.ColorChooserDialog
 import net.mm2d.orientation.control.OrientationHelper
+import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.util.UpdateRouter
+import net.mm2d.orientation.view.dialog.ResetThemeDialog
 
 class DetailedSettingsActivity
     : AppCompatActivity(), ResetThemeDialog.Callback, ColorChooserDialog.Callback {

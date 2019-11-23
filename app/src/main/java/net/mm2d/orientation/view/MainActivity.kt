@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2014 大前良介 (OHMAE Ryosuke)
+ * Copyright (c) 2019 大前良介 (OHMAE Ryosuke)
  *
  * This software is released under the MIT License.
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.orientation
+package net.mm2d.orientation.view
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -27,8 +27,10 @@ import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.control.OverlayPermissionHelper
 import net.mm2d.orientation.review.ReviewRequest
+import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.LaunchUtils
+import net.mm2d.orientation.util.UpdateRouter
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
@@ -66,7 +68,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkPermission() {
-        OverlayPermissionHelper.requestOverlayPermissionIfNeed(this, REQUEST_CODE)
+        OverlayPermissionHelper.requestOverlayPermissionIfNeed(
+            this,
+            REQUEST_CODE
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -107,7 +112,10 @@ class MainActivity : AppCompatActivity() {
             if (fixed != caution.isVisible) {
                 caution.visibility = if (fixed) View.VISIBLE else View.GONE
             }
-            handler.postDelayed(checkSystemSettingsTask, CHECK_INTERVAL)
+            handler.postDelayed(
+                checkSystemSettingsTask,
+                CHECK_INTERVAL
+            )
         }
     }
 
