@@ -7,8 +7,6 @@
 
 package net.mm2d.orientation.view
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -26,11 +24,12 @@ import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.control.OverlayPermissionHelper
+import net.mm2d.orientation.event.EventObserver
+import net.mm2d.orientation.event.EventRouter
 import net.mm2d.orientation.review.ReviewRequest
 import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.LaunchUtils
-import net.mm2d.orientation.util.UpdateRouter
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
@@ -41,12 +40,7 @@ class MainActivity : AppCompatActivity() {
     }
     private val handler = Handler(Looper.getMainLooper())
     private val checkSystemSettingsTask = Runnable { checkSystemSettings() }
-    private val receiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            applyStatus()
-            notificationSample.update()
-        }
-    }
+    private val eventObserver: EventObserver = EventRouter.createFinishObserver()
     private lateinit var notificationSample: NotificationSample
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +48,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         supportActionBar?.title = getString(R.string.app_name)
         setUpViews()
-        UpdateRouter.register(receiver)
+        eventObserver.subscribe {
+            applyStatus()
+            notificationSample.update()
+        }
         if (!OverlayPermissionHelper.canDrawOverlays(this)) {
             MainService.stop(this)
         } else {
@@ -84,7 +81,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        UpdateRouter.unregister(receiver)
+        eventObserver.unsubscribe()
     }
 
     override fun onResume() {
