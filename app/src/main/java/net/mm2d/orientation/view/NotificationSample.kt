@@ -12,7 +12,7 @@ import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import kotlinx.android.synthetic.main.notification.*
+import kotlinx.android.synthetic.main.layout_remote_views.*
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.OrientationIdManager
 import net.mm2d.orientation.settings.Settings

@@ -17,6 +17,7 @@ import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.control.OverlayPermissionHelper
 import net.mm2d.orientation.util.UpdateRouter
 import net.mm2d.orientation.view.notification.NotificationHelper
+import net.mm2d.orientation.view.widget.WidgetProvider
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
@@ -60,6 +61,7 @@ class MainService : Service() {
         private const val ACTION_STOP = "ACTION_STOP"
 
         fun start(context: Context) {
+            WidgetProvider.start(context)
             startService(
                 context,
                 ACTION_START
@@ -67,6 +69,7 @@ class MainService : Service() {
         }
 
         fun stop(context: Context) {
+            WidgetProvider.stop(context)
             if (!OrientationHelper.isEnabled) {
                 return
             }

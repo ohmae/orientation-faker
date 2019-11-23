@@ -14,6 +14,9 @@ import net.mm2d.android.orientationfaker.R
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 object OrientationIdManager {
+    private const val SCREEN_ORIENTATION_SETTINGS: Int = -2
+    const val SCREEN_ORIENTATION_INVALID: Int = -3
+
     data class OrientationId(
         val orientation: Int,
         val iconId: Int,
@@ -59,7 +62,7 @@ object OrientationIdManager {
             R.id.title_reverse_landscape
         ),
         OrientationId( // 設定ボタン用Fakeパラメータ
-            -2, // ActivityInfo.SCREEN_ORIENTATION_UNSET
+            SCREEN_ORIENTATION_SETTINGS,
             R.drawable.ic_settings,
             R.id.button_settings,
             R.id.icon_settings,
