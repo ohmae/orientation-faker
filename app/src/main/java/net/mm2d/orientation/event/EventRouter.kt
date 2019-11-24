@@ -17,6 +17,6 @@ object EventRouter {
         EventBus.notify(EVENT_UPDATE)
     }
 
-    fun createFinishObserver(): EventObserver =
+    fun createUpdateObserver(): EventObserver =
         RxEventObserver(EVENT_UPDATE)
 }

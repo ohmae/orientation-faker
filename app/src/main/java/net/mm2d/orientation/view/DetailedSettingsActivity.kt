@@ -30,7 +30,7 @@ class DetailedSettingsActivity
     private val settings by lazy {
         Settings.get()
     }
-    private val eventObserver: EventObserver = EventRouter.createFinishObserver()
+    private val eventObserver: EventObserver = EventRouter.createUpdateObserver()
     private lateinit var notificationSample: NotificationSample
 
     override fun onCreate(savedInstanceState: Bundle?) {

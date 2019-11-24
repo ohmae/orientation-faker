@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     }
     private val handler = Handler(Looper.getMainLooper())
     private val checkSystemSettingsTask = Runnable { checkSystemSettings() }
-    private val eventObserver: EventObserver = EventRouter.createFinishObserver()
+    private val eventObserver: EventObserver = EventRouter.createUpdateObserver()
     private lateinit var notificationSample: NotificationSample
 
     override fun onCreate(savedInstanceState: Bundle?) {
