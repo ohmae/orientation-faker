@@ -3,6 +3,7 @@
     <color name="primary">#202020</color>
     <color name="primaryDark">#000000</color>
     <color name="accent">#2196f3</color>
+    <color name="bg_window">#101010</color>
     <color name="bg_caution">#FFF9C4</color>
     <color name="fg_caution">#000000</color>
     <color name="fg_notification">#ffffff</color>
