@@ -13,7 +13,6 @@ import android.content.pm.ActivityInfo
 import android.graphics.PixelFormat
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
-import android.provider.Settings.System
 import android.view.View
 import android.view.WindowManager
 import android.view.WindowManager.LayoutParams
@@ -21,6 +20,7 @@ import android.widget.Toast
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.review.ReviewRequest
 import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.util.SystemSettings
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
@@ -91,7 +91,7 @@ object OrientationHelper {
         if (!Settings.get().autoRotateWarning) {
             return
         }
-        if (System.getInt(context.contentResolver, System.ACCELEROMETER_ROTATION) == 0) {
+        if (SystemSettings.rotationIsFixed(context)) {
             Toast.makeText(context, R.string.toast_system_settings, Toast.LENGTH_LONG).show()
         }
     }
