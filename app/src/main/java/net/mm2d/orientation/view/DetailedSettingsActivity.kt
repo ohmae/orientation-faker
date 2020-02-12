@@ -216,12 +216,14 @@ class DetailedSettingsActivity
             })
         }
         system_notification.setOnClickListener {
-            startActivity(Intent(ACTION_APP_NOTIFICATION_SETTINGS).also {
-                it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                it.putExtra("app_package", BuildConfig.APPLICATION_ID)
-                it.putExtra("app_uid", applicationInfo.uid)
-                it.putExtra("android.provider.extra.APP_PACKAGE", BuildConfig.APPLICATION_ID)
-            })
+            runCatching {
+                startActivity(Intent(ACTION_APP_NOTIFICATION_SETTINGS).also {
+                    it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    it.putExtra("app_package", BuildConfig.APPLICATION_ID)
+                    it.putExtra("app_uid", applicationInfo.uid)
+                    it.putExtra("android.provider.extra.APP_PACKAGE", BuildConfig.APPLICATION_ID)
+                })
+            }
         }
     }
 
