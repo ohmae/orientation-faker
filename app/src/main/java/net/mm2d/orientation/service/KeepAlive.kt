@@ -15,10 +15,8 @@ import net.mm2d.orientation.settings.Settings
  */
 object KeepAlive {
     fun ensureResident(context: Context) {
-        Settings.doOnGet {
-            if (it.shouldAutoStart()) {
-                MainService.start(context)
-            }
+        if (Settings.get().shouldAutoStart()) {
+            MainService.start(context)
         }
     }
 }

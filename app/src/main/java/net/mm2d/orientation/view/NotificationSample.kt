@@ -36,27 +36,26 @@ class NotificationSample(activity: Activity) {
     }
 
     fun update() {
-        Settings.doOnGet { settings ->
-            val orientation = settings.orientation
-            val foreground = settings.foregroundColor
-            background.setBackgroundColor(settings.backgroundColor)
-            val selectedForeground = settings.foregroundColorSelected
-            val selectedBackground = settings.backgroundColorSelected
-            buttonList.forEach {
-                if (it.orientation == orientation) {
-                    it.button.setBackgroundColor(selectedBackground)
-                    it.icon.setColorFilter(selectedForeground)
-                    it.title.setTextColor(selectedForeground)
-                } else {
-                    it.button.setBackgroundColor(Color.TRANSPARENT)
-                    it.icon.setColorFilter(foreground)
-                    it.title.setTextColor(foreground)
-                }
+        val settings = Settings.get()
+        val orientation = settings.orientation
+        val foreground = settings.foregroundColor
+        background.setBackgroundColor(settings.backgroundColor)
+        val selectedForeground = settings.foregroundColorSelected
+        val selectedBackground = settings.backgroundColorSelected
+        buttonList.forEach {
+            if (it.orientation == orientation) {
+                it.button.setBackgroundColor(selectedBackground)
+                it.icon.setColorFilter(selectedForeground)
+                it.title.setTextColor(selectedForeground)
+            } else {
+                it.button.setBackgroundColor(Color.TRANSPARENT)
+                it.icon.setColorFilter(foreground)
+                it.title.setTextColor(foreground)
             }
-            buttonList[0].title.setText(
-                if (settings.useFullSensor) R.string.force_auto else R.string.unspecified
-            )
         }
+        buttonList[0].title.setText(
+            if (settings.useFullSensor) R.string.force_auto else R.string.unspecified
+        )
     }
 
     class ButtonInfo(

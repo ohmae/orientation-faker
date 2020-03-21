@@ -54,10 +54,8 @@ class MainActivity : AppCompatActivity() {
         if (!OverlayPermissionHelper.canDrawOverlays(this)) {
             MainService.stop(this)
         } else {
-            Settings.doOnGet {
-                if (it.shouldAutoStart()) {
-                    MainService.start(this)
-                }
+            if (Settings.get().shouldAutoStart()) {
+                MainService.start(this)
             }
         }
         checkPermission()
@@ -130,9 +128,7 @@ class MainActivity : AppCompatActivity() {
         version_description.text = makeVersionInfo()
         setUpOrientationIcons()
         applyStatus()
-        Settings.doOnGet {
-            applyAutoStart()
-        }
+        applyAutoStart()
     }
 
     private fun setUpOrientationIcons() {

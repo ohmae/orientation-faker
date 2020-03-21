@@ -9,94 +9,82 @@ package net.mm2d.orientation.settings
 
 import android.content.Context
 import android.content.pm.ActivityInfo
-import android.os.Looper
-import io.reactivex.Completable
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import net.mm2d.android.orientationfaker.BuildConfig
-import net.mm2d.log.Logger
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.locks.Condition
-import java.util.concurrent.locks.Lock
-import java.util.concurrent.locks.ReentrantLock
-import kotlin.concurrent.withLock
+import net.mm2d.orientation.settings.Key.Main
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 class Settings private constructor(
-    private val storage: SettingsStorage
+    private val preferences: Preferences<Main>
 ) {
     var orientation: Int
         get() = verifyOrientation(
-            storage.readInt(
-                Key.ORIENTATION,
+            preferences.readInt(
+                Main.ORIENTATION_INT,
                 ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
             )
         )
-        set(orientation) = storage.writeInt(Key.ORIENTATION, verifyOrientation(orientation))
+        set(orientation) = preferences.writeInt(Main.ORIENTATION_INT, verifyOrientation(orientation))
 
     var foregroundColor: Int
-        get() = storage.readInt(Key.COLOR_FOREGROUND, Default.color.foreground)
-        set(value) = storage.writeInt(Key.COLOR_FOREGROUND, value)
+        get() = preferences.readInt(Main.COLOR_FOREGROUND_INT, Default.color.foreground)
+        set(value) = preferences.writeInt(Main.COLOR_FOREGROUND_INT, value)
 
     var backgroundColor: Int
-        get() = storage.readInt(Key.COLOR_BACKGROUND, Default.color.background)
-        set(value) = storage.writeInt(Key.COLOR_BACKGROUND, value)
+        get() = preferences.readInt(Main.COLOR_BACKGROUND_INT, Default.color.background)
+        set(value) = preferences.writeInt(Main.COLOR_BACKGROUND_INT, value)
 
     var foregroundColorSelected: Int
-        get() = storage.readInt(Key.COLOR_FOREGROUND_SELECTED, Default.color.foregroundSelected)
-        set(value) = storage.writeInt(Key.COLOR_FOREGROUND_SELECTED, value)
+        get() = preferences.readInt(Main.COLOR_FOREGROUND_SELECTED_INT, Default.color.foregroundSelected)
+        set(value) = preferences.writeInt(Main.COLOR_FOREGROUND_SELECTED_INT, value)
 
     var backgroundColorSelected: Int
-        get() = storage.readInt(Key.COLOR_BACKGROUND_SELECTED, Default.color.backgroundSelected)
-        set(value) = storage.writeInt(Key.COLOR_BACKGROUND_SELECTED, value)
+        get() = preferences.readInt(Main.COLOR_BACKGROUND_SELECTED_INT, Default.color.backgroundSelected)
+        set(value) = preferences.writeInt(Main.COLOR_BACKGROUND_SELECTED_INT, value)
 
     var notifySecret: Boolean
-        get() = storage.readBoolean(Key.NOTIFY_SECRET, false)
-        set(value) = storage.writeBoolean(Key.NOTIFY_SECRET, value)
+        get() = preferences.readBoolean(Main.NOTIFY_SECRET_BOOLEAN, false)
+        set(value) = preferences.writeBoolean(Main.NOTIFY_SECRET_BOOLEAN, value)
 
     var autoRotateWarning: Boolean
-        get() = storage.readBoolean(Key.AUTO_ROTATE_WARNING, true)
-        set(value) = storage.writeBoolean(Key.AUTO_ROTATE_WARNING, value)
+        get() = preferences.readBoolean(Main.AUTO_ROTATE_WARNING_BOOLEAN, true)
+        set(value) = preferences.writeBoolean(Main.AUTO_ROTATE_WARNING_BOOLEAN, value)
 
     var useFullSensor: Boolean
-        get() = storage.readBoolean(Key.USE_FULL_SENSOR, false)
-        set(value) = storage.writeBoolean(Key.USE_FULL_SENSOR, value)
+        get() = preferences.readBoolean(Main.USE_FULL_SENSOR_BOOLEAN, false)
+        set(value) = preferences.writeBoolean(Main.USE_FULL_SENSOR_BOOLEAN, value)
 
     var reviewIntervalRandomFactor: Long
-        get() = storage.readLong(Key.REVIEW_INTERVAL_RANDOM_FACTOR, 0L)
-        set(value) = storage.writeLong(Key.REVIEW_INTERVAL_RANDOM_FACTOR, value)
+        get() = preferences.readLong(Main.REVIEW_INTERVAL_RANDOM_FACTOR_LONG, 0L)
+        set(value) = preferences.writeLong(Main.REVIEW_INTERVAL_RANDOM_FACTOR_LONG, value)
 
     var firstUseTime: Long
-        get() = storage.readLong(Key.TIME_FIRST_USE, 0L)
-        set(value) = storage.writeLong(Key.TIME_FIRST_USE, value)
+        get() = preferences.readLong(Main.TIME_FIRST_USE_LONG, 0L)
+        set(value) = preferences.writeLong(Main.TIME_FIRST_USE_LONG, value)
 
     var firstReviewTime: Long
-        get() = storage.readLong(Key.TIME_FIRST_USE, 0L)
-        set(value) = storage.writeLong(Key.TIME_FIRST_USE, value)
+        get() = preferences.readLong(Main.TIME_FIRST_REVIEW_LONG, 0L)
+        set(value) = preferences.writeLong(Main.TIME_FIRST_REVIEW_LONG, value)
 
     var orientationChangeCount: Int
-        get() = storage.readInt(Key.COUNT_ORIENTATION_CHANGED, 0)
-        set(value) = storage.writeInt(Key.COUNT_ORIENTATION_CHANGED, value)
+        get() = preferences.readInt(Main.COUNT_ORIENTATION_CHANGED_INT, 0)
+        set(value) = preferences.writeInt(Main.COUNT_ORIENTATION_CHANGED_INT, value)
 
     var reviewCancelCount: Int
-        get() = storage.readInt(Key.COUNT_REVIEW_DIALOG_CANCELED, 0)
-        set(value) = storage.writeInt(Key.COUNT_REVIEW_DIALOG_CANCELED, value)
+        get() = preferences.readInt(Main.COUNT_REVIEW_DIALOG_CANCELED_INT, 0)
+        set(value) = preferences.writeInt(Main.COUNT_REVIEW_DIALOG_CANCELED_INT, value)
 
     var reviewed: Boolean
-        get() = storage.readBoolean(Key.REVIEW_REVIEWED, false)
-        set(value) = storage.writeBoolean(Key.REVIEW_REVIEWED, value)
+        get() = preferences.readBoolean(Main.REVIEW_REVIEWED_BOOLEAN, false)
+        set(value) = preferences.writeBoolean(Main.REVIEW_REVIEWED_BOOLEAN, value)
 
     var reported: Boolean
-        get() = storage.readBoolean(Key.REVIEW_REPORTED, false)
-        set(value) = storage.writeBoolean(Key.REVIEW_REPORTED, value)
+        get() = preferences.readBoolean(Main.REVIEW_REPORTED_BOOLEAN, false)
+        set(value) = preferences.writeBoolean(Main.REVIEW_REPORTED_BOOLEAN, value)
 
     var shouldUseBlankIconForNotification: Boolean
-        get() = storage.readBoolean(Key.USE_BLANK_ICON_FOR_NOTIFICATION, false)
-        set(value) = storage.writeBoolean(Key.USE_BLANK_ICON_FOR_NOTIFICATION, value)
+        get() = preferences.readBoolean(Main.USE_BLANK_ICON_FOR_NOTIFICATION_BOOLEAN, false)
+        set(value) = preferences.writeBoolean(Main.USE_BLANK_ICON_FOR_NOTIFICATION_BOOLEAN, value)
 
     fun resetTheme() {
         foregroundColor = Default.color.foreground
@@ -106,17 +94,15 @@ class Settings private constructor(
     }
 
     fun setAutoStart(autoStart: Boolean) {
-        storage.writeBoolean(Key.RESIDENT, autoStart)
+        preferences.writeBoolean(Main.RESIDENT_BOOLEAN, autoStart)
     }
 
     fun shouldAutoStart(): Boolean {
-        return storage.readBoolean(Key.RESIDENT, false)
+        return preferences.readBoolean(Main.RESIDENT_BOOLEAN, false)
     }
 
     companion object {
-        private var settings: Settings? = null
-        private val lock: Lock = ReentrantLock()
-        private val condition: Condition = lock.newCondition()
+        private lateinit var settings: Settings
 
         /**
          * アプリ起動時に一度だけコールされ、初期化を行う。
@@ -124,30 +110,11 @@ class Settings private constructor(
          * @param context コンテキスト
          */
         fun initialize(context: Context) {
-            Completable.fromAction { initializeInner(context) }
-                .subscribeOn(Schedulers.io())
-                .subscribe()
-        }
-
-        private fun initializeInner(context: Context) {
             Default.init(context)
-            val storage = SettingsStorage(context)
-            Maintainer.maintain(storage)
-            lock.withLock {
-                settings = Settings(storage)
-                condition.signalAll()
+            Preferences(context, Main::class).also {
+                Maintainer.maintain(context, it)
+                settings = Settings(it)
             }
-        }
-
-        fun doOnGet(task: (Settings) -> Unit): Disposable {
-            return Single.fromCallable { get() }
-                .subscribeOn(Schedulers.single())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(task) {
-                    Thread.currentThread()
-                        .uncaughtExceptionHandler
-                        ?.uncaughtException(Thread.currentThread(), it)
-                }
         }
 
         /**
@@ -155,25 +122,7 @@ class Settings private constructor(
          *
          * 初期化が完了していなければブロックされる。
          */
-        fun get(): Settings {
-            settings?.let {
-                return it
-            }
-            lock.withLock {
-                while (settings == null) {
-                    if (BuildConfig.DEBUG) {
-                        Logger.e("!!!!!!!!!! BLOCK !!!!!!!!!!")
-                    }
-                    val timeout = if (isMainThread()) 4L else 40L
-                    check(condition.await(timeout, TimeUnit.SECONDS)) {
-                        "Settings initialization timeout"
-                    }
-                }
-                return settings!!
-            }
-        }
-
-        private fun isMainThread() = Looper.getMainLooper().thread == Thread.currentThread()
+        fun get(): Settings = settings
 
         private fun verifyOrientation(orientation: Int): Int {
             return when (orientation) {
