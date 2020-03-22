@@ -51,6 +51,8 @@ object RemoteViewsCreator {
                     views.setTextColor(it.titleViewId, foreground)
                 }
             }
+            views.setInt(R.id.button_settings, "setBackgroundColor", Color.TRANSPARENT)
+            views.setInt(R.id.icon_settings, "setColorFilter", foreground)
             views.setOnClickPendingIntent(R.id.button_settings, createActivityIntent(context))
         }
     }

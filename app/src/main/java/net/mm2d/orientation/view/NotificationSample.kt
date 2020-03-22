@@ -32,7 +32,7 @@ class NotificationSample(activity: Activity) {
     private val background = activity.notification
 
     init {
-        buttonList[buttonList.lastIndex].button.visibility = View.GONE
+        activity.findViewById<View>(R.id.button_settings).visibility = View.GONE
     }
 
     fun update() {

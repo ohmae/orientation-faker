@@ -11,9 +11,8 @@
     <string name="force_auto">force auto</string>
     <string name="portrait">portrait</string>
     <string name="landscape">landscape</string>
-    <string name="reverse_portrait">!portrait</string>
-    <string name="reverse_landscape">!landscape</string>
-    <string name="settings">settings</string>
+    <string name="reverse_portrait">rev port</string>
+    <string name="reverse_landscape">rev land</string>
 
     <string name="status">Status</string>
     <string name="status_running">Running</string>

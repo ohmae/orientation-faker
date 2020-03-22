@@ -13,7 +13,6 @@
     <string name="landscape">横</string>
     <string name="reverse_portrait">逆縦</string>
     <string name="reverse_landscape">逆横</string>
-    <string name="settings">設定</string>
 
     <string name="status">状態</string>
     <string name="status_running">実行中</string>
