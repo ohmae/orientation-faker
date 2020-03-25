@@ -11,10 +11,11 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.view.View
 import android.widget.RemoteViews
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.orientation.control.OrientationIdManager
 import net.mm2d.orientation.control.OrientationReceiver
+import net.mm2d.orientation.control.Orientations
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.view.MainActivity
 
@@ -30,18 +31,21 @@ object RemoteViewsCreator {
         val layout = if (notification) R.layout.notification else R.layout.widget
         return RemoteViews(context.packageName, layout).also { views ->
             views.setInt(R.id.notification, "setBackgroundColor", settings.backgroundColor)
-            views.setTextViewText(
-                R.id.title_unspecified,
-                context.getText(
-                    if (settings.useFullSensor) R.string.force_auto else R.string.unspecified
-                )
-            )
-            OrientationIdManager.list.forEach {
-                views.setOnClickPendingIntent(
-                    it.viewId,
-                    createOrientationIntent(context, it.orientation)
-                )
-                if (orientation == it.orientation) {
+            val orientationList = settings.orientationList
+            orientationList.forEachIndexed { index, value ->
+                val button = ViewIds.list[index]
+                Orientations.values.find { it.value == value }?.let {
+                    views.setImageViewResource(button.iconViewId, it.icon)
+                    views.setTextViewText(button.titleViewId, context.getText(it.label))
+                    views.setOnClickPendingIntent(
+                        button.viewId,
+                        createOrientationIntent(context, it.value)
+                    )
+                }
+            }
+            val selectedIndex = orientationList.indexOf(orientation)
+            ViewIds.list.forEachIndexed { index, it ->
+                if (index == selectedIndex) {
                     views.setInt(it.viewId, "setBackgroundColor", selectedBackground)
                     views.setInt(it.iconViewId, "setColorFilter", selectedForeground)
                     views.setTextColor(it.titleViewId, selectedForeground)
@@ -50,10 +54,15 @@ object RemoteViewsCreator {
                     views.setInt(it.iconViewId, "setColorFilter", foreground)
                     views.setTextColor(it.titleViewId, foreground)
                 }
+                if (index < orientationList.size) {
+                    views.setViewVisibility(it.viewId, View.VISIBLE)
+                } else {
+                    views.setViewVisibility(it.viewId, View.GONE)
+                }
             }
-            views.setInt(R.id.button_settings, "setBackgroundColor", Color.TRANSPARENT)
-            views.setInt(R.id.icon_settings, "setColorFilter", foreground)
-            views.setOnClickPendingIntent(R.id.button_settings, createActivityIntent(context))
+            views.setInt(R.id.remote_views_button_settings, "setBackgroundColor", Color.TRANSPARENT)
+            views.setInt(R.id.remote_views_icon_settings, "setColorFilter", foreground)
+            views.setOnClickPendingIntent(R.id.remote_views_button_settings, createActivityIntent(context))
         }
     }
 

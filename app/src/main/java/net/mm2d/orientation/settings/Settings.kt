@@ -18,13 +18,8 @@ class Settings private constructor(
     private val preferences: Preferences<Main>
 ) {
     var orientation: Int
-        get() = verifyOrientation(
-            preferences.readInt(
-                Main.ORIENTATION_INT,
-                ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-            )
-        )
-        set(orientation) = preferences.writeInt(Main.ORIENTATION_INT, verifyOrientation(orientation))
+        get() = preferences.readInt(Main.ORIENTATION_INT, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+        set(value) = preferences.writeInt(Main.ORIENTATION_INT, value)
 
     var foregroundColor: Int
         get() = preferences.readInt(Main.COLOR_FOREGROUND_INT, Default.color.foreground)
@@ -49,10 +44,6 @@ class Settings private constructor(
     var autoRotateWarning: Boolean
         get() = preferences.readBoolean(Main.AUTO_ROTATE_WARNING_BOOLEAN, true)
         set(value) = preferences.writeBoolean(Main.AUTO_ROTATE_WARNING_BOOLEAN, value)
-
-    var useFullSensor: Boolean
-        get() = preferences.readBoolean(Main.USE_FULL_SENSOR_BOOLEAN, false)
-        set(value) = preferences.writeBoolean(Main.USE_FULL_SENSOR_BOOLEAN, value)
 
     var reviewIntervalRandomFactor: Long
         get() = preferences.readLong(Main.REVIEW_INTERVAL_RANDOM_FACTOR_LONG, 0L)
@@ -85,6 +76,10 @@ class Settings private constructor(
     var shouldUseBlankIconForNotification: Boolean
         get() = preferences.readBoolean(Main.USE_BLANK_ICON_FOR_NOTIFICATION_BOOLEAN, false)
         set(value) = preferences.writeBoolean(Main.USE_BLANK_ICON_FOR_NOTIFICATION_BOOLEAN, value)
+
+    var orientationList: List<Int>
+        get() = OrientationList.toList(preferences.readString(Main.ORIENTATION_LIST_STRING, ""))
+        set(value) = preferences.writeString(Main.ORIENTATION_LIST_STRING, OrientationList.toString(value))
 
     fun resetTheme() {
         foregroundColor = Default.color.foreground
@@ -123,16 +118,5 @@ class Settings private constructor(
          * 初期化が完了していなければブロックされる。
          */
         fun get(): Settings = settings
-
-        private fun verifyOrientation(orientation: Int): Int {
-            return when (orientation) {
-                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT,
-                ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE,
-                ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT,
-                ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE,
-                ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED -> orientation
-                else -> ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-            }
-        }
     }
 }

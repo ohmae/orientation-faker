@@ -49,6 +49,12 @@ internal object Maintainer {
     }
 
     private fun writeDefaultValue(preferences: Preferences<Main>) {
+        preferences.writeLong(Main.TIME_FIRST_USE_LONG, 0L)
+        preferences.writeLong(Main.TIME_FIRST_REVIEW_LONG, 0L)
+        preferences.writeInt(Main.COUNT_ORIENTATION_CHANGED_INT, 0)
+        preferences.writeInt(Main.COUNT_REVIEW_DIALOG_CANCELED_INT, 0)
+        preferences.writeBoolean(Main.REVIEW_REPORTED_BOOLEAN, false)
+        preferences.writeBoolean(Main.REVIEW_REVIEWED_BOOLEAN, false)
         preferences.writeInt(Main.ORIENTATION_INT, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
         preferences.writeBoolean(Main.RESIDENT_BOOLEAN, false)
         preferences.writeInt(Main.COLOR_FOREGROUND_INT, Default.color.foreground)
@@ -56,13 +62,9 @@ internal object Maintainer {
         preferences.writeInt(Main.COLOR_FOREGROUND_SELECTED_INT, Default.color.foregroundSelected)
         preferences.writeInt(Main.COLOR_BACKGROUND_SELECTED_INT, Default.color.backgroundSelected)
         preferences.writeBoolean(Main.NOTIFY_SECRET_BOOLEAN, false)
-        preferences.writeLong(Main.TIME_FIRST_USE_LONG, 0L)
-        preferences.writeLong(Main.TIME_FIRST_REVIEW_LONG, 0L)
-        preferences.writeInt(Main.COUNT_ORIENTATION_CHANGED_INT, 0)
-        preferences.writeInt(Main.COUNT_REVIEW_DIALOG_CANCELED_INT, 0)
-        preferences.writeBoolean(Main.REVIEW_REPORTED_BOOLEAN, false)
-        preferences.writeBoolean(Main.REVIEW_REVIEWED_BOOLEAN, false)
         preferences.writeBoolean(Main.AUTO_ROTATE_WARNING_BOOLEAN, true)
+        preferences.writeBoolean(Main.USE_BLANK_ICON_FOR_NOTIFICATION_BOOLEAN, false)
+        preferences.writeString(Main.ORIENTATION_LIST_STRING, Default.orientationList.joinToString(","))
     }
 
     private fun migrateFromVersion2(sharedPreferences: SharedPreferences, preferences: Preferences<Main>) {
@@ -82,10 +84,15 @@ internal object Maintainer {
             int(OldKey.COLOR_FOREGROUND_SELECTED, Main.COLOR_FOREGROUND_SELECTED_INT)
             int(OldKey.COLOR_BACKGROUND_SELECTED, Main.COLOR_BACKGROUND_SELECTED_INT)
             boolean(OldKey.NOTIFY_SECRET, Main.NOTIFY_SECRET_BOOLEAN)
-            boolean(OldKey.USE_FULL_SENSOR, Main.USE_FULL_SENSOR_BOOLEAN)
             boolean(OldKey.AUTO_ROTATE_WARNING, Main.AUTO_ROTATE_WARNING_BOOLEAN)
             boolean(OldKey.USE_BLANK_ICON_FOR_NOTIFICATION, Main.USE_BLANK_ICON_FOR_NOTIFICATION_BOOLEAN)
         }
+        val list = Default.orientationList.toMutableList().also {
+            if (sharedPreferences.getBoolean(OldKey.USE_FULL_SENSOR.name, false)) {
+                it[0] = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
+            }
+        }
+        preferences.writeString(Main.ORIENTATION_LIST_STRING, OrientationList.toString(list))
     }
 
     private class Migrator(

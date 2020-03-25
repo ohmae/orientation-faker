@@ -8,6 +8,7 @@
 package net.mm2d.orientation.settings
 
 import android.content.Context
+import android.content.pm.ActivityInfo
 import androidx.core.content.ContextCompat
 import net.mm2d.android.orientationfaker.R
 
@@ -17,6 +18,14 @@ import net.mm2d.android.orientationfaker.R
 internal object Default {
     lateinit var color: Color
         private set
+
+    val orientationList: List<Int> = listOf(
+        ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED,
+        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT,
+        ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE,
+        ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT,
+        ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
+    )
 
     fun init(context: Context) {
         color = Color(

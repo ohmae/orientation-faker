@@ -12,7 +12,7 @@
     >
 
     <FrameLayout
-        android:id="@+id/button_unspecified"
+        android:id="@+id/remote_views_button1"
         android:layout_width="0dp"
         android:layout_height="@dimen/notification_height"
         android:layout_gravity="center_vertical"
@@ -29,7 +29,7 @@
             >
 
             <ImageView
-                android:id="@+id/icon_unspecified"
+                android:id="@+id/remote_views_icon1"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_horizontal"
@@ -38,7 +38,7 @@
                 />
 
             <TextView
-                android:id="@+id/title_unspecified"
+                android:id="@+id/remote_views_title1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -52,7 +52,7 @@
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/button_portrait"
+        android:id="@+id/remote_views_button2"
         android:layout_width="0dp"
         android:layout_height="@dimen/notification_height"
         android:layout_gravity="center_vertical"
@@ -69,7 +69,7 @@
             >
 
             <ImageView
-                android:id="@+id/icon_portrait"
+                android:id="@+id/remote_views_icon2"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_horizontal"
@@ -78,7 +78,7 @@
                 />
 
             <TextView
-                android:id="@+id/title_portrait"
+                android:id="@+id/remote_views_title2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -92,7 +92,7 @@
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/button_landscape"
+        android:id="@+id/remote_views_button3"
         android:layout_width="0dp"
         android:layout_height="@dimen/notification_height"
         android:layout_gravity="center_vertical"
@@ -109,7 +109,7 @@
             >
 
             <ImageView
-                android:id="@+id/icon_landscape"
+                android:id="@+id/remote_views_icon3"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_horizontal"
@@ -118,7 +118,7 @@
                 />
 
             <TextView
-                android:id="@+id/title_landscape"
+                android:id="@+id/remote_views_title3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -132,7 +132,7 @@
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/button_reverse_portrait"
+        android:id="@+id/remote_views_button4"
         android:layout_width="0dp"
         android:layout_height="@dimen/notification_height"
         android:layout_gravity="center_vertical"
@@ -149,7 +149,7 @@
             >
 
             <ImageView
-                android:id="@+id/icon_reverse_portrait"
+                android:id="@+id/remote_views_icon4"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_horizontal"
@@ -158,7 +158,7 @@
                 />
 
             <TextView
-                android:id="@+id/title_reverse_portrait"
+                android:id="@+id/remote_views_title4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -172,7 +172,7 @@
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/button_reverse_landscape"
+        android:id="@+id/remote_views_button5"
         android:layout_width="0dp"
         android:layout_height="@dimen/notification_height"
         android:layout_gravity="center_vertical"
@@ -189,7 +189,7 @@
             >
 
             <ImageView
-                android:id="@+id/icon_reverse_landscape"
+                android:id="@+id/remote_views_icon5"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_horizontal"
@@ -198,7 +198,7 @@
                 />
 
             <TextView
-                android:id="@+id/title_reverse_landscape"
+                android:id="@+id/remote_views_title5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -212,7 +212,7 @@
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/button_settings"
+        android:id="@+id/remote_views_button_settings"
         android:layout_width="36dp"
         android:layout_height="@dimen/notification_height"
         android:layout_gravity="center_vertical"
@@ -220,7 +220,7 @@
         >
 
         <ImageView
-            android:id="@+id/icon_settings"
+            android:id="@+id/remote_views_icon_settings"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center"

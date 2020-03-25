@@ -12,7 +12,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import net.mm2d.orientation.control.OrientationHelper
-import net.mm2d.orientation.control.OrientationIdManager
+import net.mm2d.orientation.control.Orientations
 import net.mm2d.orientation.settings.Settings
 
 /**
@@ -24,7 +24,7 @@ class WidgetProvider : AppWidgetProvider() {
             if (OrientationHelper.isEnabled) {
                 Settings.get().orientation
             } else {
-                OrientationIdManager.SCREEN_ORIENTATION_INVALID
+                Orientations.SCREEN_ORIENTATION_INVALID
             }
         appWidgetIds.forEach {
             updateAppWidget(context, appWidgetManager, it, orientation)
@@ -37,7 +37,7 @@ class WidgetProvider : AppWidgetProvider() {
         }
 
         fun stop(context: Context) {
-            update(context, OrientationIdManager.SCREEN_ORIENTATION_INVALID)
+            update(context, Orientations.SCREEN_ORIENTATION_INVALID)
         }
 
         private fun update(context: Context, orientation: Int) {

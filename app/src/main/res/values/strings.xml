@@ -8,11 +8,13 @@
     <string name="cancel">Cancel</string>
 
     <string name="unspecified">unspecified</string>
-    <string name="force_auto">force auto</string>
+    <string name="force_sensor">force sensor</string>
     <string name="portrait">portrait</string>
     <string name="landscape">landscape</string>
     <string name="reverse_portrait">rev port</string>
     <string name="reverse_landscape">rev land</string>
+    <string name="sensor_portrait">sensor port</string>
+    <string name="sensor_landscape">sensor land</string>
 
     <string name="status">Status</string>
     <string name="status_running">Running</string>
@@ -27,8 +29,8 @@
     <string name="version">Version</string>
     <string name="caution">Please change the system setting to auto-rotate. Reverse setting may not be possible</string>
 
-    <string name="theme">Theme</string>
     <string name="reset_theme">Reset theme</string>
+    <string name="reset_button">Reset button</string>
     <string name="foreground_color">foreground</string>
     <string name="background_color">background</string>
     <string name="selected_foreground_color">*foreground</string>
@@ -39,9 +41,6 @@
     <string name="auto_rotate_warning">System setting warning</string>
     <string name="auto_rotate_warning_on">Show warning if system setting is not auto-rotate</string>
     <string name="auto_rotate_warning_off">Don\'t show warning if system setting is not auto-rotate</string>
-    <string name="use_full_sensor">Forced automatic rotation</string>
-    <string name="use_full_sensor_on">Enable forced automatic rotation</string>
-    <string name="use_full_sensor_off">Follow the displayed app</string>
     <string name="notification_privacy">Notification privacy</string>
     <string name="notification_privacy_on">Notify as secret content</string>
     <string name="notification_privacy_off">Notify as public content</string>
@@ -52,6 +51,8 @@
 
     <string name="dialog_title_reset_theme">Confirmation</string>
     <string name="dialog_message_reset_theme">Would you like to reset theme?</string>
+    <string name="dialog_title_reset_orientation">Confirmation</string>
+    <string name="dialog_message_reset_orientation">Would you like to reset buttons?</string>
     <string name="dialog_title_permission">Permission required</string>
     <string name="dialog_message_permission">To use this app, need to allow \"display over other apps\".\nGo edition devices may not be able to grant permission. In that case, you cannot use this app, so please uninstall this app.</string>
     <string name="dialog_button_open_settings">Go settings</string>
@@ -63,6 +64,8 @@
 
     <string name="toast_could_not_open_setting">Could not open system setting</string>
     <string name="toast_system_settings">Please change the system setting to auto-rotate</string>
+    <string name="toast_select_item_max">Up to 5</string>
+    <string name="toast_select_item_min">At least one is required</string>
 
     <string name="license">Open source licenses</string>
     <string name="source_code">Source code</string>

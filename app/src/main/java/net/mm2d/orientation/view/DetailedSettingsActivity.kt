@@ -13,25 +13,35 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.layout_detailed_settings.*
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.color.chooser.ColorChooserDialog
 import net.mm2d.orientation.control.OrientationHelper
+import net.mm2d.orientation.control.Orientations
 import net.mm2d.orientation.event.EventObserver
 import net.mm2d.orientation.event.EventRouter
 import net.mm2d.orientation.service.MainService
+import net.mm2d.orientation.settings.Default
+import net.mm2d.orientation.settings.OrientationList
 import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.view.dialog.ResetOrientationDialog
 import net.mm2d.orientation.view.dialog.ResetThemeDialog
+import net.mm2d.orientation.view.view.CheckItemView
 
-class DetailedSettingsActivity
-    : AppCompatActivity(), ResetThemeDialog.Callback, ColorChooserDialog.Callback {
+class DetailedSettingsActivity : AppCompatActivity(),
+    ResetThemeDialog.Callback,
+    ResetOrientationDialog.Callback,
+    ColorChooserDialog.Callback {
     private val settings by lazy {
         Settings.get()
     }
     private val eventObserver: EventObserver = EventRouter.createUpdateObserver()
     private lateinit var notificationSample: NotificationSample
+    private lateinit var checkList: List<CheckItemView>
+    private val orientationList: MutableList<Int> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,26 +72,11 @@ class DetailedSettingsActivity
     private fun setUpViews() {
         notificationSample = NotificationSample(this)
         setUpSample()
-        setUpOrientationIcons()
+        setUpOrientationSelector()
         setUpUseBlankIcon()
         setUpAutoRotateWarning()
-        setUpUseFullSensor()
         setUpNotificationPrivacy()
         setUpSystemSetting()
-    }
-
-    private fun setUpOrientationIcons() {
-        notificationSample.buttonList.forEach { view ->
-            view.button.setOnClickListener { updateOrientation(view.orientation) }
-        }
-    }
-
-    private fun updateOrientation(orientation: Int) {
-        settings.orientation = orientation
-        notificationSample.update()
-        if (OrientationHelper.isEnabled) {
-            MainService.start(this)
-        }
     }
 
     private fun setUpSample() {
@@ -101,7 +96,22 @@ class DetailedSettingsActivity
         background_selected.setOnClickListener {
             ColorChooserDialog.show(this, it.id, settings.backgroundColorSelected)
         }
-        reset.setOnClickListener { ResetThemeDialog.show(this) }
+        reset_theme.setOnClickListener { ResetThemeDialog.show(this) }
+        setUpOrientationIcons()
+    }
+
+    private fun setUpOrientationIcons() {
+        notificationSample.buttonList.forEach { view ->
+            view.button.setOnClickListener { updateOrientation(view.orientation) }
+        }
+    }
+
+    private fun updateOrientation(orientation: Int) {
+        settings.orientation = orientation
+        notificationSample.update()
+        if (OrientationHelper.isEnabled) {
+            MainService.start(this)
+        }
     }
 
     override fun onColorChooserResult(requestCode: Int, resultCode: Int, color: Int) {
@@ -142,6 +152,70 @@ class DetailedSettingsActivity
         }
     }
 
+    private fun setUpOrientationSelector() {
+        orientationList.addAll(settings.orientationList)
+        checkList = listOf(
+            check_orientation1,
+            check_orientation2,
+            check_orientation3,
+            check_orientation4,
+            check_orientation5,
+            check_orientation6,
+            check_orientation7,
+            check_orientation8
+        )
+        checkList.forEachIndexed { index, view ->
+            val orientation = Orientations.values[index]
+            view.orientation = orientation.value
+            view.setIcon(orientation.icon)
+            view.setText(orientation.label)
+        }
+        checkList.forEach { view ->
+            view.isChecked = orientationList.contains(view.orientation)
+            view.setOnClickListener {
+                onClickCheckItem(view)
+            }
+        }
+        reset_button.setOnClickListener { ResetOrientationDialog.show(this) }
+    }
+
+    private fun onClickCheckItem(view: CheckItemView) {
+        if (view.isChecked) {
+            if (orientationList.size <= OrientationList.MIN) {
+                Toast.makeText(this, R.string.toast_select_item_min, Toast.LENGTH_LONG).show()
+            } else {
+                orientationList.remove(view.orientation)
+                view.isChecked = false
+                updateOrientationSelector()
+            }
+        } else {
+            if (orientationList.size >= OrientationList.MAX) {
+                Toast.makeText(this, R.string.toast_select_item_max, Toast.LENGTH_LONG).show()
+            } else {
+                orientationList.add(view.orientation)
+                view.isChecked = true
+                updateOrientationSelector()
+            }
+        }
+    }
+
+    private fun updateOrientationSelector() {
+        settings.orientationList = orientationList
+        notificationSample.update()
+        if (OrientationHelper.isEnabled) {
+            MainService.start(this)
+        }
+    }
+
+    override fun resetOrientation() {
+        orientationList.clear()
+        orientationList.addAll(Default.orientationList)
+        checkList.forEach { view ->
+            view.isChecked = orientationList.contains(view.orientation)
+        }
+        updateOrientationSelector()
+    }
+
     private fun setUpUseBlankIcon() {
         use_blank_icon_for_notification.setOnClickListener { toggleUseBlankIcon() }
         applyUseBlankIcon()
@@ -171,24 +245,6 @@ class DetailedSettingsActivity
     private fun toggleAutoRotateWarning() {
         settings.autoRotateWarning = !settings.autoRotateWarning
         applyAutoRotateWarning()
-    }
-
-    private fun setUpUseFullSensor() {
-        use_full_sensor.setOnClickListener { toggleUseFullSensor() }
-        applyUseFullSensor()
-    }
-
-    private fun applyUseFullSensor() {
-        use_full_sensor.isChecked = settings.useFullSensor
-    }
-
-    private fun toggleUseFullSensor() {
-        settings.useFullSensor = !settings.useFullSensor
-        applyUseFullSensor()
-        notificationSample.update()
-        if (OrientationHelper.isEnabled) {
-            MainService.start(this)
-        }
     }
 
     private fun setUpNotificationPrivacy() {

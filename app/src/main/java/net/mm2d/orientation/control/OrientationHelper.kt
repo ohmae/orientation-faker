@@ -61,13 +61,7 @@ object OrientationHelper {
     fun updateOrientation() {
         ReviewRequest.initializeIfNeed()
         val settings = Settings.get()
-        val orientation = settings.orientation.let {
-            if (it == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED && settings.useFullSensor) {
-                ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
-            } else {
-                it
-            }
-        }
+        val orientation = settings.orientation
         notifySystemSettingsIfNeed(orientation)
         if (orientation != ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED &&
             orientation != layoutParams.screenOrientation

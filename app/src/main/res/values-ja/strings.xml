@@ -8,11 +8,13 @@
     <string name="cancel">キャンセル</string>
 
     <string name="unspecified">未指定</string>
-    <string name="force_auto">強制自動</string>
+    <string name="force_sensor">強制自動</string>
     <string name="portrait">縦</string>
     <string name="landscape">横</string>
     <string name="reverse_portrait">逆縦</string>
     <string name="reverse_landscape">逆横</string>
+    <string name="sensor_portrait">自動縦</string>
+    <string name="sensor_landscape">自動横</string>
 
     <string name="status">状態</string>
     <string name="status_running">実行中</string>
@@ -27,8 +29,8 @@
     <string name="version">バージョン</string>
     <string name="caution">システム設定を自動回転に変更してください。逆向き設定ができない可能性があります</string>
 
-    <string name="theme">テーマ</string>
     <string name="reset_theme">テーマをリセット</string>
+    <string name="reset_button">ボタンをリセット</string>
     <string name="foreground_color">前景色</string>
     <string name="background_color">背景色</string>
     <string name="selected_foreground_color">選択前景色</string>
@@ -39,9 +41,6 @@
     <string name="auto_rotate_warning">システム設定警告</string>
     <string name="auto_rotate_warning_on">システム設定が自動回転になっていない場合、警告を表示します</string>
     <string name="auto_rotate_warning_off">システム設定が自動回転になっていなくても、警告を表示しません</string>
-    <string name="use_full_sensor">強制自動回転</string>
-    <string name="use_full_sensor_on">強制的に自動回転させます</string>
-    <string name="use_full_sensor_off">表示されているアプリに従います</string>
     <string name="notification_privacy">通知の公開レベル</string>
     <string name="notification_privacy_on">秘匿情報として通知する</string>
     <string name="notification_privacy_off">公開情報として通知する</string>
@@ -52,6 +51,8 @@
 
     <string name="dialog_title_reset_theme">確認</string>
     <string name="dialog_message_reset_theme">テーマをリセットします。\nよろしいですか？</string>
+    <string name="dialog_title_reset_orientation">確認</string>
+    <string name="dialog_message_reset_orientation">ボタンをリセットします。\nよろしいですか？</string>
     <string name="dialog_title_permission">許可が必要です</string>
     <string name="dialog_message_permission">「他のアプリの上に重ねて表示」の許可が必要です。\nGoエディションの端末では許可を与えられない可能性があります。その場合このアプリを使用することはできません。アンインストールしてください</string>
     <string name="dialog_button_open_settings">設定を開く</string>
@@ -63,6 +64,8 @@
 
     <string name="toast_could_not_open_setting">システムの設定画面を開けません</string>
     <string name="toast_system_settings">システム設定を自動回転に変更してください</string>
+    <string name="toast_select_item_max">最大5つまでです</string>
+    <string name="toast_select_item_min">最低1つ必要です</string>
 
     <string name="license">オープンソースライセンス</string>
     <string name="source_code">ソースコード</string>
