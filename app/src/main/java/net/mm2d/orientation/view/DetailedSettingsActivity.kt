@@ -44,6 +44,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
     private lateinit var notificationSample: NotificationSample
     private lateinit var checkList: List<CheckItemView>
     private val orientationList: MutableList<Int> = mutableListOf()
+    private lateinit var orientationListStart: List<Int>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +57,20 @@ class DetailedSettingsActivity : AppCompatActivity(),
     override fun onDestroy() {
         super.onDestroy()
         eventObserver.unsubscribe()
+        if (!orientationList.contains(settings.orientation)) {
+            settings.orientation = orientationList[0]
+            MainService.update(this)
+            if (!OrientationHelper.isEnabled) {
+                EventRouter.notifyUpdate()
+            }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (orientationListStart != orientationList) {
+            finish()
+        }
     }
 
     override fun onResume() {
@@ -111,9 +126,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
     private fun updateOrientation(orientation: Int) {
         settings.orientation = orientation
         notificationSample.update()
-        if (OrientationHelper.isEnabled) {
-            MainService.start(this)
-        }
+        MainService.update(this)
     }
 
     override fun onColorChooserResult(requestCode: Int, resultCode: Int, color: Int) {
@@ -137,9 +150,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
             }
         }
         notificationSample.update()
-        if (OrientationHelper.isEnabled) {
-            MainService.start(this)
-        }
+        MainService.update(this)
     }
 
     override fun resetTheme() {
@@ -149,13 +160,12 @@ class DetailedSettingsActivity : AppCompatActivity(),
         sample_foreground_selected.setColorFilter(settings.foregroundColorSelected)
         sample_background_selected.setColorFilter(settings.backgroundColorSelected)
         notificationSample.update()
-        if (OrientationHelper.isEnabled) {
-            MainService.start(this)
-        }
+        MainService.update(this)
     }
 
     private fun setUpOrientationSelector() {
-        orientationList.addAll(settings.orientationList)
+        orientationListStart = settings.orientationList
+        orientationList.addAll(orientationListStart)
         checkList = listOf(
             check_orientation1,
             check_orientation2,
@@ -185,7 +195,8 @@ class DetailedSettingsActivity : AppCompatActivity(),
 
     private fun updateCaution() {
         if (orientationList.contains(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT) ||
-            orientationList.contains(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE)) {
+            orientationList.contains(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE)
+        ) {
             caution.visibility = View.VISIBLE
         } else {
             caution.visibility = View.GONE
@@ -215,9 +226,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
     private fun updateOrientationSelector() {
         settings.orientationList = orientationList
         notificationSample.update()
-        if (OrientationHelper.isEnabled) {
-            MainService.start(this)
-        }
+        MainService.update(this)
     }
 
     override fun resetOrientation() {
@@ -241,9 +250,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
     private fun toggleUseBlankIcon() {
         settings.shouldUseBlankIconForNotification = !settings.shouldUseBlankIconForNotification
         applyUseBlankIcon()
-        if (OrientationHelper.isEnabled) {
-            MainService.start(this)
-        }
+        MainService.update(this)
     }
 
     private fun setUpAutoRotateWarning() {
@@ -272,9 +279,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
     private fun toggleNotificationPrivacy() {
         settings.notifySecret = !settings.notifySecret
         applyNotificationPrivacy()
-        if (OrientationHelper.isEnabled) {
-            MainService.start(this)
-        }
+        MainService.update(this)
     }
 
     private fun setUpSystemSetting() {

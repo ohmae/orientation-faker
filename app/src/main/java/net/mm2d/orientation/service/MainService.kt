@@ -60,6 +60,14 @@ class MainService : Service() {
         private const val ACTION_START = "ACTION_START"
         private const val ACTION_STOP = "ACTION_STOP"
 
+        fun update(context: Context) {
+            if (OrientationHelper.isEnabled) {
+                start(context)
+            } else {
+                WidgetProvider.start(context)
+            }
+        }
+
         fun start(context: Context) {
             WidgetProvider.start(context)
             startService(

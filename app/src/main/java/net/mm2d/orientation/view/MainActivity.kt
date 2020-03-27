@@ -177,9 +177,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateOrientation(orientation: Int) {
         settings.orientation = orientation
         notificationSample.update()
-        if (OrientationHelper.isEnabled) {
-            MainService.start(this)
-        }
+        MainService.update(this)
     }
 
     private fun makeVersionInfo(): String {
