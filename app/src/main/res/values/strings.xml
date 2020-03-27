@@ -27,7 +27,8 @@
     <string name="detailed_settings">Detailed Settings</string>
     <string name="detailed_settings_description">Theme and detailed behavior settings of notification</string>
     <string name="version">Version</string>
-    <string name="caution">Please change the system setting to auto-rotate. Reverse setting may not be possible</string>
+    <string name="caution_auto_rotate">Please change the system setting to auto-rotate. Reverse setting may not be possible</string>
+    <string name="caution_experimental">"sensor port" and "sensor land" are experimental features. Some problems may occur</string>
 
     <string name="reset_theme">Reset theme</string>
     <string name="reset_button">Reset button</string>
@@ -66,6 +67,7 @@
     <string name="toast_system_settings">Please change the system setting to auto-rotate</string>
     <string name="toast_select_item_max">Up to 5</string>
     <string name="toast_select_item_min">At least one is required</string>
+    <string name="toast_fail_to_initialize_sensor">Accelerometer initialization failed</string>
 
     <string name="license">Open source licenses</string>
     <string name="source_code">Source code</string>
