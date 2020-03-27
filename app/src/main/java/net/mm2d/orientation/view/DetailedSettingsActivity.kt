@@ -27,13 +27,13 @@ import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.Default
 import net.mm2d.orientation.settings.OrientationList
 import net.mm2d.orientation.settings.Settings
-import net.mm2d.orientation.view.dialog.ResetOrientationDialog
+import net.mm2d.orientation.view.dialog.ResetButtonDialog
 import net.mm2d.orientation.view.dialog.ResetThemeDialog
 import net.mm2d.orientation.view.view.CheckItemView
 
 class DetailedSettingsActivity : AppCompatActivity(),
     ResetThemeDialog.Callback,
-    ResetOrientationDialog.Callback,
+    ResetButtonDialog.Callback,
     ColorChooserDialog.Callback {
     private val settings by lazy {
         Settings.get()
@@ -176,7 +176,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
                 onClickCheckItem(view)
             }
         }
-        reset_button.setOnClickListener { ResetOrientationDialog.show(this) }
+        reset_button.setOnClickListener { ResetButtonDialog.show(this) }
     }
 
     private fun onClickCheckItem(view: CheckItemView) {

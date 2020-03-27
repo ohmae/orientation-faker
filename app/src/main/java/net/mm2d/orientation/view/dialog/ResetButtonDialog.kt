@@ -7,7 +7,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import net.mm2d.android.orientationfaker.R
 
-class ResetOrientationDialog : DialogFragment() {
+class ResetButtonDialog : DialogFragment() {
     interface Callback {
         fun resetOrientation()
     }
@@ -30,7 +30,7 @@ class ResetOrientationDialog : DialogFragment() {
             if (fragmentManager.findFragmentByTag(TAG) != null) {
                 return
             }
-            ResetOrientationDialog()
+            ResetButtonDialog()
                 .show(fragmentManager, TAG)
         }
     }
