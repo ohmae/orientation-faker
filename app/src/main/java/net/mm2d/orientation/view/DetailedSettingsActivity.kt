@@ -10,9 +10,11 @@ package net.mm2d.orientation.view
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.layout_detailed_settings.*
@@ -174,9 +176,20 @@ class DetailedSettingsActivity : AppCompatActivity(),
             view.isChecked = orientationList.contains(view.orientation)
             view.setOnClickListener {
                 onClickCheckItem(view)
+                updateCaution()
             }
         }
         reset_button.setOnClickListener { ResetButtonDialog.show(this) }
+        updateCaution()
+    }
+
+    private fun updateCaution() {
+        if (orientationList.contains(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT) ||
+            orientationList.contains(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE)) {
+            caution.visibility = View.VISIBLE
+        } else {
+            caution.visibility = View.GONE
+        }
     }
 
     private fun onClickCheckItem(view: CheckItemView) {

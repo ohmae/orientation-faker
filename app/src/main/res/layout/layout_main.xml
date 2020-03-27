@@ -101,7 +101,7 @@
         android:paddingTop="8dp"
         android:paddingEnd="16dp"
         android:paddingBottom="8dp"
-        android:text="@string/caution"
+        android:text="@string/caution_auto_rotate"
         android:textColor="@color/fg_caution"
         android:textSize="@dimen/text_caution"
         android:visibility="gone"
