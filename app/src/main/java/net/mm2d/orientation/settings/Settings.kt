@@ -78,7 +78,9 @@ class Settings private constructor(
         set(value) = preferences.writeBoolean(Main.USE_BLANK_ICON_FOR_NOTIFICATION_BOOLEAN, value)
 
     var orientationList: List<Int>
-        get() = OrientationList.toList(preferences.readString(Main.ORIENTATION_LIST_STRING, ""))
+        get() = OrientationList.toList(preferences.readString(Main.ORIENTATION_LIST_STRING, "")).let {
+            if (it.isEmpty()) Default.orientationList else it
+        }
         set(value) = preferences.writeString(Main.ORIENTATION_LIST_STRING, OrientationList.toString(value))
 
     fun resetTheme() {
