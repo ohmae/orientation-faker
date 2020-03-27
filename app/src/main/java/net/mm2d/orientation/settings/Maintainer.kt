@@ -87,6 +87,12 @@ internal object Maintainer {
             boolean(OldKey.AUTO_ROTATE_WARNING, Main.AUTO_ROTATE_WARNING_BOOLEAN)
             boolean(OldKey.USE_BLANK_ICON_FOR_NOTIFICATION, Main.USE_BLANK_ICON_FOR_NOTIFICATION_BOOLEAN)
         }
+        if (sharedPreferences.getBoolean(OldKey.USE_FULL_SENSOR.name, false)) {
+            if (sharedPreferences.getInt(OldKey.ORIENTATION.name, 0) ==
+                    ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
+                preferences.writeInt(Main.ORIENTATION_INT, ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR)
+            }
+        }
         val list = Default.orientationList.toMutableList().also {
             if (sharedPreferences.getBoolean(OldKey.USE_FULL_SENSOR.name, false)) {
                 it[0] = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
