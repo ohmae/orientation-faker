@@ -86,6 +86,8 @@ class MainActivity : AppCompatActivity() {
         notificationSample.update()
         handler.removeCallbacks(checkSystemSettingsTask)
         handler.post(checkSystemSettingsTask)
+        applyStatus()
+        applyAutoStart()
     }
 
     override fun onPause() {
@@ -127,8 +129,6 @@ class MainActivity : AppCompatActivity() {
         detailed_setting.setOnClickListener { DetailedSettingsActivity.start(this) }
         version_description.text = makeVersionInfo()
         setUpOrientationIcons()
-        applyStatus()
-        applyAutoStart()
     }
 
     private fun setUpOrientationIcons() {

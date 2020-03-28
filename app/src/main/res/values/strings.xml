@@ -28,7 +28,7 @@
     <string name="detailed_settings_description">Theme and detailed behavior settings of notification</string>
     <string name="version">Version</string>
     <string name="caution_auto_rotate">Please change the system setting to auto-rotate. Reverse setting may not be possible</string>
-    <string name="caution_experimental">"sensor port" and "sensor land" are experimental features. Some problems may occur</string>
+    <string name="caution_experimental">\"sensor port\" and \"sensor land\" are experimental features. Some problems may occur</string>
 
     <string name="reset_theme">Reset theme</string>
     <string name="reset_button">Reset button</string>

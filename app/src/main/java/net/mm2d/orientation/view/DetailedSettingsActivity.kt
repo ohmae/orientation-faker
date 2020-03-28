@@ -76,6 +76,10 @@ class DetailedSettingsActivity : AppCompatActivity(),
     override fun onResume() {
         super.onResume()
         notificationSample.update()
+        applyOrientationSelection()
+        applyUseBlankIcon()
+        applyAutoRotateWarning()
+        applyNotificationPrivacy()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -183,12 +187,12 @@ class DetailedSettingsActivity : AppCompatActivity(),
             view.setText(orientation.label)
         }
         checkList.forEach { view ->
-            view.isChecked = orientationList.contains(view.orientation)
             view.setOnClickListener {
                 onClickCheckItem(view)
                 updateCaution()
             }
         }
+        applyOrientationSelection()
         reset_button.setOnClickListener { ResetButtonDialog.show(this) }
         updateCaution()
     }
@@ -232,15 +236,18 @@ class DetailedSettingsActivity : AppCompatActivity(),
     override fun resetOrientation() {
         orientationList.clear()
         orientationList.addAll(Default.orientationList)
+        applyOrientationSelection()
+        updateOrientationSelector()
+    }
+
+    private fun applyOrientationSelection() {
         checkList.forEach { view ->
             view.isChecked = orientationList.contains(view.orientation)
         }
-        updateOrientationSelector()
     }
 
     private fun setUpUseBlankIcon() {
         use_blank_icon_for_notification.setOnClickListener { toggleUseBlankIcon() }
-        applyUseBlankIcon()
     }
 
     private fun applyUseBlankIcon() {
@@ -255,7 +262,6 @@ class DetailedSettingsActivity : AppCompatActivity(),
 
     private fun setUpAutoRotateWarning() {
         auto_rotate_warning.setOnClickListener { toggleAutoRotateWarning() }
-        applyAutoRotateWarning()
     }
 
     private fun applyAutoRotateWarning() {
@@ -269,7 +275,6 @@ class DetailedSettingsActivity : AppCompatActivity(),
 
     private fun setUpNotificationPrivacy() {
         notification_privacy.setOnClickListener { toggleNotificationPrivacy() }
-        applyNotificationPrivacy()
     }
 
     private fun applyNotificationPrivacy() {

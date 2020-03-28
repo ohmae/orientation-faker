@@ -13,8 +13,8 @@
     <string name="landscape">横</string>
     <string name="reverse_portrait">逆縦</string>
     <string name="reverse_landscape">逆横</string>
-    <string name="sensor_portrait">自動縦</string>
-    <string name="sensor_landscape">自動横</string>
+    <string name="sensor_portrait">縦自動</string>
+    <string name="sensor_landscape">横自動</string>
 
     <string name="status">状態</string>
     <string name="status_running">実行中</string>
@@ -28,7 +28,7 @@
     <string name="detailed_settings_description">通知のテーマや詳細な動作設定</string>
     <string name="version">バージョン</string>
     <string name="caution_auto_rotate">システム設定を自動回転に変更してください。逆向き設定ができない可能性があります</string>
-    <string name="caution_experimental">「自動縦」「自動横」は試験的機能です。何らかの問題が発生する可能性があります</string>
+    <string name="caution_experimental">「縦自動」「横自動」は試験的機能です。何らかの問題が発生する可能性があります</string>
 
     <string name="reset_theme">テーマをリセット</string>
     <string name="reset_button">ボタンをリセット</string>

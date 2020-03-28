@@ -17,7 +17,7 @@ import net.mm2d.orientation.event.Event.EVENT_UPDATE
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 object EventRouter {
-    private val subject: Subject<Event> = PublishSubject.create<Event>()
+    private val subject: Subject<Event> = PublishSubject.create()
 
     fun notifyUpdate() {
         subject.onNext(EVENT_UPDATE)
