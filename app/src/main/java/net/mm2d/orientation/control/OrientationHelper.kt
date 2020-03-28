@@ -58,14 +58,7 @@ object OrientationHelper {
         override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
         override fun onSensorChanged(event: SensorEvent) {
             if (!isEnabled) return
-            val x = event.values[0]
-            val y = event.values[1]
-            val z = event.values[2]
-            if (setInitialSensorOrientation(x, y)) return
-            if (abs(z).let { it > abs(x) && it > abs(y) }) {
-                return
-            }
-            setSensorOrientation(x, y, z)
+            setSensorOrientation(event.values[0], event.values[1], event.values[2])
         }
     }
 
@@ -140,7 +133,7 @@ object OrientationHelper {
         }
     }
 
-    private fun setInitialSensorOrientation(x: Float, y: Float): Boolean {
+    private fun setSensorOrientation(x: Float, y: Float, z: Float) {
         if (settings.orientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT) {
             if (!layoutParams.screenOrientation.isPortrait()) {
                 if (y > 0) {
@@ -148,7 +141,7 @@ object OrientationHelper {
                 } else {
                     setOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT)
                 }
-                return true
+                return
             }
         } else if (settings.orientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE) {
             if (!layoutParams.screenOrientation.isLandscape()) {
@@ -157,13 +150,13 @@ object OrientationHelper {
                 } else {
                     setOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE)
                 }
-                return true
+                return
             }
         }
-        return false
-    }
-    private fun setSensorOrientation(x: Float, y: Float, z: Float) {
-        val orientation = calculateOrientation(x, y, z)
+        if (abs(z).let { it > abs(x) && it > abs(y) }) {
+            return
+        }
+        val orientation = calculateOrientation(x, y)
         if (layoutParams.screenOrientation == orientation) return
         if (settings.orientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT) {
             if (orientation.isPortrait()) {
@@ -176,7 +169,7 @@ object OrientationHelper {
         }
     }
 
-    private fun calculateOrientation(x: Float, y: Float, z: Float): Int =
+    private fun calculateOrientation(x: Float, y: Float): Int =
         (atan(x / y) / (2 * Math.PI)).let {
             if (y > 0) if (it > 0) it else 1 + it else 0.5 + it
         }.let {
