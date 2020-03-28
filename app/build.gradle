@@ -4,9 +4,9 @@ apply plugin: "kotlin-android-extensions"
 apply plugin: "com.github.ben-manes.versions"
 
 def applicationName = "OrientationFaker"
-def versionMajor = 3
-def versionMinor = 1
-def versionPatch = 1
+def versionMajor = 4
+def versionMinor = 0
+def versionPatch = 0
 
 android {
     compileSdkVersion 29
