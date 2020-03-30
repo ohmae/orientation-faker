@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import net.mm2d.android.orientationfaker.R
+import net.mm2d.orientation.util.isResumed
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
@@ -36,12 +37,14 @@ class ResetThemeDialog : DialogFragment() {
         private const val TAG = "ResetThemeDialog"
 
         fun show(activity: FragmentActivity) {
-            val fragmentManager = activity.supportFragmentManager
-            if (fragmentManager.findFragmentByTag(TAG) != null) {
+            if (activity.isFinishing || !activity.isResumed()) {
                 return
             }
-            ResetThemeDialog()
-                .show(fragmentManager, TAG)
+            activity.supportFragmentManager.also {
+                if (it.findFragmentByTag(TAG) == null) {
+                    ResetThemeDialog().show(it, TAG)
+                }
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import net.mm2d.android.orientationfaker.R
+import net.mm2d.orientation.util.isResumed
 
 class ResetButtonDialog : DialogFragment() {
     interface Callback {
@@ -26,12 +27,14 @@ class ResetButtonDialog : DialogFragment() {
         private const val TAG = "ResetOrientationDialog"
 
         fun show(activity: FragmentActivity) {
-            val fragmentManager = activity.supportFragmentManager
-            if (fragmentManager.findFragmentByTag(TAG) != null) {
+            if (activity.isFinishing || !activity.isResumed()) {
                 return
             }
-            ResetButtonDialog()
-                .show(fragmentManager, TAG)
+            activity.supportFragmentManager.also {
+                if (it.findFragmentByTag(TAG) == null) {
+                    ResetButtonDialog().show(it, TAG)
+                }
+            }
         }
     }
 }
