@@ -9,9 +9,9 @@ package net.mm2d.orientation.settings
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.pm.ActivityInfo
 import androidx.preference.PreferenceManager
 import net.mm2d.android.orientationfaker.BuildConfig
+import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.settings.Key.Main
 
 /**
@@ -55,7 +55,7 @@ internal object Maintainer {
         preferences.writeInt(Main.COUNT_REVIEW_DIALOG_CANCELED_INT, 0)
         preferences.writeBoolean(Main.REVIEW_REPORTED_BOOLEAN, false)
         preferences.writeBoolean(Main.REVIEW_REVIEWED_BOOLEAN, false)
-        preferences.writeInt(Main.ORIENTATION_INT, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+        preferences.writeInt(Main.ORIENTATION_INT, Orientation.UNSPECIFIED)
         preferences.writeBoolean(Main.RESIDENT_BOOLEAN, false)
         preferences.writeInt(Main.COLOR_FOREGROUND_INT, Default.color.foreground)
         preferences.writeInt(Main.COLOR_BACKGROUND_INT, Default.color.background)
@@ -88,14 +88,13 @@ internal object Maintainer {
             boolean(OldKey.USE_BLANK_ICON_FOR_NOTIFICATION, Main.USE_BLANK_ICON_FOR_NOTIFICATION_BOOLEAN)
         }
         if (sharedPreferences.getBoolean(OldKey.USE_FULL_SENSOR.name, false)) {
-            if (sharedPreferences.getInt(OldKey.ORIENTATION.name, 0) ==
-                    ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
-                preferences.writeInt(Main.ORIENTATION_INT, ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR)
+            if (sharedPreferences.getInt(OldKey.ORIENTATION.name, 0) == Orientation.UNSPECIFIED) {
+                preferences.writeInt(Main.ORIENTATION_INT, Orientation.FULL_SENSOR)
             }
         }
         val list = Default.orientationList.toMutableList().also {
             if (sharedPreferences.getBoolean(OldKey.USE_FULL_SENSOR.name, false)) {
-                it[0] = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
+                it[0] = Orientation.FULL_SENSOR
             }
         }
         preferences.writeString(Main.ORIENTATION_LIST_STRING, OrientationList.toString(list))

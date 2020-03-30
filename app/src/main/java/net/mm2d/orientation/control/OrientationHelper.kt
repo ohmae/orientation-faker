@@ -12,7 +12,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.ActivityInfo
 import android.graphics.PixelFormat
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -63,16 +62,13 @@ object OrientationHelper {
     }
 
     private fun Int.usesSensor(): Boolean =
-        this == ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE ||
-            this == ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
+        Orientation.sensor.contains(this)
 
     private fun Int.isPortrait(): Boolean =
-        this == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT ||
-            this == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
+        Orientation.portrait.contains(this)
 
     private fun Int.isLandscape(): Boolean =
-        this == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE ||
-            this == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
+        Orientation.landscape.contains(this)
 
     val isEnabled: Boolean
         get() = view.parent != null
@@ -97,7 +93,7 @@ object OrientationHelper {
                 or LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             PixelFormat.TRANSLUCENT
         )
-        layoutParams.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        layoutParams.screenOrientation = Orientation.UNSPECIFIED
         appContext.registerReceiver(broadcastReceiver, IntentFilter().also {
             it.addAction(Intent.ACTION_SCREEN_ON)
             it.addAction(Intent.ACTION_SCREEN_OFF)
@@ -108,14 +104,14 @@ object OrientationHelper {
         ReviewRequest.initializeIfNeed()
         val orientation = settings.orientation
         notifySystemSettingsIfNeed(orientation)
-        if (orientation != ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED &&
+        if (orientation != Orientation.UNSPECIFIED &&
             orientation != layoutParams.screenOrientation
         ) {
             settings.orientationChangeCount++
         }
         if (orientation.usesSensor()) {
             if (!isEnabled) {
-                setOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                setOrientation(Orientation.UNSPECIFIED)
             }
             startSensor()
         } else {
@@ -134,21 +130,21 @@ object OrientationHelper {
     }
 
     private fun setSensorOrientation(x: Float, y: Float, z: Float) {
-        if (settings.orientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT) {
+        if (settings.orientation == Orientation.SENSOR_PORTRAIT) {
             if (!layoutParams.screenOrientation.isPortrait()) {
                 if (y > 0) {
-                    setOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+                    setOrientation(Orientation.PORTRAIT)
                 } else {
-                    setOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT)
+                    setOrientation(Orientation.REVERSE_PORTRAIT)
                 }
                 return
             }
-        } else if (settings.orientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE) {
+        } else if (settings.orientation == Orientation.SENSOR_LANDSCAPE) {
             if (!layoutParams.screenOrientation.isLandscape()) {
                 if (x > 0) {
-                    setOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+                    setOrientation(Orientation.LANDSCAPE)
                 } else {
-                    setOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE)
+                    setOrientation(Orientation.REVERSE_LANDSCAPE)
                 }
                 return
             }
@@ -158,11 +154,11 @@ object OrientationHelper {
         }
         val orientation = calculateOrientation(x, y)
         if (layoutParams.screenOrientation == orientation) return
-        if (settings.orientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT) {
+        if (settings.orientation == Orientation.SENSOR_PORTRAIT) {
             if (orientation.isPortrait()) {
                 setOrientation(orientation)
             }
-        } else if (settings.orientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE) {
+        } else if (settings.orientation == Orientation.SENSOR_LANDSCAPE) {
             if (orientation.isLandscape()) {
                 setOrientation(orientation)
             }
@@ -174,11 +170,11 @@ object OrientationHelper {
             if (y > 0) if (it > 0) it else 1 + it else 0.5 + it
         }.let {
             when {
-                it < 0.125 -> ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                it < 0.375 -> ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-                it < 0.625 -> ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
-                it < 0.875 -> ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
-                else -> ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                it < 0.125 -> Orientation.PORTRAIT
+                it < 0.375 -> Orientation.LANDSCAPE
+                it < 0.625 -> Orientation.REVERSE_PORTRAIT
+                it < 0.875 -> Orientation.REVERSE_LANDSCAPE
+                else -> Orientation.PORTRAIT
             }
         }
 
@@ -203,10 +199,8 @@ object OrientationHelper {
         sensorManager = null
     }
 
-    private fun notifySystemSettingsIfNeed(requestedOrientation: Int) {
-        if (requestedOrientation != ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE &&
-            requestedOrientation != ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
-        ) {
+    private fun notifySystemSettingsIfNeed(orientation: Int) {
+        if (!Orientation.requestSystemSettings.contains(orientation)) {
             return
         }
         if (!Settings.get().autoRotateWarning) {

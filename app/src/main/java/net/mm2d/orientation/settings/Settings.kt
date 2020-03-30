@@ -8,7 +8,7 @@
 package net.mm2d.orientation.settings
 
 import android.content.Context
-import android.content.pm.ActivityInfo
+import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.settings.Key.Main
 
 /**
@@ -18,7 +18,7 @@ class Settings private constructor(
     private val preferences: Preferences<Main>
 ) {
     var orientation: Int
-        get() = preferences.readInt(Main.ORIENTATION_INT, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+        get() = preferences.readInt(Main.ORIENTATION_INT, Orientation.UNSPECIFIED)
         set(value) = preferences.writeInt(Main.ORIENTATION_INT, value)
 
     var foregroundColor: Int

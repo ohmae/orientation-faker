@@ -10,7 +10,6 @@ package net.mm2d.orientation.control
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.Settings
 
@@ -24,7 +23,7 @@ class OrientationReceiver : BroadcastReceiver() {
         }
         val orientation = intent.getIntExtra(
             EXTRA_ORIENTATION,
-            ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+            Orientation.UNSPECIFIED
         )
         Settings.get().orientation = orientation
         MainService.start(context)

@@ -14,7 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.layout_remote_views.*
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.orientation.control.Orientations
+import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.view.widget.ViewIds
 
@@ -45,7 +45,7 @@ class NotificationSample(activity: Activity) {
         val orientationList = settings.orientationList
         orientationList.forEachIndexed { index, value ->
             val button = buttonList[index]
-            Orientations.values.find { it.value == value }?.let {
+            Orientation.values.find { it.value == value }?.let {
                 button.icon.setImageResource(it.icon)
                 button.title.setText(it.label)
                 button.orientation = value
@@ -74,6 +74,6 @@ class NotificationSample(activity: Activity) {
         val button: View,
         val icon: ImageView,
         val title: TextView,
-        var orientation: Int = Orientations.SCREEN_ORIENTATION_INVALID
+        var orientation: Int = Orientation.INVALID
     )
 }

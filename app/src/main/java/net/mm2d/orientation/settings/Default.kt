@@ -8,9 +8,9 @@
 package net.mm2d.orientation.settings
 
 import android.content.Context
-import android.content.pm.ActivityInfo
 import androidx.core.content.ContextCompat
 import net.mm2d.android.orientationfaker.R
+import net.mm2d.orientation.control.Orientation
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
@@ -20,11 +20,11 @@ internal object Default {
         private set
 
     val orientationList: List<Int> = listOf(
-        ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED,
-        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT,
-        ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE,
-        ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT,
-        ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
+        Orientation.UNSPECIFIED,
+        Orientation.PORTRAIT,
+        Orientation.LANDSCAPE,
+        Orientation.REVERSE_PORTRAIT,
+        Orientation.REVERSE_LANDSCAPE
     )
 
     fun init(context: Context) {

@@ -14,8 +14,8 @@ import android.graphics.Color
 import android.view.View
 import android.widget.RemoteViews
 import net.mm2d.android.orientationfaker.R
+import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationReceiver
-import net.mm2d.orientation.control.Orientations
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.view.MainActivity
 
@@ -34,7 +34,7 @@ object RemoteViewsCreator {
             val orientationList = settings.orientationList
             orientationList.forEachIndexed { index, value ->
                 val button = ViewIds.list[index]
-                Orientations.values.find { it.value == value }?.let {
+                Orientation.values.find { it.value == value }?.let {
                     views.setImageViewResource(button.iconViewId, it.icon)
                     views.setTextViewText(button.titleViewId, context.getText(it.label))
                     views.setOnClickPendingIntent(button.viewId, createOrientationIntent(context, it.value))

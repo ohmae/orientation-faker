@@ -10,7 +10,6 @@ package net.mm2d.orientation.view
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
@@ -21,8 +20,8 @@ import kotlinx.android.synthetic.main.layout_detailed_settings.*
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.color.chooser.ColorChooserDialog
+import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationHelper
-import net.mm2d.orientation.control.Orientations
 import net.mm2d.orientation.event.EventObserver
 import net.mm2d.orientation.event.EventRouter
 import net.mm2d.orientation.service.MainService
@@ -181,7 +180,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
             check_orientation8
         )
         checkList.forEachIndexed { index, view ->
-            val orientation = Orientations.values[index]
+            val orientation = Orientation.values[index]
             view.orientation = orientation.value
             view.setIcon(orientation.icon)
             view.setText(orientation.label)
@@ -198,9 +197,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
     }
 
     private fun updateCaution() {
-        if (orientationList.contains(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT) ||
-            orientationList.contains(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE)
-        ) {
+        if (orientationList.any { Orientation.experimental.contains(it) }) {
             caution.visibility = View.VISIBLE
         } else {
             caution.visibility = View.GONE
