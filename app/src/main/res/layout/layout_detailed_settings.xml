@@ -261,7 +261,7 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/reset_button"
+        android:id="@+id/reset_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
@@ -277,7 +277,7 @@
             android:layout_marginEnd="@dimen/margin_menu_horizontal"
             android:layout_marginRight="@dimen/margin_menu_horizontal"
             android:layout_marginBottom="@dimen/margin_menu_vertical"
-            android:text="@string/reset_button"
+            android:text="@string/reset_layout"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="@dimen/text_description"
             />

@@ -8,23 +8,23 @@ import androidx.fragment.app.FragmentActivity
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.util.isResumed
 
-class ResetButtonDialog : DialogFragment() {
+class ResetLayoutDialog : DialogFragment() {
     interface Callback {
-        fun resetOrientation()
+        fun resetLayout()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         AlertDialog.Builder(context!!)
-            .setTitle(R.string.dialog_title_reset_orientation)
-            .setMessage(R.string.dialog_message_reset_orientation)
+            .setTitle(R.string.dialog_title_reset_layout)
+            .setMessage(R.string.dialog_message_reset_layout)
             .setPositiveButton(R.string.ok) { _, _ ->
-                (activity as? Callback)?.resetOrientation()
+                (activity as? Callback)?.resetLayout()
             }
             .setNegativeButton(R.string.cancel, null)
             .create()
 
     companion object {
-        private const val TAG = "ResetOrientationDialog"
+        private const val TAG = "ResetLayoutDialog"
 
         fun show(activity: FragmentActivity) {
             if (activity.isFinishing || !activity.isResumed()) {
@@ -32,7 +32,7 @@ class ResetButtonDialog : DialogFragment() {
             }
             activity.supportFragmentManager.also {
                 if (it.findFragmentByTag(TAG) == null) {
-                    ResetButtonDialog().show(it, TAG)
+                    ResetLayoutDialog().show(it, TAG)
                 }
             }
         }

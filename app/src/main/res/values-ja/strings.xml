@@ -31,7 +31,7 @@
     <string name="caution_experimental">「縦自動」「横自動」は試験的機能です。何らかの問題が発生する可能性があります</string>
 
     <string name="reset_theme">テーマをリセット</string>
-    <string name="reset_button">ボタンをリセット</string>
+    <string name="reset_layout">ボタン配置をリセット</string>
     <string name="foreground_color">前景色</string>
     <string name="background_color">背景色</string>
     <string name="selected_foreground_color">選択前景色</string>
@@ -52,8 +52,8 @@
 
     <string name="dialog_title_reset_theme">確認</string>
     <string name="dialog_message_reset_theme">テーマをリセットします。\nよろしいですか？</string>
-    <string name="dialog_title_reset_orientation">確認</string>
-    <string name="dialog_message_reset_orientation">ボタンをリセットします。\nよろしいですか？</string>
+    <string name="dialog_title_reset_layout">確認</string>
+    <string name="dialog_message_reset_layout">ボタン配置をリセットします。\nよろしいですか？</string>
     <string name="dialog_title_permission">許可が必要です</string>
     <string name="dialog_message_permission">「他のアプリの上に重ねて表示」の許可が必要です。\nGoエディションの端末では許可を与えられない可能性があります。その場合このアプリを使用することはできません。アンインストールしてください</string>
     <string name="dialog_button_open_settings">設定を開く</string>

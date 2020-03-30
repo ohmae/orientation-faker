@@ -29,13 +29,13 @@ import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.Default
 import net.mm2d.orientation.settings.OrientationList
 import net.mm2d.orientation.settings.Settings
-import net.mm2d.orientation.view.dialog.ResetButtonDialog
+import net.mm2d.orientation.view.dialog.ResetLayoutDialog
 import net.mm2d.orientation.view.dialog.ResetThemeDialog
 import net.mm2d.orientation.view.view.CheckItemView
 
 class DetailedSettingsActivity : AppCompatActivity(),
     ResetThemeDialog.Callback,
-    ResetButtonDialog.Callback,
+    ResetLayoutDialog.Callback,
     ColorChooserDialog.Callback {
     private val settings by lazy {
         Settings.get()
@@ -43,8 +43,8 @@ class DetailedSettingsActivity : AppCompatActivity(),
     private val eventObserver: EventObserver = EventRouter.createUpdateObserver()
     private lateinit var notificationSample: NotificationSample
     private lateinit var checkList: List<CheckItemView>
-    private val orientationList: MutableList<Int> = mutableListOf()
     private lateinit var orientationListStart: List<Int>
+    private val orientationList: MutableList<Int> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +76,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
     override fun onResume() {
         super.onResume()
         notificationSample.update()
-        applyOrientationSelection()
+        applyLayoutSelection()
         applyUseBlankIcon()
         applyAutoRotateWarning()
         applyNotificationPrivacy()
@@ -93,7 +93,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
     private fun setUpViews() {
         notificationSample = NotificationSample(this)
         setUpSample()
-        setUpOrientationSelector()
+        setUpLayoutSelector()
         setUpUseBlankIcon()
         setUpAutoRotateWarning()
         setUpNotificationPrivacy()
@@ -167,7 +167,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
         MainService.update(this)
     }
 
-    private fun setUpOrientationSelector() {
+    private fun setUpLayoutSelector() {
         orientationListStart = settings.orientationList
         orientationList.addAll(orientationListStart)
         checkList = listOf(
@@ -192,8 +192,8 @@ class DetailedSettingsActivity : AppCompatActivity(),
                 updateCaution()
             }
         }
-        applyOrientationSelection()
-        reset_button.setOnClickListener { ResetButtonDialog.show(this) }
+        applyLayoutSelection()
+        reset_layout.setOnClickListener { ResetLayoutDialog.show(this) }
         updateCaution()
     }
 
@@ -214,7 +214,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
             } else {
                 orientationList.remove(view.orientation)
                 view.isChecked = false
-                updateOrientationSelector()
+                updateLayoutSelector()
             }
         } else {
             if (orientationList.size >= OrientationList.MAX) {
@@ -222,25 +222,25 @@ class DetailedSettingsActivity : AppCompatActivity(),
             } else {
                 orientationList.add(view.orientation)
                 view.isChecked = true
-                updateOrientationSelector()
+                updateLayoutSelector()
             }
         }
     }
 
-    private fun updateOrientationSelector() {
+    private fun updateLayoutSelector() {
         settings.orientationList = orientationList
         notificationSample.update()
         MainService.update(this)
     }
 
-    override fun resetOrientation() {
+    override fun resetLayout() {
         orientationList.clear()
         orientationList.addAll(Default.orientationList)
-        applyOrientationSelection()
-        updateOrientationSelector()
+        applyLayoutSelection()
+        updateLayoutSelector()
     }
 
-    private fun applyOrientationSelection() {
+    private fun applyLayoutSelection() {
         checkList.forEach { view ->
             view.isChecked = orientationList.contains(view.orientation)
         }

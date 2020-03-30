@@ -31,7 +31,7 @@
     <string name="caution_experimental">\"sensor port\" and \"sensor land\" are experimental features. Some problems may occur</string>
 
     <string name="reset_theme">Reset theme</string>
-    <string name="reset_button">Reset button</string>
+    <string name="reset_layout">Reset button layout</string>
     <string name="foreground_color">foreground</string>
     <string name="background_color">background</string>
     <string name="selected_foreground_color">*foreground</string>
@@ -52,8 +52,8 @@
 
     <string name="dialog_title_reset_theme">Confirmation</string>
     <string name="dialog_message_reset_theme">Would you like to reset theme?</string>
-    <string name="dialog_title_reset_orientation">Confirmation</string>
-    <string name="dialog_message_reset_orientation">Would you like to reset buttons?</string>
+    <string name="dialog_title_reset_layout">Confirmation</string>
+    <string name="dialog_message_reset_layout">Would you like to reset button layout?</string>
     <string name="dialog_title_permission">Permission required</string>
     <string name="dialog_message_permission">To use this app, need to allow \"display over other apps\".\nGo edition devices may not be able to grant permission. In that case, you cannot use this app, so please uninstall this app.</string>
     <string name="dialog_button_open_settings">Go settings</string>
