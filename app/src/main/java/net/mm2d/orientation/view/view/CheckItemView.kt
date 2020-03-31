@@ -20,7 +20,7 @@ class CheckItemView @JvmOverloads constructor(
     var orientation: Int = 0
 
     fun setText(id: Int) {
-        description.setText(id)
+        name.setText(id)
     }
 
     fun setIcon(id: Int) {

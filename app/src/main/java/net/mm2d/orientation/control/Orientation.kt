@@ -15,51 +15,60 @@ object Orientation {
     const val SENSOR_LANDSCAPE: Int = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
 
     data class Entity(
-        val value: Int,
+        val orientation: Int,
         val icon: Int,
-        val label: Int
+        val label: Int,
+        val description: Int
     )
 
     val values: List<Entity> = listOf(
         Entity(
             PORTRAIT,
             R.drawable.ic_portrait,
-            R.string.portrait
+            R.string.portrait,
+            R.string.description_portrait
         ),
         Entity(
             LANDSCAPE,
             R.drawable.ic_landscape,
-            R.string.landscape
+            R.string.landscape,
+            R.string.description_landscape
         ),
         Entity(
             REVERSE_PORTRAIT,
             R.drawable.ic_reverse_portrait,
-            R.string.reverse_portrait
+            R.string.reverse_portrait,
+            R.string.description_reverse_portrait
         ),
         Entity(
             REVERSE_LANDSCAPE,
             R.drawable.ic_reverse_landscape,
-            R.string.reverse_landscape
+            R.string.reverse_landscape,
+            R.string.description_reverse_landscape
         ),
         Entity(
             UNSPECIFIED,
             R.drawable.ic_unspecified,
-            R.string.unspecified
+            R.string.unspecified,
+            R.string.description_unspecified
         ),
         Entity(
             FULL_SENSOR,
             R.drawable.ic_force_sensor,
-            R.string.force_sensor
+            R.string.force_sensor,
+            R.string.description_force_sensor
         ),
         Entity(
             SENSOR_PORTRAIT,
             R.drawable.ic_sensor_portrait,
-            R.string.sensor_portrait
+            R.string.sensor_portrait,
+            R.string.description_sensor_portrait
         ),
         Entity(
             SENSOR_LANDSCAPE,
             R.drawable.ic_sensor_landscape,
-            R.string.sensor_landscape
+            R.string.sensor_landscape,
+            R.string.description_sensor_landscape
         )
     )
 

@@ -16,6 +16,15 @@
     <string name="sensor_portrait">縦自動</string>
     <string name="sensor_landscape">横自動</string>
 
+    <string name="description_unspecified">アプリからは画面の向きを指定しません。表示されているアプリ本来の向きになります</string>
+    <string name="description_force_sensor">センサーの情報を元に回転させます</string>
+    <string name="description_portrait">縦方向に固定します</string>
+    <string name="description_landscape">横方向に固定します</string>
+    <string name="description_reverse_portrait">逆向きの縦方向に固定します</string>
+    <string name="description_reverse_landscape">逆向きの横方向に固定します</string>
+    <string name="description_sensor_portrait">縦方向固定し、上下はセンサーによって反転させます</string>
+    <string name="description_sensor_landscape">横方向固定し、上下はセンサーによって反転させます</string>
+
     <string name="status">状態</string>
     <string name="status_running">実行中</string>
     <string name="status_waiting">待機中</string>
@@ -57,6 +66,7 @@
     <string name="dialog_title_permission">許可が必要です</string>
     <string name="dialog_message_permission">「他のアプリの上に重ねて表示」の許可が必要です。\nGoエディションの端末では許可を与えられない可能性があります。その場合このアプリを使用することはできません。アンインストールしてください</string>
     <string name="dialog_button_open_settings">設定を開く</string>
+    <string name="dialog_title_help">機能説明</string>
 
     <string name="dialog_title_review">ご満足いただけましたか？</string>
     <string name="dialog_message_review">５つ星評価で応援をお願いします\n問題があれば報告いただけますと幸いです</string>

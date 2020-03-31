@@ -27,7 +27,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_menu_horizontal"
         android:layout_marginTop="@dimen/margin_menu_vertical"
-        android:text="@string/status"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textSize="@dimen/text_title"
         app:layout_constraintEnd_toStartOf="@+id/menu_switch"
@@ -35,6 +34,7 @@
         app:layout_constraintRight_toLeftOf="@+id/menu_switch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/status"
         />
 
     <TextView
@@ -43,7 +43,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_menu_horizontal"
         android:layout_marginBottom="@dimen/margin_menu_vertical"
-        android:text="@string/status_running"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="@dimen/text_description"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -52,6 +51,7 @@
         app:layout_constraintRight_toLeftOf="@+id/menu_switch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/menu_title"
+        tools:text="@string/status_running"
         />
 
 </merge>

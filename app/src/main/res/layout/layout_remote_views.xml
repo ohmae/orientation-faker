@@ -34,8 +34,8 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_unspecified"
                 tools:ignore="ContentDescription,VectorDrawableCompat"
+                tools:src="@drawable/ic_unspecified"
                 />
 
             <TextView
@@ -44,10 +44,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:text="@string/unspecified"
                 android:textColor="@color/fg_notification"
                 android:textSize="@dimen/text_icon"
                 tools:ignore="SmallSp,SpUsage"
+                tools:text="@string/unspecified"
                 />
         </LinearLayout>
     </FrameLayout>
@@ -74,8 +74,8 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_portrait"
                 tools:ignore="ContentDescription,VectorDrawableCompat"
+                tools:src="@drawable/ic_portrait"
                 />
 
             <TextView
@@ -84,10 +84,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:text="@string/portrait"
                 android:textColor="@color/fg_notification"
                 android:textSize="@dimen/text_icon"
                 tools:ignore="SmallSp,SpUsage"
+                tools:text="@string/portrait"
                 />
         </LinearLayout>
     </FrameLayout>
@@ -114,8 +114,8 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_landscape"
                 tools:ignore="ContentDescription,VectorDrawableCompat"
+                tools:src="@drawable/ic_landscape"
                 />
 
             <TextView
@@ -124,10 +124,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:text="@string/landscape"
                 android:textColor="@color/fg_notification"
                 android:textSize="@dimen/text_icon"
                 tools:ignore="SmallSp,SpUsage"
+                tools:text="@string/landscape"
                 />
         </LinearLayout>
     </FrameLayout>
@@ -154,8 +154,8 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_reverse_portrait"
                 tools:ignore="ContentDescription,VectorDrawableCompat"
+                tools:src="@drawable/ic_reverse_portrait"
                 />
 
             <TextView
@@ -164,10 +164,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:text="@string/reverse_portrait"
                 android:textColor="@color/fg_notification"
                 android:textSize="@dimen/text_icon"
                 tools:ignore="SmallSp,SpUsage"
+                tools:text="@string/reverse_portrait"
                 />
         </LinearLayout>
     </FrameLayout>
@@ -194,8 +194,8 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_reverse_landscape"
                 tools:ignore="ContentDescription,VectorDrawableCompat"
+                tools:src="@drawable/ic_reverse_landscape"
                 />
 
             <TextView
@@ -204,10 +204,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:text="@string/reverse_landscape"
                 android:textColor="@color/fg_notification"
                 android:textSize="@dimen/text_icon"
                 tools:ignore="SmallSp,SpUsage"
+                tools:text="@string/reverse_landscape"
                 />
         </LinearLayout>
     </FrameLayout>

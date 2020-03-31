@@ -34,10 +34,10 @@ object RemoteViewsCreator {
             val orientationList = settings.orientationList
             orientationList.forEachIndexed { index, value ->
                 val button = ViewIds.list[index]
-                Orientation.values.find { it.value == value }?.let {
+                Orientation.values.find { it.orientation == value }?.let {
                     views.setImageViewResource(button.iconViewId, it.icon)
                     views.setTextViewText(button.titleViewId, context.getText(it.label))
-                    views.setOnClickPendingIntent(button.viewId, createOrientationIntent(context, it.value))
+                    views.setOnClickPendingIntent(button.viewId, createOrientationIntent(context, it.orientation))
                 }
             }
             val selectedIndex = orientationList.indexOf(orientation)

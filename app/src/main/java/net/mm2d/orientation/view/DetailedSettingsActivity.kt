@@ -28,6 +28,7 @@ import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.Default
 import net.mm2d.orientation.settings.OrientationList
 import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.view.dialog.OrientationHelpDialog
 import net.mm2d.orientation.view.dialog.ResetLayoutDialog
 import net.mm2d.orientation.view.dialog.ResetThemeDialog
 import net.mm2d.orientation.view.view.CheckItemView
@@ -181,7 +182,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
         )
         checkList.forEachIndexed { index, view ->
             val orientation = Orientation.values[index]
-            view.orientation = orientation.value
+            view.orientation = orientation.orientation
             view.setIcon(orientation.icon)
             view.setText(orientation.label)
         }
@@ -193,6 +194,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
         }
         applyLayoutSelection()
         reset_layout.setOnClickListener { ResetLayoutDialog.show(this) }
+        help_layout.setOnClickListener { OrientationHelpDialog.show(this) }
         updateCaution()
     }
 
