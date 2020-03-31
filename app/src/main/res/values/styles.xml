@@ -6,7 +6,7 @@
         <item name="colorPrimaryDark">@color/primaryDark</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:windowBackground">@color/bg_window</item>
-        <item name="alertDialogTheme">@style/MyDialog</item>
+        <item name="alertDialogTheme">@style/AppAlertDialog</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -17,8 +17,9 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-    <style name="MyDialog" parent="Theme.AppCompat.Dialog.Alert">
+
+    <style name="AppAlertDialog" parent="Theme.AppCompat.Dialog.Alert">
         <item name="colorAccent">@color/accent</item>
-        <item name="android:windowBackground">@color/primary</item>
+        <item name="android:windowBackground">@color/bg_dialog</item>
     </style>
 </resources>
