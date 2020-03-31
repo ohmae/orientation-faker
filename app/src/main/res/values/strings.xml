@@ -75,7 +75,7 @@
 
     <string name="toast_could_not_open_setting">Could not open system setting</string>
     <string name="toast_system_settings">Please change the system setting to auto-rotate</string>
-    <string name="toast_select_item_max">Up to 5</string>
+    <string name="toast_select_item_max">Cannot add more than 5</string>
     <string name="toast_select_item_min">At least one is required</string>
     <string name="toast_fail_to_initialize_sensor">Accelerometer initialization failed</string>
 

@@ -75,7 +75,7 @@
 
     <string name="toast_could_not_open_setting">システムの設定画面を開けません</string>
     <string name="toast_system_settings">システム設定を自動回転に変更してください</string>
-    <string name="toast_select_item_max">最大5つまでです</string>
+    <string name="toast_select_item_max">5つ以上追加できません</string>
     <string name="toast_select_item_min">最低1つ必要です</string>
     <string name="toast_fail_to_initialize_sensor">加速度センサーの初期化に失敗しました</string>
 
