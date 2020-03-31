@@ -10,14 +10,12 @@ package net.mm2d.orientation.view
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.layout_detailed_settings.*
-import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.color.chooser.ColorChooserDialog
 import net.mm2d.orientation.control.Orientation
@@ -28,6 +26,7 @@ import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.Default
 import net.mm2d.orientation.settings.OrientationList
 import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.view.dialog.OrientationHelpDialog
 import net.mm2d.orientation.view.dialog.ResetLayoutDialog
 import net.mm2d.orientation.view.dialog.ResetThemeDialog
@@ -288,27 +287,14 @@ class DetailedSettingsActivity : AppCompatActivity(),
 
     private fun setUpSystemSetting() {
         system_app.setOnClickListener {
-            startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS).also {
-                it.data = Uri.parse("package:" + BuildConfig.APPLICATION_ID)
-                it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            })
+            SystemSettings.startApplicationDetailsSettings(this)
         }
         system_notification.setOnClickListener {
-            runCatching {
-                startActivity(Intent(ACTION_APP_NOTIFICATION_SETTINGS).also {
-                    it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    it.putExtra("app_package", BuildConfig.APPLICATION_ID)
-                    it.putExtra("app_uid", applicationInfo.uid)
-                    it.putExtra("android.provider.extra.APP_PACKAGE", BuildConfig.APPLICATION_ID)
-                })
-            }
+            SystemSettings.startAppNotificationSettings(this)
         }
     }
 
     companion object {
-        private const val ACTION_APP_NOTIFICATION_SETTINGS =
-            "android.settings.APP_NOTIFICATION_SETTINGS"
-
         fun start(context: Context) {
             context.startActivity(Intent(context, DetailedSettingsActivity::class.java))
         }

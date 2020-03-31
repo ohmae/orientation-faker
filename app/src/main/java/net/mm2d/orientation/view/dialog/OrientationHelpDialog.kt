@@ -33,7 +33,7 @@ class OrientationHelpDialog : DialogFragment() {
             .create()
     }
 
-    class HelpAdapter(context: Context): Adapter<ViewHolder>() {
+    class HelpAdapter(context: Context) : Adapter<ViewHolder>() {
         private val layoutInflater = LayoutInflater.from(context)
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
             ViewHolder(layoutInflater.inflate(R.layout.layout_help_item, parent, false))
@@ -46,7 +46,7 @@ class OrientationHelpDialog : DialogFragment() {
         }
     }
 
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(entity: Orientation.Entity) {
             itemView.icon.setImageResource(entity.icon)
             itemView.name.setText(entity.label)
