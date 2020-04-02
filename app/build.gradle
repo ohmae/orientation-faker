@@ -74,7 +74,7 @@ dependencies {
 
 dependencyUpdates.resolutionStrategy {
     componentSelection { rules ->
-        rules.all { ComponentSelection selection ->
+        rules.all { selection ->
             boolean rejected = ["alpha", "beta", "rc", "cr", "m", "preview", "b", "ea"].any { qualifier ->
                 selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-+]*/
             }
