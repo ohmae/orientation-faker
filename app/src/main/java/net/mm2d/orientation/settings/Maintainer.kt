@@ -18,10 +18,10 @@ import net.mm2d.orientation.settings.Key.Main
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 internal object Maintainer {
-    // 0 : 1.0.0
-    // 1 : 2.0.0 - 2.1.2
-    // 2 : 2.2.0 -
-    // 3 : 4.0.0 -
+    // 0 : 2013/04/21 : 1.0.0
+    // 1 : 2018/01/14 : 2.0.0 - 2.1.2
+    // 2 : 2018/12/16 : 2.2.0 -
+    // 3 : 2020/03/28 : 4.0.0 -
     private const val SETTINGS_VERSION = 3
 
     fun maintain(context: Context, preferences: Preferences<Main>) {

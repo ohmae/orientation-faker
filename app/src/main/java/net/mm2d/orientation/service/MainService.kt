@@ -45,7 +45,7 @@ class MainService : Service() {
     }
 
     private fun start() {
-        OrientationHelper.updateOrientation()
+        OrientationHelper.update()
         EventRouter.notifyUpdate()
     }
 

@@ -9,6 +9,7 @@ package net.mm2d.orientation.review
 
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
+import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.view.dialog.ReviewDialog
@@ -24,11 +25,14 @@ object ReviewRequest {
     private val INTERVAL_SECOND_REVIEW = TimeUnit.DAYS.toMillis(42)
     private val INTERVAL_RANDOM_RANGE = TimeUnit.DAYS.toMillis(14)
 
-    fun initializeIfNeed() {
+    fun updateOrientation(orientation: Int) {
         val settings = Settings.get()
         if (settings.firstUseTime == 0L) {
             settings.firstUseTime = System.currentTimeMillis()
             settings.reviewIntervalRandomFactor = Random.nextLong(INTERVAL_RANDOM_RANGE)
+        }
+        if (orientation != Orientation.UNSPECIFIED) {
+            settings.orientationChangeCount++
         }
     }
 

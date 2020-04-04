@@ -24,6 +24,30 @@ object SystemSettings {
     private const val ACTION_APP_NOTIFICATION_SETTINGS =
         "android.settings.APP_NOTIFICATION_SETTINGS"
 
+    private fun startSystemSettings(activity: Activity, action: String, block: (Intent) -> Unit) {
+        try {
+            val intent = Intent(action).also {
+                it.data = Uri.parse("package:${BuildConfig.APPLICATION_ID}")
+                it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            block(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(activity, R.string.toast_could_not_open_setting, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun startSystemSettings(activity: Activity, action: String) {
+        startSystemSettings(activity, action) {
+            activity.startActivity(it)
+        }
+    }
+
+    private fun startSystemSettingsForResult(activity: Activity, action: String, requestCode: Int) {
+        startSystemSettings(activity, action) {
+            activity.startActivityForResult(it, requestCode)
+        }
+    }
+
     fun rotationIsFixed(context: Context): Boolean = try {
         System.getInt(context.contentResolver, System.ACCELEROMETER_ROTATION) == 0
     } catch (ignored: Exception) {
@@ -37,27 +61,11 @@ object SystemSettings {
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun requestOverlayPermission(activity: Activity, requestCode: Int) {
-        try {
-            val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION).also {
-                it.data = Uri.parse("package:${BuildConfig.APPLICATION_ID}")
-                it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-            activity.startActivityForResult(intent, requestCode)
-        } catch (e: ActivityNotFoundException) {
-            Toast.makeText(activity, R.string.toast_could_not_open_setting, Toast.LENGTH_LONG).show()
-        }
+        startSystemSettingsForResult(activity, Settings.ACTION_MANAGE_OVERLAY_PERMISSION, requestCode)
     }
 
     fun startApplicationDetailsSettings(activity: Activity) {
-        try {
-            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).also {
-                it.data = Uri.parse("package:${BuildConfig.APPLICATION_ID}")
-                it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-            activity.startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
-            Toast.makeText(activity, R.string.toast_could_not_open_setting, Toast.LENGTH_LONG).show()
-        }
+        startSystemSettings(activity, Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
     }
 
     fun startAppNotificationSettings(activity: Activity) {
