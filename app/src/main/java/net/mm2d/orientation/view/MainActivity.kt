@@ -7,7 +7,7 @@
 
 package net.mm2d.orientation.view
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.layout_main.*
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.OrientationHelper
-import net.mm2d.orientation.control.OverlayPermissionHelper
 import net.mm2d.orientation.event.EventObserver
 import net.mm2d.orientation.event.EventRouter
 import net.mm2d.orientation.review.ReviewRequest
@@ -29,6 +28,7 @@ import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.LaunchUtils
 import net.mm2d.orientation.util.SystemSettings
+import net.mm2d.orientation.view.dialog.OverlayPermissionDialog
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
@@ -58,22 +58,14 @@ class MainActivity : AppCompatActivity() {
                 MainService.start(this)
             }
         }
-        checkPermission()
     }
 
-    private fun checkPermission() {
-        OverlayPermissionHelper.requestOverlayPermissionIfNeed(
-            this,
-            REQUEST_CODE
-        )
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE) {
-            handler.postDelayed({ checkPermission() }, 1000)
-            return
+    @SuppressLint("NewApi")
+    override fun onPostResume() {
+        super.onPostResume()
+        if (!SystemSettings.canDrawOverlays(this)) {
+            OverlayPermissionDialog.showDialog(this)
         }
-        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onDestroy() {
@@ -188,7 +180,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val REQUEST_CODE = 101
         private const val CHECK_INTERVAL = 5000L
     }
 }

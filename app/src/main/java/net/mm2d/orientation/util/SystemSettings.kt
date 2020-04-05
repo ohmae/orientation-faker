@@ -24,27 +24,17 @@ object SystemSettings {
     private const val ACTION_APP_NOTIFICATION_SETTINGS =
         "android.settings.APP_NOTIFICATION_SETTINGS"
 
-    private fun startSystemSettings(activity: Activity, action: String, block: (Intent) -> Unit) {
+    private fun startSystemSettings(activity: Activity, action: String, withPackage: Boolean = true) {
         try {
             val intent = Intent(action).also {
-                it.data = Uri.parse("package:${BuildConfig.APPLICATION_ID}")
+                if (withPackage) {
+                    it.data = Uri.parse("package:${BuildConfig.APPLICATION_ID}")
+                }
                 it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
-            block(intent)
+            activity.startActivity(intent)
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(activity, R.string.toast_could_not_open_setting, Toast.LENGTH_LONG).show()
-        }
-    }
-
-    private fun startSystemSettings(activity: Activity, action: String) {
-        startSystemSettings(activity, action) {
-            activity.startActivity(it)
-        }
-    }
-
-    private fun startSystemSettingsForResult(activity: Activity, action: String, requestCode: Int) {
-        startSystemSettings(activity, action) {
-            activity.startActivityForResult(it, requestCode)
         }
     }
 
@@ -60,8 +50,8 @@ object SystemSettings {
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    fun requestOverlayPermission(activity: Activity, requestCode: Int) {
-        startSystemSettingsForResult(activity, Settings.ACTION_MANAGE_OVERLAY_PERMISSION, requestCode)
+    fun requestOverlayPermission(activity: Activity) {
+        startSystemSettings(activity, Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
     }
 
     fun startApplicationDetailsSettings(activity: Activity) {

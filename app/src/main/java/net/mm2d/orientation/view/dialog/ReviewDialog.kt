@@ -23,13 +23,12 @@ import net.mm2d.orientation.util.isResumed
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 class ReviewDialog : DialogFragment() {
-    private lateinit var settings: Settings
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        settings = Settings.get()
         val activity = activity ?: throw IllegalStateException()
         val parent = activity.window.decorView as ViewGroup
         val view = activity.layoutInflater
             .inflate(R.layout.layout_review, parent, false)
+        val settings = Settings.get()
         return AlertDialog.Builder(activity)
             .setIcon(R.drawable.ic_launcher)
             .setTitle(R.string.app_name)
@@ -50,13 +49,7 @@ class ReviewDialog : DialogFragment() {
 
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
-        settings.reviewCancelCount++
-
-    }
-
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-        activity?.finish()
+        Settings.get().reviewCancelCount++
     }
 
     companion object {
