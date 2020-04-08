@@ -16,6 +16,7 @@
     <string name="sensor_portrait">sensor port</string>
     <string name="sensor_landscape">sensor land</string>
 
+    <string name="description_clear">Clear settings</string>
     <string name="description_unspecified">Unspecified orientation from this app. Device will be the original orientation of the displayed app</string>
     <string name="description_force_sensor">Rotate based on sensor information</string>
     <string name="description_portrait">Fixed to portrait</string>
@@ -35,6 +36,8 @@
     <string name="auto_start_description_off">Do not start automatically</string>
     <string name="detailed_settings">Detailed Settings</string>
     <string name="detailed_settings_description">Theme and detailed behavior settings of notification</string>
+    <string name="setting_for_each_app">Setting for each app</string>
+    <string name="setting_for_each_app_description">Set the default screen orientation for each app</string>
     <string name="version">Version</string>
     <string name="caution_auto_rotate">Please change the system setting to auto-rotate. Reverse setting may not be possible</string>
     <string name="caution_experimental">\"sensor port\" and \"sensor land\" are experimental features. Some problems may occur</string>
@@ -66,8 +69,9 @@
     <string name="dialog_title_overlay_permission">Permission required</string>
     <string name="dialog_message_overlay_permission">To use this app, need to allow \"display over other apps\".</string>
     <string name="dialog_message_overlay_permission_go">To use this app, need to allow \"display over other apps\".\nGo edition devices may not be able to grant permission. In that case, you cannot use this app, so please uninstall this app.</string>
+    <string name="dialog_title_usage_access">Permission required</string>
+    <string name="dialog_message_usage_access">Usage access permission is required to use this feature</string>
     <string name="dialog_button_open_settings">Go settings</string>
-    <string name="dialog_title_help">Feature Description</string>
 
     <string name="dialog_title_review">Are you satisfied?</string>
     <string name="dialog_message_review">Please cheer me up by 5-stars review.\nIf there is a problem, please report it to me</string>
@@ -79,6 +83,7 @@
     <string name="toast_select_item_max">Cannot add more than 5</string>
     <string name="toast_select_item_min">At least one is required</string>
     <string name="toast_fail_to_initialize_sensor">Accelerometer initialization failed</string>
+    <string name="toast_no_permission_to_usage_access">No permissions to usage access</string>
 
     <string name="license">Open source licenses</string>
     <string name="source_code">Source code</string>

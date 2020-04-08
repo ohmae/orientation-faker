@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
-import kotlinx.android.synthetic.main.layout_help_item.view.*
+import kotlinx.android.synthetic.main.layout_orientation_item.view.*
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.util.isResumed
@@ -27,7 +27,6 @@ class OrientationHelpDialog : DialogFragment() {
         recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         recyclerView.overScrollMode = View.OVER_SCROLL_NEVER
         return AlertDialog.Builder(context)
-            .setTitle(R.string.dialog_title_help)
             .setView(recyclerView)
             .setPositiveButton(R.string.ok, null)
             .create()
@@ -36,7 +35,7 @@ class OrientationHelpDialog : DialogFragment() {
     class HelpAdapter(context: Context) : Adapter<ViewHolder>() {
         private val layoutInflater = LayoutInflater.from(context)
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-            ViewHolder(layoutInflater.inflate(R.layout.layout_help_item, parent, false))
+            ViewHolder(layoutInflater.inflate(R.layout.layout_orientation_item, parent, false))
 
         override fun getItemCount(): Int =
             Orientation.values.size

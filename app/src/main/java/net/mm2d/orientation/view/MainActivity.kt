@@ -121,6 +121,7 @@ class MainActivity : AppCompatActivity() {
         detailed_setting.setOnClickListener { DetailedSettingsActivity.start(this) }
         version_description.text = makeVersionInfo()
         setUpOrientationIcons()
+        each_app.setOnClickListener { EachAppActivity.start(this) }
     }
 
     private fun setUpOrientationIcons() {

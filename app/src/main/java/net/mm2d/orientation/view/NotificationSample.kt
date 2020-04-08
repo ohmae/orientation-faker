@@ -15,6 +15,7 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.layout_remote_views.*
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.Orientation
+import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.view.widget.ViewIds
 
@@ -37,7 +38,7 @@ class NotificationSample(activity: Activity) {
 
     fun update() {
         val settings = Settings.get()
-        val orientation = settings.orientation
+        val orientation = OrientationHelper.getOrientation()
         val foreground = settings.foregroundColor
         background.setBackgroundColor(settings.backgroundColor)
         val selectedForeground = settings.foregroundColorSelected

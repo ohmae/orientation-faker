@@ -36,6 +36,8 @@ object ForegroundPackageSettings {
         }
     }
 
+    fun isEmpty(): Boolean = map.isEmpty()
+
     fun get(packageName: String): Int = map.getOrElse(packageName) { Orientation.INVALID }
 
     fun put(packageName: String, orientation: Int) {

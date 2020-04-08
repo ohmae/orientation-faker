@@ -41,12 +41,12 @@ object OrientationHelper {
     private lateinit var view: View
     private lateinit var windowManager: WindowManager
     private lateinit var layoutParams: LayoutParams
-    private val settings: Settings by lazy { Settings.get() }
+    private var orientation: Int = Orientation.INVALID
     private var sensorManager: SensorManager? = null
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
             if (!isEnabled) return
-            if (PowerUtils.isInteractive(context) && settings.orientation.usesSensor()) {
+            if (PowerUtils.isInteractive(context) && orientation.usesSensor()) {
                 startSensor()
             } else {
                 stopSensor()
@@ -91,8 +91,8 @@ object OrientationHelper {
         })
     }
 
-    fun update() {
-        val orientation = settings.orientation
+    fun update(orientation: Int) {
+        this.orientation = orientation
         ReviewRequest.updateOrientation(orientation)
         notifySystemSettingsIfNeed(orientation)
         if (orientation.usesSensor()) {
@@ -115,6 +115,13 @@ object OrientationHelper {
         stopSensor()
     }
 
+    fun getOrientation(): Int =
+        if (isEnabled) {
+            orientation
+        } else {
+            Settings.get().orientation
+        }
+
     private fun setOrientation(orientation: Int) {
         layoutParams.screenOrientation = orientation
         if (isEnabled) {
@@ -125,7 +132,7 @@ object OrientationHelper {
     }
 
     private fun setSensorOrientation(x: Float, y: Float, z: Float) {
-        if (settings.orientation == Orientation.SENSOR_PORTRAIT) {
+        if (orientation == Orientation.SENSOR_PORTRAIT) {
             if (!layoutParams.screenOrientation.isPortrait()) {
                 if (y > 0) {
                     setOrientation(Orientation.PORTRAIT)
@@ -134,7 +141,7 @@ object OrientationHelper {
                 }
                 return
             }
-        } else if (settings.orientation == Orientation.SENSOR_LANDSCAPE) {
+        } else if (orientation == Orientation.SENSOR_LANDSCAPE) {
             if (!layoutParams.screenOrientation.isLandscape()) {
                 if (x > 0) {
                     setOrientation(Orientation.LANDSCAPE)
@@ -149,11 +156,11 @@ object OrientationHelper {
         }
         val orientation = calculateOrientation(x, y)
         if (layoutParams.screenOrientation == orientation) return
-        if (settings.orientation == Orientation.SENSOR_PORTRAIT) {
+        if (orientation == Orientation.SENSOR_PORTRAIT) {
             if (orientation.isPortrait()) {
                 setOrientation(orientation)
             }
-        } else if (settings.orientation == Orientation.SENSOR_LANDSCAPE) {
+        } else if (orientation == Orientation.SENSOR_LANDSCAPE) {
             if (orientation.isLandscape()) {
                 setOrientation(orientation)
             }
