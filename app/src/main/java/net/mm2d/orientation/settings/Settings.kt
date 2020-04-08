@@ -83,6 +83,14 @@ class Settings private constructor(
         }
         set(value) = preferences.writeString(Main.ORIENTATION_LIST_STRING, OrientationList.toString(value))
 
+    var foregroundPackage: String
+        get() = preferences.readString(Main.FOREGROUND_PACKAGE_STRING, "")
+        set(value) = preferences.writeString(Main.FOREGROUND_PACKAGE_STRING, value)
+
+    var foregroundPackageCheckTime: Long
+        get() = preferences.readLong(Main.FOREGROUND_PACKAGE_CHECK_TIME_LONG, 0L)
+        set(value) = preferences.writeLong(Main.FOREGROUND_PACKAGE_CHECK_TIME_LONG, value)
+
     fun resetTheme() {
         foregroundColor = Default.color.foreground
         backgroundColor = Default.color.background

@@ -8,6 +8,7 @@
 package net.mm2d.orientation.util
 
 import android.app.Activity
+import android.app.AppOpsManager
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -17,6 +18,7 @@ import android.provider.Settings
 import android.provider.Settings.System
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.getSystemService
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 
@@ -70,4 +72,31 @@ object SystemSettings {
             Toast.makeText(activity, R.string.toast_could_not_open_setting, Toast.LENGTH_LONG).show()
         }
     }
+
+    fun startUsageAccessSettings(activity: Activity) {
+        val canSpecifyPackage = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+        startSystemSettings(activity, Settings.ACTION_USAGE_ACCESS_SETTINGS, canSpecifyPackage)
+    }
+
+    fun hasUsageAccessPermission(context: Context) =
+        try {
+            checkOpNoThrow(
+                context,
+                AppOpsManager.OPSTR_GET_USAGE_STATS,
+                android.os.Process.myUid(),
+                BuildConfig.APPLICATION_ID
+            ) == AppOpsManager.MODE_ALLOWED
+        } catch (ignored: Exception) {
+            false
+        }
+
+    @Suppress("SameParameterValue", "DEPRECATION")
+    private fun checkOpNoThrow(context: Context, op: String, uid: Int, packageName: String): Int? =
+        context.getSystemService<AppOpsManager>()?.let {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                it.unsafeCheckOpNoThrow(op, uid, packageName)
+            } else {
+                it.checkOpNoThrow(op, uid, packageName)
+            }
+        }
 }

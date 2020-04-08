@@ -17,6 +17,7 @@ import io.reactivex.plugins.RxJavaPlugins
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.log.Logger
 import net.mm2d.log.android.AndroidSenders
+import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.service.KeepAlive
 import net.mm2d.orientation.settings.Settings
@@ -38,6 +39,7 @@ class App : Application() {
         registerActivityLifecycleCallbacks(CustomTabsBinder())
         KeepAlive.ensureResident(this)
         OrientationHelper.initialize(this)
+        ForegroundPackageSettings.initialize(this)
     }
 
     private fun logError(e: Throwable) {

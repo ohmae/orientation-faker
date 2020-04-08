@@ -11,6 +11,10 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions"
+        />
 
     <application
         android:name="net.mm2d.orientation.App"
@@ -41,6 +45,11 @@
             android:name="net.mm2d.orientation.view.DetailedSettingsActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|keyboard"
             android:label="@string/detailed_settings"
+            />
+        <activity
+            android:name="net.mm2d.orientation.view.EachAppActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|keyboard"
+            android:label="@string/setting_for_each_app"
             />
         <activity
             android:name="net.mm2d.orientation.view.LicenseActivity"
