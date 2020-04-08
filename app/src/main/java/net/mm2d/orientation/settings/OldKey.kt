@@ -13,7 +13,7 @@ package net.mm2d.orientation.settings
 internal enum class OldKey {
     SETTINGS_VERSION,
     APP_VERSION_AT_INSTALL,
-    APP_VERSION_AT_LAST_LAUNCHED,
+    // APP_VERSION_AT_LAST_LAUNCHED,
     REVIEW_INTERVAL_RANDOM_FACTOR,
     TIME_FIRST_USE,
     TIME_FIRST_REVIEW,

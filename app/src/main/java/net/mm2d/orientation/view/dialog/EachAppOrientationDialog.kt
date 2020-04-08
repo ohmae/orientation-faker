@@ -99,8 +99,8 @@ class EachAppOrientationDialog : DialogFragment() {
             }
             activity.supportFragmentManager.also {
                 if (it.findFragmentByTag(TAG) == null) {
-                    EachAppOrientationDialog().also {
-                        it.arguments = arguments
+                    EachAppOrientationDialog().also { dialog ->
+                        dialog.arguments = arguments
                     }.show(it, TAG)
                 }
             }

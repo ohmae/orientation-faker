@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="64dp"
     android:background="?android:attr/selectableItemBackground"
+    tools:ignore="Overdraw"
     >
 
     <androidx.constraintlayout.widget.Guideline

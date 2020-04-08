@@ -42,7 +42,7 @@ object LaunchUtils {
         return true
     }
 
-    fun openCustomTabs(context: Context, uri: String): Boolean =
+    private fun openCustomTabs(context: Context, uri: String): Boolean =
         openCustomTabs(context, Uri.parse(uri))
 
     fun openCustomTabs(context: Context, uri: Uri): Boolean {
