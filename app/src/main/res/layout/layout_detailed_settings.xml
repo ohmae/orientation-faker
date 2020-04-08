@@ -308,7 +308,7 @@
         android:paddingTop="8dp"
         android:paddingEnd="16dp"
         android:paddingBottom="8dp"
-        android:text="@string/caution_experimental"
+        android:text="@string/caution_experimental_orientation"
         android:textColor="@color/fg_caution"
         android:textSize="@dimen/text_caution"
         />
