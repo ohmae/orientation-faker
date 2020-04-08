@@ -16,7 +16,8 @@
     <string name="sensor_portrait">sensor port</string>
     <string name="sensor_landscape">sensor land</string>
 
-    <string name="description_clear">Clear settings</string>
+    <string name="clear">clear</string>
+    <string name="description_clear">Clear each app setting, follow global setting</string>
     <string name="description_unspecified">Unspecified orientation from this app. Device will be the original orientation of the displayed app</string>
     <string name="description_force_sensor">Rotate based on sensor information</string>
     <string name="description_portrait">Fixed to portrait</string>
