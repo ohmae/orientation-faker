@@ -184,77 +184,76 @@
             />
     </FrameLayout>
 
-    <GridLayout
+    <androidx.gridlayout.widget.GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="4"
+        app:columnCount="4"
         >
 
         <net.mm2d.orientation.view.view.CheckItemView
             android:id="@+id/check_orientation1"
             android:layout_width="0dp"
             android:layout_height="64dp"
-            android:layout_columnWeight="1"
             android:background="?android:attr/selectableItemBackground"
+            app:layout_columnWeight="1"
             />
 
         <net.mm2d.orientation.view.view.CheckItemView
             android:id="@+id/check_orientation2"
             android:layout_width="0dp"
             android:layout_height="64dp"
-            android:layout_columnWeight="1"
             android:background="?android:attr/selectableItemBackground"
+            app:layout_columnWeight="1"
             />
 
         <net.mm2d.orientation.view.view.CheckItemView
             android:id="@+id/check_orientation3"
             android:layout_width="0dp"
             android:layout_height="64dp"
-            android:layout_columnWeight="1"
             android:background="?android:attr/selectableItemBackground"
+            app:layout_columnWeight="1"
             />
 
         <net.mm2d.orientation.view.view.CheckItemView
             android:id="@+id/check_orientation4"
             android:layout_width="0dp"
             android:layout_height="64dp"
-            android:layout_columnWeight="1"
             android:background="?android:attr/selectableItemBackground"
+            app:layout_columnWeight="1"
             />
 
         <net.mm2d.orientation.view.view.CheckItemView
             android:id="@+id/check_orientation5"
             android:layout_width="0dp"
             android:layout_height="64dp"
-            android:layout_columnSpan="1"
-            android:layout_gravity="fill_horizontal"
             android:background="?android:attr/selectableItemBackground"
+            app:layout_columnWeight="1"
             />
 
         <net.mm2d.orientation.view.view.CheckItemView
             android:id="@+id/check_orientation6"
             android:layout_width="0dp"
             android:layout_height="64dp"
-            android:layout_columnWeight="1"
             android:background="?android:attr/selectableItemBackground"
+            app:layout_columnWeight="1"
             />
 
         <net.mm2d.orientation.view.view.CheckItemView
             android:id="@+id/check_orientation7"
             android:layout_width="0dp"
             android:layout_height="64dp"
-            android:layout_columnWeight="1"
             android:background="?android:attr/selectableItemBackground"
+            app:layout_columnWeight="1"
             />
 
         <net.mm2d.orientation.view.view.CheckItemView
             android:id="@+id/check_orientation8"
             android:layout_width="0dp"
             android:layout_height="64dp"
-            android:layout_columnWeight="1"
             android:background="?android:attr/selectableItemBackground"
+            app:layout_columnWeight="1"
             />
-    </GridLayout>
+    </androidx.gridlayout.widget.GridLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
