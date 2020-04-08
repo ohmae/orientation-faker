@@ -35,11 +35,11 @@ class App : Application() {
         setStrictMode()
         RxJavaPlugins.setErrorHandler(::logError)
         Settings.initialize(this)
+        ForegroundPackageSettings.initialize(this)
         CustomTabsHelper.initialize(this)
         registerActivityLifecycleCallbacks(CustomTabsBinder())
-        KeepAlive.ensureResident(this)
         OrientationHelper.initialize(this)
-        ForegroundPackageSettings.initialize(this)
+        KeepAlive.ensureResident(this)
     }
 
     private fun logError(e: Throwable) {
