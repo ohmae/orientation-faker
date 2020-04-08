@@ -19,6 +19,8 @@ import kotlinx.android.synthetic.main.li_each_app.view.*
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.Orientation
+import net.mm2d.orientation.control.OrientationHelper
+import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.view.dialog.EachAppOrientationDialog
 import net.mm2d.orientation.view.dialog.UsageAppPermissionDialog
@@ -57,6 +59,9 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
 
     override fun onChangeSettings(position: Int) {
         adapter.notifyItemChanged(position)
+        if (OrientationHelper.isEnabled) {
+            MainService.start(this)
+        }
     }
 
     private fun makeAppList(): List<AppInfo> {
