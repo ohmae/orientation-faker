@@ -29,9 +29,11 @@ object ForegroundPackageSettings {
 
     fun updateInstalledPackages(packages: List<String>) {
         val list = map.keys.toMutableList()
-        list.removeAll(packages)
-        list.forEach { map.remove(it) }
         scope.launch {
+            list.removeAll(packages)
+            withContext(Dispatchers.IO) {
+                list.forEach { map.remove(it) }
+            }
             list.forEach { database.packageSettingsDao().delete(it) }
         }
     }

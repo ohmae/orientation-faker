@@ -46,8 +46,8 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
 
     private fun setAdapter(list: List<AppInfo>) {
         ForegroundPackageSettings.updateInstalledPackages(list.map { it.packageName })
-        adapter = Adapter(this@EachAppActivity, list) { position, packageName ->
-            EachAppOrientationDialog.show(this@EachAppActivity, position, packageName)
+        adapter = Adapter(this, list) { position, packageName ->
+            EachAppOrientationDialog.show(this, position, packageName)
         }
         recycler_view.adapter = adapter
         progress_bar.visibility = View.GONE
