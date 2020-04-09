@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_each_app.*
 import kotlinx.android.synthetic.main.li_each_app.view.*
+import kotlinx.coroutines.*
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.Orientation
@@ -28,18 +29,33 @@ import net.mm2d.orientation.view.dialog.UsageAppPermissionDialog
 class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
     private var defaultIcon: Drawable? = null
     private lateinit var adapter: Adapter
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_each_app)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         recycler_view.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        val list = makeAppList()
-        adapter = Adapter(this, list) { position, packageName ->
-            EachAppOrientationDialog.show(this, position, packageName)
+        scope.launch {
+            val list = makeAppList()
+            withContext(Dispatchers.Main) {
+                setAdapter(list)
+            }
+        }
+    }
+
+    private fun setAdapter(list: List<AppInfo>) {
+        ForegroundPackageSettings.updateInstalledPackages(list.map { it.packageName })
+        adapter = Adapter(this@EachAppActivity, list) { position, packageName ->
+            EachAppOrientationDialog.show(this@EachAppActivity, position, packageName)
         }
         recycler_view.adapter = adapter
-        ForegroundPackageSettings.updateInstalledPackages(list.map { it.packageName })
+        progress_bar.visibility = View.GONE
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        scope.cancel()
     }
 
     override fun onPostResume() {
