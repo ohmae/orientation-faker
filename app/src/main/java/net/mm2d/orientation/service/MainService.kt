@@ -69,12 +69,12 @@ class MainService : Service() {
 
     private fun startForegroundChecker() {
         if (checker != null) {
-            if (ForegroundPackageSettings.isEmpty()) {
+            if (ForegroundPackageSettings.disabled()) {
                 stopForegroundChecker()
             }
             return
         }
-        if (ForegroundPackageSettings.isEmpty()) return
+        if (ForegroundPackageSettings.disabled()) return
         if (!SystemSettings.hasUsageAccessPermission(this)) {
             Toast.makeText(this, R.string.toast_no_permission_to_usage_access, Toast.LENGTH_LONG).show()
             return

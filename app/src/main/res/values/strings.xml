@@ -42,6 +42,10 @@
     <string name="version">Version</string>
     <string name="caution_auto_rotate">Please change the system setting to auto-rotate. Reverse setting may not be possible</string>
     <string name="caution_experimental_orientation">\"sensor port\" and \"sensor land\" are experimental features. Some problems may occur</string>
+
+    <string name="package_check">Settings for each app</string>
+    <string name="package_check_on">Monitor launched apps</string>
+    <string name="package_check_off">Does not monitor launched apps</string>
     <string name="caution_experimental_feature">This is experimental feature. If you have any problems please report details to developer</string>
 
     <string name="reset_theme">Reset theme</string>

@@ -23,11 +23,15 @@ import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.service.MainService
+import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.view.dialog.EachAppOrientationDialog
 import net.mm2d.orientation.view.dialog.UsageAppPermissionDialog
 
 class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
+    private val settings by lazy {
+        Settings.get()
+    }
     private lateinit var adapter: Adapter
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
 
@@ -35,6 +39,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_each_app)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        package_check.setOnClickListener { togglePackageCheck() }
         recycler_view.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         scope.launch {
             val list = makeAppList()
@@ -58,6 +63,11 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
         scope.cancel()
     }
 
+    override fun onResume() {
+        super.onResume()
+        applyPackageCheck()
+    }
+
     override fun onPostResume() {
         super.onPostResume()
         if (!SystemSettings.hasUsageAccessPermission(this)) {
@@ -78,6 +88,16 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
         if (OrientationHelper.isEnabled) {
             MainService.start(this)
         }
+    }
+
+    private fun togglePackageCheck() {
+        settings.foregroundPackageCheckEnabled = !settings.foregroundPackageCheckEnabled
+        applyPackageCheck()
+        MainService.update(this)
+    }
+
+    private fun applyPackageCheck() {
+        package_check.isChecked = settings.foregroundPackageCheckEnabled
     }
 
     private fun makeAppList(): List<AppInfo> {

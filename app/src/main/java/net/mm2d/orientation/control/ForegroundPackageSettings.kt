@@ -8,12 +8,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.mm2d.orientation.room.database.PackageSettingsDatabase
 import net.mm2d.orientation.room.entity.PackageSettingEntity
+import net.mm2d.orientation.settings.Settings
 
 object ForegroundPackageSettings {
     private const val DB_NAME = "package_settings.db"
     private lateinit var database: PackageSettingsDatabase
     private val map: MutableMap<String, Int> = mutableMapOf()
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+    private val settings: Settings by lazy { Settings.get() }
 
     fun initialize(context: Context) {
         database = Room.databaseBuilder(context, PackageSettingsDatabase::class.java, DB_NAME).build()
@@ -38,7 +40,7 @@ object ForegroundPackageSettings {
         }
     }
 
-    fun isEmpty(): Boolean = map.isEmpty()
+    fun disabled(): Boolean = map.isEmpty() || !settings.foregroundPackageCheckEnabled
 
     fun get(packageName: String): Int = map.getOrElse(packageName) { Orientation.INVALID }
 

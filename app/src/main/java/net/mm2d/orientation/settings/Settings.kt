@@ -91,6 +91,10 @@ class Settings private constructor(
         get() = preferences.readLong(Main.FOREGROUND_PACKAGE_CHECK_TIME_LONG, 0L)
         set(value) = preferences.writeLong(Main.FOREGROUND_PACKAGE_CHECK_TIME_LONG, value)
 
+    var foregroundPackageCheckEnabled: Boolean
+        get() = preferences.readBoolean(Main.FOREGROUND_PACKAGE_ENABLED_BOOLEAN, true)
+        set(value) = preferences.writeBoolean(Main.FOREGROUND_PACKAGE_ENABLED_BOOLEAN, value)
+
     fun resetTheme() {
         foregroundColor = Default.color.foreground
         backgroundColor = Default.color.background

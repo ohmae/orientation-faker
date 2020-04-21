@@ -7,6 +7,20 @@
     android:orientation="vertical"
     >
 
+    <net.mm2d.orientation.view.view.SwitchMenuView
+        android:id="@+id/package_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        app:checked="true"
+        app:descriptionOff="@string/package_check_off"
+        app:descriptionOn="@string/package_check_on"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/package_check"
+        />
+
     <TextView
         android:id="@+id/caution"
         android:layout_width="match_parent"
@@ -24,7 +38,7 @@
         android:textSize="@dimen/text_caution"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/package_check"
         />
 
     <androidx.recyclerview.widget.RecyclerView
