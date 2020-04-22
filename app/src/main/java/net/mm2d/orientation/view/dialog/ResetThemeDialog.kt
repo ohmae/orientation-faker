@@ -24,7 +24,7 @@ class ResetThemeDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        AlertDialog.Builder(context!!)
+        AlertDialog.Builder(requireContext())
             .setTitle(R.string.dialog_title_reset_theme)
             .setMessage(R.string.dialog_message_reset_theme)
             .setPositiveButton(R.string.ok) { _, _ ->
