@@ -152,7 +152,7 @@ object OrientationHelper {
             }
         }
         if (abs(z).let { it > abs(x) && it > abs(y) }) {
-            return
+            return // Z成分が大きい場合は判断しない
         }
         val orientation = calculateOrientation(x, y)
         if (layoutParams.screenOrientation == orientation) return
@@ -168,16 +168,22 @@ object OrientationHelper {
     }
 
     private fun calculateOrientation(x: Float, y: Float): Int =
-        (atan(x / y) / (2 * Math.PI)).let {
-            if (y > 0) if (it > 0) it else 1 + it else 0.5 + it
-        }.let {
+        calculateAngle(x, y).let {
             when {
-                it < 0.125 -> Orientation.PORTRAIT
-                it < 0.375 -> Orientation.LANDSCAPE
-                it < 0.625 -> Orientation.REVERSE_PORTRAIT
-                it < 0.875 -> Orientation.REVERSE_LANDSCAPE
+                it < 1 / 8.0 -> Orientation.PORTRAIT
+                it < 3 / 8.0 -> Orientation.LANDSCAPE
+                it < 5 / 8.0 -> Orientation.REVERSE_PORTRAIT
+                it < 7 / 8.0 -> Orientation.REVERSE_LANDSCAPE
                 else -> Orientation.PORTRAIT
             }
+        }
+
+    // 角度を[0-1]で表現
+    // arctan(x/y)/2πでy軸から時計回りに[0-0.25][-0.25-0][0-0.25][-0.25-0]という値が取られる。
+    // これを時計回りに[0-1]になるように計算する。
+    private fun calculateAngle(x: Float, y: Float): Double =
+        (atan(x / y) / (2 * Math.PI)).let {
+            if (y > 0) (if (it > 0) it else 1 + it) else 0.5 + it
         }
 
     private fun startSensor() {
