@@ -20,12 +20,13 @@ import net.mm2d.orientation.util.isResumed
 
 class OrientationHelpDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val context = context!!
+        val context = requireContext()
         val recyclerView = RecyclerView(context)
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = HelpAdapter(context)
         recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         recyclerView.overScrollMode = View.OVER_SCROLL_NEVER
+        recyclerView.isVerticalFadingEdgeEnabled = true
         return AlertDialog.Builder(context)
             .setView(recyclerView)
             .setPositiveButton(R.string.ok, null)

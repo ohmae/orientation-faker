@@ -25,7 +25,7 @@ class EachAppOrientationDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val context = context!!
+        val context = requireContext()
         val position = arguments?.getInt(KEY_POSITION)!!
         val packageName = arguments?.getString(KEY_PACKAGE)!!
         val recyclerView = RecyclerView(context)
@@ -37,6 +37,7 @@ class EachAppOrientationDialog : DialogFragment() {
         }
         recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         recyclerView.overScrollMode = View.OVER_SCROLL_NEVER
+        recyclerView.isVerticalFadingEdgeEnabled = true
         return AlertDialog.Builder(context)
             .setView(recyclerView)
             .setNegativeButton(R.string.cancel, null)
