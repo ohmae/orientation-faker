@@ -12,4 +12,5 @@
     <dimen name="text_description">12sp</dimen>
     <dimen name="text_caution">12sp</dimen>
     <dimen name="text_button">18sp</dimen>
+    <dimen name="customize_height">64dp</dimen>
 </resources>

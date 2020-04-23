@@ -15,6 +15,8 @@
     <string name="reverse_landscape">rev land</string>
     <string name="sensor_portrait">sensor port</string>
     <string name="sensor_landscape">sensor land</string>
+    <string name="sensor_lie_left">lie left</string>
+    <string name="sensor_lie_right">lie right</string>
 
     <string name="clear">clear</string>
     <string name="description_clear">Clear each app setting, follow global setting</string>
@@ -26,6 +28,8 @@
     <string name="description_reverse_landscape">Fixed to reverse landscape</string>
     <string name="description_sensor_portrait">Fixed to portrait, automatically flip upside down by sensor</string>
     <string name="description_sensor_landscape">Fixed to landscape, automatically flip upside down by sensor</string>
+    <string name="description_sensor_lie_left">Rotate it 90 degrees to the left with respect to the sensor. If you lie on left lateral and use it, the top and bottom will match.</string>
+    <string name="description_sensor_lie_right">Rotate it 90 degrees to the right with respect to the sensor. If you lie on right lateral and use it, the top and bottom will match.</string>
 
     <string name="status">Status</string>
     <string name="status_running">Running</string>

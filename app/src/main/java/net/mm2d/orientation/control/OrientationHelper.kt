@@ -131,52 +131,81 @@ object OrientationHelper {
         }
     }
 
-    private fun setSensorOrientation(x: Float, y: Float, z: Float) {
+    private fun minimumCoercion(x: Float, y: Float): Boolean {
         if (orientation == Orientation.SENSOR_PORTRAIT) {
             if (!layoutParams.screenOrientation.isPortrait()) {
-                if (y > 0) {
-                    setOrientation(Orientation.PORTRAIT)
-                } else {
-                    setOrientation(Orientation.REVERSE_PORTRAIT)
-                }
-                return
+                setOrientation(if (y > 0) Orientation.PORTRAIT else Orientation.REVERSE_PORTRAIT)
+                return true
             }
         } else if (orientation == Orientation.SENSOR_LANDSCAPE) {
             if (!layoutParams.screenOrientation.isLandscape()) {
-                if (x > 0) {
-                    setOrientation(Orientation.LANDSCAPE)
-                } else {
-                    setOrientation(Orientation.REVERSE_LANDSCAPE)
-                }
-                return
+                setOrientation(if (x > 0) Orientation.LANDSCAPE else Orientation.REVERSE_LANDSCAPE)
+                return true
             }
         }
+        return false
+    }
+
+    private fun setSensorOrientation(x: Float, y: Float, z: Float) {
+        if (minimumCoercion(x, y)) return
         if (abs(z).let { it > abs(x) && it > abs(y) }) {
             return // Z成分が大きい場合は判断しない
         }
-        val orientation = calculateOrientation(x, y)
-        if (layoutParams.screenOrientation == orientation) return
+        val angle = calculateAngle(x, y)
+        when (orientation) {
+            Orientation.SENSOR_PORTRAIT,
+            Orientation.SENSOR_LANDSCAPE ->
+                sensorUpSideDown(angle)
+            Orientation.SENSOR_LIE_LEFT ->
+                sensorLieLeft(angle)
+            Orientation.SENSOR_LIE_RIGHT ->
+                sensorLieRight(angle)
+        }
+    }
+
+    private fun sensorUpSideDown(angle: Double) {
+        val targetOrientation = when {
+            angle < 1 / 8.0 -> Orientation.PORTRAIT
+            angle < 3 / 8.0 -> Orientation.LANDSCAPE
+            angle < 5 / 8.0 -> Orientation.REVERSE_PORTRAIT
+            angle < 7 / 8.0 -> Orientation.REVERSE_LANDSCAPE
+            else -> Orientation.PORTRAIT
+        }
+        if (layoutParams.screenOrientation == targetOrientation) return
         if (orientation == Orientation.SENSOR_PORTRAIT) {
-            if (orientation.isPortrait()) {
-                setOrientation(orientation)
+            if (targetOrientation.isPortrait()) {
+                setOrientation(targetOrientation)
             }
         } else if (orientation == Orientation.SENSOR_LANDSCAPE) {
-            if (orientation.isLandscape()) {
-                setOrientation(orientation)
+            if (targetOrientation.isLandscape()) {
+                setOrientation(targetOrientation)
             }
         }
     }
 
-    private fun calculateOrientation(x: Float, y: Float): Int =
-        calculateAngle(x, y).let {
-            when {
-                it < 1 / 8.0 -> Orientation.PORTRAIT
-                it < 3 / 8.0 -> Orientation.LANDSCAPE
-                it < 5 / 8.0 -> Orientation.REVERSE_PORTRAIT
-                it < 7 / 8.0 -> Orientation.REVERSE_LANDSCAPE
-                else -> Orientation.PORTRAIT
-            }
+    private fun sensorLieLeft(angle: Double) {
+        val targetOrientation = when {
+            angle < 1 / 8.0 -> Orientation.REVERSE_LANDSCAPE
+            angle < 3 / 8.0 -> Orientation.PORTRAIT
+            angle < 5 / 8.0 -> Orientation.LANDSCAPE
+            angle < 7 / 8.0 -> Orientation.REVERSE_PORTRAIT
+            else -> Orientation.REVERSE_LANDSCAPE
         }
+        if (layoutParams.screenOrientation == targetOrientation) return
+        setOrientation(targetOrientation)
+    }
+
+    private fun sensorLieRight(angle: Double) {
+        val targetOrientation = when {
+            angle < 1 / 8.0 -> Orientation.LANDSCAPE
+            angle < 3 / 8.0 -> Orientation.REVERSE_PORTRAIT
+            angle < 5 / 8.0 -> Orientation.REVERSE_LANDSCAPE
+            angle < 7 / 8.0 -> Orientation.PORTRAIT
+            else -> Orientation.LANDSCAPE
+        }
+        if (layoutParams.screenOrientation == targetOrientation) return
+        setOrientation(targetOrientation)
+    }
 
     // 角度を[0-1]で表現
     // arctan(x/y)/2πでy軸から時計回りに[0-0.25][-0.25-0][0-0.25][-0.25-0]という値が取られる。

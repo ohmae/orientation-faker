@@ -15,6 +15,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.gridlayout.widget.GridLayout
+import androidx.gridlayout.widget.GridLayout.spec
 import kotlinx.android.synthetic.main.layout_detailed_settings.*
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.color.chooser.ColorChooserDialog
@@ -169,27 +171,27 @@ class DetailedSettingsActivity : AppCompatActivity(),
     private fun setUpLayoutSelector() {
         orientationListStart = settings.orientationList
         orientationList.addAll(orientationListStart)
-        checkList = listOf(
-            check_orientation1,
-            check_orientation2,
-            check_orientation3,
-            check_orientation4,
-            check_orientation5,
-            check_orientation6,
-            check_orientation7,
-            check_orientation8
-        )
-        checkList.forEachIndexed { index, view ->
-            val orientation = Orientation.values[index]
-            view.orientation = orientation.orientation
-            view.setIcon(orientation.icon)
-            view.setText(orientation.label)
-        }
-        checkList.forEach { view ->
-            view.setOnClickListener {
-                onClickCheckItem(view)
-                updateCaution()
+
+        checkList = Orientation.values.map { orientation ->
+            CheckItemView(this).also { view ->
+                view.orientation = orientation.orientation
+                view.setIcon(orientation.icon)
+                view.setText(orientation.label)
+                view.setOnClickListener {
+                    onClickCheckItem(view)
+                    updateCaution()
+                }
             }
+        }
+        checkList.forEachIndexed { index, view ->
+            val params = GridLayout.LayoutParams(
+                spec(index / 4),
+                spec(index % 4, 1f)
+            ).also {
+                it.width = 0
+                it.height = resources.getDimensionPixelSize(R.dimen.customize_height)
+            }
+            check_holder.addView(view, params)
         }
         applyLayoutSelection()
         reset_layout.setOnClickListener { ResetLayoutDialog.show(this) }

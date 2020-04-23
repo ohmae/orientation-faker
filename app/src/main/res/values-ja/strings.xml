@@ -15,6 +15,8 @@
     <string name="reverse_landscape">逆横</string>
     <string name="sensor_portrait">縦自動</string>
     <string name="sensor_landscape">横自動</string>
+    <string name="sensor_lie_left">左寝</string>
+    <string name="sensor_lie_right">右寝</string>
 
     <string name="clear">設定削除</string>
     <string name="description_clear">個別の設定を削除します。全体の設定に従います</string>
@@ -26,6 +28,8 @@
     <string name="description_reverse_landscape">逆向きの横方向に固定します</string>
     <string name="description_sensor_portrait">縦方向固定し、上下はセンサーによって反転させます</string>
     <string name="description_sensor_landscape">横方向固定し、上下はセンサーによって反転させます</string>
+    <string name="description_sensor_lie_left">センサーに対して左に90°ずれた向きに回転させます。左側を下に横寝して使うと上下が一致します</string>
+    <string name="description_sensor_lie_right">センサーに対して右に90°ずれた向きに回転させます。右側を下に横寝して使うと上下が一致します</string>
 
     <string name="status">状態</string>
     <string name="status_running">実行中</string>
