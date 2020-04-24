@@ -14,7 +14,7 @@ class ResetLayoutDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        AlertDialog.Builder(context!!)
+        AlertDialog.Builder(requireContext())
             .setTitle(R.string.dialog_title_reset_layout)
             .setMessage(R.string.dialog_message_reset_layout)
             .setPositiveButton(R.string.ok) { _, _ ->
