@@ -102,12 +102,16 @@ object Orientation {
     )
     val experimental: Set<Int> = setOf(
         SENSOR_PORTRAIT,
-        SENSOR_LANDSCAPE
+        SENSOR_LANDSCAPE,
+        SENSOR_LIE_RIGHT,
+        SENSOR_LIE_LEFT
     )
     val requestSystemSettings: Set<Int> = setOf(
         REVERSE_PORTRAIT,
         REVERSE_LANDSCAPE,
         SENSOR_PORTRAIT,
-        SENSOR_LANDSCAPE
+        SENSOR_LANDSCAPE,
+        SENSOR_LIE_RIGHT,
+        SENSOR_LIE_LEFT
     )
 }

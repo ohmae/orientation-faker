@@ -45,7 +45,7 @@
     <string name="setting_for_each_app_description">Set the default screen orientation for each app</string>
     <string name="version">Version</string>
     <string name="caution_auto_rotate">Please change the system setting to auto-rotate. Reverse setting may not be possible</string>
-    <string name="caution_experimental_orientation">\"sensor port\" and \"sensor land\" are experimental features. Some problems may occur</string>
+    <string name="caution_experimental_orientation">\"sensor port\", \"sensor land\", \"lie left\" and \"lie right\" are experimental features. Some problems may occur</string>
 
     <string name="package_check">Settings for each app</string>
     <string name="package_check_on">Monitor launched apps</string>
