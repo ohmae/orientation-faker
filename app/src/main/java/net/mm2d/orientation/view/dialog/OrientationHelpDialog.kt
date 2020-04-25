@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import kotlinx.android.synthetic.main.layout_orientation_item.view.*
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.util.isResumed
+import net.mm2d.orientation.util.isStarted
 
 class OrientationHelpDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -58,7 +58,7 @@ class OrientationHelpDialog : DialogFragment() {
         private const val TAG = "OrientationHelpDialog"
 
         fun show(activity: FragmentActivity) {
-            if (activity.isFinishing || !activity.isResumed()) {
+            if (activity.isFinishing || !activity.isStarted()) {
                 return
             }
             activity.supportFragmentManager.also {

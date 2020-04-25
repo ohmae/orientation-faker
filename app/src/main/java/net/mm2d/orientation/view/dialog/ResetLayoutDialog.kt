@@ -6,7 +6,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.orientation.util.isResumed
+import net.mm2d.orientation.util.isStarted
 
 class ResetLayoutDialog : DialogFragment() {
     interface Callback {
@@ -27,7 +27,7 @@ class ResetLayoutDialog : DialogFragment() {
         private const val TAG = "ResetLayoutDialog"
 
         fun show(activity: FragmentActivity) {
-            if (activity.isFinishing || !activity.isResumed()) {
+            if (activity.isFinishing || !activity.isStarted()) {
                 return
             }
             activity.supportFragmentManager.also {

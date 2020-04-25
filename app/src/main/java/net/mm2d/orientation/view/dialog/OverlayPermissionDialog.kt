@@ -11,7 +11,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.util.SystemSettings
-import net.mm2d.orientation.util.isResumed
+import net.mm2d.orientation.util.isStarted
 
 class OverlayPermissionDialog : DialogFragment() {
     @RequiresApi(Build.VERSION_CODES.M)
@@ -45,7 +45,7 @@ class OverlayPermissionDialog : DialogFragment() {
 
         @RequiresApi(Build.VERSION_CODES.M)
         fun showDialog(activity: FragmentActivity) {
-            if (activity.isFinishing || !activity.isResumed()) {
+            if (activity.isFinishing || !activity.isStarted()) {
                 return
             }
             activity.supportFragmentManager.also {

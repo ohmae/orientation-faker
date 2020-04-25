@@ -17,7 +17,7 @@ import androidx.fragment.app.FragmentActivity
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.LaunchUtils
-import net.mm2d.orientation.util.isResumed
+import net.mm2d.orientation.util.isStarted
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
@@ -56,7 +56,7 @@ class ReviewDialog : DialogFragment() {
         private const val TAG = "ReviewDialog"
 
         fun showDialog(activity: FragmentActivity) {
-            if (activity.isFinishing || !activity.isResumed()) {
+            if (activity.isFinishing || !activity.isStarted()) {
                 return
             }
             activity.supportFragmentManager.also {
