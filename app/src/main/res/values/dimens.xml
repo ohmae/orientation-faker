@@ -13,4 +13,6 @@
     <dimen name="text_caution">12sp</dimen>
     <dimen name="text_button">18sp</dimen>
     <dimen name="customize_height">64dp</dimen>
+    <dimen name="text_update">12sp</dimen>
+    <dimen name="text_update_button">14sp</dimen>
 </resources>

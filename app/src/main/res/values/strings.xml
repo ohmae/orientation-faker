@@ -52,6 +52,11 @@
     <string name="package_check_off">Does not monitor launched apps</string>
     <string name="caution_experimental_feature">This is experimental feature. If you have any problems please report details to developer</string>
 
+    <string name="update_status_preparing">Preparing update…</string>
+    <string name="update_status_downloading">Downloading update…</string>
+    <string name="update_status_downloaded">Ready to update</string>
+    <string name="update_button">update</string>
+
     <string name="reset_theme">Reset theme</string>
     <string name="reset_layout">Reset button layout</string>
     <string name="foreground_color">foreground</string>

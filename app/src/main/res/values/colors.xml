@@ -6,6 +6,8 @@
     <color name="bg_window">#101010</color>
     <color name="bg_caution">#FFF9C4</color>
     <color name="bg_dialog">#303030</color>
+    <color name="bg_update">#FFFFFF</color>
+    <color name="fg_update">#000000</color>
     <color name="fg_caution">#000000</color>
     <color name="fg_notification">#ffffff</color>
     <color name="bg_notification">#212121</color>

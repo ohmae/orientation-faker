@@ -52,6 +52,11 @@
     <string name="package_check_off">起動しているアプリを監視しません</string>
     <string name="caution_experimental_feature">これは試験的機能です。問題が発生した場合は詳細を連絡していただけると幸いです</string>
 
+    <string name="update_status_preparing">アップデートの準備中…</string>
+    <string name="update_status_downloading">アップデートのダウンロード…</string>
+    <string name="update_status_downloaded">アップデートの準備ができました</string>
+    <string name="update_button">アップデート</string>
+
     <string name="reset_theme">テーマをリセット</string>
     <string name="reset_layout">ボタン配置をリセット</string>
     <string name="foreground_color">前景色</string>
