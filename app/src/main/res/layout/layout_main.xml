@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#000000"
-        android:paddingLeft="@dimen/margin_sample_horizontal"
+        android:paddingStart="@dimen/margin_sample_horizontal"
         android:paddingTop="@dimen/margin_sample_vertical"
-        android:paddingRight="@dimen/margin_sample_horizontal"
+        android:paddingEnd="@dimen/margin_sample_horizontal"
         android:paddingBottom="@dimen/margin_sample_vertical"
         >
 
@@ -40,7 +40,6 @@
             android:textSize="@dimen/text_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
 
@@ -54,8 +53,6 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textSize="@dimen/text_title"
             app:layout_constraintEnd_toStartOf="@id/status_button"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/status_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
@@ -71,8 +68,6 @@
             android:textSize="@dimen/text_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/status_button"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/status_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/status_title"
             />
@@ -123,7 +118,6 @@
             android:text="@string/detailed_settings"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textSize="@dimen/text_title"
-            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
@@ -138,7 +132,6 @@
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="@dimen/text_description"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailed_setting_title"
             />
@@ -161,7 +154,6 @@
             android:text="@string/setting_for_each_app"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textSize="@dimen/text_title"
-            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
@@ -176,7 +168,6 @@
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="@dimen/text_description"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/each_app_title"
             />
@@ -199,7 +190,6 @@
             android:text="@string/version"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textSize="@dimen/text_title"
-            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
@@ -213,7 +203,6 @@
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="@dimen/text_description"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/version_title"
             tools:text="1.1.1"
