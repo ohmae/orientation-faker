@@ -11,9 +11,6 @@ import android.app.Application
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
-import io.reactivex.exceptions.OnErrorNotImplementedException
-import io.reactivex.exceptions.UndeliverableException
-import io.reactivex.plugins.RxJavaPlugins
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.log.Logger
 import net.mm2d.log.android.AndroidSenders
@@ -33,24 +30,12 @@ class App : Application() {
         super.onCreate()
         setUpLogger()
         setStrictMode()
-        RxJavaPlugins.setErrorHandler(::logError)
         Settings.initialize(this)
         ForegroundPackageSettings.initialize(this)
         CustomTabsHelper.initialize(this)
         registerActivityLifecycleCallbacks(CustomTabsBinder())
         OrientationHelper.initialize(this)
         KeepAlive.ensureResident(this)
-    }
-
-    private fun logError(e: Throwable) {
-        when (e) {
-            is UndeliverableException
-            -> Logger.w(e.cause, "UndeliverableException:")
-            is OnErrorNotImplementedException
-            -> Logger.w(e.cause, "OnErrorNotImplementedException:")
-            else
-            -> Logger.w(e)
-        }
     }
 
     private fun setUpLogger() {
