@@ -29,7 +29,12 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.ktx.installStatus
 import com.google.android.play.core.ktx.isFlexibleUpdateAllowed
 import com.google.android.play.core.ktx.isImmediateUpdateAllowed
+import com.google.android.play.core.ktx.requestAppUpdateInfo
 import kotlinx.android.synthetic.main.layout_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.OrientationHelper
@@ -52,11 +57,12 @@ class MainActivity : AppCompatActivity(), InstallStateUpdatedListener {
     private val appUpdateManager by lazy {
         AppUpdateManagerFactory.create(applicationContext)
     }
-    private var appUpdateListenerRegistered: Boolean = true
+    private var appUpdateListenerRegistered: Boolean = false
     private val handler = Handler(Looper.getMainLooper())
     private val checkSystemSettingsTask = Runnable { checkSystemSettings() }
     private val eventObserver: EventObserver = EventRouter.createUpdateObserver()
     private lateinit var notificationSample: NotificationSample
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,6 +95,7 @@ class MainActivity : AppCompatActivity(), InstallStateUpdatedListener {
         super.onDestroy()
         eventObserver.unsubscribe()
         unregisterAppUpdateListener()
+        scope.cancel()
     }
 
     override fun onResume() {
@@ -130,14 +137,19 @@ class MainActivity : AppCompatActivity(), InstallStateUpdatedListener {
     }
 
     private fun checkUpdate() {
-        appUpdateManager.appUpdateInfo.addOnSuccessListener {
-            if (it.installStatus == InstallStatus.DOWNLOADED) {
+        val activity = this
+        scope.launch {
+            val info = appUpdateManager.requestAppUpdateInfo()
+            if (info.installStatus == InstallStatus.DOWNLOADED) {
                 showUpdateButton()
-            } else if (it.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
-                if (it.isFlexibleUpdateAllowed) {
-                    appUpdateManager.startUpdateFlowForResult(it, AppUpdateType.FLEXIBLE, this, UPDATE_REQUEST_CODE)
-                } else if (it.isImmediateUpdateAllowed) {
-                    appUpdateManager.startUpdateFlow(it, this, AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE))
+            } else if (info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                if (info.isFlexibleUpdateAllowed) {
+                    appUpdateManager.startUpdateFlowForResult(
+                        info, AppUpdateType.FLEXIBLE, activity, UPDATE_REQUEST_CODE
+                    )
+                } else if (info.isImmediateUpdateAllowed) {
+                    val options = AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE)
+                    appUpdateManager.startUpdateFlow(info, activity, options)
                 }
             }
         }
