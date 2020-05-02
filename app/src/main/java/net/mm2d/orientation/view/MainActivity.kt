@@ -133,6 +133,7 @@ class MainActivity : AppCompatActivity(), InstallStateUpdatedListener {
     private fun unregisterAppUpdateListener() {
         if (appUpdateListenerRegistered) {
             appUpdateManager.unregisterListener(this)
+            appUpdateListenerRegistered = false
         }
     }
 
