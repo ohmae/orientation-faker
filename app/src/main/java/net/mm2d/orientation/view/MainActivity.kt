@@ -26,12 +26,11 @@ import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
-import com.google.android.play.core.ktx.*
+import com.google.android.play.core.ktx.clientVersionStalenessDays
+import com.google.android.play.core.ktx.installStatus
+import com.google.android.play.core.ktx.isFlexibleUpdateAllowed
+import com.google.android.play.core.ktx.isImmediateUpdateAllowed
 import kotlinx.android.synthetic.main.layout_main.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.OrientationHelper
@@ -59,7 +58,6 @@ class MainActivity : AppCompatActivity(), InstallStateUpdatedListener {
     private val checkSystemSettingsTask = Runnable { checkSystemSettings() }
     private val eventObserver: EventObserver = EventRouter.createUpdateObserver()
     private lateinit var notificationSample: NotificationSample
-    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,7 +90,6 @@ class MainActivity : AppCompatActivity(), InstallStateUpdatedListener {
         super.onDestroy()
         eventObserver.unsubscribe()
         unregisterAppUpdateListener()
-        scope.cancel()
     }
 
     override fun onResume() {
@@ -136,8 +133,7 @@ class MainActivity : AppCompatActivity(), InstallStateUpdatedListener {
 
     private fun checkUpdate() {
         val activity = this
-        scope.launch {
-            val info = appUpdateManager.requestAppUpdateInfo()
+        appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
             if (info.installStatus == InstallStatus.DOWNLOADED) {
                 showUpdateButton()
             } else if (info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
