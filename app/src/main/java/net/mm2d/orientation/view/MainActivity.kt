@@ -26,10 +26,7 @@ import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
-import com.google.android.play.core.ktx.installStatus
-import com.google.android.play.core.ktx.isFlexibleUpdateAllowed
-import com.google.android.play.core.ktx.isImmediateUpdateAllowed
-import com.google.android.play.core.ktx.requestAppUpdateInfo
+import com.google.android.play.core.ktx.*
 import kotlinx.android.synthetic.main.layout_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -143,7 +140,9 @@ class MainActivity : AppCompatActivity(), InstallStateUpdatedListener {
             val info = appUpdateManager.requestAppUpdateInfo()
             if (info.installStatus == InstallStatus.DOWNLOADED) {
                 showUpdateButton()
-            } else if (info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+            } else if (info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
+                info.clientVersionStalenessDays.let { it != null && it >= DAYS_FOR_UPDATE }
+            ) {
                 if (info.isFlexibleUpdateAllowed) {
                     appUpdateManager.startUpdateFlowForResult(
                         info, AppUpdateType.FLEXIBLE, activity, UPDATE_REQUEST_CODE
@@ -282,6 +281,7 @@ class MainActivity : AppCompatActivity(), InstallStateUpdatedListener {
 
     companion object {
         private const val CHECK_INTERVAL: Long = 5000L
+        private const val DAYS_FOR_UPDATE: Int = 2
         private const val UPDATE_REQUEST_CODE: Int = 100
     }
 }
