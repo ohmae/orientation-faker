@@ -47,7 +47,7 @@
                 android:textColor="@color/fg_notification"
                 android:textSize="@dimen/text_icon"
                 tools:ignore="SmallSp,SpUsage"
-                tools:text="@string/unspecified"
+                tools:text="@string/label_unspecified"
                 />
         </LinearLayout>
     </FrameLayout>
@@ -87,7 +87,7 @@
                 android:textColor="@color/fg_notification"
                 android:textSize="@dimen/text_icon"
                 tools:ignore="SmallSp,SpUsage"
-                tools:text="@string/portrait"
+                tools:text="@string/label_portrait"
                 />
         </LinearLayout>
     </FrameLayout>
@@ -127,7 +127,7 @@
                 android:textColor="@color/fg_notification"
                 android:textSize="@dimen/text_icon"
                 tools:ignore="SmallSp,SpUsage"
-                tools:text="@string/landscape"
+                tools:text="@string/label_landscape"
                 />
         </LinearLayout>
     </FrameLayout>
@@ -167,7 +167,7 @@
                 android:textColor="@color/fg_notification"
                 android:textSize="@dimen/text_icon"
                 tools:ignore="SmallSp,SpUsage"
-                tools:text="@string/reverse_portrait"
+                tools:text="@string/label_reverse_portrait"
                 />
         </LinearLayout>
     </FrameLayout>
@@ -207,7 +207,7 @@
                 android:textColor="@color/fg_notification"
                 android:textSize="@dimen/text_icon"
                 tools:ignore="SmallSp,SpUsage"
-                tools:text="@string/reverse_landscape"
+                tools:text="@string/label_reverse_landscape"
                 />
         </LinearLayout>
     </FrameLayout>

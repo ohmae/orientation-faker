@@ -27,61 +27,61 @@ object Orientation {
         Entity(
             PORTRAIT,
             R.drawable.ic_portrait,
-            R.string.portrait,
+            R.string.label_portrait,
             R.string.description_portrait
         ),
         Entity(
             LANDSCAPE,
             R.drawable.ic_landscape,
-            R.string.landscape,
+            R.string.label_landscape,
             R.string.description_landscape
         ),
         Entity(
             REVERSE_PORTRAIT,
             R.drawable.ic_reverse_portrait,
-            R.string.reverse_portrait,
+            R.string.label_reverse_portrait,
             R.string.description_reverse_portrait
         ),
         Entity(
             REVERSE_LANDSCAPE,
             R.drawable.ic_reverse_landscape,
-            R.string.reverse_landscape,
+            R.string.label_reverse_landscape,
             R.string.description_reverse_landscape
         ),
         Entity(
             UNSPECIFIED,
             R.drawable.ic_unspecified,
-            R.string.unspecified,
+            R.string.label_unspecified,
             R.string.description_unspecified
         ),
         Entity(
             FULL_SENSOR,
             R.drawable.ic_force_sensor,
-            R.string.force_sensor,
+            R.string.label_force_sensor,
             R.string.description_force_sensor
         ),
         Entity(
             SENSOR_PORTRAIT,
             R.drawable.ic_sensor_portrait,
-            R.string.sensor_portrait,
+            R.string.label_sensor_portrait,
             R.string.description_sensor_portrait
         ),
         Entity(
             SENSOR_LANDSCAPE,
             R.drawable.ic_sensor_landscape,
-            R.string.sensor_landscape,
+            R.string.label_sensor_landscape,
             R.string.description_sensor_landscape
         ),
         Entity(
             SENSOR_LIE_LEFT,
             R.drawable.ic_sensor_lie_left,
-            R.string.sensor_lie_left,
+            R.string.label_sensor_lie_left,
             R.string.description_sensor_lie_left
         ),
         Entity(
             SENSOR_LIE_RIGHT,
             R.drawable.ic_sensor_lie_right,
-            R.string.sensor_lie_right,
+            R.string.label_sensor_lie_right,
             R.string.description_sensor_lie_right
         )
     )

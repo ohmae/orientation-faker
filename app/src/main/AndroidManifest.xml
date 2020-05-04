@@ -44,16 +44,16 @@
         <activity
             android:name="net.mm2d.orientation.view.DetailedSettingsActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|keyboard"
-            android:label="@string/detailed_settings"
+            android:label="@string/menu_title_detailed_settings"
             />
         <activity
             android:name="net.mm2d.orientation.view.EachAppActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|keyboard"
-            android:label="@string/setting_for_each_app"
+            android:label="@string/menu_title_setting_for_each_app"
             />
         <activity
             android:name="net.mm2d.orientation.view.LicenseActivity"
-            android:label="@string/license"
+            android:label="@string/options_menu_license"
             android:theme="@style/AppTheme.NoActionBar"
             />
 

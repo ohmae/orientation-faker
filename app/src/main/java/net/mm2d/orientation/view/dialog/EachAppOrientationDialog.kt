@@ -79,7 +79,7 @@ class EachAppOrientationDialog : DialogFragment() {
                 itemView.description.setText(entity.description)
             } else {
                 itemView.icon.setImageResource(R.drawable.ic_remove)
-                itemView.name.setText(R.string.clear)
+                itemView.name.setText(R.string.label_clear)
                 itemView.description.setText(R.string.description_clear)
             }
         }

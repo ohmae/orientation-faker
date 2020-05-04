@@ -87,6 +87,6 @@
         app:layout_constraintStart_toStartOf="@id/guideline2"
         app:layout_constraintTop_toBottomOf="@id/orientation_icon"
         tools:ignore="SmallSp,SpUsage"
-        tools:text="@string/landscape"
+        tools:text="@string/label_landscape"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

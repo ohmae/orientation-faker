@@ -41,7 +41,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/icon"
         tools:ignore="SmallSp,SpUsage"
-        tools:text="@string/landscape"
+        tools:text="@string/label_landscape"
         />
 
     <TextView

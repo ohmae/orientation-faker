@@ -36,6 +36,7 @@ class MainService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        NotificationHelper.startForeground(this)
         if (shouldStop(intent)) {
             stop()
             return START_NOT_STICKY
@@ -60,7 +61,6 @@ class MainService : Service() {
 
     private fun stop() {
         OrientationHelper.cancel()
-        NotificationHelper.startForeground(this)
         NotificationHelper.stopForeground(this)
         EventRouter.notifyUpdate()
         stopForegroundChecker()

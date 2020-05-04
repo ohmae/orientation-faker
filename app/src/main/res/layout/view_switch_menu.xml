@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toStartOf="@+id/menu_switch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/status"
+        tools:text="@string/menu_title_status"
         />
 
     <TextView
@@ -46,7 +46,7 @@
         app:layout_constraintEnd_toStartOf="@+id/menu_switch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/menu_title"
-        tools:text="@string/status_running"
+        tools:text="@string/menu_description_status_running"
         />
 
 </merge>

@@ -7,19 +7,18 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
-    <string name="unspecified">unspecified</string>
-    <string name="force_sensor">force sensor</string>
-    <string name="portrait">portrait</string>
-    <string name="landscape">landscape</string>
-    <string name="reverse_portrait">rev port</string>
-    <string name="reverse_landscape">rev land</string>
-    <string name="sensor_portrait">sensor port</string>
-    <string name="sensor_landscape">sensor land</string>
-    <string name="sensor_lie_left">lie left</string>
-    <string name="sensor_lie_right">lie right</string>
+    <string name="label_unspecified">unspecified</string>
+    <string name="label_force_sensor">force sensor</string>
+    <string name="label_portrait">portrait</string>
+    <string name="label_landscape">landscape</string>
+    <string name="label_reverse_portrait">rev port</string>
+    <string name="label_reverse_landscape">rev land</string>
+    <string name="label_sensor_portrait">sensor port</string>
+    <string name="label_sensor_landscape">sensor land</string>
+    <string name="label_sensor_lie_left">lie left</string>
+    <string name="label_sensor_lie_right">lie right</string>
+    <string name="label_clear">clear</string>
 
-    <string name="clear">clear</string>
-    <string name="description_clear">Clear each app setting, follow global setting</string>
     <string name="description_unspecified">Unspecified orientation from this app. Device will be the original orientation of the displayed app</string>
     <string name="description_force_sensor">Rotate based on sensor information</string>
     <string name="description_portrait">Fixed to portrait</string>
@@ -30,52 +29,48 @@
     <string name="description_sensor_landscape">Fixed to landscape, automatically flip upside down by sensor</string>
     <string name="description_sensor_lie_left">Rotate it 90 degrees to the left with respect to the sensor. If you lie on left lateral and use it, the top and bottom will match.</string>
     <string name="description_sensor_lie_right">Rotate it 90 degrees to the right with respect to the sensor. If you lie on right lateral and use it, the top and bottom will match.</string>
+    <string name="description_clear">Clear each app setting, follow global setting</string>
 
-    <string name="status">Status</string>
-    <string name="status_running">Running</string>
-    <string name="status_waiting">Waiting</string>
-    <string name="status_start">START</string>
-    <string name="status_stop">STOP</string>
-    <string name="auto_start">Auto start</string>
-    <string name="auto_start_description_on">Start automatically at device startup</string>
-    <string name="auto_start_description_off">Do not start automatically</string>
-    <string name="detailed_settings">Detailed Settings</string>
-    <string name="detailed_settings_description">Theme and detailed behavior settings of notification</string>
-    <string name="setting_for_each_app">Setting for each app</string>
-    <string name="setting_for_each_app_description">Set the default screen orientation for each app</string>
-    <string name="version">Version</string>
+    <string name="menu_title_status">Status</string>
+    <string name="menu_description_status_running">Running</string>
+    <string name="menu_description_status_waiting">Waiting</string>
+    <string name="button_status_start">START</string>
+    <string name="button_status_stop">STOP</string>
+    <string name="menu_title_auto_start">Auto start</string>
+    <string name="menu_description_auto_start_description_on">Start automatically at device startup</string>
+    <string name="menu_description_auto_start_description_off">Do not start automatically</string>
+    <string name="menu_title_detailed_settings">Detailed Settings</string>
+    <string name="menu_description_detailed_settings_description">Theme and detailed behavior settings of notification</string>
+    <string name="menu_title_setting_for_each_app">Setting for each app</string>
+    <string name="menu_description_setting_for_each_app_description">Set the default screen orientation for each app</string>
+    <string name="menu_title_version">Version</string>
     <string name="caution_auto_rotate">Please change the system setting to auto-rotate. Reverse setting may not be possible</string>
     <string name="caution_experimental_orientation">\"sensor port\", \"sensor land\", \"lie left\" and \"lie right\" are experimental features. Some problems may occur</string>
 
-    <string name="package_check">Settings for each app</string>
-    <string name="package_check_on">Monitor launched apps</string>
-    <string name="package_check_off">Does not monitor launched apps</string>
+    <string name="menu_title_package_check">Settings for each app</string>
+    <string name="menu_description_package_check_on">Monitor launched apps</string>
+    <string name="menu_description_package_check_off">Does not monitor launched apps</string>
     <string name="caution_experimental_feature">This is experimental feature. If you have any problems please report details to developer</string>
 
-    <string name="update_status_preparing">Preparing update…</string>
-    <string name="update_status_downloading">Downloading update…</string>
-    <string name="update_status_downloaded">Ready to update</string>
-    <string name="update_button">update</string>
-
-    <string name="reset_theme">Reset theme</string>
-    <string name="reset_layout">Reset button layout</string>
-    <string name="foreground_color">foreground</string>
-    <string name="background_color">background</string>
-    <string name="selected_foreground_color">*foreground</string>
-    <string name="selected_background_color">*background</string>
-    <string name="use_blank_icon_for_notification">Make the status bar icon transparent</string>
-    <string name="use_blank_icon_for_notification_on">Display transparent icon in the status bar</string>
-    <string name="use_blank_icon_for_notification_off">Display icon that reflects the status in the status bar</string>
-    <string name="auto_rotate_warning">System setting warning</string>
-    <string name="auto_rotate_warning_on">Show warning if system setting is not auto-rotate</string>
-    <string name="auto_rotate_warning_off">Don\'t show warning if system setting is not auto-rotate</string>
-    <string name="notification_privacy">Notification privacy</string>
-    <string name="notification_privacy_on">Notify as secret content</string>
-    <string name="notification_privacy_off">Notify as public content</string>
-    <string name="system_notification">Notification Settings</string>
-    <string name="system_notification_description">Open system notification settings</string>
-    <string name="system_app">App Info</string>
-    <string name="system_app_description">Open system app info</string>
+    <string name="button_reset_theme">Reset theme</string>
+    <string name="button_reset_layout">Reset button layout</string>
+    <string name="button_foreground_color">foreground</string>
+    <string name="button_background_color">background</string>
+    <string name="button_selected_foreground_color">*foreground</string>
+    <string name="button_selected_background_color">*background</string>
+    <string name="menu_title_use_blank_icon_for_notification">Make the status bar icon transparent</string>
+    <string name="menu_description_use_blank_icon_for_notification_on">Display transparent icon in the status bar</string>
+    <string name="menu_description_use_blank_icon_for_notification_off">Display icon that reflects the status in the status bar</string>
+    <string name="menu_title_auto_rotate_warning">System setting warning</string>
+    <string name="menu_description_auto_rotate_warning_on">Show warning if system setting is not auto-rotate</string>
+    <string name="menu_description_auto_rotate_warning_off">Don\'t show warning if system setting is not auto-rotate</string>
+    <string name="menu_title_notification_privacy">Notification privacy</string>
+    <string name="menu_description_notification_privacy_on">Notify as secret content</string>
+    <string name="menu_description_notification_privacy_off">Notify as public content</string>
+    <string name="menu_title_system_notification">Notification Settings</string>
+    <string name="menu_description_system_notification_description">Open system notification settings</string>
+    <string name="menu_title_system_app">App Info</string>
+    <string name="menu_description_system_app_description">Open system app info</string>
 
     <string name="dialog_title_reset_theme">Confirmation</string>
     <string name="dialog_message_reset_theme">Would you like to reset theme?</string>
@@ -100,8 +95,13 @@
     <string name="toast_fail_to_initialize_sensor">Accelerometer initialization failed</string>
     <string name="toast_no_permission_to_usage_access">No permissions to usage access</string>
 
-    <string name="license">Open source licenses</string>
-    <string name="source_code">Source code</string>
-    <string name="privacy_policy">Privacy policy</string>
-    <string name="play_store">Google Play store</string>
+    <string name="options_menu_license">Open source licenses</string>
+    <string name="options_menu_source_code">Source code</string>
+    <string name="options_menu_privacy_policy">Privacy policy</string>
+    <string name="options_menu_play_store">Google Play store</string>
+
+    <string name="status_update_preparing">Preparing update…</string>
+    <string name="status_update_downloading">Downloading update…</string>
+    <string name="status_update_downloaded">Ready to update</string>
+    <string name="button_update">update</string>
 </resources>

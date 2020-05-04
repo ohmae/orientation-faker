@@ -154,13 +154,13 @@ class MainActivity : AppCompatActivity(), InstallStateUpdatedListener {
     private fun showUpdateStatus() {
         update_snack_bar.visibility = View.VISIBLE
         update_button.isEnabled = false
-        update_title.setText(R.string.update_status_preparing)
+        update_title.setText(R.string.status_update_preparing)
     }
 
     private fun showUpdateButton() {
         update_snack_bar.visibility = View.VISIBLE
         update_button.isEnabled = true
-        update_title.setText(R.string.update_status_downloaded)
+        update_title.setText(R.string.status_update_downloaded)
         update_snack_bar.setOnClickListener {
             appUpdateManager.completeUpdate()
         }
@@ -171,7 +171,7 @@ class MainActivity : AppCompatActivity(), InstallStateUpdatedListener {
             InstallStatus.PENDING -> {
             }
             InstallStatus.DOWNLOADING -> {
-                update_title.setText(R.string.update_status_downloading)
+                update_title.setText(R.string.status_update_downloading)
             }
             InstallStatus.DOWNLOADED -> {
                 showUpdateButton()
@@ -239,13 +239,13 @@ class MainActivity : AppCompatActivity(), InstallStateUpdatedListener {
 
     private fun applyStatus() {
         if (OrientationHelper.isEnabled) {
-            status_button.setText(R.string.status_stop)
+            status_button.setText(R.string.button_status_stop)
             status_button.setBackgroundResource(R.drawable.bg_stop_button)
-            status_description.setText(R.string.status_running)
+            status_description.setText(R.string.menu_description_status_running)
         } else {
-            status_button.setText(R.string.status_start)
+            status_button.setText(R.string.button_status_start)
             status_button.setBackgroundResource(R.drawable.bg_start_button)
-            status_description.setText(R.string.status_waiting)
+            status_description.setText(R.string.menu_description_status_waiting)
         }
         ReviewRequest.requestReviewIfNeed(this)
     }

@@ -6,25 +6,25 @@
     <item
         android:id="@+id/license"
         android:orderInCategory="100"
-        android:title="@string/license"
+        android:title="@string/options_menu_license"
         app:showAsAction="never"
         />
     <item
         android:id="@+id/source_code"
         android:orderInCategory="101"
-        android:title="@string/source_code"
+        android:title="@string/options_menu_source_code"
         app:showAsAction="never"
         />
     <item
         android:id="@+id/privacy_policy"
         android:orderInCategory="102"
-        android:title="@string/privacy_policy"
+        android:title="@string/options_menu_privacy_policy"
         app:showAsAction="never"
         />
     <item
         android:id="@+id/play_store"
         android:orderInCategory="103"
-        android:title="@string/play_store"
+        android:title="@string/options_menu_play_store"
         app:showAsAction="never"
         />
 </menu>

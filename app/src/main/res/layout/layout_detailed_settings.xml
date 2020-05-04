@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/margin_menu_sample"
-                android:text="@string/foreground_color"
+                android:text="@string/button_foreground_color"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="@dimen/text_color_title"
                 />
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/margin_menu_sample"
-                android:text="@string/background_color"
+                android:text="@string/button_background_color"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="@dimen/text_color_title"
                 />
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/margin_menu_sample"
-                android:text="@string/selected_foreground_color"
+                android:text="@string/button_selected_foreground_color"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="@dimen/text_color_title"
                 />
@@ -143,7 +143,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/margin_menu_sample"
-                android:text="@string/selected_background_color"
+                android:text="@string/button_selected_background_color"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="@dimen/text_color_title"
                 />
@@ -176,7 +176,7 @@
             android:layout_marginTop="@dimen/margin_menu_vertical"
             android:layout_marginEnd="@dimen/margin_menu_horizontal"
             android:layout_marginBottom="@dimen/margin_menu_vertical"
-            android:text="@string/reset_theme"
+            android:text="@string/button_reset_theme"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="@dimen/text_description"
             />
@@ -221,7 +221,7 @@
                 android:layout_marginTop="@dimen/margin_menu_vertical"
                 android:layout_marginEnd="@dimen/margin_menu_horizontal"
                 android:layout_marginBottom="@dimen/margin_menu_vertical"
-                android:text="@string/reset_layout"
+                android:text="@string/button_reset_layout"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="@dimen/text_description"
                 />
@@ -251,9 +251,9 @@
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
         app:checked="true"
-        app:descriptionOff="@string/use_blank_icon_for_notification_off"
-        app:descriptionOn="@string/use_blank_icon_for_notification_on"
-        app:title="@string/use_blank_icon_for_notification"
+        app:descriptionOff="@string/menu_description_use_blank_icon_for_notification_off"
+        app:descriptionOn="@string/menu_description_use_blank_icon_for_notification_on"
+        app:title="@string/menu_title_use_blank_icon_for_notification"
         />
 
     <net.mm2d.orientation.view.view.SwitchMenuView
@@ -262,9 +262,9 @@
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
         app:checked="true"
-        app:descriptionOff="@string/auto_rotate_warning_off"
-        app:descriptionOn="@string/auto_rotate_warning_on"
-        app:title="@string/auto_rotate_warning"
+        app:descriptionOff="@string/menu_description_auto_rotate_warning_off"
+        app:descriptionOn="@string/menu_description_auto_rotate_warning_on"
+        app:title="@string/menu_title_auto_rotate_warning"
         />
 
     <net.mm2d.orientation.view.view.SwitchMenuView
@@ -273,9 +273,9 @@
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
         app:checked="false"
-        app:descriptionOff="@string/notification_privacy_off"
-        app:descriptionOn="@string/notification_privacy_on"
-        app:title="@string/notification_privacy"
+        app:descriptionOff="@string/menu_description_notification_privacy_off"
+        app:descriptionOn="@string/menu_description_notification_privacy_on"
+        app:title="@string/menu_title_notification_privacy"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -291,7 +291,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_menu_horizontal"
             android:layout_marginTop="@dimen/margin_menu_vertical"
-            android:text="@string/system_notification"
+            android:text="@string/menu_title_system_notification"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textSize="@dimen/text_title"
             app:layout_constraintStart_toStartOf="parent"
@@ -304,7 +304,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_menu_horizontal"
             android:layout_marginBottom="@dimen/margin_menu_vertical"
-            android:text="@string/system_notification_description"
+            android:text="@string/menu_description_system_notification_description"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="@dimen/text_description"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -327,7 +327,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_menu_horizontal"
             android:layout_marginTop="@dimen/margin_menu_vertical"
-            android:text="@string/system_app"
+            android:text="@string/menu_title_system_app"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textSize="@dimen/text_title"
             app:layout_constraintStart_toStartOf="parent"
@@ -340,7 +340,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_menu_horizontal"
             android:layout_marginBottom="@dimen/margin_menu_vertical"
-            android:text="@string/system_app_description"
+            android:text="@string/menu_description_system_app_description"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="@dimen/text_description"
             app:layout_constraintBottom_toBottomOf="parent"
