@@ -39,25 +39,25 @@
             android:paddingBottom="@dimen/margin_menu_sample"
             >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_menu_sample"
-                android:text="@string/button_foreground_color"
-                android:textAppearance="@style/TextAppearance.AppCompat"
-                android:textSize="@dimen/text_color_title"
-                />
-
             <ImageView
                 android:id="@+id/sample_foreground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/margin_menu_sample"
                 android:background="@drawable/bg_sample"
                 android:contentDescription="@null"
                 android:scaleType="center"
                 app:srcCompat="@drawable/ic_circle"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/button_foreground_color"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textSize="@dimen/text_color_title"
                 />
         </LinearLayout>
 
@@ -72,25 +72,25 @@
             android:paddingBottom="@dimen/margin_menu_sample"
             >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_menu_sample"
-                android:text="@string/button_background_color"
-                android:textAppearance="@style/TextAppearance.AppCompat"
-                android:textSize="@dimen/text_color_title"
-                />
-
             <ImageView
                 android:id="@+id/sample_background"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/margin_menu_sample"
                 android:background="@drawable/bg_sample"
                 android:contentDescription="@null"
                 android:scaleType="center"
                 app:srcCompat="@drawable/ic_circle"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/button_background_color"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textSize="@dimen/text_color_title"
                 />
         </LinearLayout>
 
@@ -105,25 +105,25 @@
             android:paddingBottom="@dimen/margin_menu_sample"
             >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_menu_sample"
-                android:text="@string/button_selected_foreground_color"
-                android:textAppearance="@style/TextAppearance.AppCompat"
-                android:textSize="@dimen/text_color_title"
-                />
-
             <ImageView
                 android:id="@+id/sample_foreground_selected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/margin_menu_sample"
                 android:background="@drawable/bg_sample"
                 android:contentDescription="@null"
                 android:scaleType="center"
                 app:srcCompat="@drawable/ic_circle"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/button_selected_foreground_color"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textSize="@dimen/text_color_title"
                 />
         </LinearLayout>
 
@@ -138,25 +138,25 @@
             android:paddingBottom="@dimen/margin_menu_sample"
             >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_menu_sample"
-                android:text="@string/button_selected_background_color"
-                android:textAppearance="@style/TextAppearance.AppCompat"
-                android:textSize="@dimen/text_color_title"
-                />
-
             <ImageView
                 android:id="@+id/sample_background_selected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/margin_menu_sample"
                 android:background="@drawable/bg_sample"
                 android:contentDescription="@null"
                 android:scaleType="center"
                 app:srcCompat="@drawable/ic_circle"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/button_selected_background_color"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textSize="@dimen/text_color_title"
                 />
         </LinearLayout>
     </LinearLayout>
