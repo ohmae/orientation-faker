@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.layout_orientation_item.view.*
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.util.isStarted
+import net.mm2d.orientation.util.isActive
 
 class EachAppOrientationDialog : DialogFragment() {
     interface Callback {
@@ -91,7 +91,7 @@ class EachAppOrientationDialog : DialogFragment() {
         private const val KEY_PACKAGE = "KEY_PACKAGE"
 
         fun show(activity: FragmentActivity, position: Int, packageName: String) {
-            if (activity.isFinishing || !activity.isStarted()) {
+            if (!activity.isActive()) {
                 return
             }
             val arguments = Bundle().also {
