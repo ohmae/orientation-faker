@@ -15,6 +15,7 @@ import androidx.browser.customtabs.CustomTabsCallback
 import androidx.browser.customtabs.CustomTabsClient
 import androidx.browser.customtabs.CustomTabsServiceConnection
 import androidx.browser.customtabs.CustomTabsSession
+import androidx.lifecycle.ProcessLifecycleOwner
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
@@ -76,6 +77,9 @@ object CustomTabsHelper : CustomTabsServiceConnection() {
 
     fun initialize(context: Context) {
         this.context = context.applicationContext
+        ProcessLifecycleOwner.get()
+            .lifecycle
+            .addObserver(CustomTabsBinder())
     }
 
     internal fun bind() {

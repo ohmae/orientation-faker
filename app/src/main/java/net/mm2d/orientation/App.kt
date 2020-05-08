@@ -18,7 +18,6 @@ import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.service.KeepAlive
 import net.mm2d.orientation.settings.Settings
-import net.mm2d.orientation.tabs.CustomTabsBinder
 import net.mm2d.orientation.tabs.CustomTabsHelper
 
 /**
@@ -33,7 +32,6 @@ class App : Application() {
         Settings.initialize(this)
         ForegroundPackageSettings.initialize(this)
         CustomTabsHelper.initialize(this)
-        registerActivityLifecycleCallbacks(CustomTabsBinder())
         OrientationHelper.initialize(this)
         KeepAlive.ensureResident(this)
     }

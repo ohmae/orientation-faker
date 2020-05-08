@@ -7,29 +7,21 @@
 
 package net.mm2d.orientation.tabs
 
-import android.app.Activity
-import android.app.Application.ActivityLifecycleCallbacks
-import android.os.Bundle
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
-class CustomTabsBinder : ActivityLifecycleCallbacks {
-    private var count: Int = 0
-    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        count++
+class CustomTabsBinder : LifecycleObserver {
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    fun onStart() {
         CustomTabsHelper.bind()
     }
 
-    override fun onActivityDestroyed(activity: Activity) {
-        if (--count == 0 && activity.isFinishing) {
-            CustomTabsHelper.unbind()
-        }
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    fun onStop() {
+        CustomTabsHelper.unbind()
     }
-
-    override fun onActivityStarted(activity: Activity) {}
-    override fun onActivityResumed(activity: Activity) {}
-    override fun onActivityPaused(activity: Activity) {}
-    override fun onActivityStopped(activity: Activity) {}
-    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {}
 }
