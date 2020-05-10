@@ -225,6 +225,7 @@ class MainActivity : AppCompatActivity(), InstallStateUpdatedListener {
         }
     }
 
+    @SuppressLint("NewApi")
     private fun toggleStatus() {
         if (OrientationHelper.isEnabled) {
             MainService.stop(this)
@@ -233,7 +234,11 @@ class MainActivity : AppCompatActivity(), InstallStateUpdatedListener {
                 applyAutoStart()
             }
         } else {
-            MainService.start(this)
+            if (SystemSettings.canDrawOverlays(this)) {
+                MainService.start(this)
+            } else {
+                OverlayPermissionDialog.showDialog(this)
+            }
         }
     }
 
