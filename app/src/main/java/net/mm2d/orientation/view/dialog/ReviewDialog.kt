@@ -17,7 +17,7 @@ import androidx.fragment.app.FragmentActivity
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.LaunchUtils
-import net.mm2d.orientation.util.isActive
+import net.mm2d.orientation.util.isInActive
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
@@ -56,14 +56,11 @@ class ReviewDialog : DialogFragment() {
         private const val TAG = "ReviewDialog"
 
         fun showDialog(activity: FragmentActivity) {
-            if (!activity.isActive()) {
-                return
-            }
-            activity.supportFragmentManager.also {
-                if (it.findFragmentByTag(TAG) == null) {
-                    ReviewDialog().show(it, TAG)
-                }
-            }
+            if (activity.isInActive()) return
+            val manager = activity.supportFragmentManager
+            if (manager.isStateSaved) return
+            if (manager.findFragmentByTag(TAG) != null) return
+            ReviewDialog().show(manager, TAG)
         }
     }
 }

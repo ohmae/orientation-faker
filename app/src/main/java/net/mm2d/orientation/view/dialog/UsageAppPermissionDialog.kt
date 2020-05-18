@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.util.SystemSettings
-import net.mm2d.orientation.util.isActive
+import net.mm2d.orientation.util.isInActive
 
 class UsageAppPermissionDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -33,14 +33,11 @@ class UsageAppPermissionDialog : DialogFragment() {
         private const val TAG = "UsageAppPermissionDialog"
 
         fun showDialog(activity: FragmentActivity) {
-            if (!activity.isActive()) {
-                return
-            }
-            activity.supportFragmentManager.also {
-                if (it.findFragmentByTag(TAG) == null) {
-                    UsageAppPermissionDialog().show(it, TAG)
-                }
-            }
+            if (activity.isInActive()) return
+            val manager = activity.supportFragmentManager
+            if (manager.isStateSaved) return
+            if (manager.findFragmentByTag(TAG) != null) return
+            UsageAppPermissionDialog().show(manager, TAG)
         }
     }
 }
