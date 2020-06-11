@@ -161,26 +161,23 @@
         </LinearLayout>
     </LinearLayout>
 
-    <FrameLayout
+    <TextView
         android:id="@+id/reset_theme"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginStart="@dimen/margin_menu_horizontal"
-            android:layout_marginTop="@dimen/margin_menu_vertical"
-            android:layout_marginEnd="@dimen/margin_menu_horizontal"
-            android:layout_marginBottom="@dimen/margin_menu_vertical"
-            android:text="@string/button_reset_theme"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="@dimen/text_description"
-            />
-    </FrameLayout>
+        android:layout_gravity="end"
+        android:layout_marginStart="@dimen/margin_menu_horizontal"
+        android:layout_marginEnd="@dimen/margin_menu_vertical"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_reset_button"
+        android:paddingStart="32dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="32dp"
+        android:paddingBottom="12dp"
+        android:text="@string/button_reset_theme"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="@dimen/text_description"
+        />
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/check_holder"
@@ -189,44 +186,46 @@
         app:columnCount="4"
         />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         >
 
         <ImageView
             android:id="@+id/help_layout"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@null"
             android:paddingStart="@dimen/margin_menu_horizontal"
             android:paddingEnd="@dimen/margin_menu_horizontal"
             android:src="@drawable/ic_help"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             />
 
-        <FrameLayout
+        <TextView
             android:id="@+id/reset_layout"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginStart="@dimen/margin_menu_horizontal"
-                android:layout_marginTop="@dimen/margin_menu_vertical"
-                android:layout_marginEnd="@dimen/margin_menu_horizontal"
-                android:layout_marginBottom="@dimen/margin_menu_vertical"
-                android:text="@string/button_reset_layout"
-                android:textAppearance="@style/TextAppearance.AppCompat"
-                android:textSize="@dimen/text_description"
-                />
-        </FrameLayout>
-    </LinearLayout>
+            android:layout_gravity="end"
+            android:layout_marginStart="@dimen/margin_menu_horizontal"
+            android:layout_marginEnd="@dimen/margin_menu_vertical"
+            android:background="@drawable/bg_reset_button"
+            android:paddingStart="32dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="32dp"
+            android:paddingBottom="12dp"
+            android:text="@string/button_reset_layout"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="@dimen/text_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/caution"
