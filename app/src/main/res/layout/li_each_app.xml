@@ -54,7 +54,7 @@
         android:id="@+id/app_package"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="@color/fg_sub"
         android:textSize="@dimen/text_description"
