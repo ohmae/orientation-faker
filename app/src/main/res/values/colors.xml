@@ -2,17 +2,18 @@
 <resources>
     <color name="primary">#202020</color>
     <color name="primaryDark">#000000</color>
-    <color name="accent">#2196f3</color>
+    <color name="accent">#2196F3</color>
     <color name="bg_window">#101010</color>
-    <color name="bg_caution">#FFF9C4</color>
+    <color name="bg_caution">#2962FF</color>
     <color name="bg_dialog">#303030</color>
-    <color name="bg_update">#FFFFFF</color>
-    <color name="fg_update">#000000</color>
-    <color name="fg_caution">#000000</color>
-    <color name="fg_notification">#ffffff</color>
+    <color name="bg_update">#2962FF</color>
+    <color name="fg_update">#FFFFFF</color>
+    <color name="fg_caution">#FFFFFF</color>
+    <color name="fg_notification">#FFFFFF</color>
     <color name="bg_notification">#212121</color>
     <color name="bg_notification_selected">#448AFF</color>
     <color name="ripple_dark">#33FFFFFF</color>
-    <color name="fg_main">#ffffff</color>
+    <color name="fg_main">#FFFFFF</color>
     <color name="fg_sub">#9E9E9E</color>
+    <color name="fg_inverse">#000000</color>
 </resources>

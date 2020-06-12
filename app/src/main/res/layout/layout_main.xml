@@ -41,6 +41,7 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:text="@string/button_update"
+            android:textColor="@color/fg_inverse"
             android:textSize="@dimen/text_update_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
