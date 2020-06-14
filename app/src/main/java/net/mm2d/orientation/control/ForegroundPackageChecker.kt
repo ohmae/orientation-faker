@@ -102,6 +102,6 @@ class ForegroundPackageChecker(
         private val CHECK_INTERVAL: Long = TimeUnit.SECONDS.toMillis(1)
         private val FIRST_DURATION: Long = TimeUnit.MINUTES.toMillis(5)
         private val SECOND_DURATION: Long = TimeUnit.HOURS.toMillis(1)
-        private const val CHECK_MARGIN = 500
+        private const val CHECK_MARGIN = 2000
     }
 }
