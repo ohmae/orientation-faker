@@ -47,10 +47,9 @@
     <string name="caution_auto_rotate">Please change the system setting to auto-rotate. Reverse setting may not be possible</string>
     <string name="caution_experimental_orientation">\"sensor port\", \"sensor land\", \"lie left\" and \"lie right\" are experimental features. Some problems may occur</string>
 
-    <string name="menu_title_package_check">Settings for each app</string>
-    <string name="menu_description_package_check_on">Monitor launched apps</string>
-    <string name="menu_description_package_check_off">Does not monitor launched apps</string>
+    <string name="package_check_disabled">Please turn on the switch to enable this function</string>
     <string name="caution_experimental_feature">This is experimental feature. If you have any problems please report details to developer</string>
+    <string name="search_apps">Search apps</string>
 
     <string name="button_reset_theme">Reset theme</string>
     <string name="button_reset_layout">Reset button layout</string>

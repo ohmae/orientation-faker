@@ -6,8 +6,11 @@
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="48dp" />
-            <stroke android:color="@color/accent" android:width="1dp" />
-            <solid android:color="@color/bg_window"/>
+            <stroke
+                android:color="@color/accent"
+                android:width="1dp"
+                />
+            <solid android:color="@color/bg_window" />
         </shape>
     </item>
 </ripple>

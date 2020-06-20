@@ -49,6 +49,7 @@
         <activity
             android:name="net.mm2d.orientation.view.EachAppActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|keyboard"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/menu_title_setting_for_each_app"
             />
         <activity
