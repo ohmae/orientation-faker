@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isGone
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_each_app.*
@@ -59,6 +58,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 adapter?.search(s.toString())
+                recycler_view.scrollToPosition(0)
             }
         })
         search_window.setOnEditorActionListener { _, _, _ ->
@@ -160,19 +160,6 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
         var icon: Drawable? = null
     }
 
-    private class DiffCallback(
-        private val old: List<AppInfo>,
-        private val new: List<AppInfo>
-    ) : DiffUtil.Callback() {
-        override fun getOldListSize(): Int = old.size
-        override fun getNewListSize(): Int = new.size
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            old[oldItemPosition] == new[newItemPosition]
-
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            old[oldItemPosition] == new[newItemPosition]
-    }
-
     class Adapter(
         private val context: Context,
         private val initialList: List<AppInfo>,
@@ -188,10 +175,8 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
             val w = word.toLowerCase(Locale.ENGLISH)
             if (w == searchWord) return
             searchWord = w
-            val newList = initialList.filter { it.contains(w) }
-            val diff = DiffUtil.calculateDiff(DiffCallback(list, newList))
-            list = newList
-            diff.dispatchUpdatesTo(this)
+            list =  initialList.filter { it.contains(w) }
+            notifyDataSetChanged()
         }
 
         private fun AppInfo.contains(word: String): Boolean =
