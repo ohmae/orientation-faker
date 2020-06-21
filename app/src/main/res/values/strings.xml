@@ -50,6 +50,7 @@
     <string name="package_check_disabled">Please turn on the switch to enable this function</string>
     <string name="caution_experimental_feature">This is experimental feature. If you have any problems please report details to developer</string>
     <string name="search_apps">Search apps</string>
+    <string name="no_app_caution">No apps that match the search conditions</string>
 
     <string name="button_reset_theme">Reset theme</string>
     <string name="button_reset_layout">Reset button layout</string>

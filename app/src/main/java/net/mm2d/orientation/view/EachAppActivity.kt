@@ -57,14 +57,20 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
             override fun afterTextChanged(s: Editable?) = Unit
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                adapter?.search(s.toString())
-                recycler_view.scrollToPosition(0)
+                search(s.toString())
             }
         })
         search_window.setOnEditorActionListener { _, _, _ ->
             hideKeyboard()
             true
         }
+    }
+
+    private fun search(word: String) {
+        val adapter = adapter ?: return
+        adapter.search(word)
+        no_app_caution.isGone = adapter.itemCount != 0
+        recycler_view.scrollToPosition(0)
     }
 
     private fun setAdapter(list: List<AppInfo>) {
@@ -75,7 +81,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
         }.let {
             adapter = it
             recycler_view.adapter = it
-            it.search(search_window.text.toString())
+            search(search_window.text.toString())
         }
         progress_bar.visibility = View.GONE
     }
