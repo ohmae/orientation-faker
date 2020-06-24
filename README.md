@@ -12,6 +12,18 @@ Not all settings are available because some screen orientations are not supporte
 Because this app forcibly changes the display of the running application, it can become inoperable or, in the worst case, cause a crash.
 Please use at your own risk.
 
+## Screenshots
+
+|![](readme/1.png)|![](readme/2.png)|![](readme/3.png)|![](readme/4.png)|
+|-|-|-|-|
+|![](readme/5.png)|![](readme/6.png)|![](readme/7.png)||
+
+## Install
+
+[Google Play](https://play.google.com/store/apps/details?id=net.mm2d.android.orientationfaker)
+
+## Feature
+
 The following settings are possible
 
 - unspecified
@@ -35,19 +47,9 @@ The following settings are possible
 - lie right
   - Rotate it 90 degrees to the right with respect to the sensor. If you lie on right lateral and use it, the top and bottom will match.
 
-Trouble shooting
+### Trouble shooting
 
-- If you can not fix in the opposite direction of the portrait / landscape, try changing the system setting to auto-rotate
-
-## Install
-
-[Google Play](https://play.google.com/store/apps/details?id=net.mm2d.android.orientationfaker)
-
-## Screenshots
-
-|![](readme/1.png)|![](readme/2.png)|![](readme/3.png)|![](readme/4.png)|
-|-|-|-|-|
-|![](readme/5.png)|![](readme/6.png)|![](readme/7.png)||
+If you can not fix in the opposite direction of the portrait / landscape, try changing the system setting to auto-rotate
 
 ## Author
 
