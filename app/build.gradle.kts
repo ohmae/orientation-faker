@@ -63,8 +63,6 @@ android {
     }
 }
 
-val kotlinVersion: String by project
-
 dependencies {
     implementation("androidx.appcompat:appcompat:1.2.0")
     implementation("androidx.core:core-ktx:1.3.1")
@@ -76,28 +74,26 @@ dependencies {
     implementation("androidx.preference:preference:1.1.1")
     implementation("com.google.android.material:material:1.2.0")
     implementation("com.google.android.play:core:1.8.0")
-    implementation("com.google.android.play:core-ktx:1.8.0")
+    implementation("com.google.android.play:core-ktx:1.8.1")
     implementation("androidx.room:room-runtime:2.2.5")
     implementation("androidx.room:room-ktx:2.2.5")
     kapt("androidx.room:room-compiler:2.2.5")
     implementation("net.mm2d:log:0.9.1")
     implementation("net.mm2d:log-android:0.9.1")
     implementation("net.mm2d:color-chooser:0.1.6")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.8")
+    implementation(kotlin("stdlib"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.4")
 }
 
-fun isNonStable(version: String): Boolean {
-    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+fun isStable(version: String): Boolean {
+    val versionUpperCase = version.toUpperCase()
+    val hasStableKeyword = listOf("RELEASE", "FINAL", "GA").any { versionUpperCase.contains(it) }
     val regex = "^[0-9,.v-]+(-r)?$".toRegex()
-    val isStable = stableKeyword || regex.matches(version)
-    return isStable.not()
+    return hasStableKeyword || regex.matches(version)
 }
 
-tasks.named("dependencyUpdates", DependencyUpdatesTask::class.java).configure {
-    rejectVersionIf {
-        isNonStable(candidate.version) && !isNonStable(currentVersion)
-    }
+tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
+    rejectVersionIf { !isStable(candidate.version) }
 }
