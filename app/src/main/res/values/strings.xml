@@ -99,9 +99,4 @@
     <string name="options_menu_source_code">Source code</string>
     <string name="options_menu_privacy_policy">Privacy policy</string>
     <string name="options_menu_play_store">Google Play store</string>
-
-    <string name="status_update_preparing">Preparing update…</string>
-    <string name="status_update_downloading">Downloading update…</string>
-    <string name="status_update_downloaded">Ready to update</string>
-    <string name="button_update">update</string>
 </resources>

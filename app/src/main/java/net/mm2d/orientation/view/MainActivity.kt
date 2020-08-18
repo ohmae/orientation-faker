@@ -8,8 +8,6 @@
 package net.mm2d.orientation.view
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -21,14 +19,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle.State
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.appupdate.AppUpdateOptions
-import com.google.android.play.core.install.InstallState
-import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.ktx.clientVersionStalenessDays
-import com.google.android.play.core.ktx.installStatus
-import com.google.android.play.core.ktx.isFlexibleUpdateAllowed
 import com.google.android.play.core.ktx.isImmediateUpdateAllowed
 import kotlinx.android.synthetic.main.layout_main.*
 import net.mm2d.android.orientationfaker.BuildConfig
@@ -46,14 +39,10 @@ import net.mm2d.orientation.view.dialog.OverlayPermissionDialog
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
-class MainActivity : AppCompatActivity(), InstallStateUpdatedListener {
+class MainActivity : AppCompatActivity() {
     private val settings by lazy {
         Settings.get()
     }
-    private val appUpdateManager by lazy {
-        AppUpdateManagerFactory.create(applicationContext)
-    }
-    private var appUpdateListenerRegistered: Boolean = false
     private val handler = Handler(Looper.getMainLooper())
     private val checkSystemSettingsTask = Runnable { checkSystemSettings() }
     private val eventObserver: EventObserver = EventRouter.createUpdateObserver()
@@ -89,7 +78,6 @@ class MainActivity : AppCompatActivity(), InstallStateUpdatedListener {
     override fun onDestroy() {
         super.onDestroy()
         eventObserver.unsubscribe()
-        unregisterAppUpdateListener()
     }
 
     override fun onResume() {
@@ -106,78 +94,15 @@ class MainActivity : AppCompatActivity(), InstallStateUpdatedListener {
         handler.removeCallbacks(checkSystemSettingsTask)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == UPDATE_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                registerAppUpdateListener()
-                showUpdateStatus()
-            }
-            return
-        }
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    private fun registerAppUpdateListener() {
-        if (!appUpdateListenerRegistered) {
-            appUpdateManager.registerListener(this)
-            appUpdateListenerRegistered = true
-        }
-    }
-
-    private fun unregisterAppUpdateListener() {
-        if (appUpdateListenerRegistered) {
-            appUpdateManager.unregisterListener(this)
-            appUpdateListenerRegistered = false
-        }
-    }
-
     private fun checkUpdate() {
-        val activity = this
-        appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
-            if (info.installStatus == InstallStatus.DOWNLOADED) {
-                showUpdateButton()
-            } else if (info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
-                info.clientVersionStalenessDays.let { it != null && it >= DAYS_FOR_UPDATE }
+        val manager = AppUpdateManagerFactory.create(applicationContext)
+        manager.appUpdateInfo.addOnSuccessListener { info ->
+            if (info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
+                info.clientVersionStalenessDays.let { it != null && it >= DAYS_FOR_UPDATE } &&
+                info.isImmediateUpdateAllowed
             ) {
-                if (info.isFlexibleUpdateAllowed) {
-                    appUpdateManager.startUpdateFlowForResult(
-                        info, AppUpdateType.FLEXIBLE, activity, UPDATE_REQUEST_CODE
-                    )
-                } else if (info.isImmediateUpdateAllowed) {
-                    val options = AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE)
-                    appUpdateManager.startUpdateFlow(info, activity, options)
-                }
-            }
-        }
-    }
-
-    private fun showUpdateStatus() {
-        update_snack_bar.visibility = View.VISIBLE
-        update_button.isEnabled = false
-        update_title.setText(R.string.status_update_preparing)
-    }
-
-    private fun showUpdateButton() {
-        update_snack_bar.visibility = View.VISIBLE
-        update_button.isEnabled = true
-        update_title.setText(R.string.status_update_downloaded)
-        update_snack_bar.setOnClickListener {
-            appUpdateManager.completeUpdate()
-        }
-    }
-
-    override fun onStateUpdate(state: InstallState) {
-        when (state.installStatus()) {
-            InstallStatus.PENDING -> {
-            }
-            InstallStatus.DOWNLOADING -> {
-                update_title.setText(R.string.status_update_downloading)
-            }
-            InstallStatus.DOWNLOADED -> {
-                showUpdateButton()
-            }
-            else -> {
-                update_snack_bar.visibility = View.GONE
+                val options = AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE)
+                manager.startUpdateFlow(info, this, options)
             }
         }
     }
