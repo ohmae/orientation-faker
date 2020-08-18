@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bg_caution"
-        android:drawableEnd="@drawable/ic_arrow_up"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:paddingStart="8dp"
@@ -26,6 +25,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:drawableEndCompat="@drawable/ic_arrow_up"
         />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -67,7 +67,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bg_caution"
-        android:drawableStart="@drawable/ic_caution"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:paddingStart="16dp"
@@ -80,6 +79,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:drawableStartCompat="@drawable/ic_caution"
         />
 
     <ProgressBar

@@ -32,7 +32,7 @@ class SwitchMenuView
     init {
         LayoutInflater.from(context)
             .inflate(R.layout.view_switch_menu, this)
-        switchView = menu_switch as CompoundButton
+        switchView = menu_switch
         val ta = context.obtainStyledAttributes(attrs, R.styleable.SwitchMenuView)
         menu_title.text = ta.getStringOrThrow(R.styleable.SwitchMenuView_title)
         descriptionOn = ta.getStringOrThrow(R.styleable.SwitchMenuView_descriptionOn)

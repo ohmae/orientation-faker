@@ -91,7 +91,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bg_caution"
-        android:drawableStart="@drawable/ic_caution"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:paddingStart="16dp"
@@ -102,6 +101,7 @@
         android:textColor="@color/fg_caution"
         android:textSize="@dimen/text_caution"
         android:visibility="gone"
+        app:drawableStartCompat="@drawable/ic_caution"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout

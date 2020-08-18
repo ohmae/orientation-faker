@@ -208,6 +208,5 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val CHECK_INTERVAL: Long = 5000L
         private const val DAYS_FOR_UPDATE: Int = 2
-        private const val UPDATE_REQUEST_CODE: Int = 100
     }
 }
