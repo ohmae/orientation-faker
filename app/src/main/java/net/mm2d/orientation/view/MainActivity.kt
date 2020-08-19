@@ -101,8 +101,11 @@ class MainActivity : AppCompatActivity() {
                 info.clientVersionStalenessDays.let { it != null && it >= DAYS_FOR_UPDATE } &&
                 info.isImmediateUpdateAllowed
             ) {
-                val options = AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE)
-                manager.startUpdateFlow(info, this, options)
+                try {
+                    val options = AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE)
+                    manager.startUpdateFlow(info, this, options)
+                } catch (ignored: Exception) {
+                }
             }
         }
     }
