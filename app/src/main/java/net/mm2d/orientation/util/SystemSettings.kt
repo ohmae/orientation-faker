@@ -27,11 +27,24 @@ object SystemSettings {
         "android.settings.APP_NOTIFICATION_SETTINGS"
 
     private fun startSystemSettings(activity: Activity, action: String, withPackage: Boolean = true) {
+        if (!withPackage) {
+            startSystemSettingsWithoutPackage(activity, action)
+            return
+        }
         try {
             val intent = Intent(action).also {
-                if (withPackage) {
-                    it.data = Uri.parse("package:${BuildConfig.APPLICATION_ID}")
-                }
+                it.data = Uri.parse("package:${BuildConfig.APPLICATION_ID}")
+                it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            activity.startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            startSystemSettingsWithoutPackage(activity, action)
+        }
+    }
+
+    private fun startSystemSettingsWithoutPackage(activity: Activity, action: String) {
+        try {
+            val intent = Intent(action).also {
                 it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
             activity.startActivity(intent)
