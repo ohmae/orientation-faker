@@ -7,11 +7,11 @@
 
 package net.mm2d.orientation.event
 
+import androidx.lifecycle.LifecycleOwner
+
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 interface EventObserver {
-    fun subscribe(callback: () -> Unit)
-
-    fun unsubscribe()
+    fun subscribe(owner: LifecycleOwner, callback: () -> Unit)
 }

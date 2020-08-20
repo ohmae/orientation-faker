@@ -22,7 +22,6 @@ import net.mm2d.android.orientationfaker.R
 import net.mm2d.color.chooser.ColorChooserDialog
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationHelper
-import net.mm2d.orientation.event.EventObserver
 import net.mm2d.orientation.event.EventRouter
 import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.Default
@@ -41,7 +40,6 @@ class DetailedSettingsActivity : AppCompatActivity(),
     private val settings by lazy {
         Settings.get()
     }
-    private val eventObserver: EventObserver = EventRouter.createUpdateObserver()
     private lateinit var notificationSample: NotificationSample
     private lateinit var checkList: List<CheckItemView>
     private lateinit var orientationListStart: List<Int>
@@ -52,12 +50,11 @@ class DetailedSettingsActivity : AppCompatActivity(),
         setContentView(R.layout.activity_detailed_settings)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setUpViews()
-        eventObserver.subscribe { notificationSample.update() }
+        EventRouter.createUpdateObserver().subscribe(this) { notificationSample.update() }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        eventObserver.unsubscribe()
         if (!orientationList.contains(settings.orientation)) {
             settings.orientation = orientationList[0]
             MainService.update(this)

@@ -27,7 +27,6 @@ import kotlinx.android.synthetic.main.layout_main.*
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.OrientationHelper
-import net.mm2d.orientation.event.EventObserver
 import net.mm2d.orientation.event.EventRouter
 import net.mm2d.orientation.review.ReviewRequest
 import net.mm2d.orientation.service.MainService
@@ -45,7 +44,6 @@ class MainActivity : AppCompatActivity() {
     }
     private val handler = Handler(Looper.getMainLooper())
     private val checkSystemSettingsTask = Runnable { checkSystemSettings() }
-    private val eventObserver: EventObserver = EventRouter.createUpdateObserver()
     private lateinit var notificationSample: NotificationSample
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         supportActionBar?.title = getString(R.string.app_name)
         setUpViews()
-        eventObserver.subscribe {
+        EventRouter.createUpdateObserver().subscribe(this) {
             applyStatus()
             notificationSample.update()
         }
@@ -73,11 +71,6 @@ class MainActivity : AppCompatActivity() {
         if (!SystemSettings.canDrawOverlays(this)) {
             OverlayPermissionDialog.showDialog(this)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        eventObserver.unsubscribe()
     }
 
     override fun onResume() {

@@ -7,6 +7,7 @@
 
 package net.mm2d.orientation.event
 
+import androidx.lifecycle.LifecycleOwner
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.asFlow
@@ -34,11 +35,8 @@ object EventRouter {
     internal class ChannelEventObserver(
         private val event: Event
     ) : EventObserver {
-        private var job: Job? = null
-
-        override fun subscribe(callback: () -> Unit) {
-            job?.cancel()
-            job = GlobalScope.launch {
+        override fun subscribe(owner: LifecycleOwner, callback: () -> Unit) {
+            GlobalScope.launch {
                 channel.asFlow()
                     .filter { it == event }
                     .collect {
@@ -46,12 +44,7 @@ object EventRouter {
                             callback.invoke()
                         }
                     }
-            }
-        }
-
-        override fun unsubscribe() {
-            job?.cancel()
-            job = null
+            }.cancelOnDestroy(owner)
         }
     }
 }

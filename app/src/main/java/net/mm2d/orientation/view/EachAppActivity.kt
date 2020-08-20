@@ -181,7 +181,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
             val w = word.toLowerCase(Locale.ENGLISH)
             if (w == searchWord) return
             searchWord = w
-            list =  initialList.filter { it.contains(w) }
+            list = initialList.filter { it.contains(w) }
             notifyDataSetChanged()
         }
 
