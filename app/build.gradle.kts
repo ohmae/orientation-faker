@@ -12,11 +12,10 @@ plugins {
 val applicationName = "OrientationFaker"
 val versionMajor = 4
 val versionMinor = 2
-val versionPatch = 8
+val versionPatch = 9
 
 android {
     compileSdkVersion(29)
-    buildToolsVersion = "29.0.3"
 
     defaultConfig {
         applicationId = "net.mm2d.android.orientationfaker"
