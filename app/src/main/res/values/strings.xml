@@ -17,6 +17,7 @@
     <string name="label_sensor_landscape">sensor land</string>
     <string name="label_sensor_lie_left">lie left</string>
     <string name="label_sensor_lie_right">lie right</string>
+    <string name="label_sensor_headstand">headstand</string>
     <string name="label_clear">clear</string>
 
     <string name="description_unspecified">Unspecified orientation from this app. Device will be the original orientation of the displayed app</string>
@@ -27,8 +28,9 @@
     <string name="description_reverse_landscape">Fixed to reverse landscape</string>
     <string name="description_sensor_portrait">Fixed to portrait, automatically flip upside down by sensor</string>
     <string name="description_sensor_landscape">Fixed to landscape, automatically flip upside down by sensor</string>
-    <string name="description_sensor_lie_left">Rotate it 90 degrees to the left with respect to the sensor. If you lie on left lateral and use it, the top and bottom will match.</string>
-    <string name="description_sensor_lie_right">Rotate it 90 degrees to the right with respect to the sensor. If you lie on right lateral and use it, the top and bottom will match.</string>
+    <string name="description_sensor_lie_left">Rotate 90 degrees to the left with respect to the sensor. If you lie on left lateral and use this, the top and bottom will match.</string>
+    <string name="description_sensor_lie_right">Rotate 90 degrees to the right with respect to the sensor. If you lie on right lateral and use this, the top and bottom will match.</string>
+    <string name="description_sensor_headstand">Rotate 180 degrees with respect to the sensor. If you use this by headstand, the top and bottom will match.</string>
     <string name="description_clear">Clear each app setting, follow global setting</string>
 
     <string name="menu_title_status">Status</string>
@@ -45,7 +47,7 @@
     <string name="menu_description_setting_for_each_app_description">Set the default screen orientation for each app</string>
     <string name="menu_title_version">Version</string>
     <string name="caution_auto_rotate">Please change the system setting to auto-rotate. Reverse setting may not be possible</string>
-    <string name="caution_experimental_orientation">\"sensor port\", \"sensor land\", \"lie left\" and \"lie right\" are experimental features. Some problems may occur</string>
+    <string name="caution_experimental_orientation">\"sensor port\", \"sensor land\", \"lie left\", \"lie right\" and \"headstand\" are experimental features. Some problems may occur</string>
 
     <string name="package_check_disabled">Please turn on the switch to enable this function</string>
     <string name="caution_experimental_feature">This is experimental feature. If you have any problems please report details to developer</string>

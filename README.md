@@ -43,9 +43,11 @@ The following settings are possible
 - sensor land
   - Fixed to landscape, automatically flip upside down by sensor
 - lie left
-  - Rotate it 90 degrees to the left with respect to the sensor. If you lie on left lateral and use it, the top and bottom will match.
+  - Rotate 90 degrees to the left with respect to the sensor. If you lie on left lateral and use this, the top and bottom will match.
 - lie right
-  - Rotate it 90 degrees to the right with respect to the sensor. If you lie on right lateral and use it, the top and bottom will match.
+  - Rotate 90 degrees to the right with respect to the sensor. If you lie on right lateral and use this, the top and bottom will match.
+- headstand
+  - Rotate 180 degrees with respect to the sensor. If you use this by headstand, the top and bottom will match.
 
 ### Trouble shooting
 

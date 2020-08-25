@@ -160,6 +160,8 @@ object OrientationHelper {
                 sensorLieLeft(angle)
             Orientation.SENSOR_LIE_RIGHT ->
                 sensorLieRight(angle)
+            Orientation.SENSOR_HEADSTAND ->
+                sensorHeadstand(angle)
         }
     }
 
@@ -202,6 +204,18 @@ object OrientationHelper {
             angle < 5 / 8.0 -> Orientation.REVERSE_LANDSCAPE
             angle < 7 / 8.0 -> Orientation.PORTRAIT
             else -> Orientation.LANDSCAPE
+        }
+        if (layoutParams.screenOrientation == targetOrientation) return
+        setOrientation(targetOrientation)
+    }
+
+    private fun sensorHeadstand(angle: Double) {
+        val targetOrientation = when {
+            angle < 1 / 8.0 -> Orientation.REVERSE_PORTRAIT
+            angle < 3 / 8.0 -> Orientation.REVERSE_LANDSCAPE
+            angle < 5 / 8.0 -> Orientation.PORTRAIT
+            angle < 7 / 8.0 -> Orientation.LANDSCAPE
+            else -> Orientation.REVERSE_PORTRAIT
         }
         if (layoutParams.screenOrientation == targetOrientation) return
         setOrientation(targetOrientation)

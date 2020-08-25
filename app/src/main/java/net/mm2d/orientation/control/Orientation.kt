@@ -15,6 +15,7 @@ object Orientation {
     const val SENSOR_LANDSCAPE: Int = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
     const val SENSOR_LIE_RIGHT: Int = 101
     const val SENSOR_LIE_LEFT: Int = 102
+    const val SENSOR_HEADSTAND: Int = 103
 
     data class Entity(
         val orientation: Int,
@@ -83,28 +84,36 @@ object Orientation {
             R.drawable.ic_sensor_lie_right,
             R.string.label_sensor_lie_right,
             R.string.description_sensor_lie_right
+        ),
+        Entity(
+            SENSOR_HEADSTAND,
+            R.drawable.ic_sensor_headstand,
+            R.string.label_sensor_headstand,
+            R.string.description_sensor_headstand
         )
     )
 
     val portrait: Set<Int> = setOf(
         PORTRAIT,
-        REVERSE_PORTRAIT
+        REVERSE_PORTRAIT,
     )
     val landscape: Set<Int> = setOf(
         LANDSCAPE,
-        REVERSE_LANDSCAPE
+        REVERSE_LANDSCAPE,
     )
     val sensor: Set<Int> = setOf(
         SENSOR_PORTRAIT,
         SENSOR_LANDSCAPE,
         SENSOR_LIE_RIGHT,
-        SENSOR_LIE_LEFT
+        SENSOR_LIE_LEFT,
+        SENSOR_HEADSTAND,
     )
     val experimental: Set<Int> = setOf(
         SENSOR_PORTRAIT,
         SENSOR_LANDSCAPE,
         SENSOR_LIE_RIGHT,
-        SENSOR_LIE_LEFT
+        SENSOR_LIE_LEFT,
+        SENSOR_HEADSTAND,
     )
     val requestSystemSettings: Set<Int> = setOf(
         REVERSE_PORTRAIT,
@@ -112,6 +121,7 @@ object Orientation {
         SENSOR_PORTRAIT,
         SENSOR_LANDSCAPE,
         SENSOR_LIE_RIGHT,
-        SENSOR_LIE_LEFT
+        SENSOR_LIE_LEFT,
+        SENSOR_HEADSTAND,
     )
 }

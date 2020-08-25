@@ -17,6 +17,7 @@
     <string name="label_sensor_landscape">横自動</string>
     <string name="label_sensor_lie_left">左寝</string>
     <string name="label_sensor_lie_right">右寝</string>
+    <string name="label_sensor_headstand">逆立ち</string>
     <string name="label_clear">設定削除</string>
 
     <string name="description_unspecified">アプリからは画面の向きを指定しません。表示されているアプリ本来の向きになります</string>
@@ -29,6 +30,7 @@
     <string name="description_sensor_landscape">横方向固定し、上下はセンサーによって反転させます</string>
     <string name="description_sensor_lie_left">センサーに対して左に90°ずれた向きに回転させます。左側を下に横寝して使うと上下が一致します</string>
     <string name="description_sensor_lie_right">センサーに対して右に90°ずれた向きに回転させます。右側を下に横寝して使うと上下が一致します</string>
+    <string name="description_sensor_headstand">センサーに対して180°ずれた向きに回転させます。逆立ちして使うと上下が一致します</string>
     <string name="description_clear">個別の設定を削除します。全体の設定に従います</string>
 
     <string name="menu_title_status">状態</string>
@@ -45,7 +47,7 @@
     <string name="menu_description_setting_for_each_app_description">アプリごとのデフォルトの画面向きを設定します</string>
     <string name="menu_title_version">バージョン</string>
     <string name="caution_auto_rotate">システム設定を自動回転に変更してください。逆向き設定ができない可能性があります</string>
-    <string name="caution_experimental_orientation">「縦自動」「横自動」「左寝」「右寝」は試験的機能です。何らかの問題が発生する可能性があります</string>
+    <string name="caution_experimental_orientation">「縦自動」「横自動」「左寝」「右寝」「逆立ち」は試験的機能です。何らかの問題が発生する可能性があります</string>
 
     <string name="package_check_disabled">機能を有効にするにはスイッチをONにしてください</string>
     <string name="caution_experimental_feature">これは試験的機能です。問題が発生した場合は詳細を連絡していただけると幸いです</string>
