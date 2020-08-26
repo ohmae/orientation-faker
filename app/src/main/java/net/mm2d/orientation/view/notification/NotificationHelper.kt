@@ -14,7 +14,7 @@ import android.app.Service
 import android.content.Context
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
-import androidx.annotation.RequiresApi
+import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
 import net.mm2d.android.orientationfaker.R
@@ -31,8 +31,10 @@ object NotificationHelper {
     private const val CHANNEL_ID = "CONTROL"
     private const val NOTIFICATION_ID = 10
 
-    @RequiresApi(VERSION_CODES.O)
-    private fun createChannel(context: Context) {
+    fun createChannel(context: Context) {
+        if (VERSION.SDK_INT < VERSION_CODES.O) {
+            return
+        }
         val name = context.getString(R.string.notification_channel_name)
         val importance = NotificationManager.IMPORTANCE_LOW
         val channel = NotificationChannel(CHANNEL_ID, name, importance).also {
@@ -50,16 +52,24 @@ object NotificationHelper {
     private fun getNotificationManager(context: Context): NotificationManager? =
         context.getSystemService()
 
+    fun startForegroundEmpty(service: Service) {
+        service.startForeground(NOTIFICATION_ID, makeEmptyNotification(service))
+    }
+
     fun startForeground(service: Service) {
-        if (VERSION.SDK_INT >= VERSION_CODES.O) {
-            createChannel(service)
-        }
         service.startForeground(NOTIFICATION_ID, makeNotification(service))
     }
 
     fun stopForeground(service: Service) {
         service.stopForeground(true)
     }
+
+    private fun makeEmptyNotification(context: Context): Notification =
+        NotificationCompat.Builder(context, CHANNEL_ID)
+            .setDefaults(0)
+            .setCustomContentView(RemoteViews(context.packageName, R.layout.empty_notification))
+            .setSmallIcon(R.drawable.ic_blank)
+            .build()
 
     private fun makeNotification(context: Context): Notification {
         val orientation = OrientationHelper.getOrientation()
@@ -77,7 +87,6 @@ object NotificationHelper {
             .setVisibility(visibility)
             .setCustomContentView(views)
             .setSmallIcon(icon)
-            .setOngoing(true)
             .build()
     }
 }
