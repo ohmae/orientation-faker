@@ -87,6 +87,11 @@ object NotificationHelper {
             .setVisibility(visibility)
             .setCustomContentView(views)
             .setSmallIcon(icon)
+            .setNotificationSilent(settings.notifySecret)
             .build()
+    }
+
+    private fun NotificationCompat.Builder.setNotificationSilent(silent: Boolean): NotificationCompat.Builder = apply {
+        if (silent) setNotificationSilent()
     }
 }
