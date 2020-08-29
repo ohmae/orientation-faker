@@ -9,7 +9,6 @@ package net.mm2d.orientation.util
 
 import android.app.Activity
 import android.app.AppOpsManager
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -37,7 +36,7 @@ object SystemSettings {
                 it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
             activity.startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
+        } catch (e: Exception) {
             startSystemSettingsWithoutPackage(activity, action)
         }
     }
@@ -48,7 +47,7 @@ object SystemSettings {
                 it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
             activity.startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
+        } catch (e: Exception) {
             Toast.makeText(activity, R.string.toast_could_not_open_setting, Toast.LENGTH_LONG).show()
         }
     }
@@ -81,7 +80,7 @@ object SystemSettings {
                 it.putExtra("app_uid", activity.applicationInfo.uid)
                 it.putExtra("android.provider.extra.APP_PACKAGE", BuildConfig.APPLICATION_ID)
             })
-        } catch (e: ActivityNotFoundException) {
+        } catch (e: Exception) {
             Toast.makeText(activity, R.string.toast_could_not_open_setting, Toast.LENGTH_LONG).show()
         }
     }
