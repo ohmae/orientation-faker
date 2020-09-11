@@ -120,8 +120,8 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             R.id.license -> LicenseActivity.start(this)
             R.id.source_code -> LaunchUtils.openSourceCode(this)
             R.id.privacy_policy -> LaunchUtils.openPrivacyPolicy(this)
