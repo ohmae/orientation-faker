@@ -11,7 +11,7 @@ plugins {
 
 val applicationName = "OrientationFaker"
 val versionMajor = 4
-val versionMinor = 3
+val versionMinor = 4
 val versionPatch = 0
 
 android {
@@ -78,7 +78,7 @@ dependencies {
     kapt("androidx.room:room-compiler:2.2.5")
     implementation("net.mm2d:log:0.9.2")
     implementation("net.mm2d:log-android:0.9.2")
-    implementation("net.mm2d:color-chooser:0.1.8")
+    implementation("net.mm2d:color-chooser:0.2.0")
     implementation(kotlin("stdlib"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
