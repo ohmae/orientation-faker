@@ -41,16 +41,12 @@ object NotificationHelper {
             it.enableLights(false)
             it.enableVibration(false)
         }
-        getNotificationManager(context)?.also {
-            if (it.getNotificationChannel(OLD_CHANNEL_ID) != null) {
-                it.deleteNotificationChannel(OLD_CHANNEL_ID)
-            }
-            it.createNotificationChannel(channel)
+        val manager = context.getSystemService<NotificationManager>() ?: return
+        if (manager.getNotificationChannel(OLD_CHANNEL_ID) != null) {
+            manager.deleteNotificationChannel(OLD_CHANNEL_ID)
         }
+        manager.createNotificationChannel(channel)
     }
-
-    private fun getNotificationManager(context: Context): NotificationManager? =
-        context.getSystemService()
 
     fun startForegroundEmpty(service: Service) {
         service.startForeground(NOTIFICATION_ID, makeEmptyNotification(service))
@@ -85,6 +81,7 @@ object NotificationHelper {
             .setDefaults(0)
             .setContentTitle(context.getText(R.string.app_name))
             .setVisibility(visibility)
+            .setOngoing(true)
             .setCustomContentView(views)
             .setSmallIcon(icon)
             .setNotificationSilent(settings.notifySecret)

@@ -7,16 +7,15 @@
 
 package net.mm2d.orientation.service
 
-import android.content.Context
 import net.mm2d.orientation.settings.Settings
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 object KeepAlive {
-    fun ensureResident(context: Context) {
+    fun ensureResident() {
         if (Settings.get().shouldAutoStart()) {
-            MainService.start(context)
+            MainController.start()
         }
     }
 }

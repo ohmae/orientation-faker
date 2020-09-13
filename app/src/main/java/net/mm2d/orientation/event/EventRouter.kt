@@ -8,18 +8,19 @@
 package net.mm2d.orientation.event
 
 import androidx.lifecycle.LifecycleOwner
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.mm2d.orientation.event.Event.EVENT_UPDATE
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
-@FlowPreview
-@ExperimentalCoroutinesApi
 object EventRouter {
     private val channel: BroadcastChannel<Event> = BroadcastChannel(1)
 

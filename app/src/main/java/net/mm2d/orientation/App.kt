@@ -17,6 +17,7 @@ import net.mm2d.log.android.AndroidSenders
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.service.KeepAlive
+import net.mm2d.orientation.service.MainController
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.tabs.CustomTabsHelper
 import net.mm2d.orientation.view.notification.NotificationHelper
@@ -31,11 +32,12 @@ class App : Application() {
         setUpLogger()
         setStrictMode()
         Settings.initialize(this)
+        MainController.initialize(this)
         NotificationHelper.createChannel(this)
         ForegroundPackageSettings.initialize(this)
         CustomTabsHelper.initialize(this)
         OrientationHelper.initialize(this)
-        KeepAlive.ensureResident(this)
+        KeepAlive.ensureResident()
     }
 
     private fun setUpLogger() {

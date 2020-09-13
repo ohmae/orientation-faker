@@ -24,7 +24,7 @@ import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationHelper
-import net.mm2d.orientation.service.MainService
+import net.mm2d.orientation.service.MainController
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.view.dialog.EachAppOrientationDialog
@@ -116,7 +116,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
                 hideKeyboard()
                 settings.foregroundPackageCheckEnabled = isChecked
                 package_check_disabled.isGone = isChecked
-                MainService.update(this)
+                MainController.update()
             }
         }
         return true
@@ -133,7 +133,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
     override fun onChangeSettings(position: Int) {
         adapter?.notifyItemChanged(position)
         if (OrientationHelper.isEnabled) {
-            MainService.start(this)
+            MainController.update()
         }
     }
 

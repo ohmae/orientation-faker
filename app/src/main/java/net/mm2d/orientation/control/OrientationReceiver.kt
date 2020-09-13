@@ -10,7 +10,7 @@ package net.mm2d.orientation.control
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import net.mm2d.orientation.service.MainService
+import net.mm2d.orientation.service.MainController
 import net.mm2d.orientation.settings.Settings
 
 /**
@@ -26,7 +26,7 @@ class OrientationReceiver : BroadcastReceiver() {
             Orientation.UNSPECIFIED
         )
         Settings.get().orientation = orientation
-        MainService.start(context)
+        MainController.start()
     }
 
     companion object {

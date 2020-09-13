@@ -29,7 +29,7 @@ import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.event.EventRouter
 import net.mm2d.orientation.review.ReviewRequest
-import net.mm2d.orientation.service.MainService
+import net.mm2d.orientation.service.MainController
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.LaunchUtils
 import net.mm2d.orientation.util.SystemSettings
@@ -56,10 +56,10 @@ class MainActivity : AppCompatActivity() {
             notificationSample.update()
         }
         if (!SystemSettings.canDrawOverlays(this)) {
-            MainService.stop(this)
+            MainController.stop()
         } else {
             if (Settings.get().shouldAutoStart()) {
-                MainService.start(this)
+                MainController.start()
             }
             checkUpdate()
         }
@@ -149,14 +149,14 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("NewApi")
     private fun toggleStatus() {
         if (OrientationHelper.isEnabled) {
-            MainService.stop(this)
+            MainController.stop()
             if (settings.shouldAutoStart()) {
                 settings.setAutoStart(false)
                 applyAutoStart()
             }
         } else {
             if (SystemSettings.canDrawOverlays(this)) {
-                MainService.start(this)
+                MainController.start()
             } else {
                 OverlayPermissionDialog.showDialog(this)
             }
@@ -180,7 +180,7 @@ class MainActivity : AppCompatActivity() {
         settings.setAutoStart(!settings.shouldAutoStart())
         applyAutoStart()
         if (settings.shouldAutoStart() && !OrientationHelper.isEnabled) {
-            MainService.start(this)
+            MainController.start()
         }
     }
 
@@ -191,7 +191,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateOrientation(orientation: Int) {
         settings.orientation = orientation
         notificationSample.update()
-        MainService.update(this)
+        MainController.update()
     }
 
     private fun makeVersionInfo(): String {
