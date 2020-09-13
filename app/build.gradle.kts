@@ -67,6 +67,8 @@ dependencies {
     implementation("androidx.browser:browser:1.2.0")
     implementation("androidx.legacy:legacy-support-v13:1.0.0")
     implementation("androidx.lifecycle:lifecycle-process:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
     implementation("androidx.constraintlayout:constraintlayout:2.0.1")
     implementation("androidx.gridlayout:gridlayout:1.0.0")
     implementation("androidx.preference:preference:1.1.1")

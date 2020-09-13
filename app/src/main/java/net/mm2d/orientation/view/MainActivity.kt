@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         supportActionBar?.title = getString(R.string.app_name)
         setUpViews()
-        EventRouter.createUpdateObserver().subscribe(this) {
+        EventRouter.observeUpdate(this) {
             applyStatus()
             notificationSample.update()
         }

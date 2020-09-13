@@ -50,7 +50,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
         setContentView(R.layout.activity_detailed_settings)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setUpViews()
-        EventRouter.createUpdateObserver().subscribe(this) { notificationSample.update() }
+        EventRouter.observeUpdate(this) { notificationSample.update() }
     }
 
     override fun onDestroy() {
