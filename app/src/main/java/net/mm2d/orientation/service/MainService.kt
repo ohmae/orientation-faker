@@ -55,6 +55,7 @@ class MainService : Service() {
     private fun start() {
         OrientationHelper.update(Settings.get().orientation)
         NotificationHelper.startForeground(this)
+        WidgetProvider.start(this)
         EventRouter.notifyUpdate()
         startForegroundChecker()
     }
@@ -116,7 +117,6 @@ class MainService : Service() {
         }
 
         fun start(context: Context) {
-            WidgetProvider.start(context)
             startService(
                 context,
                 ACTION_START
