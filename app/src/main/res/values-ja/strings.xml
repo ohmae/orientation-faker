@@ -38,9 +38,6 @@
     <string name="menu_description_status_waiting">待機中</string>
     <string name="button_status_start">START</string>
     <string name="button_status_stop">STOP</string>
-    <string name="menu_title_auto_start">自動起動</string>
-    <string name="menu_description_auto_start_description_on">デバイス起動時に自動起動します</string>
-    <string name="menu_description_auto_start_description_off">自動起動しません</string>
     <string name="menu_title_detailed_settings">詳細設定</string>
     <string name="menu_description_detailed_settings_description">通知のテーマや詳細な動作設定</string>
     <string name="menu_title_setting_for_each_app">アプリごとの設定</string>

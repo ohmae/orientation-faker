@@ -79,7 +79,6 @@ class MainActivity : AppCompatActivity() {
         handler.removeCallbacks(checkSystemSettingsTask)
         handler.post(checkSystemSettingsTask)
         applyStatus()
-        applyAutoStart()
     }
 
     override fun onPause() {
@@ -133,7 +132,6 @@ class MainActivity : AppCompatActivity() {
     private fun setUpViews() {
         notificationSample = NotificationSample(this)
         status.setOnClickListener { toggleStatus() }
-        auto_start.setOnClickListener { toggleAutoStart() }
         detailed_setting.setOnClickListener { DetailedSettingsActivity.start(this) }
         version_description.text = makeVersionInfo()
         setUpOrientationIcons()
@@ -150,13 +148,11 @@ class MainActivity : AppCompatActivity() {
     private fun toggleStatus() {
         if (OrientationHelper.isEnabled) {
             MainController.stop()
-            if (settings.shouldAutoStart()) {
-                settings.setAutoStart(false)
-                applyAutoStart()
-            }
+            settings.setAutoStart(false)
         } else {
             if (SystemSettings.canDrawOverlays(this)) {
                 MainController.start()
+                settings.setAutoStart(true)
             } else {
                 OverlayPermissionDialog.showDialog(this)
             }
@@ -174,18 +170,6 @@ class MainActivity : AppCompatActivity() {
             status_description.setText(R.string.menu_description_status_waiting)
         }
         ReviewRequest.requestReviewIfNeed(this)
-    }
-
-    private fun toggleAutoStart() {
-        settings.setAutoStart(!settings.shouldAutoStart())
-        applyAutoStart()
-        if (settings.shouldAutoStart() && !OrientationHelper.isEnabled) {
-            MainController.start()
-        }
-    }
-
-    private fun applyAutoStart() {
-        auto_start.isChecked = settings.shouldAutoStart()
     }
 
     private fun updateOrientation(orientation: Int) {

@@ -38,9 +38,6 @@
     <string name="menu_description_status_waiting">Waiting</string>
     <string name="button_status_start">START</string>
     <string name="button_status_stop">STOP</string>
-    <string name="menu_title_auto_start">Auto start</string>
-    <string name="menu_description_auto_start_description_on">Start automatically at device startup</string>
-    <string name="menu_description_auto_start_description_off">Do not start automatically</string>
     <string name="menu_title_detailed_settings">Detailed Settings</string>
     <string name="menu_description_detailed_settings_description">Theme and detailed behavior settings of notification</string>
     <string name="menu_title_setting_for_each_app">Setting for each app</string>
