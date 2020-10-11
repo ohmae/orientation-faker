@@ -31,7 +31,7 @@ import net.mm2d.orientation.event.EventRouter
 import net.mm2d.orientation.review.ReviewRequest
 import net.mm2d.orientation.service.MainController
 import net.mm2d.orientation.settings.Settings
-import net.mm2d.orientation.util.LaunchUtils
+import net.mm2d.orientation.util.Launcher
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.view.dialog.OverlayPermissionDialog
 
@@ -122,9 +122,9 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.license -> LicenseActivity.start(this)
-            R.id.source_code -> LaunchUtils.openSourceCode(this)
-            R.id.privacy_policy -> LaunchUtils.openPrivacyPolicy(this)
-            R.id.play_store -> LaunchUtils.openGooglePlay(this)
+            R.id.source_code -> Launcher.openSourceCode(this)
+            R.id.privacy_policy -> Launcher.openPrivacyPolicy(this)
+            R.id.play_store -> Launcher.openGooglePlay(this)
         }
         return true
     }

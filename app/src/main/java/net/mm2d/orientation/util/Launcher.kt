@@ -22,7 +22,7 @@ import net.mm2d.orientation.tabs.CustomTabsHelper
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
-object LaunchUtils {
+object Launcher {
     private const val PACKAGE_NAME = "net.mm2d.android.orientationfaker"
     private const val PRIVACY_POLICY_URL =
         "https://github.com/ohmae/orientation-faker/blob/develop/PRIVACY-POLICY.md"

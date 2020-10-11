@@ -16,7 +16,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.settings.Settings
-import net.mm2d.orientation.util.LaunchUtils
+import net.mm2d.orientation.util.Launcher
 import net.mm2d.orientation.util.isInActive
 
 /**
@@ -34,11 +34,11 @@ class ReviewDialog : DialogFragment() {
             .setTitle(R.string.app_name)
             .setView(view)
             .setPositiveButton(R.string.dialog_button_review) { _, _ ->
-                LaunchUtils.openGooglePlay(activity)
+                Launcher.openGooglePlay(activity)
                 settings.reviewed = true
             }
             .setNeutralButton(R.string.dialog_button_send_mail) { _, _ ->
-                LaunchUtils.sendMailReport(activity)
+                Launcher.sendMailReport(activity)
                 settings.reported = true
             }
             .setNegativeButton(R.string.cancel) { dialogInterface, _ ->

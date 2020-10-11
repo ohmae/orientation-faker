@@ -17,7 +17,7 @@ import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_license.*
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.orientation.util.LaunchUtils
+import net.mm2d.orientation.util.Launcher
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
@@ -37,7 +37,7 @@ class LicenseActivity : AppCompatActivity() {
                 request: WebResourceRequest?
             ): Boolean {
                 val uri = request?.url ?: return true
-                return LaunchUtils.openCustomTabs(this@LicenseActivity, uri)
+                return Launcher.openCustomTabs(this@LicenseActivity, uri)
             }
         }
         webView.loadUrl("file:///android_asset/license.html")
