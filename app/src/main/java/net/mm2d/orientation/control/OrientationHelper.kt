@@ -27,7 +27,7 @@ import androidx.core.content.getSystemService
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.review.ReviewRequest
 import net.mm2d.orientation.settings.Settings
-import net.mm2d.orientation.util.PowerUtils
+import net.mm2d.orientation.util.Powers
 import net.mm2d.orientation.util.SystemSettings
 import kotlin.math.abs
 import kotlin.math.atan
@@ -46,7 +46,7 @@ object OrientationHelper {
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
             if (!isEnabled) return
-            if (PowerUtils.isInteractive(context) && orientation.usesSensor()) {
+            if (Powers.isInteractive(context) && orientation.usesSensor()) {
                 startSensor()
             } else {
                 stopSensor()
@@ -99,7 +99,7 @@ object OrientationHelper {
             if (!isEnabled) {
                 setOrientation(Orientation.UNSPECIFIED)
             }
-            if (PowerUtils.isInteractive(context)) {
+            if (Powers.isInteractive(context)) {
                 startSensor()
             }
         } else {

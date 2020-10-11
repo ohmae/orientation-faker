@@ -10,7 +10,7 @@ import android.content.IntentFilter
 import android.os.Handler
 import android.os.Looper
 import net.mm2d.orientation.settings.Settings
-import net.mm2d.orientation.util.PowerUtils
+import net.mm2d.orientation.util.Powers
 import net.mm2d.orientation.util.SystemSettings
 import java.util.concurrent.TimeUnit
 
@@ -48,7 +48,7 @@ class ForegroundPackageChecker(
         })
         check()
         onChangeForegroundPackage.invoke(settings.foregroundPackage)
-        if (PowerUtils.isInteractive(context)) {
+        if (Powers.isInteractive(context)) {
             handler.postDelayed(checkTask, CHECK_INTERVAL)
         }
     }
