@@ -15,23 +15,24 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_license.*
-import net.mm2d.android.orientationfaker.R
+import net.mm2d.android.orientationfaker.databinding.ActivityLicenseBinding
 import net.mm2d.orientation.util.Launcher
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 class LicenseActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityLicenseBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_license)
-        setSupportActionBar(toolbar)
+        binding = ActivityLicenseBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        webView.settings.setSupportZoom(false)
-        webView.settings.displayZoomControls = false
-        webView.webViewClient = object : WebViewClient() {
+        binding.webView.settings.setSupportZoom(false)
+        binding.webView.settings.displayZoomControls = false
+        binding.webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
                 request: WebResourceRequest?
@@ -40,7 +41,7 @@ class LicenseActivity : AppCompatActivity() {
                 return Launcher.openCustomTabs(this@LicenseActivity, uri)
             }
         }
-        webView.loadUrl("file:///android_asset/license.html")
+        binding.webView.loadUrl("file:///android_asset/license.html")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

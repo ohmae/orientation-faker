@@ -13,10 +13,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
-import kotlinx.android.synthetic.main.layout_orientation_item.view.*
 import net.mm2d.android.orientationfaker.R
+import net.mm2d.android.orientationfaker.databinding.LayoutOrientationItemBinding
 import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.util.isInActive
 
 class OrientationHelpDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -36,7 +35,7 @@ class OrientationHelpDialog : DialogFragment() {
     class HelpAdapter(context: Context) : Adapter<ViewHolder>() {
         private val layoutInflater = LayoutInflater.from(context)
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-            ViewHolder(layoutInflater.inflate(R.layout.layout_orientation_item, parent, false))
+            ViewHolder(LayoutOrientationItemBinding.inflate(layoutInflater, parent, false))
 
         override fun getItemCount(): Int =
             Orientation.values.size
@@ -46,11 +45,11 @@ class OrientationHelpDialog : DialogFragment() {
         }
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(private val binding: LayoutOrientationItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(entity: Orientation.Entity) {
-            itemView.icon.setImageResource(entity.icon)
-            itemView.name.setText(entity.label)
-            itemView.description.setText(entity.description)
+            binding.icon.setImageResource(entity.icon)
+            binding.name.setText(entity.label)
+            binding.description.setText(entity.description)
         }
     }
 
@@ -58,10 +57,8 @@ class OrientationHelpDialog : DialogFragment() {
         private const val TAG = "OrientationHelpDialog"
 
         fun show(activity: FragmentActivity) {
-            if (activity.isInActive()) return
             val manager = activity.supportFragmentManager
-            if (manager.isStateSaved) return
-            if (manager.findFragmentByTag(TAG) != null) return
+            if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
             OrientationHelpDialog().show(manager, TAG)
         }
     }

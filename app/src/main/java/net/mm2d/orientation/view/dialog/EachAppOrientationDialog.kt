@@ -13,11 +13,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
-import kotlinx.android.synthetic.main.layout_orientation_item.view.*
 import net.mm2d.android.orientationfaker.R
+import net.mm2d.android.orientationfaker.databinding.LayoutOrientationItemBinding
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.util.isInActive
 
 class EachAppOrientationDialog : DialogFragment() {
     interface Callback {
@@ -50,7 +49,7 @@ class EachAppOrientationDialog : DialogFragment() {
     ) : Adapter<ViewHolder>() {
         private val layoutInflater = LayoutInflater.from(context)
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-            ViewHolder(layoutInflater.inflate(R.layout.layout_orientation_item, parent, false))
+            ViewHolder(LayoutOrientationItemBinding.inflate(layoutInflater, parent, false))
 
         override fun getItemCount(): Int =
             Orientation.values.size + 1
@@ -71,16 +70,16 @@ class EachAppOrientationDialog : DialogFragment() {
         }
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(private val binding: LayoutOrientationItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(entity: Orientation.Entity?) {
             if (entity != null) {
-                itemView.icon.setImageResource(entity.icon)
-                itemView.name.setText(entity.label)
-                itemView.description.setText(entity.description)
+                binding.icon.setImageResource(entity.icon)
+                binding.name.setText(entity.label)
+                binding.description.setText(entity.description)
             } else {
-                itemView.icon.setImageResource(R.drawable.ic_remove)
-                itemView.name.setText(R.string.label_clear)
-                itemView.description.setText(R.string.description_clear)
+                binding.icon.setImageResource(R.drawable.ic_remove)
+                binding.name.setText(R.string.label_clear)
+                binding.description.setText(R.string.description_clear)
             }
         }
     }
@@ -91,10 +90,8 @@ class EachAppOrientationDialog : DialogFragment() {
         private const val KEY_PACKAGE = "KEY_PACKAGE"
 
         fun show(activity: FragmentActivity, position: Int, packageName: String) {
-            if (activity.isInActive()) return
             val manager = activity.supportFragmentManager
-            if (manager.isStateSaved) return
-            if (manager.findFragmentByTag(TAG) != null) return
+            if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
             EachAppOrientationDialog().also { dialog ->
                 dialog.arguments = Bundle().also {
                     it.putInt(KEY_POSITION, position)

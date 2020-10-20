@@ -4,7 +4,6 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("kotlin-android-extensions")
     id("kotlin-kapt")
     id("com.github.ben-manes.versions")
 }
@@ -51,6 +50,9 @@ android {
         arguments {
             arg("room.schemaLocation", "$projectDir/schemas")
         }
+    }
+    buildFeatures {
+        viewBinding = true
     }
     applicationVariants.all {
         if (buildType.name == "release") {

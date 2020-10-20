@@ -4,32 +4,29 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
-import kotlinx.android.synthetic.main.view_check_item.view.*
-import net.mm2d.android.orientationfaker.R
+import net.mm2d.android.orientationfaker.databinding.ViewCheckItemBinding
 
 class CheckItemView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
-    init {
-        LayoutInflater.from(context)
-            .inflate(R.layout.view_check_item, this)
-    }
+    private val binding: ViewCheckItemBinding =
+        ViewCheckItemBinding.inflate(LayoutInflater.from(context), this)
 
     var orientation: Int = 0
 
     fun setText(id: Int) {
-        name.setText(id)
+        binding.name.setText(id)
     }
 
     fun setIcon(id: Int) {
-        icon.setImageResource(id)
+        binding.icon.setImageResource(id)
     }
 
     var isChecked: Boolean
-        get() = checkbox.isChecked
+        get() = binding.checkbox.isChecked
         set(value) {
-            checkbox.isChecked = value
+            binding.checkbox.isChecked = value
         }
 }

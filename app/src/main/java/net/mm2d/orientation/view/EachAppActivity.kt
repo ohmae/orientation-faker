@@ -17,10 +17,10 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_each_app.*
-import kotlinx.android.synthetic.main.li_each_app.view.*
 import kotlinx.coroutines.*
 import net.mm2d.android.orientationfaker.R
+import net.mm2d.android.orientationfaker.databinding.ActivityEachAppBinding
+import net.mm2d.android.orientationfaker.databinding.ItemEachAppBinding
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationHelper
@@ -37,12 +37,14 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
     }
     private var adapter: Adapter? = null
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+    private lateinit var binding: ActivityEachAppBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_each_app)
+        binding = ActivityEachAppBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        recycler_view.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        binding.recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         setUpSearch()
         scope.launch {
             val list = makeAppList()
@@ -53,14 +55,14 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
     }
 
     private fun setUpSearch() {
-        search_window.addTextChangedListener(object : TextWatcher {
+        binding.searchWindow.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) = Unit
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 search(s.toString())
             }
         })
-        search_window.setOnEditorActionListener { _, _, _ ->
+        binding.searchWindow.setOnEditorActionListener { _, _, _ ->
             hideKeyboard()
             true
         }
@@ -69,8 +71,8 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
     private fun search(word: String) {
         val adapter = adapter ?: return
         adapter.search(word)
-        no_app_caution.isGone = adapter.itemCount != 0
-        recycler_view.scrollToPosition(0)
+        binding.noAppCaution.isGone = adapter.itemCount != 0
+        binding.recyclerView.scrollToPosition(0)
     }
 
     private fun setAdapter(list: List<AppInfo>) {
@@ -80,15 +82,15 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
             EachAppOrientationDialog.show(this, position, packageName)
         }.let {
             adapter = it
-            recycler_view.adapter = it
-            search(search_window.text.toString())
+            binding.recyclerView.adapter = it
+            search(binding.searchWindow.text.toString())
         }
-        progress_bar.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
     }
 
     private fun hideKeyboard() {
         (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
-            .hideSoftInputFromWindow(search_window.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+            .hideSoftInputFromWindow(binding.searchWindow.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
     }
 
     override fun onDestroy() {
@@ -98,7 +100,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
 
     override fun onResume() {
         super.onResume()
-        package_check_disabled.isGone = settings.foregroundPackageCheckEnabled
+        binding.packageCheckDisabled.isGone = settings.foregroundPackageCheckEnabled
     }
 
     override fun onPostResume() {
@@ -115,7 +117,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
             it.setOnCheckedChangeListener { _, isChecked ->
                 hideKeyboard()
                 settings.foregroundPackageCheckEnabled = isChecked
-                package_check_disabled.isGone = isChecked
+                binding.packageCheckDisabled.isGone = isChecked
                 MainController.update()
             }
         }
@@ -190,12 +192,12 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
                 packageName.toLowerCase(Locale.ENGLISH).contains(word)
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-            ViewHolder(inflater.inflate(R.layout.li_each_app, parent, false))
+            ViewHolder(ItemEachAppBinding.inflate(inflater, parent, false))
 
         override fun getItemCount(): Int = list.size
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            bind(holder.itemView, position, list[position])
+            bind(holder.binding, position, list[position])
         }
 
         private fun getDefaultIcon(): Drawable =
@@ -203,40 +205,40 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
                 defaultIcon = it
             }
 
-        private fun bind(itemView: View, position: Int, info: AppInfo) {
-            itemView.tag = position
+        private fun bind(binding: ItemEachAppBinding, position: Int, info: AppInfo) {
+            binding.root.tag = position
             if (info.icon != null) {
-                itemView.app_icon.setImageDrawable(info.icon)
+                binding.appIcon.setImageDrawable(info.icon)
             } else {
                 scope.launch {
                     info.icon = info.activityInfo.loadIcon(context.packageManager)
                         ?: getDefaultIcon()
                     withContext(Dispatchers.Main) {
-                        if (itemView.tag == position) {
-                            itemView.app_icon.setImageDrawable(info.icon)
+                        if (binding.root.tag == position) {
+                            binding.appIcon.setImageDrawable(info.icon)
                         }
                     }
                 }
             }
-            itemView.app_name.text = info.label
-            itemView.app_package.text = info.packageName
+            binding.appName.text = info.label
+            binding.appPackage.text = info.packageName
             val orientation = ForegroundPackageSettings.get(info.packageName)
             if (orientation != Orientation.INVALID) {
                 Orientation.values.find { it.orientation == orientation }?.let {
-                    itemView.orientation_icon.setImageResource(it.icon)
-                    itemView.orientation_name.setText(it.label)
+                    binding.orientationIcon.setImageResource(it.icon)
+                    binding.orientationName.setText(it.label)
                 }
             } else {
-                itemView.orientation_icon.setImageResource(0)
-                itemView.orientation_name.text = ""
+                binding.orientationIcon.setImageResource(0)
+                binding.orientationName.text = ""
             }
-            itemView.setOnClickListener {
+            binding.root.setOnClickListener {
                 listener(position, info.packageName)
             }
         }
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class ViewHolder(val binding: ItemEachAppBinding) : RecyclerView.ViewHolder(binding.root)
 
     companion object {
         fun start(context: Context) {

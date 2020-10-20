@@ -12,7 +12,6 @@ import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import kotlinx.android.synthetic.main.layout_remote_views.*
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationHelper
@@ -30,7 +29,7 @@ class NotificationSample(activity: Activity) {
             activity.findViewById(it.titleViewId)
         )
     }
-    private val background = activity.notification
+    private val background = activity.findViewById<View>(R.id.notification)
 
     init {
         activity.findViewById<View>(R.id.remote_views_button_settings).visibility = View.GONE

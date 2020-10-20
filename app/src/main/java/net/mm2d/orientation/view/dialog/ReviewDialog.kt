@@ -15,19 +15,18 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import net.mm2d.android.orientationfaker.R
+import net.mm2d.android.orientationfaker.databinding.LayoutReviewBinding
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.Launcher
-import net.mm2d.orientation.util.isInActive
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 class ReviewDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val activity = activity ?: throw IllegalStateException()
+        val activity = requireActivity()
         val parent = activity.window.decorView as ViewGroup
-        val view = activity.layoutInflater
-            .inflate(R.layout.layout_review, parent, false)
+        val view = LayoutReviewBinding.inflate(activity.layoutInflater, parent, false).root
         val settings = Settings.get()
         return AlertDialog.Builder(activity)
             .setIcon(R.drawable.ic_launcher)
@@ -56,10 +55,8 @@ class ReviewDialog : DialogFragment() {
         private const val TAG = "ReviewDialog"
 
         fun showDialog(activity: FragmentActivity) {
-            if (activity.isInActive()) return
             val manager = activity.supportFragmentManager
-            if (manager.isStateSaved) return
-            if (manager.findFragmentByTag(TAG) != null) return
+            if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
             ReviewDialog().show(manager, TAG)
         }
     }

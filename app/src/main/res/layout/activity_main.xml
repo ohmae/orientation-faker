@@ -15,6 +15,9 @@
         tools:ignore="UselessParent"
         >
 
-        <include layout="@layout/layout_main" />
+        <include
+            android:id="@+id/content"
+            layout="@layout/layout_main"
+            />
     </ScrollView>
 </LinearLayout>
