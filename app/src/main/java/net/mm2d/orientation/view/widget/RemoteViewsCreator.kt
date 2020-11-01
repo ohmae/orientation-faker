@@ -23,13 +23,12 @@ import net.mm2d.orientation.view.MainActivity
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
 object RemoteViewsCreator {
-    fun create(context: Context, orientation: Int, notification: Boolean): RemoteViews {
+    fun create(context: Context, orientation: Int): RemoteViews {
         val settings = Settings.get()
         val foreground = settings.foregroundColor
         val selectedForeground = settings.foregroundColorSelected
         val selectedBackground = settings.backgroundColorSelected
-        val layout = if (notification) R.layout.notification else R.layout.widget
-        return RemoteViews(context.packageName, layout).also { views ->
+        return RemoteViews(context.packageName, R.layout.notification).also { views ->
             views.setInt(R.id.notification, "setBackgroundColor", settings.backgroundColor)
             val orientationList = settings.orientationList
             orientationList.forEachIndexed { index, value ->

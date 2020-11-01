@@ -76,7 +76,7 @@ object NotificationHelper {
         val icon =
             if (settings.shouldUseBlankIconForNotification) R.drawable.ic_blank
             else Orientation.values.find { it.orientation == orientation }?.icon ?: R.drawable.ic_blank
-        val views = RemoteViewsCreator.create(context, orientation, true)
+        val views = RemoteViewsCreator.create(context, orientation)
         return NotificationCompat.Builder(context, CHANNEL_ID)
             .setDefaults(0)
             .setContentTitle(context.getText(R.string.app_name))

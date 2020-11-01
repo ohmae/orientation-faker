@@ -48,7 +48,7 @@ class WidgetProvider : AppWidgetProvider() {
         }
 
         fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, id: Int, orientation: Int) {
-            val views = RemoteViewsCreator.create(context, orientation, false)
+            val views = RemoteViewsCreator.create(context, orientation)
             appWidgetManager.updateAppWidget(id, views)
         }
     }

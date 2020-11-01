@@ -11,14 +11,14 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#000000"
+        android:background="@color/bg_sample"
         android:paddingStart="@dimen/margin_sample_horizontal"
         android:paddingTop="@dimen/margin_sample_vertical"
         android:paddingEnd="@dimen/margin_sample_horizontal"
         android:paddingBottom="@dimen/margin_sample_vertical"
         >
 
-        <include layout="@layout/notification" />
+        <include layout="@layout/layout_remote_views" />
     </FrameLayout>
 
     <LinearLayout
@@ -46,6 +46,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/margin_menu_sample"
                 android:background="@drawable/bg_sample"
+                android:backgroundTint="@color/fg_main"
                 android:contentDescription="@null"
                 android:scaleType="center"
                 app:srcCompat="@drawable/ic_circle"
@@ -79,6 +80,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/margin_menu_sample"
                 android:background="@drawable/bg_sample"
+                android:backgroundTint="@color/fg_main"
                 android:contentDescription="@null"
                 android:scaleType="center"
                 app:srcCompat="@drawable/ic_circle"
@@ -112,6 +114,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/margin_menu_sample"
                 android:background="@drawable/bg_sample"
+                android:backgroundTint="@color/fg_main"
                 android:contentDescription="@null"
                 android:scaleType="center"
                 app:srcCompat="@drawable/ic_circle"
@@ -145,6 +148,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/margin_menu_sample"
                 android:background="@drawable/bg_sample"
+                android:backgroundTint="@color/fg_main"
                 android:contentDescription="@null"
                 android:scaleType="center"
                 app:srcCompat="@drawable/ic_circle"

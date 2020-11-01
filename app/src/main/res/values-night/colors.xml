@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#202020</color>
+    <color name="primaryDark">#000000</color>
+    <color name="accent">#2196F3</color>
+    <color name="bg_window">#101010</color>
+    <color name="bg_caution">#2962FF</color>
+    <color name="bg_dialog">#202020</color>
+    <color name="bg_sample">#000000</color>
+    <color name="fg_caution">#FFFFFF</color>
+    <color name="fg_main">#FFFFFF</color>
+    <color name="fg_sub">#9E9E9E</color>
+    <color name="ic_star">#00E676</color>
+</resources>

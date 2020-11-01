@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#202020</color>
-    <color name="primaryDark">#000000</color>
+    <color name="primary">#FFFFFF</color>
+    <color name="primaryDark">#FFFFFF</color>
     <color name="accent">#2196F3</color>
-    <color name="bg_window">#101010</color>
+    <color name="bg_window">#FFFFFF</color>
     <color name="bg_caution">#2962FF</color>
-    <color name="bg_dialog">#303030</color>
+    <color name="bg_dialog">#FFFFFF</color>
+    <color name="bg_sample">#E0E0E0</color>
     <color name="fg_caution">#FFFFFF</color>
+    <color name="fg_main">#000000</color>
+    <color name="fg_sub">#808080</color>
+    <color name="ic_star">#00E676</color>
+
+    <color name="control_start">#43A047</color>
+    <color name="control_stop">#E53935</color>
+    <color name="control_text">#FFFFFF</color>
+
     <color name="fg_notification">#FFFFFF</color>
     <color name="bg_notification">#212121</color>
     <color name="bg_notification_selected">#448AFF</color>
     <color name="ripple_dark">#33FFFFFF</color>
-    <color name="fg_main">#FFFFFF</color>
-    <color name="fg_sub">#9E9E9E</color>
-    <color name="ic_star">#00E676</color>
 </resources>
