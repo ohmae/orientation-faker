@@ -13,4 +13,5 @@
     <color name="ripple_dark">#33FFFFFF</color>
     <color name="fg_main">#FFFFFF</color>
     <color name="fg_sub">#9E9E9E</color>
+    <color name="ic_star">#00E676</color>
 </resources>
