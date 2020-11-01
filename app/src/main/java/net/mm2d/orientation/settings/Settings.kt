@@ -8,8 +8,10 @@
 package net.mm2d.orientation.settings
 
 import android.content.Context
+import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.settings.Key.Main
+import java.io.File
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
@@ -124,9 +126,21 @@ class Settings private constructor(
          */
         fun initialize(context: Context) {
             Default.init(context)
-            Preferences(context, Main::class).also {
+            tryMigrate(context)
+            Preferences<Main>(context, Main.FILE_NAME).also {
                 Maintainer.maintain(context, it)
                 settings = Settings(it)
+            }
+        }
+
+        private fun tryMigrate(context: Context) {
+            // 2020/11/2 4.6.0
+            runCatching {
+                val prefsDir = File(context.filesDir.parent, "shared_prefs")
+                val obfuscatedFile = File(prefsDir, BuildConfig.APPLICATION_ID + ".b.xml")
+                val targetFile = File(prefsDir, BuildConfig.APPLICATION_ID + "." + Main.FILE_NAME + ".xml")
+                if (targetFile.exists() || !obfuscatedFile.exists()) return
+                obfuscatedFile.renameTo(targetFile)
             }
         }
 

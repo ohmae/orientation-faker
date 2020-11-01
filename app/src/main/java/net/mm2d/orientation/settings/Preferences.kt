@@ -9,16 +9,15 @@ package net.mm2d.orientation.settings
 
 import android.content.Context
 import net.mm2d.android.orientationfaker.BuildConfig
-import kotlin.reflect.KClass
 
 class Preferences<K>(
     context: Context,
-    kClass: KClass<K>
+    name: String
 ) where K : Enum<*>,
         K : Key {
     private val dataStore: SharedPreferenceDataStore =
         SharedPreferenceDataStore(
-            context.getSharedPreferences(BuildConfig.APPLICATION_ID + "." + kClass.simpleName, Context.MODE_PRIVATE)
+            context.getSharedPreferences(BuildConfig.APPLICATION_ID + "." + name, Context.MODE_PRIVATE)
         )
 
     operator fun contains(key: K): Boolean =

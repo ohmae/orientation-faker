@@ -35,6 +35,10 @@ interface Key {
         FOREGROUND_PACKAGE_CHECK_TIME_LONG,
         FOREGROUND_PACKAGE_ENABLED_BOOLEAN,
         USE_ROUND_BACKGROUND_BOOLEAN,
+        ;
+        companion object {
+            const val FILE_NAME: String = "Main"
+        }
     }
 }
 
