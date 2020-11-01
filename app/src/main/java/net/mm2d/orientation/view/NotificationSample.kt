@@ -62,13 +62,12 @@ class NotificationSample(activity: Activity) {
                     it.background.setColorFilter(selectedBackground)
                 } else {
                     it.button.setBackgroundColor(selectedBackground)
+                    it.background.visibility = View.GONE
                 }
                 it.icon.setColorFilter(selectedForeground)
                 it.title.setTextColor(selectedForeground)
             } else {
-                if (shouldUseRoundBackground) {
-                    it.background.visibility = View.GONE
-                }
+                it.background.visibility = View.GONE
                 it.button.setBackgroundColor(Color.TRANSPARENT)
                 it.icon.setColorFilter(foreground)
                 it.title.setTextColor(foreground)

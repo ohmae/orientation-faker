@@ -50,13 +50,12 @@ object RemoteViewsCreator {
                         views.setInt(it.backgroundId, "setColorFilter", selectedBackground)
                     } else {
                         views.setInt(it.buttonId, "setBackgroundColor", selectedBackground)
+                        views.setViewVisibility(it.backgroundId, View.GONE)
                     }
                     views.setInt(it.iconId, "setColorFilter", selectedForeground)
                     views.setTextColor(it.titleId, selectedForeground)
                 } else {
-                    if (shouldUseRoundBackground) {
-                        views.setViewVisibility(it.backgroundId, View.GONE)
-                    }
+                    views.setViewVisibility(it.backgroundId, View.GONE)
                     views.setInt(it.buttonId, "setBackgroundColor", Color.TRANSPARENT)
                     views.setInt(it.iconId, "setColorFilter", foreground)
                     views.setTextColor(it.titleId, foreground)
