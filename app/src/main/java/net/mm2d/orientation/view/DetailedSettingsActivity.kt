@@ -77,6 +77,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
         super.onResume()
         notificationSample.update()
         applyLayoutSelection()
+        applyUseRoundBackground()
         applyUseBlankIcon()
         applyAutoRotateWarning()
         applyNotificationPrivacy()
@@ -94,6 +95,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
         notificationSample = NotificationSample(this)
         setUpSample()
         setUpLayoutSelector()
+        setUpUseRoundBackground()
         setUpUseBlankIcon()
         setUpAutoRotateWarning()
         setUpNotificationPrivacy()
@@ -244,6 +246,23 @@ class DetailedSettingsActivity : AppCompatActivity(),
         checkList.forEach { view ->
             view.isChecked = orientationList.contains(view.orientation)
         }
+    }
+
+    private fun setUpUseRoundBackground() {
+        binding.content.useRoundBackground.setOnClickListener {
+            toggleUseRoundBackground()
+        }
+    }
+
+    private fun applyUseRoundBackground() {
+        binding.content.useRoundBackground.isChecked = settings.shouldUseRoundBackground
+    }
+
+    private fun toggleUseRoundBackground() {
+        settings.shouldUseRoundBackground = !settings.shouldUseRoundBackground
+        applyUseRoundBackground()
+        MainController.update()
+        notificationSample.update()
     }
 
     private fun setUpUseBlankIcon() {

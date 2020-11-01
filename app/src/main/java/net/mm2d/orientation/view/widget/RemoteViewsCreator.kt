@@ -35,26 +35,41 @@ object RemoteViewsCreator {
             orientationList.forEachIndexed { index, value ->
                 val button = ViewIds.list[index]
                 Orientation.values.find { it.orientation == value }?.let {
-                    views.setImageViewResource(button.iconViewId, it.icon)
-                    views.setTextViewText(button.titleViewId, context.getText(it.label))
-                    views.setOnClickPendingIntent(button.viewId, createOrientationIntent(context, it.orientation))
+                    views.setImageViewResource(button.iconId, it.icon)
+                    views.setTextViewText(button.titleId, context.getText(it.label))
+                    views.setOnClickPendingIntent(button.buttonId, createOrientationIntent(context, it.orientation))
                 }
             }
             val selectedIndex = orientationList.indexOf(orientation)
+            val shouldUseRoundBackground = settings.shouldUseRoundBackground
             ViewIds.list.forEachIndexed { index, it ->
                 if (index == selectedIndex) {
-                    views.setInt(it.viewId, "setBackgroundColor", selectedBackground)
-                    views.setInt(it.iconViewId, "setColorFilter", selectedForeground)
-                    views.setTextColor(it.titleViewId, selectedForeground)
+                    if (shouldUseRoundBackground) {
+                        views.setInt(it.buttonId, "setBackgroundColor", Color.TRANSPARENT)
+                        views.setViewVisibility(it.backgroundId, View.VISIBLE)
+                        views.setInt(it.backgroundId, "setColorFilter", selectedBackground)
+                    } else {
+                        views.setInt(it.buttonId, "setBackgroundColor", selectedBackground)
+                    }
+                    views.setInt(it.iconId, "setColorFilter", selectedForeground)
+                    views.setTextColor(it.titleId, selectedForeground)
                 } else {
-                    views.setInt(it.viewId, "setBackgroundColor", Color.TRANSPARENT)
-                    views.setInt(it.iconViewId, "setColorFilter", foreground)
-                    views.setTextColor(it.titleViewId, foreground)
+                    if (shouldUseRoundBackground) {
+                        views.setViewVisibility(it.backgroundId, View.GONE)
+                    }
+                    views.setInt(it.buttonId, "setBackgroundColor", Color.TRANSPARENT)
+                    views.setInt(it.iconId, "setColorFilter", foreground)
+                    views.setTextColor(it.titleId, foreground)
+                }
+                if (shouldUseRoundBackground) {
+                    views.setViewVisibility(it.titleId, View.GONE)
+                } else {
+                    views.setViewVisibility(it.titleId, View.VISIBLE)
                 }
                 if (index < orientationList.size) {
-                    views.setViewVisibility(it.viewId, View.VISIBLE)
+                    views.setViewVisibility(it.buttonId, View.VISIBLE)
                 } else {
-                    views.setViewVisibility(it.viewId, View.GONE)
+                    views.setViewVisibility(it.buttonId, View.GONE)
                 }
             }
             views.setInt(R.id.remote_views_button_settings, "setBackgroundColor", Color.TRANSPARENT)

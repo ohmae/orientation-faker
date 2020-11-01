@@ -245,6 +245,17 @@
         />
 
     <net.mm2d.orientation.view.view.SwitchMenuView
+        android:id="@+id/use_round_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        app:checked="false"
+        app:descriptionOff="@string/menu_description_use_round_background_off"
+        app:descriptionOn="@string/menu_description_use_round_background_on"
+        app:title="@string/menu_title_use_round_background"
+        />
+
+    <net.mm2d.orientation.view.view.SwitchMenuView
         android:id="@+id/use_blank_icon_for_notification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -95,6 +95,10 @@ class Settings private constructor(
         get() = preferences.readBoolean(Main.FOREGROUND_PACKAGE_ENABLED_BOOLEAN, true)
         set(value) = preferences.writeBoolean(Main.FOREGROUND_PACKAGE_ENABLED_BOOLEAN, value)
 
+    var shouldUseRoundBackground: Boolean
+        get() = preferences.readBoolean(Main.USE_ROUND_BACKGROUND_BOOLEAN, false)
+        set(value) = preferences.writeBoolean(Main.USE_ROUND_BACKGROUND_BOOLEAN, value)
+
     fun resetTheme() {
         foregroundColor = Default.color.foreground
         backgroundColor = Default.color.background

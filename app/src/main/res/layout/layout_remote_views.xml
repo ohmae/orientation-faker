@@ -21,6 +21,15 @@
         android:foreground="@drawable/fg_touch_dark"
         >
 
+        <ImageView
+            android:id="@+id/remote_views_background1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/bg_circle"
+            android:visibility="gone"
+            />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,6 +69,15 @@
         android:layout_weight="1"
         android:foreground="@drawable/fg_touch_dark"
         >
+
+        <ImageView
+            android:id="@+id/remote_views_background2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/bg_circle"
+            android:visibility="gone"
+            />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -101,6 +119,15 @@
         android:foreground="@drawable/fg_touch_dark"
         >
 
+        <ImageView
+            android:id="@+id/remote_views_background3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/bg_circle"
+            android:visibility="gone"
+            />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -141,6 +168,15 @@
         android:foreground="@drawable/fg_touch_dark"
         >
 
+        <ImageView
+            android:id="@+id/remote_views_background4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/bg_circle"
+            android:visibility="gone"
+            />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -180,6 +216,15 @@
         android:layout_weight="1"
         android:foreground="@drawable/fg_touch_dark"
         >
+
+        <ImageView
+            android:id="@+id/remote_views_background5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/bg_circle"
+            android:visibility="gone"
+            />
 
         <LinearLayout
             android:layout_width="wrap_content"

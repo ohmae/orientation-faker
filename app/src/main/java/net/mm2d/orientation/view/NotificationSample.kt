@@ -24,9 +24,10 @@ import net.mm2d.orientation.view.widget.ViewIds
 class NotificationSample(activity: Activity) {
     val buttonList: List<ButtonInfo> = ViewIds.list.map {
         ButtonInfo(
-            activity.findViewById(it.viewId),
-            activity.findViewById(it.iconViewId),
-            activity.findViewById(it.titleViewId)
+            activity.findViewById(it.buttonId),
+            activity.findViewById(it.iconId),
+            activity.findViewById(it.titleId),
+            activity.findViewById(it.backgroundId),
         )
     }
     private val background = activity.findViewById<View>(R.id.notification)
@@ -52,15 +53,30 @@ class NotificationSample(activity: Activity) {
             }
         }
         val selectedIndex = orientationList.indexOf(orientation)
+        val shouldUseRoundBackground = settings.shouldUseRoundBackground
         buttonList.forEachIndexed { index, it ->
             if (index == selectedIndex) {
-                it.button.setBackgroundColor(selectedBackground)
+                if (shouldUseRoundBackground) {
+                    it.button.setBackgroundColor(Color.TRANSPARENT)
+                    it.background.visibility = View.VISIBLE
+                    it.background.setColorFilter(selectedBackground)
+                } else {
+                    it.button.setBackgroundColor(selectedBackground)
+                }
                 it.icon.setColorFilter(selectedForeground)
                 it.title.setTextColor(selectedForeground)
             } else {
+                if (shouldUseRoundBackground) {
+                    it.background.visibility = View.GONE
+                }
                 it.button.setBackgroundColor(Color.TRANSPARENT)
                 it.icon.setColorFilter(foreground)
                 it.title.setTextColor(foreground)
+            }
+            if (shouldUseRoundBackground) {
+                it.title.visibility = View.GONE
+            } else {
+                it.title.visibility = View.VISIBLE
             }
             if (index < orientationList.size) {
                 it.button.visibility = View.VISIBLE
@@ -74,6 +90,7 @@ class NotificationSample(activity: Activity) {
         val button: View,
         val icon: ImageView,
         val title: TextView,
+        val background: ImageView,
         var orientation: Int = Orientation.INVALID
     )
 }

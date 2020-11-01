@@ -57,6 +57,9 @@
     <string name="button_background_color">背景色</string>
     <string name="button_selected_foreground_color">選択前景色</string>
     <string name="button_selected_background_color">選択背景色</string>
+    <string name="menu_title_use_round_background">丸形アイコン</string>
+    <string name="menu_description_use_round_background_on">説明テキストを表示しないでアイコンを丸形にします</string>
+    <string name="menu_description_use_round_background_off">アイコンと説明テキストを表示します</string>
     <string name="menu_title_use_blank_icon_for_notification">ステータスバーのアイコンを透明にする</string>
     <string name="menu_description_use_blank_icon_for_notification_on">ステータスバーに透明なアイコンを表示します</string>
     <string name="menu_description_use_blank_icon_for_notification_off">ステータスバーに状態を表すアイコンを表示します</string>
