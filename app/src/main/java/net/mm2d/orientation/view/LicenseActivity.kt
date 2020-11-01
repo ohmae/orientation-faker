@@ -7,8 +7,10 @@
 
 package net.mm2d.orientation.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import android.webkit.WebResourceRequest
@@ -24,6 +26,7 @@ import net.mm2d.orientation.util.Launcher
 class LicenseActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLicenseBinding
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLicenseBinding.inflate(layoutInflater)
@@ -41,7 +44,10 @@ class LicenseActivity : AppCompatActivity() {
                 return Launcher.openCustomTabs(this@LicenseActivity, uri)
             }
         }
-        binding.webView.loadUrl("file:///android_asset/license.html")
+        val nightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        val query = if (nightMode == Configuration.UI_MODE_NIGHT_YES) "t=dark" else "t=light"
+        binding.webView.settings.javaScriptEnabled = true
+        binding.webView.loadUrl("file:///android_asset/license.html?$query")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
