@@ -22,10 +22,10 @@
         android:text="@string/package_check_disabled"
         android:textColor="@color/fg_caution"
         android:textSize="@dimen/text_caution"
+        app:drawableEndCompat="@drawable/ic_arrow_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:drawableEndCompat="@drawable/ic_arrow_up"
         />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -36,7 +36,7 @@
         android:clipToPadding="false"
         android:paddingTop="24dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/caution"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/package_check_disabled"
@@ -62,33 +62,13 @@
         app:layout_constraintTop_toBottomOf="@id/package_check_disabled"
         />
 
-    <TextView
-        android:id="@+id/caution"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bg_caution"
-        android:drawablePadding="8dp"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="8dp"
-        android:text="@string/caution_experimental_feature"
-        android:textColor="@color/fg_caution"
-        android:textSize="@dimen/text_caution"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:drawableStartCompat="@drawable/ic_caution"
-        />
-
     <ProgressBar
         android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        app:layout_constraintBottom_toTopOf="@id/caution"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_window"

@@ -47,7 +47,6 @@
     <string name="caution_experimental_orientation">\"sensor port\", \"sensor land\", \"lie left\", \"lie right\" and \"headstand\" are experimental features. Some problems may occur</string>
 
     <string name="package_check_disabled">Please turn on the switch to enable this function</string>
-    <string name="caution_experimental_feature">This is experimental feature. If you have any problems please report details to developer</string>
     <string name="search_apps">Search apps</string>
     <string name="no_app_caution">No apps that match the search conditions</string>
 
