@@ -43,7 +43,7 @@
     <string name="menu_title_setting_for_each_app">アプリごとの設定</string>
     <string name="menu_description_setting_for_each_app">アプリごとのデフォルトの画面向きを設定します</string>
     <string name="menu_title_app_theme">アプリのテーマ</string>
-    <string name="menu_description_app_theme_system">システムに従う</string>
+    <string name="menu_description_app_theme_system">システムに合わせる</string>
     <string name="menu_description_app_theme_light">ライト</string>
     <string name="menu_description_app_theme_dark">ダーク</string>
     <string name="menu_title_version">バージョン</string>
