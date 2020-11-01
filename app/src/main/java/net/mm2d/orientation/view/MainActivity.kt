@@ -16,6 +16,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Lifecycle.State
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.appupdate.AppUpdateOptions
@@ -30,15 +31,17 @@ import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.event.EventRouter
 import net.mm2d.orientation.review.ReviewRequest
 import net.mm2d.orientation.service.MainController
+import net.mm2d.orientation.settings.NightModes
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.Launcher
 import net.mm2d.orientation.util.SystemSettings
+import net.mm2d.orientation.view.dialog.NightModeDialog
 import net.mm2d.orientation.view.dialog.OverlayPermissionDialog
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NightModeDialog.Callback {
     private val settings by lazy {
         Settings.get()
     }
@@ -71,7 +74,7 @@ class MainActivity : AppCompatActivity() {
     override fun onPostResume() {
         super.onPostResume()
         if (!SystemSettings.canDrawOverlays(this)) {
-            OverlayPermissionDialog.showDialog(this)
+            OverlayPermissionDialog.show(this)
         }
     }
 
@@ -139,12 +142,31 @@ class MainActivity : AppCompatActivity() {
         binding.content.versionDescription.text = makeVersionInfo()
         setUpOrientationIcons()
         binding.content.eachApp.setOnClickListener { EachAppActivity.start(this) }
+        setUpNightMode()
     }
 
     private fun setUpOrientationIcons() {
         notificationSample.buttonList.forEach { view ->
             view.button.setOnClickListener { updateOrientation(view.orientation) }
         }
+    }
+
+    private fun setUpNightMode() {
+        binding.content.nightMode.setOnClickListener {
+            NightModeDialog.show(this)
+        }
+        applyNightMode()
+    }
+
+    private fun applyNightMode() {
+        binding.content.nightModeDescription.setText(NightModes.getTextId(settings.nightMode))
+    }
+
+    override fun onSelectNightMode(mode: Int) {
+        if (settings.nightMode == mode) return
+        settings.nightMode = mode
+        applyNightMode()
+        AppCompatDelegate.setDefaultNightMode(mode)
     }
 
     @SuppressLint("NewApi")
@@ -157,7 +179,7 @@ class MainActivity : AppCompatActivity() {
                 MainController.start()
                 settings.setAutoStart(true)
             } else {
-                OverlayPermissionDialog.showDialog(this)
+                OverlayPermissionDialog.show(this)
             }
         }
     }

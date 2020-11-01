@@ -43,6 +43,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
         super.onCreate(savedInstanceState)
         binding = ActivityEachAppBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         setUpSearch()
@@ -106,7 +107,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
     override fun onPostResume() {
         super.onPostResume()
         if (!SystemSettings.hasUsageAccessPermission(this)) {
-            UsageAppPermissionDialog.showDialog(this)
+            UsageAppPermissionDialog.show(this)
         }
     }
 

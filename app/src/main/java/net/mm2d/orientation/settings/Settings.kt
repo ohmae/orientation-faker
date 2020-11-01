@@ -8,6 +8,7 @@
 package net.mm2d.orientation.settings
 
 import android.content.Context
+import androidx.appcompat.app.AppCompatDelegate
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.settings.Key.Main
@@ -100,6 +101,10 @@ class Settings private constructor(
     var shouldUseRoundBackground: Boolean
         get() = preferences.readBoolean(Main.USE_ROUND_BACKGROUND_BOOLEAN, false)
         set(value) = preferences.writeBoolean(Main.USE_ROUND_BACKGROUND_BOOLEAN, value)
+
+    var nightMode: Int
+        get() = preferences.readInt(Main.NIGHT_MODE_INT, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        set(value) = preferences.writeInt(Main.NIGHT_MODE_INT, value)
 
     fun resetTheme() {
         foregroundColor = Default.color.foreground

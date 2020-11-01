@@ -11,6 +11,7 @@ import android.app.Application
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
+import androidx.appcompat.app.AppCompatDelegate
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.log.Logger
 import net.mm2d.log.android.AndroidSenders
@@ -38,6 +39,7 @@ class App : Application() {
         CustomTabsHelper.initialize(this)
         OrientationHelper.initialize(this)
         KeepAlive.ensureResident()
+        AppCompatDelegate.setDefaultNightMode(Settings.get().nightMode)
     }
 
     private fun setUpLogger() {

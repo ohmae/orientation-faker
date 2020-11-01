@@ -159,13 +159,51 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_menu_horizontal"
             android:layout_marginBottom="@dimen/margin_menu_vertical"
-            android:text="@string/menu_description_setting_for_each_app_description"
+            android:text="@string/menu_description_setting_for_each_app"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/fg_sub"
             android:textSize="@dimen/text_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/each_app_title"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/night_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        >
+
+        <TextView
+            android:id="@+id/night_mode_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_menu_horizontal"
+            android:layout_marginTop="@dimen/margin_menu_vertical"
+            android:text="@string/menu_title_app_theme"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/fg_main"
+            android:textSize="@dimen/text_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/night_mode_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_menu_horizontal"
+            android:layout_marginBottom="@dimen/margin_menu_vertical"
+            android:text="@string/menu_description_app_theme_system"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/fg_sub"
+            android:textSize="@dimen/text_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/night_mode_title"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

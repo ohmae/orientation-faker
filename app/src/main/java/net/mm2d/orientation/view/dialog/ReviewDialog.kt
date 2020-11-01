@@ -40,8 +40,8 @@ class ReviewDialog : DialogFragment() {
                 Launcher.sendMailReport(activity)
                 settings.reported = true
             }
-            .setNegativeButton(R.string.cancel) { dialogInterface, _ ->
-                dialogInterface.cancel()
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.cancel()
             }
             .create()
     }
@@ -54,7 +54,7 @@ class ReviewDialog : DialogFragment() {
     companion object {
         private const val TAG = "ReviewDialog"
 
-        fun showDialog(activity: FragmentActivity) {
+        fun show(activity: FragmentActivity) {
             val manager = activity.supportFragmentManager
             if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
             ReviewDialog().show(manager, TAG)

@@ -43,7 +43,7 @@ class OverlayPermissionDialog : DialogFragment() {
         private const val TAG = "OverlayPermissionDialog"
 
         @RequiresApi(Build.VERSION_CODES.M)
-        fun showDialog(activity: FragmentActivity) {
+        fun show(activity: FragmentActivity) {
             val manager = activity.supportFragmentManager
             if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
             OverlayPermissionDialog().show(manager, TAG)

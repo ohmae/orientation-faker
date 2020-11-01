@@ -31,7 +31,7 @@ class UsageAppPermissionDialog : DialogFragment() {
     companion object {
         private const val TAG = "UsageAppPermissionDialog"
 
-        fun showDialog(activity: FragmentActivity) {
+        fun show(activity: FragmentActivity) {
             val manager = activity.supportFragmentManager
             if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
             UsageAppPermissionDialog().show(manager, TAG)

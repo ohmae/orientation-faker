@@ -67,6 +67,6 @@ object ReviewRequest {
         if (settings.reviewCancelCount == 0) {
             settings.firstReviewTime = now
         }
-        ReviewDialog.showDialog(activity)
+        ReviewDialog.show(activity)
     }
 }
