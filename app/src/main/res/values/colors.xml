@@ -2,7 +2,7 @@
 <resources>
     <color name="primary">#FFFFFF</color>
     <color name="primaryDark">#FFFFFF</color>
-    <color name="accent">#2196F3</color>
+    <color name="accent">#2962FF</color>
     <color name="bg_window">#FFFFFF</color>
     <color name="bg_caution">#2962FF</color>
     <color name="bg_dialog">#FFFFFF</color>
