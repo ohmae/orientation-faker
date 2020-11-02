@@ -11,7 +11,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.format.DateFormat
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -139,7 +138,7 @@ class MainActivity : AppCompatActivity(), NightModeDialog.Callback {
         notificationSample = NotificationSample(this)
         binding.content.status.setOnClickListener { toggleStatus() }
         binding.content.detailedSetting.setOnClickListener { DetailedSettingsActivity.start(this) }
-        binding.content.versionDescription.text = makeVersionInfo()
+        binding.content.versionDescription.text = BuildConfig.VERSION_NAME
         setUpOrientationIcons()
         binding.content.eachApp.setOnClickListener { EachAppActivity.start(this) }
         setUpNightMode()
@@ -201,13 +200,6 @@ class MainActivity : AppCompatActivity(), NightModeDialog.Callback {
         settings.orientation = orientation
         notificationSample.update()
         MainController.update()
-    }
-
-    private fun makeVersionInfo(): String {
-        return BuildConfig.VERSION_NAME +
-            if (BuildConfig.DEBUG)
-                " # " + DateFormat.format("yyyy/M/d kk:mm:ss", BuildConfig.BUILD_TIME)
-            else ""
     }
 
     companion object {

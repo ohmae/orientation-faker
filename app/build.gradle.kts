@@ -23,7 +23,6 @@ android {
         versionCode = versionMajor * 10000 + versionMinor * 100 + versionPatch
         versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
         vectorDrawables.useSupportLibrary = true
-        buildConfigField("long", "BUILD_TIME", "${System.currentTimeMillis()}L")
         base.archivesBaseName = "${applicationName}-${versionName}"
         multiDexEnabled = true
     }
@@ -38,7 +37,6 @@ android {
         getByName("debug") {
             isDebuggable = true
             applicationIdSuffix = ".debug"
-            versionNameSuffix = "d"
         }
         getByName("release") {
             isShrinkResources = true
