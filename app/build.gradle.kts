@@ -63,8 +63,8 @@ android {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1")
     implementation("androidx.appcompat:appcompat:1.2.0")
     implementation("androidx.core:core-ktx:1.3.2")
     implementation("androidx.browser:browser:1.2.0")
@@ -84,7 +84,7 @@ dependencies {
     kapt("androidx.room:room-compiler:2.2.5")
     implementation("net.mm2d:log:0.9.3")
     implementation("net.mm2d:log-android:0.9.3")
-    implementation("net.mm2d:color-chooser:0.2.0")
+    implementation("net.mm2d:color-chooser:0.2.1")
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.5")
 }
 
