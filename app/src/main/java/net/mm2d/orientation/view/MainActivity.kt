@@ -143,7 +143,13 @@ class MainActivity : AppCompatActivity(), NightModeDialog.Callback {
 
     private fun setUpOrientationIcons() {
         notificationSample.buttonList.forEach { view ->
-            view.button.setOnClickListener { updateOrientation(view.orientation) }
+            view.button.setOnClickListener {
+                updateOrientation(view.orientation)
+                if (!OrientationHelper.isEnabled && SystemSettings.canDrawOverlays(this)) {
+                    MainController.start()
+                    settings.setAutoStart(true)
+                }
+            }
         }
     }
 
