@@ -15,9 +15,6 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 object EventRouter {
     private val updateChannel: BroadcastChannel<Unit> = BroadcastChannel(1)
 

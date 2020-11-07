@@ -32,9 +32,6 @@ import net.mm2d.orientation.util.SystemSettings
 import kotlin.math.abs
 import kotlin.math.atan
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 @SuppressLint("StaticFieldLeak")
 object OrientationHelper {
     private lateinit var context: Context

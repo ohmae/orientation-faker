@@ -23,9 +23,6 @@ import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.tabs.CustomTabsHelper
 import net.mm2d.orientation.view.notification.NotificationHelper
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 @Suppress("unused")
 class App : Application() {
     override fun onCreate() {

@@ -25,9 +25,6 @@ import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.view.notification.NotificationHelper
 import net.mm2d.orientation.view.widget.WidgetProvider
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 class MainService : Service() {
     private var checker: ForegroundPackageChecker? = null
 

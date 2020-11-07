@@ -7,9 +7,6 @@
 
 package net.mm2d.orientation.settings
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 internal enum class OldKey {
     SETTINGS_VERSION,
     APP_VERSION_AT_INSTALL,

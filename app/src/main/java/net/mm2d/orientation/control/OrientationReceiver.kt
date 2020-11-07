@@ -13,9 +13,6 @@ import android.content.Intent
 import net.mm2d.orientation.service.MainController
 import net.mm2d.orientation.settings.Settings
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 class OrientationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != ACTION_ORIENTATION) {

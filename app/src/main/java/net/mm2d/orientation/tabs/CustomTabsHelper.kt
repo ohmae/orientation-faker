@@ -17,9 +17,6 @@ import androidx.browser.customtabs.CustomTabsServiceConnection
 import androidx.browser.customtabs.CustomTabsSession
 import androidx.lifecycle.ProcessLifecycleOwner
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 @SuppressLint("StaticFieldLeak")
 object CustomTabsHelper : CustomTabsServiceConnection() {
     private val PREFERRED_PACKAGES = listOf(

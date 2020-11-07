@@ -9,9 +9,6 @@ package net.mm2d.orientation.service
 
 import net.mm2d.orientation.settings.Settings
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 object KeepAlive {
     fun ensureResident() {
         if (Settings.get().shouldAutoStart()) {

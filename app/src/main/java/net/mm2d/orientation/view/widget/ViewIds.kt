@@ -9,9 +9,6 @@ package net.mm2d.orientation.view.widget
 
 import net.mm2d.android.orientationfaker.R.id
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 object ViewIds {
     data class OrientationId(
         val buttonId: Int,

@@ -16,9 +16,6 @@ import net.mm2d.orientation.view.dialog.ReviewDialog
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 object ReviewRequest {
     private const val ORIENTATION_CHANGE_COUNT = 10
     private val INTERVAL_FIRST_REVIEW = TimeUnit.DAYS.toMillis(21)

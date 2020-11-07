@@ -23,9 +23,6 @@ import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.view.widget.RemoteViewsCreator
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 object NotificationHelper {
     private const val OLD_CHANNEL_ID = "CHANNEL_ID"
     private const val CHANNEL_ID = "CONTROL"

@@ -13,9 +13,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 object OpenUriUtils {
     private var defaultBrowserPackage: String? = null
     private var browserPackages: Set<String>? = null

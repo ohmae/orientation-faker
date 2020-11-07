@@ -19,9 +19,6 @@ import net.mm2d.orientation.control.OrientationReceiver
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.view.MainActivity
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 object RemoteViewsCreator {
     fun create(context: Context, orientation: Int): RemoteViews {
         val settings = Settings.get()

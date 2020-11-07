@@ -18,9 +18,6 @@ import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.view.widget.ViewIds
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 class NotificationSample(activity: Activity) {
     val buttonList: List<ButtonInfo> = ViewIds.list.map {
         ButtonInfo(

@@ -14,9 +14,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import net.mm2d.android.orientationfaker.R
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 class ResetThemeDialog : DialogFragment() {
     interface Callback {
         fun resetTheme()

@@ -23,9 +23,6 @@ import androidx.core.view.forEach
 import com.google.android.material.appbar.AppBarLayout
 import kotlin.math.abs
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 class NestedScrollingWebView
 @JvmOverloads constructor(
     context: Context,

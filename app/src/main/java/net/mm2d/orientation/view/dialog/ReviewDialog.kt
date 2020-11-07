@@ -19,9 +19,6 @@ import net.mm2d.android.orientationfaker.databinding.LayoutReviewBinding
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.Launcher
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 class ReviewDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val activity = requireActivity()

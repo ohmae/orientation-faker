@@ -12,9 +12,6 @@ import androidx.core.content.ContextCompat
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.Orientation
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 internal object Default {
     lateinit var color: Color
         private set

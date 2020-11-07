@@ -21,9 +21,6 @@ import androidx.webkit.WebViewFeature
 import net.mm2d.android.orientationfaker.databinding.ActivityLicenseBinding
 import net.mm2d.orientation.util.Launcher
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 class LicenseActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLicenseBinding
 

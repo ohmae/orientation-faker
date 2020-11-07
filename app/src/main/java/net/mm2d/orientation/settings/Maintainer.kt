@@ -14,9 +14,6 @@ import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.settings.Key.Main
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 internal object Maintainer {
     // 0 : 2013/04/21 : 1.0.0
     // 1 : 2018/01/14 : 2.0.0 - 2.1.2

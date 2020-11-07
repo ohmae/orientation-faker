@@ -15,9 +15,6 @@ import androidx.core.content.res.getStringOrThrow
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.ViewSwitchMenuBinding
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 class SwitchMenuView
 @JvmOverloads constructor(
     context: Context,

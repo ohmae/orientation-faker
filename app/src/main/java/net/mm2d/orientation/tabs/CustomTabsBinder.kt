@@ -11,9 +11,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 class CustomTabsBinder : LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onStart() {

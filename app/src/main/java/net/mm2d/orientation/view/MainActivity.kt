@@ -37,9 +37,6 @@ import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.view.dialog.NightModeDialog
 import net.mm2d.orientation.view.dialog.OverlayPermissionDialog
 
-/**
- * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
- */
 class MainActivity : AppCompatActivity(), NightModeDialog.Callback {
     private val settings by lazy {
         Settings.get()
