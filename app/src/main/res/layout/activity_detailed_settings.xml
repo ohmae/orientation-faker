@@ -17,6 +17,7 @@
 
         <include
             android:id="@+id/content"
-            layout="@layout/layout_detailed_settings" />
+            layout="@layout/layout_detailed_settings"
+            />
     </ScrollView>
 </LinearLayout>

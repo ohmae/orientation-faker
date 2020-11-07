@@ -37,6 +37,7 @@ interface Key {
         USE_ROUND_BACKGROUND_BOOLEAN,
         NIGHT_MODE_INT,
         ;
+
         companion object {
             const val FILE_NAME: String = "Main"
         }
