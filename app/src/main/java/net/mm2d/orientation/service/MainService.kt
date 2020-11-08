@@ -35,9 +35,11 @@ class MainService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         NotificationHelper.startForegroundEmpty(this)
         if (shouldStop(intent)) {
+            isStarted = false
             stop()
             return START_NOT_STICKY
         }
+        isStarted = true
         start()
         return START_STICKY
     }
@@ -91,9 +93,7 @@ class MainService : Service() {
         val orientation = ForegroundPackageSettings.get(packageName).let {
             if (it == Orientation.INVALID) Settings.get().orientation else it
         }
-        if (!OrientationHelper.isEnabled ||
-            OrientationHelper.getOrientation() == orientation
-        ) {
+        if (!isStarted || OrientationHelper.getOrientation() == orientation) {
             return
         }
         OrientationHelper.update(orientation)
@@ -104,9 +104,11 @@ class MainService : Service() {
     companion object {
         private const val ACTION_START = "ACTION_START"
         private const val ACTION_STOP = "ACTION_STOP"
+        var isStarted: Boolean = false
+            private set
 
         fun update(context: Context) {
-            if (OrientationHelper.isEnabled) {
+            if (isStarted) {
                 start(context)
             } else {
                 WidgetProvider.start(context)
@@ -122,7 +124,7 @@ class MainService : Service() {
 
         fun stop(context: Context) {
             WidgetProvider.stop(context)
-            if (!OrientationHelper.isEnabled) {
+            if (!isStarted) {
                 return
             }
             startService(

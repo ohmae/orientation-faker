@@ -58,7 +58,7 @@ object OrientationHelper {
         }
     }
 
-    val isEnabled: Boolean
+    private val isEnabled: Boolean
         get() = view.parent != null
 
     @Suppress("DEPRECATION")
@@ -121,10 +121,16 @@ object OrientationHelper {
 
     private fun setOrientation(orientation: Int) {
         layoutParams.screenOrientation = orientation
-        if (isEnabled) {
-            windowManager.updateViewLayout(view, layoutParams)
+        if (orientation == Orientation.UNSPECIFIED) {
+            if (isEnabled) {
+                windowManager.removeViewImmediate(view)
+            }
         } else {
-            windowManager.addView(view, layoutParams)
+            if (isEnabled) {
+                windowManager.updateViewLayout(view, layoutParams)
+            } else {
+                windowManager.addView(view, layoutParams)
+            }
         }
     }
 

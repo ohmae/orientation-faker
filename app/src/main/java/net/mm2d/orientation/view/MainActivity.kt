@@ -26,10 +26,10 @@ import com.google.android.play.core.ktx.isImmediateUpdateAllowed
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.ActivityMainBinding
-import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.event.EventRouter
 import net.mm2d.orientation.review.ReviewRequest
 import net.mm2d.orientation.service.MainController
+import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.NightModes
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.Launcher
@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity(), NightModeDialog.Callback {
         notificationSample.buttonList.forEach { view ->
             view.button.setOnClickListener {
                 updateOrientation(view.orientation)
-                if (!OrientationHelper.isEnabled && SystemSettings.canDrawOverlays(this)) {
+                if (!MainService.isStarted && SystemSettings.canDrawOverlays(this)) {
                     MainController.start()
                     settings.setAutoStart(true)
                 }
@@ -173,7 +173,7 @@ class MainActivity : AppCompatActivity(), NightModeDialog.Callback {
 
     @SuppressLint("NewApi")
     private fun toggleStatus() {
-        if (OrientationHelper.isEnabled) {
+        if (MainService.isStarted) {
             MainController.stop()
             settings.setAutoStart(false)
         } else {
@@ -187,7 +187,7 @@ class MainActivity : AppCompatActivity(), NightModeDialog.Callback {
     }
 
     private fun applyStatus() {
-        if (OrientationHelper.isEnabled) {
+        if (MainService.isStarted) {
             binding.content.statusButton.setText(R.string.button_status_stop)
             binding.content.statusButton.setBackgroundResource(R.drawable.bg_stop_button)
             binding.content.statusDescription.setText(R.string.menu_description_status_running)

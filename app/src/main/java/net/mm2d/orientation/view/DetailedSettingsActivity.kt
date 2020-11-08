@@ -21,9 +21,9 @@ import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.ActivityDetailedSettingsBinding
 import net.mm2d.color.chooser.ColorChooserDialog
 import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.event.EventRouter
 import net.mm2d.orientation.service.MainController
+import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.Default
 import net.mm2d.orientation.settings.OrientationList
 import net.mm2d.orientation.settings.Settings
@@ -60,7 +60,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
         if (!orientationList.contains(settings.orientation)) {
             settings.orientation = orientationList[0]
             MainController.update()
-            if (!OrientationHelper.isEnabled) {
+            if (!MainService.isStarted) {
                 EventRouter.notifyUpdate()
             }
         }

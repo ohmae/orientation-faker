@@ -34,7 +34,9 @@
             android:id="@+id/status_button"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="@dimen/margin_menu_horizontal"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/bg_start_button"
             android:clickable="false"
             android:text="@string/button_status_start"
@@ -46,34 +48,19 @@
             />
 
         <TextView
-            android:id="@+id/status_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_menu_horizontal"
-            android:layout_marginTop="@dimen/margin_menu_vertical"
-            android:text="@string/menu_title_status"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textColor="@color/fg_main"
-            android:textSize="@dimen/text_title"
-            app:layout_constraintEnd_toStartOf="@id/status_button"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-
-        <TextView
             android:id="@+id/status_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_menu_horizontal"
-            android:layout_marginBottom="@dimen/margin_menu_vertical"
             android:text="@string/menu_description_status_running"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textColor="@color/fg_sub"
-            android:textSize="@dimen/text_description"
+            android:textColor="@color/fg_main"
+            android:textSize="@dimen/text_status"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/status_button"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/status_title"
+            app:layout_constraintTop_toTopOf="parent"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

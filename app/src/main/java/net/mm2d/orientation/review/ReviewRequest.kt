@@ -10,7 +10,7 @@ package net.mm2d.orientation.review
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.control.OrientationHelper
+import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.view.dialog.ReviewDialog
 import java.util.concurrent.TimeUnit
@@ -34,7 +34,7 @@ object ReviewRequest {
     }
 
     fun requestReviewIfNeed(activity: FragmentActivity) {
-        if (!OrientationHelper.isEnabled) {
+        if (!MainService.isStarted) {
             return
         }
         if (activity.lifecycle.currentState != Lifecycle.State.RESUMED) {
