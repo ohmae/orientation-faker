@@ -20,6 +20,7 @@ import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import net.mm2d.android.orientationfaker.databinding.ActivityLicenseBinding
 import net.mm2d.orientation.util.Launcher
+import net.mm2d.orientation.util.isNightMode
 
 class LicenseActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLicenseBinding
@@ -34,9 +35,7 @@ class LicenseActivity : AppCompatActivity() {
             it.setSupportZoom(false)
             it.displayZoomControls = false
             if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-                val nightMode =
-                    (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-                val mode = if (nightMode) WebSettingsCompat.FORCE_DARK_ON else WebSettingsCompat.FORCE_DARK_OFF
+                val mode = if (isNightMode()) WebSettingsCompat.FORCE_DARK_ON else WebSettingsCompat.FORCE_DARK_OFF
                 WebSettingsCompat.setForceDark(it, mode)
             }
             if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
