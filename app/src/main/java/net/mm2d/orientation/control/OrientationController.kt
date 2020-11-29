@@ -29,6 +29,8 @@ class OrientationController(context: Context) {
     val orientation: Int
         get() = layoutParams.screenOrientation
 
+    private var attached: Boolean = false
+
     @Suppress("DEPRECATION")
     private val type: Int
         get() =
@@ -36,26 +38,29 @@ class OrientationController(context: Context) {
             else LayoutParams.TYPE_SYSTEM_ALERT
 
     fun setOrientation(orientation: Int) {
+        isEnabled = true
         if (layoutParams.screenOrientation == orientation) return
         layoutParams.screenOrientation = orientation
         if (orientation == Orientation.UNSPECIFIED) {
-            if (isEnabled) {
+            if (attached) {
                 windowManager.removeView(view)
-                isEnabled = false
+                attached = false
             }
         } else {
-            if (isEnabled) {
+            if (attached) {
                 windowManager.updateViewLayout(view, layoutParams)
             } else {
                 windowManager.addView(view, layoutParams)
-                isEnabled = true
+                attached = true
             }
         }
     }
 
     fun stop() {
-        if (isEnabled) {
+        isEnabled = false
+        if (attached) {
             windowManager.removeViewImmediate(view)
+            attached = false
         }
     }
 }
