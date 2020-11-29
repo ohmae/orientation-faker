@@ -9,7 +9,6 @@ package net.mm2d.orientation.view
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import android.webkit.WebResourceRequest

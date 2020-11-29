@@ -7,18 +7,15 @@
 
 package net.mm2d.orientation.tabs
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 
-class CustomTabsBinder : LifecycleObserver {
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onStart() {
+class CustomTabsBinder : DefaultLifecycleObserver {
+    override fun onStart(owner: LifecycleOwner) {
         CustomTabsHelper.bind()
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onStop() {
+    override fun onStop(owner: LifecycleOwner) {
         CustomTabsHelper.unbind()
     }
 }
