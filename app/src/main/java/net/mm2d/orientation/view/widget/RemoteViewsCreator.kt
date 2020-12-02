@@ -17,16 +17,17 @@ import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationReceiver
 import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.util.shouldUseWhiteForeground
 import net.mm2d.orientation.view.MainActivity
 
 object RemoteViewsCreator {
-    fun create(context: Context, orientation: Int): RemoteViews {
-        val settings = Settings.get()
-        val foreground = settings.foregroundColor
-        val background = settings.backgroundColor
-        val selectedForeground = settings.foregroundColorSelected
-        val selectedBackground = settings.backgroundColorSelected
-        return RemoteViews(context.packageName, R.layout.notification).also { views ->
+    fun create(context: Context, orientation: Int): RemoteViews =
+        RemoteViews(context.packageName, R.layout.notification).also { views ->
+            val settings = Settings.get()
+            val foreground = settings.foregroundColor
+            val background = settings.backgroundColor
+            val selectedForeground = settings.foregroundColorSelected
+            val selectedBackground = settings.backgroundColorSelected
             val shouldUseRoundBackground = settings.shouldUseRoundBackground
             val baseColor = if (shouldUseRoundBackground) settings.baseColor else background
             views.setInt(R.id.notification, "setBackgroundColor", baseColor)
@@ -74,10 +75,13 @@ object RemoteViewsCreator {
                 }
             }
             views.setInt(R.id.remote_views_button_settings, "setBackgroundColor", Color.TRANSPARENT)
-            views.setInt(R.id.remote_views_icon_settings, "setColorFilter", foreground)
+            val whiteForeground = baseColor.shouldUseWhiteForeground()
+            val settingsColor = if (shouldUseRoundBackground) {
+                if (whiteForeground) Color.WHITE else Color.BLACK
+            } else foreground
+            views.setInt(R.id.remote_views_icon_settings, "setColorFilter", settingsColor)
             views.setOnClickPendingIntent(R.id.remote_views_button_settings, createActivityIntent(context))
         }
-    }
 
     private fun createOrientationIntent(context: Context, orientation: Int): PendingIntent {
         val intent = Intent(OrientationReceiver.ACTION_ORIENTATION).also {

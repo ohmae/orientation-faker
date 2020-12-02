@@ -18,7 +18,7 @@
         android:layout_height="@dimen/notification_height"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:foreground="@drawable/fg_touch_dark"
+        android:foreground="@drawable/fg_touch"
         >
 
         <ImageView
@@ -67,7 +67,7 @@
         android:layout_height="@dimen/notification_height"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:foreground="@drawable/fg_touch_dark"
+        android:foreground="@drawable/fg_touch"
         >
 
         <ImageView
@@ -116,7 +116,7 @@
         android:layout_height="@dimen/notification_height"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:foreground="@drawable/fg_touch_dark"
+        android:foreground="@drawable/fg_touch"
         >
 
         <ImageView
@@ -165,7 +165,7 @@
         android:layout_height="@dimen/notification_height"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:foreground="@drawable/fg_touch_dark"
+        android:foreground="@drawable/fg_touch"
         >
 
         <ImageView
@@ -214,7 +214,7 @@
         android:layout_height="@dimen/notification_height"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:foreground="@drawable/fg_touch_dark"
+        android:foreground="@drawable/fg_touch"
         >
 
         <ImageView
@@ -262,7 +262,7 @@
         android:layout_width="36dp"
         android:layout_height="@dimen/notification_height"
         android:layout_gravity="center_vertical"
-        android:foreground="@drawable/fg_touch_dark"
+        android:foreground="@drawable/fg_touch"
         >
 
         <ImageView

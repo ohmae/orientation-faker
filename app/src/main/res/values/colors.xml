@@ -19,5 +19,5 @@
     <color name="fg_notification">#FFFFFF</color>
     <color name="bg_notification">#212121</color>
     <color name="bg_notification_selected">#448AFF</color>
-    <color name="ripple_dark">#33FFFFFF</color>
+    <color name="ripple_dark">#337F7F7F</color>
 </resources>
