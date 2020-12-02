@@ -2,11 +2,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="48dp"
     android:height="48dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24"
+    android:viewportWidth="48"
+    android:viewportHeight="48"
     >
     <path
         android:fillColor="@android:color/white"
-        android:pathData="M12,12m-12,0a12,12 0,1 1,24 0a12,12 0,1 1,-24 0"
+        android:pathData="M24,24m-24,0a24,24 0,1 1,48 0a24,24 0,1 1,-48 0"
         />
 </vector>

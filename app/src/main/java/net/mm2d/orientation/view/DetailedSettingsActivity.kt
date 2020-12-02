@@ -15,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
 import androidx.gridlayout.widget.GridLayout
 import androidx.gridlayout.widget.GridLayout.spec
 import net.mm2d.android.orientationfaker.R
@@ -107,6 +108,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
         binding.content.sampleBackground.setColorFilter(settings.backgroundColor)
         binding.content.sampleForegroundSelected.setColorFilter(settings.foregroundColorSelected)
         binding.content.sampleBackgroundSelected.setColorFilter(settings.backgroundColorSelected)
+        binding.content.sampleBase.setColorFilter(settings.baseColor)
         binding.content.foreground.setOnClickListener {
             ColorChooserDialog.show(this, it.id, settings.foregroundColor)
         }
@@ -118,6 +120,10 @@ class DetailedSettingsActivity : AppCompatActivity(),
         }
         binding.content.backgroundSelected.setOnClickListener {
             ColorChooserDialog.show(this, it.id, settings.backgroundColorSelected)
+        }
+        binding.content.base.isGone = !settings.shouldUseRoundBackground
+        binding.content.base.setOnClickListener {
+            ColorChooserDialog.show(this, it.id, settings.baseColor)
         }
         binding.content.resetTheme.setOnClickListener { ResetThemeDialog.show(this) }
         setUpOrientationIcons()
@@ -154,6 +160,10 @@ class DetailedSettingsActivity : AppCompatActivity(),
                 settings.backgroundColorSelected = color
                 binding.content.sampleBackgroundSelected.setColorFilter(color)
             }
+            R.id.base -> {
+                settings.baseColor = color
+                binding.content.sampleBase.setColorFilter(color)
+            }
         }
         notificationSample.update()
         MainController.update()
@@ -165,6 +175,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
         binding.content.sampleBackground.setColorFilter(settings.backgroundColor)
         binding.content.sampleForegroundSelected.setColorFilter(settings.foregroundColorSelected)
         binding.content.sampleBackgroundSelected.setColorFilter(settings.backgroundColorSelected)
+        binding.content.sampleBase.setColorFilter(settings.baseColor)
         notificationSample.update()
         MainController.update()
     }
@@ -259,7 +270,13 @@ class DetailedSettingsActivity : AppCompatActivity(),
     }
 
     private fun toggleUseRoundBackground() {
-        settings.shouldUseRoundBackground = !settings.shouldUseRoundBackground
+        val round = !settings.shouldUseRoundBackground
+        settings.shouldUseRoundBackground = round
+        if (round && !settings.hasBaseColor()) {
+            settings.baseColor = settings.backgroundColor
+            binding.content.sampleBase.setColorFilter(settings.baseColor)
+        }
+        binding.content.base.isGone = !round
         applyUseRoundBackground()
         MainController.update()
         notificationSample.update()

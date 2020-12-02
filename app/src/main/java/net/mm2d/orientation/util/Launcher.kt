@@ -44,7 +44,8 @@ object Launcher {
 
     fun openCustomTabs(context: Context, uri: Uri): Boolean {
         try {
-            val scheme = if (context.isNightMode()) CustomTabsIntent.COLOR_SCHEME_DARK else CustomTabsIntent.COLOR_SCHEME_LIGHT
+            val scheme =
+                if (context.isNightMode()) CustomTabsIntent.COLOR_SCHEME_DARK else CustomTabsIntent.COLOR_SCHEME_LIGHT
             val intent = CustomTabsIntent.Builder(CustomTabsHelper.session)
                 .setShowTitle(true)
                 .setToolbarColor(ContextCompat.getColor(context, R.color.primary))

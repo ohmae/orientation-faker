@@ -19,25 +19,36 @@ internal object Maintainer {
     // 1 : 2018/01/14 : 2.0.0 - 2.1.2
     // 2 : 2018/12/16 : 2.2.0 -
     // 3 : 2020/03/28 : 4.0.0 -
-    private const val SETTINGS_VERSION = 3
+    // 4 : 2020/12/03 : 4.7.0-
+    private const val SETTINGS_VERSION = 4
 
     fun maintain(context: Context, preferences: Preferences<Main>) {
         Main.values().checkSuffix()
         if (preferences.readInt(Main.APP_VERSION_AT_LAST_LAUNCHED_INT, 0) != BuildConfig.VERSION_CODE) {
             preferences.writeInt(Main.APP_VERSION_AT_LAST_LAUNCHED_INT, BuildConfig.VERSION_CODE)
         }
-        if (preferences.readInt(Main.PREFERENCES_VERSION_INT, 0) == SETTINGS_VERSION) {
+        val settingsVersion = preferences.readInt(Main.PREFERENCES_VERSION_INT, 0)
+        if (settingsVersion == SETTINGS_VERSION) {
             return
         }
         preferences.writeInt(Main.PREFERENCES_VERSION_INT, SETTINGS_VERSION)
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        if (sharedPreferences.all.isNotEmpty()) {
-            if (sharedPreferences.getInt(OldKey.SETTINGS_VERSION.name, 0) == 2) {
-                migrateFromVersion2(sharedPreferences, preferences)
-                sharedPreferences.edit().clear().apply()
-                return
+        if (settingsVersion == 3) {
+            if (preferences.readBoolean(Main.USE_ROUND_BACKGROUND_BOOLEAN, false) &&
+                preferences.contains(Main.COLOR_BACKGROUND_INT)
+            ) {
+                val bg = preferences.readInt(Main.COLOR_BACKGROUND_INT, Default.color.background)
+                preferences.writeInt(Main.COLOR_BASE_INT, bg)
             }
-            sharedPreferences.edit().clear().apply()
+        } else {
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            if (sharedPreferences.all.isNotEmpty()) {
+                if (sharedPreferences.getInt(OldKey.SETTINGS_VERSION.name, 0) == 2) {
+                    migrateFromVersion2(sharedPreferences, preferences)
+                    sharedPreferences.edit().clear().apply()
+                    return
+                }
+                sharedPreferences.edit().clear().apply()
+            }
         }
         if (!preferences.contains(Main.APP_VERSION_AT_INSTALL_INT)) {
             preferences.writeInt(Main.APP_VERSION_AT_INSTALL_INT, BuildConfig.VERSION_CODE)

@@ -23,10 +23,13 @@ object RemoteViewsCreator {
     fun create(context: Context, orientation: Int): RemoteViews {
         val settings = Settings.get()
         val foreground = settings.foregroundColor
+        val background = settings.backgroundColor
         val selectedForeground = settings.foregroundColorSelected
         val selectedBackground = settings.backgroundColorSelected
         return RemoteViews(context.packageName, R.layout.notification).also { views ->
-            views.setInt(R.id.notification, "setBackgroundColor", settings.backgroundColor)
+            val shouldUseRoundBackground = settings.shouldUseRoundBackground
+            val baseColor = if (shouldUseRoundBackground) settings.baseColor else background
+            views.setInt(R.id.notification, "setBackgroundColor", baseColor)
             val orientationList = settings.orientationList
             orientationList.forEachIndexed { index, value ->
                 val button = ViewIds.list[index]
@@ -37,7 +40,6 @@ object RemoteViewsCreator {
                 }
             }
             val selectedIndex = orientationList.indexOf(orientation)
-            val shouldUseRoundBackground = settings.shouldUseRoundBackground
             ViewIds.list.forEachIndexed { index, it ->
                 if (index == selectedIndex) {
                     if (shouldUseRoundBackground) {
@@ -51,8 +53,12 @@ object RemoteViewsCreator {
                     views.setInt(it.iconId, "setColorFilter", selectedForeground)
                     views.setTextColor(it.titleId, selectedForeground)
                 } else {
-                    views.setViewVisibility(it.backgroundId, View.GONE)
-                    views.setInt(it.buttonId, "setBackgroundColor", Color.TRANSPARENT)
+                    if (shouldUseRoundBackground) {
+                        views.setViewVisibility(it.backgroundId, View.VISIBLE)
+                        views.setInt(it.backgroundId, "setColorFilter", background)
+                    } else {
+                        views.setViewVisibility(it.backgroundId, View.GONE)
+                    }
                     views.setInt(it.iconId, "setColorFilter", foreground)
                     views.setTextColor(it.titleId, foreground)
                 }

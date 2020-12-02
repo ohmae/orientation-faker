@@ -56,10 +56,11 @@
 
     <string name="button_reset_theme">テーマをリセット</string>
     <string name="button_reset_layout">ボタン配置をリセット</string>
-    <string name="button_foreground_color">前景色</string>
-    <string name="button_background_color">背景色</string>
-    <string name="button_selected_foreground_color">選択前景色</string>
-    <string name="button_selected_background_color">選択背景色</string>
+    <string name="button_foreground_color">前景</string>
+    <string name="button_background_color">背景</string>
+    <string name="button_selected_foreground_color">選択前景</string>
+    <string name="button_selected_background_color">選択背景</string>
+    <string name="button_base_color">ベース</string>
     <string name="menu_title_use_round_background">丸形アイコン</string>
     <string name="menu_description_use_round_background_on">説明テキストを表示しないでアイコンを丸形にします</string>
     <string name="menu_description_use_round_background_off">アイコンと説明テキストを表示します</string>

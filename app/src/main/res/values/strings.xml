@@ -56,10 +56,11 @@
 
     <string name="button_reset_theme">Reset theme</string>
     <string name="button_reset_layout">Reset button layout</string>
-    <string name="button_foreground_color">foreground</string>
-    <string name="button_background_color">background</string>
-    <string name="button_selected_foreground_color">*foreground</string>
-    <string name="button_selected_background_color">*background</string>
+    <string name="button_foreground_color">fg</string>
+    <string name="button_background_color">bg</string>
+    <string name="button_selected_foreground_color">sel. fg</string>
+    <string name="button_selected_background_color">sel. bg</string>
+    <string name="button_base_color">base</string>
     <string name="menu_title_use_round_background">Round icon background</string>
     <string name="menu_description_use_round_background_on">Show only icon without descriptive text, with round icon background</string>
     <string name="menu_description_use_round_background_off">Show icon and descriptive text, with rectangular background</string>

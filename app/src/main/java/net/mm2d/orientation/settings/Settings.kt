@@ -37,6 +37,12 @@ class Settings private constructor(
         get() = preferences.readInt(Main.COLOR_BACKGROUND_SELECTED_INT, Default.color.backgroundSelected)
         set(value) = preferences.writeInt(Main.COLOR_BACKGROUND_SELECTED_INT, value)
 
+    var baseColor: Int
+        get() = preferences.readInt(Main.COLOR_BASE_INT, Default.color.background)
+        set(value) = preferences.writeInt(Main.COLOR_BASE_INT, value)
+
+    fun hasBaseColor(): Boolean = preferences.contains(Main.COLOR_BASE_INT)
+
     var notifySecret: Boolean
         get() = preferences.readBoolean(Main.NOTIFY_SECRET_BOOLEAN, false)
         set(value) = preferences.writeBoolean(Main.NOTIFY_SECRET_BOOLEAN, value)

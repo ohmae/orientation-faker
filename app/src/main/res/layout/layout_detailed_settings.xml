@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:baselineAligned="false"
         android:orientation="horizontal"
+        android:animateLayoutChanges="true"
         >
 
         <LinearLayout
@@ -160,6 +161,41 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/button_selected_background_color"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textSize="@dimen/text_color_title"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/base"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/margin_menu_sample"
+            android:paddingBottom="@dimen/margin_menu_sample"
+            android:visibility="gone"
+            >
+
+            <ImageView
+                android:id="@+id/sample_base"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/margin_menu_sample"
+                android:background="@drawable/bg_sample"
+                android:backgroundTint="@color/fg_main"
+                android:contentDescription="@null"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_circle"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/button_base_color"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="@dimen/text_color_title"
                 />
