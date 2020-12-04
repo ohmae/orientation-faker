@@ -312,7 +312,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/bg_circle"
-            app:tint="@color/fg_main"
+            app:tint="@color/accent"
             />
 
         <TextView
