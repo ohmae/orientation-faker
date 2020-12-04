@@ -79,7 +79,9 @@
     <string name="menu_description_system_app_description">システムのアプリ情報を開きます</string>
     <string name="menu_title_icon_shape">アイコン形状</string>
     <string name="menu_description_icon_shape_circle">円</string>
-    <string name="menu_description_icon_shape_round_square">角丸四角形</string>
+    <string name="menu_description_item_shape_squircle">スクワークル</string>
+    <string name="menu_description_icon_shape_rounded_square">角丸四角形</string>
+    <string name="menu_description_icon_shape_teardrop">ティアドロップ</string>
     <string name="menu_description_icon_shape_hexagon">六角形</string>
 
     <string name="dialog_title_reset_theme">確認</string>

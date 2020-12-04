@@ -78,9 +78,11 @@
     <string name="menu_title_system_app">App Info</string>
     <string name="menu_description_system_app_description">Open system app info</string>
     <string name="menu_title_icon_shape">Icon shape</string>
-    <string name="menu_description_icon_shape_circle">circle</string>
-    <string name="menu_description_icon_shape_round_square">round square</string>
-    <string name="menu_description_icon_shape_hexagon">hexagon</string>
+    <string name="menu_description_icon_shape_circle">Circle</string>
+    <string name="menu_description_item_shape_squircle">Squircle</string>
+    <string name="menu_description_icon_shape_rounded_square">Rounded square</string>
+    <string name="menu_description_icon_shape_teardrop">Teardrop</string>
+    <string name="menu_description_icon_shape_hexagon">Hexagon</string>
 
     <string name="dialog_title_reset_theme">Confirmation</string>
     <string name="dialog_message_reset_theme">Would you like to reset theme?</string>

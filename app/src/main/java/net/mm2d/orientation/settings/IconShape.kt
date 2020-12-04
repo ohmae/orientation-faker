@@ -10,9 +10,17 @@ enum class IconShape(
         R.drawable.bg_circle,
         R.string.menu_description_icon_shape_circle
     ),
-    ROUND_SQUARE(
-        R.drawable.bg_round_square,
-        R.string.menu_description_icon_shape_round_square
+    SQUIRECLE(
+        R.drawable.bg_squircle,
+        R.string.menu_description_item_shape_squircle
+    ),
+    ROUNDED_SQUARE(
+        R.drawable.bg_rounded_square,
+        R.string.menu_description_icon_shape_rounded_square
+    ),
+    TEARDROP(
+        R.drawable.bg_teardrop,
+        R.string.menu_description_icon_shape_teardrop
     ),
     HEXAGON(
         R.drawable.bg_hexagon,
