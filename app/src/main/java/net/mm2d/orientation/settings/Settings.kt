@@ -101,7 +101,7 @@ class Settings private constructor(
         get() = preferences.readBoolean(Main.FOREGROUND_PACKAGE_ENABLED_BOOLEAN, true)
         set(value) = preferences.writeBoolean(Main.FOREGROUND_PACKAGE_ENABLED_BOOLEAN, value)
 
-    var shouldUseRoundBackground: Boolean
+    var shouldUseIconBackground: Boolean
         get() = preferences.readBoolean(Main.USE_ROUND_BACKGROUND_BOOLEAN, false)
         set(value) = preferences.writeBoolean(Main.USE_ROUND_BACKGROUND_BOOLEAN, value)
 
@@ -109,11 +109,16 @@ class Settings private constructor(
         get() = preferences.readInt(Main.NIGHT_MODE_INT, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         set(value) = preferences.writeInt(Main.NIGHT_MODE_INT, value)
 
+    var iconShape: IconShape
+        get() = IconShape.of(preferences.readString(Main.ICON_SHAPE_STRING, ""))
+        set(value) = preferences.writeString(Main.ICON_SHAPE_STRING, value.name)
+
     fun resetTheme() {
         foregroundColor = Default.color.foreground
         backgroundColor = Default.color.background
         foregroundColorSelected = Default.color.foregroundSelected
         backgroundColorSelected = Default.color.backgroundSelected
+        baseColor = Default.color.background
     }
 
     fun setAutoStart(autoStart: Boolean) {

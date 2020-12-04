@@ -1,0 +1,58 @@
+package net.mm2d.orientation.view.dialog
+
+import android.app.Dialog
+import android.content.Context
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.BaseAdapter
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentActivity
+import net.mm2d.android.orientationfaker.R
+import net.mm2d.android.orientationfaker.databinding.ItemIconShapeBinding
+import net.mm2d.orientation.settings.IconShape
+
+class IconShapeDialog : DialogFragment() {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.menu_title_icon_shape)
+            .setAdapter(IconShapeAdapter(requireContext())) { _, which ->
+                (activity as? Callback)?.onSelectIconShape(IconShape.values()[which])
+            }
+            .create()
+
+    interface Callback {
+        fun onSelectIconShape(iconShape: IconShape)
+    }
+
+    class IconShapeAdapter(context: Context) : BaseAdapter() {
+        private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+        private val values = IconShape.values()
+        override fun getCount(): Int = values.size
+        override fun getItem(position: Int): IconShape = values[position]
+        override fun getItemId(position: Int): Long = position.toLong()
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+            val binding = if (convertView == null) {
+                ItemIconShapeBinding.inflate(layoutInflater, parent, false)
+            } else {
+                ItemIconShapeBinding.bind(convertView)
+            }
+            val shape = getItem(position)
+            binding.icon.setImageResource(shape.iconId)
+            binding.text.setText(shape.textId)
+            return binding.root
+        }
+    }
+
+    companion object {
+        private const val TAG = "IconShapeDialog"
+
+        fun show(activity: FragmentActivity) {
+            val manager = activity.supportFragmentManager
+            if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
+            IconShapeDialog().show(manager, TAG)
+        }
+    }
+}

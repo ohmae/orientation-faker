@@ -37,6 +37,7 @@ interface Key {
         FOREGROUND_PACKAGE_ENABLED_BOOLEAN,
         USE_ROUND_BACKGROUND_BOOLEAN,
         NIGHT_MODE_INT,
+        ICON_SHAPE_STRING,
         ;
 
         companion object {

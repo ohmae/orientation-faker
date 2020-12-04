@@ -40,8 +40,8 @@ class NotificationSample(activity: Activity) {
         val background = settings.backgroundColor
         val selectedForeground = settings.foregroundColorSelected
         val selectedBackground = settings.backgroundColorSelected
-        val shouldUseRoundBackground = settings.shouldUseRoundBackground
-        val baseColor = if (shouldUseRoundBackground) settings.baseColor else background
+        val shouldUseIconBackground = settings.shouldUseIconBackground
+        val baseColor = if (shouldUseIconBackground) settings.baseColor else background
         base.setBackgroundColor(baseColor)
         val orientationList = settings.orientationList
         orientationList.forEachIndexed { index, value ->
@@ -52,10 +52,12 @@ class NotificationSample(activity: Activity) {
                 button.orientation = value
             }
         }
+        val iconShape = settings.iconShape
         val selectedIndex = orientationList.indexOf(orientation)
         buttonList.forEachIndexed { index, it ->
+            it.background.setImageResource(iconShape.iconId)
             if (index == selectedIndex) {
-                if (shouldUseRoundBackground) {
+                if (shouldUseIconBackground) {
                     it.button.setBackgroundColor(Color.TRANSPARENT)
                     it.background.visibility = View.VISIBLE
                     it.background.setColorFilter(selectedBackground)
@@ -66,7 +68,7 @@ class NotificationSample(activity: Activity) {
                 it.icon.setColorFilter(selectedForeground)
                 it.title.setTextColor(selectedForeground)
             } else {
-                if (shouldUseRoundBackground) {
+                if (shouldUseIconBackground) {
                     it.background.visibility = View.VISIBLE
                     it.background.setColorFilter(background)
                 } else {
@@ -76,7 +78,7 @@ class NotificationSample(activity: Activity) {
                 it.icon.setColorFilter(foreground)
                 it.title.setTextColor(foreground)
             }
-            if (shouldUseRoundBackground) {
+            if (shouldUseIconBackground) {
                 it.title.visibility = View.GONE
             } else {
                 it.title.visibility = View.VISIBLE

@@ -25,9 +25,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:baselineAligned="false"
         android:orientation="horizontal"
-        android:animateLayoutChanges="true"
         >
 
         <LinearLayout
@@ -286,15 +286,67 @@
         />
 
     <net.mm2d.orientation.view.view.SwitchMenuView
-        android:id="@+id/use_round_background"
+        android:id="@+id/use_icon_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
         app:checked="false"
-        app:descriptionOff="@string/menu_description_use_round_background_off"
-        app:descriptionOn="@string/menu_description_use_round_background_on"
-        app:title="@string/menu_title_use_round_background"
+        app:descriptionOff="@string/menu_description_use_icon_background_off"
+        app:descriptionOn="@string/menu_description_use_icon_background_on"
+        app:title="@string/menu_title_use_icon_background"
         />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/icon_shape"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        >
+
+        <ImageView
+            android:id="@+id/icon_shape_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="@dimen/margin_menu_horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/bg_circle"
+            app:tint="@color/fg_main"
+            />
+
+        <TextView
+            android:id="@+id/icon_shape_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_menu_horizontal"
+            android:layout_marginTop="@dimen/margin_menu_vertical"
+            android:text="@string/menu_title_icon_shape"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/fg_main"
+            android:textSize="@dimen/text_title"
+            app:layout_constraintEnd_toStartOf="@+id/icon_shape_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/icon_shape_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_menu_horizontal"
+            android:layout_marginBottom="@dimen/margin_menu_vertical"
+            android:text="@string/menu_description_icon_shape_circle"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/fg_sub"
+            android:textSize="@dimen/text_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/icon_shape_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/icon_shape_title"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <net.mm2d.orientation.view.view.SwitchMenuView
         android:id="@+id/use_blank_icon_for_notification"

@@ -40,7 +40,7 @@ class NightModeDialog : DialogFragment() {
     }
 
     companion object {
-        private const val TAG = "AppThemeDialog"
+        private const val TAG = "NightModeDialog"
 
         fun show(activity: FragmentActivity) {
             val manager = activity.supportFragmentManager

@@ -61,9 +61,9 @@
     <string name="button_selected_foreground_color">選択前景</string>
     <string name="button_selected_background_color">選択背景</string>
     <string name="button_base_color">ベース</string>
-    <string name="menu_title_use_round_background">丸形アイコン</string>
-    <string name="menu_description_use_round_background_on">説明テキストを表示しないでアイコンを丸形にします</string>
-    <string name="menu_description_use_round_background_off">アイコンと説明テキストを表示します</string>
+    <string name="menu_title_use_icon_background">アイコン背景</string>
+    <string name="menu_description_use_icon_background_on">説明テキストを表示しないでアイコンを表示します</string>
+    <string name="menu_description_use_icon_background_off">アイコンと説明テキストを表示します</string>
     <string name="menu_title_use_blank_icon_for_notification">ステータスバーのアイコンを透明にする</string>
     <string name="menu_description_use_blank_icon_for_notification_on">ステータスバーに透明なアイコンを表示します</string>
     <string name="menu_description_use_blank_icon_for_notification_off">ステータスバーに状態を表すアイコンを表示します</string>
@@ -77,6 +77,10 @@
     <string name="menu_description_system_notification_description">システムの通知設定を開きます</string>
     <string name="menu_title_system_app">アプリ情報</string>
     <string name="menu_description_system_app_description">システムのアプリ情報を開きます</string>
+    <string name="menu_title_icon_shape">アイコン形状</string>
+    <string name="menu_description_icon_shape_circle">円</string>
+    <string name="menu_description_icon_shape_round_square">角丸四角形</string>
+    <string name="menu_description_icon_shape_hexagon">六角形</string>
 
     <string name="dialog_title_reset_theme">確認</string>
     <string name="dialog_message_reset_theme">テーマをリセットします。\nよろしいですか？</string>
