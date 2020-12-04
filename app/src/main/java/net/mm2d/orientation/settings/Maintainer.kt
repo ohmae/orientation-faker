@@ -19,7 +19,7 @@ internal object Maintainer {
     // 1 : 2018/01/14 : 2.0.0 - 2.1.2
     // 2 : 2018/12/16 : 2.2.0 -
     // 3 : 2020/03/28 : 4.0.0 -
-    // 4 : 2020/12/03 : 4.7.0-
+    // 4 : 2020/12/05 : 4.7.0-
     private const val SETTINGS_VERSION = 4
 
     fun maintain(context: Context, preferences: Preferences<Main>) {
