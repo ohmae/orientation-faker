@@ -39,16 +39,16 @@ internal object Maintainer {
                 val bg = preferences.readInt(Main.COLOR_BACKGROUND_INT, Default.color.background)
                 preferences.writeInt(Main.COLOR_BASE_INT, bg)
             }
-        } else {
-            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-            if (sharedPreferences.all.isNotEmpty()) {
-                if (sharedPreferences.getInt(OldKey.SETTINGS_VERSION.name, 0) == 2) {
-                    migrateFromVersion2(sharedPreferences, preferences)
-                    sharedPreferences.edit().clear().apply()
-                    return
-                }
+            return
+        }
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        if (sharedPreferences.all.isNotEmpty()) {
+            if (sharedPreferences.getInt(OldKey.SETTINGS_VERSION.name, 0) == 2) {
+                migrateFromVersion2(sharedPreferences, preferences)
                 sharedPreferences.edit().clear().apply()
+                return
             }
+            sharedPreferences.edit().clear().apply()
         }
         if (!preferences.contains(Main.APP_VERSION_AT_INSTALL_INT)) {
             preferences.writeInt(Main.APP_VERSION_AT_INSTALL_INT, BuildConfig.VERSION_CODE)
