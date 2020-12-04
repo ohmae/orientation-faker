@@ -16,6 +16,9 @@ class SharedPreferenceDataStore(
     fun clear(): Unit =
         sharedPreferences.edit().clear().apply()
 
+    fun remove(key: String): Unit =
+        sharedPreferences.edit().remove(key).apply()
+
     fun contains(key: String): Boolean =
         sharedPreferences.contains(key)
 

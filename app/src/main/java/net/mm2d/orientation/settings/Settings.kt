@@ -118,7 +118,11 @@ class Settings private constructor(
         backgroundColor = Default.color.background
         foregroundColorSelected = Default.color.foregroundSelected
         backgroundColorSelected = Default.color.backgroundSelected
-        baseColor = Default.color.background
+        if (shouldUseIconBackground) {
+            baseColor = Default.color.background
+        } else {
+            preferences.remove(Main.COLOR_BASE_INT)
+        }
     }
 
     fun setAutoStart(autoStart: Boolean) {

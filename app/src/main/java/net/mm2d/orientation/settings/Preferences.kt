@@ -20,6 +20,9 @@ class Preferences<K>(
             context.getSharedPreferences(BuildConfig.APPLICATION_ID + "." + name, Context.MODE_PRIVATE)
         )
 
+    fun remove(key: K): Unit =
+        dataStore.remove(key.name)
+
     operator fun contains(key: K): Boolean =
         dataStore.contains(key.name)
 
