@@ -62,6 +62,7 @@ object RemoteViewsCreator {
                     } else {
                         views.setViewVisibility(it.backgroundId, View.GONE)
                     }
+                    views.setInt(it.buttonId, "setBackgroundColor", Color.TRANSPARENT)
                     views.setInt(it.iconId, "setColorFilter", foreground)
                     views.setTextColor(it.titleId, foreground)
                 }
