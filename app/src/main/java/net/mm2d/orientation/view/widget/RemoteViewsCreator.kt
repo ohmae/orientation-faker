@@ -13,78 +13,125 @@ import android.content.Intent
 import android.graphics.Color
 import android.view.View
 import android.widget.RemoteViews
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
+import androidx.annotation.IdRes
+import androidx.annotation.StringRes
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationReceiver
 import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.util.alpha
+import net.mm2d.orientation.util.opaque
 import net.mm2d.orientation.util.shouldUseWhiteForeground
 import net.mm2d.orientation.view.MainActivity
+import net.mm2d.orientation.view.widget.ViewIds.ViewId
 
 object RemoteViewsCreator {
     fun create(context: Context, orientation: Int): RemoteViews =
         RemoteViews(context.packageName, R.layout.notification).also { views ->
             val settings = Settings.get()
-            val foreground = settings.foregroundColor
-            val background = settings.backgroundColor
-            val selectedForeground = settings.foregroundColorSelected
-            val selectedBackground = settings.backgroundColorSelected
+            val fgColor = settings.foregroundColor
+            val bgColor = settings.backgroundColor
+            val selFgColor = settings.foregroundColorSelected
+            val selBgColor = settings.backgroundColorSelected
             val shouldUseIconBackground = settings.shouldUseIconBackground
-            val baseColor = if (shouldUseIconBackground) settings.baseColor else background
-            views.setInt(R.id.notification, "setBackgroundColor", baseColor)
+            val baseColor = if (shouldUseIconBackground) settings.baseColor else bgColor
+            views.helper(R.id.notification).setBackgroundColor(baseColor)
             val orientationList = settings.orientationList
             orientationList.forEachIndexed { index, value ->
                 val button = ViewIds.list[index]
                 Orientation.values.find { it.orientation == value }?.let {
-                    views.setImageViewResource(button.iconId, it.icon)
-                    views.setTextViewText(button.titleId, context.getText(it.label))
-                    views.setOnClickPendingIntent(button.buttonId, createOrientationIntent(context, it.orientation))
+                    val helpers = RemoteViewHelpers(views, button)
+                    helpers.icon.setImageResource(it.icon)
+                    helpers.label.setText(it.label)
+                    helpers.button.setOnClickPendingIntent(createOrientationIntent(context, it.orientation))
                 }
             }
             val iconShape = settings.iconShape
             val selectedIndex = orientationList.indexOf(orientation)
             ViewIds.list.forEachIndexed { index, it ->
-                views.setImageViewResource(it.backgroundId, iconShape.iconId)
+                val helpers = RemoteViewHelpers(views, it)
+                helpers.shape.setImageResource(iconShape.iconId)
                 if (index == selectedIndex) {
                     if (shouldUseIconBackground) {
-                        views.setInt(it.buttonId, "setBackgroundColor", Color.TRANSPARENT)
-                        views.setViewVisibility(it.backgroundId, View.VISIBLE)
-                        views.setInt(it.backgroundId, "setColorFilter", selectedBackground)
+                        helpers.button.setBackgroundColor(Color.TRANSPARENT)
+                        helpers.shape.setVisible(true)
+                        helpers.shape.setImageColor(selBgColor)
                     } else {
-                        views.setInt(it.buttonId, "setBackgroundColor", selectedBackground)
-                        views.setViewVisibility(it.backgroundId, View.GONE)
+                        helpers.button.setBackgroundColor(selBgColor)
+                        helpers.shape.setVisible(false)
                     }
-                    views.setInt(it.iconId, "setColorFilter", selectedForeground)
-                    views.setTextColor(it.titleId, selectedForeground)
+                    helpers.icon.setImageColor(selFgColor)
+                    helpers.label.setTextColor(selFgColor)
                 } else {
                     if (shouldUseIconBackground) {
-                        views.setViewVisibility(it.backgroundId, View.VISIBLE)
-                        views.setInt(it.backgroundId, "setColorFilter", background)
+                        helpers.shape.setVisible(true)
+                        helpers.shape.setImageColor(bgColor)
                     } else {
-                        views.setViewVisibility(it.backgroundId, View.GONE)
+                        helpers.shape.setVisible(false)
                     }
-                    views.setInt(it.buttonId, "setBackgroundColor", Color.TRANSPARENT)
-                    views.setInt(it.iconId, "setColorFilter", foreground)
-                    views.setTextColor(it.titleId, foreground)
+                    helpers.button.setBackgroundColor(Color.TRANSPARENT)
+                    helpers.icon.setImageColor(fgColor)
+                    helpers.label.setTextColor(fgColor)
                 }
-                if (shouldUseIconBackground) {
-                    views.setViewVisibility(it.titleId, View.GONE)
-                } else {
-                    views.setViewVisibility(it.titleId, View.VISIBLE)
-                }
-                if (index < orientationList.size) {
-                    views.setViewVisibility(it.buttonId, View.VISIBLE)
-                } else {
-                    views.setViewVisibility(it.buttonId, View.GONE)
-                }
+                helpers.label.setVisible(!shouldUseIconBackground)
+                helpers.button.setVisible(index < orientationList.size)
             }
-            views.setInt(R.id.remote_views_button_settings, "setBackgroundColor", Color.TRANSPARENT)
             val whiteForeground = baseColor.shouldUseWhiteForeground()
             val settingsColor = if (shouldUseIconBackground) {
                 if (whiteForeground) Color.WHITE else Color.BLACK
-            } else foreground
-            views.setInt(R.id.remote_views_icon_settings, "setColorFilter", settingsColor)
-            views.setOnClickPendingIntent(R.id.remote_views_button_settings, createActivityIntent(context))
+            } else fgColor
+            views.helper(R.id.remote_views_icon_settings).setImageColor(settingsColor)
+            views.helper(R.id.remote_views_button_settings).also {
+                it.setBackgroundColor(Color.TRANSPARENT)
+                it.setOnClickPendingIntent(createActivityIntent(context))
+            }
         }
+
+    private class RemoteViewHelpers(views: RemoteViews, viewId: ViewId) {
+        val button = views.helper(viewId.buttonId)
+        val icon = views.helper(viewId.iconId)
+        val label = views.helper(viewId.labelId)
+        val shape = views.helper(viewId.shapeId)
+    }
+
+    private class RemoteViewHelper(
+        private val views: RemoteViews,
+        @IdRes private val id: Int
+    ) {
+        fun setVisible(visible: Boolean) {
+            views.setViewVisibility(id, if (visible) View.VISIBLE else View.GONE)
+        }
+
+        fun setImageResource(@DrawableRes resourceId: Int) {
+            views.setImageViewResource(id, resourceId)
+        }
+
+        fun setText(@StringRes text: Int) {
+            views.setInt(id, "setText", text)
+        }
+
+        fun setTextColor(@ColorInt color: Int) {
+            views.setTextColor(id, color)
+        }
+
+        fun setImageColor(@ColorInt color: Int) {
+            views.setInt(id, "setColorFilter", color.opaque())
+            views.setInt(id, "setImageAlpha", color.alpha())
+        }
+
+        fun setBackgroundColor(@ColorInt color: Int) {
+            views.setInt(id, "setBackgroundColor", color)
+        }
+
+        fun setOnClickPendingIntent(pendingIntent: PendingIntent) {
+            views.setOnClickPendingIntent(id, pendingIntent)
+        }
+    }
+
+    private fun RemoteViews.helper(@IdRes id: Int): RemoteViewHelper =
+        RemoteViewHelper(this, id)
 
     private fun createOrientationIntent(context: Context, orientation: Int): PendingIntent {
         val intent = Intent(OrientationReceiver.ACTION_ORIENTATION).also {
@@ -93,7 +140,7 @@ object RemoteViewsCreator {
         }
         return PendingIntent.getBroadcast(
             context,
-            orientation,
+            orientation + 1000,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )

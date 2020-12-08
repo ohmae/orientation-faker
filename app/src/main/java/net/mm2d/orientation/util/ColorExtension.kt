@@ -3,7 +3,7 @@ package net.mm2d.orientation.util
 import android.graphics.Color
 import kotlin.math.pow
 
-internal fun Int.shouldUseWhiteForeground(): Boolean =
+fun Int.shouldUseWhiteForeground(): Boolean =
     calculateContrast(this, Color.WHITE) >= 3
 
 // https://www.w3.org/TR/WCAG20/#contrast-ratiodef
@@ -30,3 +30,9 @@ private fun Int.green(): Float = Color.green(this) / 255f
 private fun Int.blue(): Float = Color.blue(this) / 255f
 private fun Float.normalize(): Float =
     if (this < 0.03928f) this / 12.92f else ((this + 0.055f) / 1.055f).pow(2.4f)
+
+fun Int.alpha(): Int =
+    this.ushr(24) and 0xFF
+
+fun Int.opaque(): Int =
+    this or 0xFF.shl(24)

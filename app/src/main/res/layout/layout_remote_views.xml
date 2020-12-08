@@ -22,7 +22,7 @@
         >
 
         <ImageView
-            android:id="@+id/remote_views_background1"
+            android:id="@+id/remote_views_shape1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -48,7 +48,7 @@
                 />
 
             <TextView
-                android:id="@+id/remote_views_title1"
+                android:id="@+id/remote_views_label1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -71,7 +71,7 @@
         >
 
         <ImageView
-            android:id="@+id/remote_views_background2"
+            android:id="@+id/remote_views_shape2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -97,7 +97,7 @@
                 />
 
             <TextView
-                android:id="@+id/remote_views_title2"
+                android:id="@+id/remote_views_label2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -120,7 +120,7 @@
         >
 
         <ImageView
-            android:id="@+id/remote_views_background3"
+            android:id="@+id/remote_views_shape3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -146,7 +146,7 @@
                 />
 
             <TextView
-                android:id="@+id/remote_views_title3"
+                android:id="@+id/remote_views_label3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -169,7 +169,7 @@
         >
 
         <ImageView
-            android:id="@+id/remote_views_background4"
+            android:id="@+id/remote_views_shape4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -195,7 +195,7 @@
                 />
 
             <TextView
-                android:id="@+id/remote_views_title4"
+                android:id="@+id/remote_views_label4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -218,7 +218,7 @@
         >
 
         <ImageView
-            android:id="@+id/remote_views_background5"
+            android:id="@+id/remote_views_shape5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -244,7 +244,7 @@
                 />
 
             <TextView
-                android:id="@+id/remote_views_title5"
+                android:id="@+id/remote_views_label5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

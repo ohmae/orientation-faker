@@ -12,19 +12,23 @@ import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorInt
+import androidx.core.view.isVisible
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.util.alpha
+import net.mm2d.orientation.util.opaque
 import net.mm2d.orientation.view.widget.ViewIds
 
 class NotificationSample(activity: Activity) {
-    val buttonList: List<ButtonInfo> = ViewIds.list.map {
-        ButtonInfo(
+    val buttonList: List<ButtonViews> = ViewIds.list.map {
+        ButtonViews(
             activity.findViewById(it.buttonId),
             activity.findViewById(it.iconId),
-            activity.findViewById(it.titleId),
-            activity.findViewById(it.backgroundId),
+            activity.findViewById(it.labelId),
+            activity.findViewById(it.shapeId),
         )
     }
     private val base = activity.findViewById<View>(R.id.notification)
@@ -48,54 +52,51 @@ class NotificationSample(activity: Activity) {
             val button = buttonList[index]
             Orientation.values.find { it.orientation == value }?.let {
                 button.icon.setImageResource(it.icon)
-                button.title.setText(it.label)
+                button.label.setText(it.label)
                 button.orientation = value
             }
         }
         val iconShape = settings.iconShape
         val selectedIndex = orientationList.indexOf(orientation)
         buttonList.forEachIndexed { index, it ->
-            it.background.setImageResource(iconShape.iconId)
+            it.shape.setImageResource(iconShape.iconId)
             if (index == selectedIndex) {
                 if (shouldUseIconBackground) {
                     it.button.setBackgroundColor(Color.TRANSPARENT)
-                    it.background.visibility = View.VISIBLE
-                    it.background.setColorFilter(selectedBackground)
+                    it.shape.isVisible = true
+                    it.shape.setImageColor(selectedBackground)
                 } else {
                     it.button.setBackgroundColor(selectedBackground)
-                    it.background.visibility = View.GONE
+                    it.shape.isVisible = false
                 }
-                it.icon.setColorFilter(selectedForeground)
-                it.title.setTextColor(selectedForeground)
+                it.icon.setImageColor(selectedForeground)
+                it.label.setTextColor(selectedForeground)
             } else {
                 if (shouldUseIconBackground) {
-                    it.background.visibility = View.VISIBLE
-                    it.background.setColorFilter(background)
+                    it.shape.isVisible = true
+                    it.shape.setImageColor(background)
                 } else {
-                    it.background.visibility = View.GONE
+                    it.shape.isVisible = false
                 }
                 it.button.setBackgroundColor(Color.TRANSPARENT)
-                it.icon.setColorFilter(foreground)
-                it.title.setTextColor(foreground)
+                it.icon.setImageColor(foreground)
+                it.label.setTextColor(foreground)
             }
-            if (shouldUseIconBackground) {
-                it.title.visibility = View.GONE
-            } else {
-                it.title.visibility = View.VISIBLE
-            }
-            if (index < orientationList.size) {
-                it.button.visibility = View.VISIBLE
-            } else {
-                it.button.visibility = View.GONE
-            }
+            it.label.isVisible = !shouldUseIconBackground
+            it.button.isVisible = index < orientationList.size
         }
     }
 
-    class ButtonInfo(
+    private fun ImageView.setImageColor(@ColorInt color: Int) {
+        setColorFilter(color.opaque())
+        imageAlpha = color.alpha()
+    }
+
+    class ButtonViews(
         val button: View,
         val icon: ImageView,
-        val title: TextView,
-        val background: ImageView,
+        val label: TextView,
+        val shape: ImageView,
         var orientation: Int = Orientation.INVALID
     )
 }

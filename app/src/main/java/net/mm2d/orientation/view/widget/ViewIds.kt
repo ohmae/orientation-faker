@@ -10,43 +10,43 @@ package net.mm2d.orientation.view.widget
 import net.mm2d.android.orientationfaker.R.id
 
 object ViewIds {
-    data class OrientationId(
+    data class ViewId(
         val buttonId: Int,
         val iconId: Int,
-        val titleId: Int,
-        val backgroundId: Int,
+        val labelId: Int,
+        val shapeId: Int,
     )
 
-    val list: List<OrientationId> = listOf(
-        OrientationId(
+    val list: List<ViewId> = listOf(
+        ViewId(
             id.remote_views_button1,
             id.remote_views_icon1,
-            id.remote_views_title1,
-            id.remote_views_background1,
+            id.remote_views_label1,
+            id.remote_views_shape1,
         ),
-        OrientationId(
+        ViewId(
             id.remote_views_button2,
             id.remote_views_icon2,
-            id.remote_views_title2,
-            id.remote_views_background2,
+            id.remote_views_label2,
+            id.remote_views_shape2,
         ),
-        OrientationId(
+        ViewId(
             id.remote_views_button3,
             id.remote_views_icon3,
-            id.remote_views_title3,
-            id.remote_views_background3,
+            id.remote_views_label3,
+            id.remote_views_shape3,
         ),
-        OrientationId(
+        ViewId(
             id.remote_views_button4,
             id.remote_views_icon4,
-            id.remote_views_title4,
-            id.remote_views_background4,
+            id.remote_views_label4,
+            id.remote_views_shape4,
         ),
-        OrientationId(
+        ViewId(
             id.remote_views_button5,
             id.remote_views_icon5,
-            id.remote_views_title5,
-            id.remote_views_background5,
+            id.remote_views_label5,
+            id.remote_views_shape5,
         )
     )
 }
