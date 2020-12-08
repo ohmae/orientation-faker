@@ -13,7 +13,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.gridlayout.widget.GridLayout
@@ -30,6 +32,8 @@ import net.mm2d.orientation.settings.IconShape
 import net.mm2d.orientation.settings.OrientationList
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.SystemSettings
+import net.mm2d.orientation.util.alpha
+import net.mm2d.orientation.util.opaque
 import net.mm2d.orientation.view.dialog.IconShapeDialog
 import net.mm2d.orientation.view.dialog.OrientationHelpDialog
 import net.mm2d.orientation.view.dialog.ResetLayoutDialog
@@ -108,11 +112,11 @@ class DetailedSettingsActivity : AppCompatActivity(),
     }
 
     private fun setUpSample() {
-        binding.content.sampleForeground.setColorFilter(settings.foregroundColor)
-        binding.content.sampleBackground.setColorFilter(settings.backgroundColor)
-        binding.content.sampleForegroundSelected.setColorFilter(settings.foregroundColorSelected)
-        binding.content.sampleBackgroundSelected.setColorFilter(settings.backgroundColorSelected)
-        binding.content.sampleBase.setColorFilter(settings.baseColor)
+        binding.content.sampleForeground.setImageColor(settings.foregroundColor)
+        binding.content.sampleBackground.setImageColor(settings.backgroundColor)
+        binding.content.sampleForegroundSelected.setImageColor(settings.foregroundColorSelected)
+        binding.content.sampleBackgroundSelected.setImageColor(settings.backgroundColorSelected)
+        binding.content.sampleBase.setImageColor(settings.baseColor)
         binding.content.foreground.setOnClickListener {
             ColorChooserDialog.show(this, it.id, settings.foregroundColor, true)
         }
@@ -150,23 +154,23 @@ class DetailedSettingsActivity : AppCompatActivity(),
         when (requestCode) {
             R.id.foreground -> {
                 settings.foregroundColor = color
-                binding.content.sampleForeground.setColorFilter(color)
+                binding.content.sampleForeground.setImageColor(color)
             }
             R.id.background -> {
                 settings.backgroundColor = color
-                binding.content.sampleBackground.setColorFilter(color)
+                binding.content.sampleBackground.setImageColor(color)
             }
             R.id.foreground_selected -> {
                 settings.foregroundColorSelected = color
-                binding.content.sampleForegroundSelected.setColorFilter(color)
+                binding.content.sampleForegroundSelected.setImageColor(color)
             }
             R.id.background_selected -> {
                 settings.backgroundColorSelected = color
-                binding.content.sampleBackgroundSelected.setColorFilter(color)
+                binding.content.sampleBackgroundSelected.setImageColor(color)
             }
             R.id.base -> {
                 settings.baseColor = color
-                binding.content.sampleBase.setColorFilter(color)
+                binding.content.sampleBase.setImageColor(color)
             }
         }
         notificationSample.update()
@@ -175,13 +179,18 @@ class DetailedSettingsActivity : AppCompatActivity(),
 
     override fun resetTheme() {
         settings.resetTheme()
-        binding.content.sampleForeground.setColorFilter(settings.foregroundColor)
-        binding.content.sampleBackground.setColorFilter(settings.backgroundColor)
-        binding.content.sampleForegroundSelected.setColorFilter(settings.foregroundColorSelected)
-        binding.content.sampleBackgroundSelected.setColorFilter(settings.backgroundColorSelected)
-        binding.content.sampleBase.setColorFilter(settings.baseColor)
+        binding.content.sampleForeground.setImageColor(settings.foregroundColor)
+        binding.content.sampleBackground.setImageColor(settings.backgroundColor)
+        binding.content.sampleForegroundSelected.setImageColor(settings.foregroundColorSelected)
+        binding.content.sampleBackgroundSelected.setImageColor(settings.backgroundColorSelected)
+        binding.content.sampleBase.setImageColor(settings.baseColor)
         notificationSample.update()
         MainController.update()
+    }
+
+    private fun ImageView.setImageColor(@ColorInt color: Int) {
+        setColorFilter(color.opaque())
+        imageAlpha = color.alpha()
     }
 
     private fun setUpLayoutSelector() {

@@ -30,62 +30,87 @@
         android:orientation="horizontal"
         >
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/foreground"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:orientation="vertical"
             android:paddingTop="@dimen/margin_menu_sample"
             android:paddingBottom="@dimen/margin_menu_sample"
             >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@null"
+                android:scaleType="center"
+                app:srcCompat="@drawable/bg_sample"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
             <ImageView
                 android:id="@+id/sample_foreground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_menu_sample"
-                android:background="@drawable/bg_sample"
-                android:backgroundTint="@color/fg_main"
                 android:contentDescription="@null"
                 android:scaleType="center"
                 app:srcCompat="@drawable/ic_circle"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
 
             <TextView
+                android:id="@+id/label_foreground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:text="@string/button_foreground_color"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="@dimen/text_color_title"
+                android:layout_marginTop="@dimen/margin_menu_sample"
+                app:layout_constraintTop_toBottomOf="@id/sample_foreground"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/background"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:orientation="vertical"
             android:paddingTop="@dimen/margin_menu_sample"
             android:paddingBottom="@dimen/margin_menu_sample"
             >
 
             <ImageView
-                android:id="@+id/sample_background"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_menu_sample"
-                android:background="@drawable/bg_sample"
-                android:backgroundTint="@color/fg_main"
+                android:contentDescription="@null"
+                android:scaleType="center"
+                app:srcCompat="@drawable/bg_sample"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <ImageView
+                android:id="@+id/sample_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:contentDescription="@null"
                 android:scaleType="center"
                 app:srcCompat="@drawable/ic_circle"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
 
             <TextView
@@ -95,31 +120,46 @@
                 android:text="@string/button_background_color"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="@dimen/text_color_title"
+                android:layout_marginTop="@dimen/margin_menu_sample"
+                app:layout_constraintTop_toBottomOf="@id/sample_background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/foreground_selected"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:orientation="vertical"
             android:paddingTop="@dimen/margin_menu_sample"
             android:paddingBottom="@dimen/margin_menu_sample"
             >
 
             <ImageView
-                android:id="@+id/sample_foreground_selected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_menu_sample"
-                android:background="@drawable/bg_sample"
-                android:backgroundTint="@color/fg_main"
+                android:contentDescription="@null"
+                android:scaleType="center"
+                app:srcCompat="@drawable/bg_sample"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <ImageView
+                android:id="@+id/sample_foreground_selected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:contentDescription="@null"
                 android:scaleType="center"
                 app:srcCompat="@drawable/ic_circle"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
 
             <TextView
@@ -129,31 +169,46 @@
                 android:text="@string/button_selected_foreground_color"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="@dimen/text_color_title"
+                android:layout_marginTop="@dimen/margin_menu_sample"
+                app:layout_constraintTop_toBottomOf="@id/sample_foreground_selected"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/background_selected"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:orientation="vertical"
             android:paddingTop="@dimen/margin_menu_sample"
             android:paddingBottom="@dimen/margin_menu_sample"
             >
 
             <ImageView
-                android:id="@+id/sample_background_selected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_menu_sample"
-                android:background="@drawable/bg_sample"
-                android:backgroundTint="@color/fg_main"
+                android:contentDescription="@null"
+                android:scaleType="center"
+                app:srcCompat="@drawable/bg_sample"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <ImageView
+                android:id="@+id/sample_background_selected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:contentDescription="@null"
                 android:scaleType="center"
                 app:srcCompat="@drawable/ic_circle"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
 
             <TextView
@@ -163,32 +218,47 @@
                 android:text="@string/button_selected_background_color"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="@dimen/text_color_title"
+                android:layout_marginTop="@dimen/margin_menu_sample"
+                app:layout_constraintTop_toBottomOf="@id/sample_background_selected"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/base"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:orientation="vertical"
             android:paddingTop="@dimen/margin_menu_sample"
             android:paddingBottom="@dimen/margin_menu_sample"
             android:visibility="gone"
             >
 
             <ImageView
-                android:id="@+id/sample_base"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_menu_sample"
-                android:background="@drawable/bg_sample"
-                android:backgroundTint="@color/fg_main"
+                android:contentDescription="@null"
+                android:scaleType="center"
+                app:srcCompat="@drawable/bg_sample"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <ImageView
+                android:id="@+id/sample_base"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:contentDescription="@null"
                 android:scaleType="center"
                 app:srcCompat="@drawable/ic_circle"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
 
             <TextView
@@ -198,8 +268,13 @@
                 android:text="@string/button_base_color"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="@dimen/text_color_title"
+                android:layout_marginTop="@dimen/margin_menu_sample"
+                app:layout_constraintTop_toBottomOf="@id/sample_base"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
     <TextView
