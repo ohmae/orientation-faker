@@ -114,20 +114,20 @@ class DetailedSettingsActivity : AppCompatActivity(),
         binding.content.sampleBackgroundSelected.setColorFilter(settings.backgroundColorSelected)
         binding.content.sampleBase.setColorFilter(settings.baseColor)
         binding.content.foreground.setOnClickListener {
-            ColorChooserDialog.show(this, it.id, settings.foregroundColor)
+            ColorChooserDialog.show(this, it.id, settings.foregroundColor, true)
         }
         binding.content.background.setOnClickListener {
-            ColorChooserDialog.show(this, it.id, settings.backgroundColor)
+            ColorChooserDialog.show(this, it.id, settings.backgroundColor, true)
         }
         binding.content.foregroundSelected.setOnClickListener {
-            ColorChooserDialog.show(this, it.id, settings.foregroundColorSelected)
+            ColorChooserDialog.show(this, it.id, settings.foregroundColorSelected, true)
         }
         binding.content.backgroundSelected.setOnClickListener {
-            ColorChooserDialog.show(this, it.id, settings.backgroundColorSelected)
+            ColorChooserDialog.show(this, it.id, settings.backgroundColorSelected, true)
         }
         binding.content.base.isGone = !settings.shouldUseIconBackground
         binding.content.base.setOnClickListener {
-            ColorChooserDialog.show(this, it.id, settings.baseColor)
+            ColorChooserDialog.show(this, it.id, settings.baseColor, true)
         }
         binding.content.resetTheme.setOnClickListener { ResetThemeDialog.show(this) }
         setUpOrientationIcons()
