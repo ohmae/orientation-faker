@@ -36,7 +36,8 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
         Settings.get()
     }
     private var adapter: Adapter? = null
-    private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+    private val job = Job()
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + job)
     private lateinit var binding: ActivityEachAppBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,7 +97,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
 
     override fun onDestroy() {
         super.onDestroy()
-        scope.cancel()
+        job.cancel()
     }
 
     override fun onResume() {
@@ -157,6 +158,9 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
                     it.packageName
                 )
             }
+            .groupBy { it.packageName }
+            .values
+            .map { it[0] }
             .sortedBy { it.label }
             .toList()
     }
