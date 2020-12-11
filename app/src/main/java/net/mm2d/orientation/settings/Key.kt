@@ -38,6 +38,7 @@ interface Key {
         USE_ROUND_BACKGROUND_BOOLEAN,
         NIGHT_MODE_INT,
         ICON_SHAPE_STRING,
+        SHOW_ALL_APPS_BOOLEAN,
         ;
 
         companion object {

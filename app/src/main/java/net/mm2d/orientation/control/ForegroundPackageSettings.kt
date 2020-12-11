@@ -58,4 +58,11 @@ object ForegroundPackageSettings {
             }
         }
     }
+
+    fun reset() {
+        map.clear()
+        scope.launch {
+            database.packageSettingsDao().deleteAll()
+        }
+    }
 }

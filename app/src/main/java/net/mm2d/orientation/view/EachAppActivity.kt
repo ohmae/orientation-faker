@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isGone
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.*
@@ -48,6 +49,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         setUpSearch()
+        setUpBottom()
         scope.launch {
             val list = makeAppList()
             withContext(Dispatchers.Main) {
@@ -75,6 +77,18 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
         adapter.search(word)
         binding.noAppCaution.isGone = adapter.itemCount != 0
         binding.recyclerView.scrollToPosition(0)
+    }
+
+    private fun setUpBottom() {
+        binding.showAllCheck.isChecked = settings.showAllApps
+        binding.showAllCheck.setOnCheckedChangeListener { _, isChecked ->
+            settings.showAllApps = isChecked
+            adapter?.update()
+        }
+        binding.resetButton.setOnClickListener {
+            ForegroundPackageSettings.reset()
+            adapter?.notifyDataSetChanged()
+        }
     }
 
     private fun setAdapter(list: List<AppInfo>) {
@@ -147,30 +161,42 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
         }
         val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PackageManager.MATCH_ALL else 0
         val pm = packageManager
-        return pm.queryIntentActivities(intent, flag)
-            .asSequence()
+        val allApps = pm.getInstalledPackages(PackageManager.GET_ACTIVITIES)
+            .mapNotNull { it.activities?.getOrNull(0) }
+            .map { it to false }
+        val launcherApps = pm.queryIntentActivities(intent, flag)
             .mapNotNull { it.activityInfo }
-            .filter { it.packageName != packageName }
-            .map {
-                AppInfo(
-                    it,
-                    it.loadLabel(pm).toString(),
-                    it.packageName
-                )
-            }
-            .groupBy { it.packageName }
-            .values
-            .map { it[0] }
+            .map { it to true }
+        return (launcherApps + allApps)
+            .filter { it.first.packageName != packageName }
+            .distinctBy { it.first.packageName }
+            .map { appInfo(pm, it.first, it.second) }
             .sortedBy { it.label }
-            .toList()
     }
+
+    private fun appInfo(pm: PackageManager, activityInfo: ActivityInfo, launcher: Boolean): AppInfo =
+        AppInfo(activityInfo, activityInfo.loadLabel(pm).toString(), activityInfo.packageName, launcher)
 
     data class AppInfo(
         val activityInfo: ActivityInfo,
         val label: String,
-        val packageName: String
+        val packageName: String,
+        val launcher: Boolean
     ) {
         var icon: Drawable? = null
+    }
+
+    private class DiffCallback(
+        private val oldList: List<AppInfo>,
+        private val newList: List<AppInfo>
+    ) : DiffUtil.Callback() {
+        override fun getOldListSize(): Int = oldList.size
+        override fun getNewListSize(): Int = newList.size
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+            oldList[oldItemPosition].packageName == newList[newItemPosition].packageName
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+            oldList[oldItemPosition].packageName == newList[newItemPosition].packageName
     }
 
     class Adapter(
@@ -180,16 +206,39 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
     ) : RecyclerView.Adapter<ViewHolder>() {
         private val inflater: LayoutInflater = LayoutInflater.from(context)
         private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
-        private var list: List<AppInfo> = initialList
-        private var defaultIcon: Drawable? = null
+        private val settings: Settings = Settings.get()
+        private val defaultIcon: Drawable by lazy {
+            AppCompatResources.getDrawable(context, R.drawable.ic_launcher_default)!!
+        }
         private var searchWord: String = ""
+        private var list: List<AppInfo> =
+            if (settings.showAllApps) initialList else initialList.filter { it.launcher }
 
         fun search(word: String) {
             val w = word.toLowerCase(Locale.ENGLISH)
             if (w == searchWord) return
             searchWord = w
-            list = initialList.filter { it.contains(w) }
-            notifyDataSetChanged()
+            update()
+        }
+
+        fun update() {
+            val oldList = list
+            list = filter()
+            val result = DiffUtil.calculateDiff(DiffCallback(oldList, list))
+            result.dispatchUpdatesTo(this)
+        }
+
+        private fun filter(): List<AppInfo> {
+            val word = searchWord
+            return if (word.isEmpty()) {
+                if (settings.showAllApps) initialList else initialList.filter { it.launcher }
+            } else {
+                if (settings.showAllApps) {
+                    initialList.filter { it.contains(word) }
+                } else {
+                    initialList.filter { it.launcher && it.contains(word) }
+                }
+            }
         }
 
         private fun AppInfo.contains(word: String): Boolean =
@@ -205,19 +254,13 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
             bind(holder.binding, position, list[position])
         }
 
-        private fun getDefaultIcon(): Drawable =
-            defaultIcon ?: AppCompatResources.getDrawable(context, R.drawable.ic_launcher_default)!!.also {
-                defaultIcon = it
-            }
-
         private fun bind(binding: ItemEachAppBinding, position: Int, info: AppInfo) {
             binding.root.tag = position
             if (info.icon != null) {
                 binding.appIcon.setImageDrawable(info.icon)
             } else {
                 scope.launch {
-                    info.icon = info.activityInfo.loadIcon(context.packageManager)
-                        ?: getDefaultIcon()
+                    info.icon = info.activityInfo.loadIcon(context.packageManager) ?: defaultIcon
                     withContext(Dispatchers.Main) {
                         if (binding.root.tag == position) {
                             binding.appIcon.setImageDrawable(info.icon)

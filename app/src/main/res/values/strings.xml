@@ -53,6 +53,8 @@
     <string name="package_check_disabled">Please turn on the switch to enable this function</string>
     <string name="search_apps">Search apps</string>
     <string name="no_app_caution">No apps that match the search conditions</string>
+    <string name="check_show_all_app">Show all apps</string>
+    <string name="button_reset_each_app_setting">Reset</string>
 
     <string name="button_reset_theme">Reset theme</string>
     <string name="button_reset_layout">Reset button layout</string>

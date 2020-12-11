@@ -16,4 +16,7 @@ interface PackageSettingsDao {
 
     @Query("DELETE FROM package_settings WHERE package_name = :packageName")
     suspend fun delete(packageName: String)
+
+    @Query("DELETE FROM package_settings")
+    suspend fun deleteAll()
 }

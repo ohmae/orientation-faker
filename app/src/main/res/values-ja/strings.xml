@@ -53,6 +53,8 @@
     <string name="package_check_disabled">機能を有効にするにはスイッチをONにしてください</string>
     <string name="search_apps">アプリを検索</string>
     <string name="no_app_caution">検索条件に一致するアプリは見つかりませんでした</string>
+    <string name="check_show_all_app">すべてのアプリを表示</string>
+    <string name="button_reset_each_app_setting">リセット</string>
 
     <string name="button_reset_theme">テーマをリセット</string>
     <string name="button_reset_layout">ボタン配置をリセット</string>
