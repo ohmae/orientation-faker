@@ -9,7 +9,7 @@
     android:background="@color/bg_notification"
     android:baselineAligned="false"
     android:orientation="horizontal"
-    tools:ignore="Overdraw,UselessParent"
+    tools:ignore="Overdraw,UselessParent,ContentDescription,VectorDrawableCompat"
     >
 
     <FrameLayout
@@ -270,8 +270,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_settings"
-            tools:ignore="ContentDescription,VectorDrawableCompat"
+            android:src="@drawable/ic_more_vertical"
             />
     </FrameLayout>
 </LinearLayout>
