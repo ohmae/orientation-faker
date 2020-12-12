@@ -23,19 +23,6 @@ object CustomTabsHelper : CustomTabsServiceConnection() {
         "com.android.chrome", // Chrome
         "org.mozilla.firefox", // Firefox
         "com.microsoft.emmx", // Microsoft Edge
-        "com.yandex.browser", //Yandex Browser
-        "com.sec.android.app.sbrowser", // Samsung Internet Browser
-        "com.kiwibrowser.browser", // Kiwi Browser
-        "com.brave.browser", // Brave Browser
-        "com.chrome.beta", // Chrome Beta
-        "com.chrome.dev", // Chrome Dev
-        "com.chrome.canary", // Chrome Canary
-        "org.mozilla.firefox_beta", // Firefox Beta
-        "org.mozilla.fennec_aurora", // Firefox Nightly
-        "org.mozilla.focus", // Firefox Focus
-        "com.yandex.browser.beta", // Yandex Browser (beta)
-        "com.yandex.browser.alpha", // Yandex Browser (alpha)
-        "com.google.android.apps.chrome" // Chrome Local
     )
     private const val ACTION_CUSTOM_TABS_CONNECTION =
         "android.support.customtabs.action.CustomTabsService"
@@ -64,7 +51,7 @@ object CustomTabsHelper : CustomTabsServiceConnection() {
                 return it
             }
         }
-        return PREFERRED_PACKAGES.find { candidate.contains(it) }
+        return PREFERRED_PACKAGES.find { candidate.contains(it) } ?: candidate[0]
     }
 
     private lateinit var context: Context
