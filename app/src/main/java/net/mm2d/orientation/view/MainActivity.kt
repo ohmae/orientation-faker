@@ -127,6 +127,7 @@ class MainActivity : AppCompatActivity(), NightModeDialog.Callback {
             R.id.source_code -> Launcher.openSourceCode(this)
             R.id.privacy_policy -> Launcher.openPrivacyPolicy(this)
             R.id.play_store -> Launcher.openGooglePlay(this)
+            R.id.mail_to_developer -> Launcher.sendMailToDeveloper(this)
         }
         return true
     }

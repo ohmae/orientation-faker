@@ -27,4 +27,10 @@
         android:title="@string/options_menu_play_store"
         app:showAsAction="never"
         />
+    <item
+        android:id="@+id/mail_to_developer"
+        android:orderInCategory="103"
+        android:title="@string/options_menu_mail_to_developer"
+        app:showAsAction="never"
+        />
 </menu>

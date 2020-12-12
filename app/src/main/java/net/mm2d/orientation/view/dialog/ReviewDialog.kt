@@ -34,7 +34,7 @@ class ReviewDialog : DialogFragment() {
                 settings.reviewed = true
             }
             .setNeutralButton(R.string.dialog_button_send_mail) { _, _ ->
-                Launcher.sendMailReport(activity)
+                Launcher.sendMailToDeveloper(activity)
                 settings.reported = true
             }
             .setNegativeButton(R.string.cancel) { dialog, _ ->

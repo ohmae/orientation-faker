@@ -76,31 +76,19 @@ object Launcher {
         openCustomTabs(context, GITHUB_URL)
     }
 
-    fun sendMailReport(context: Context) {
+    fun sendMailToDeveloper(context: Context) {
         try {
-            val intent = Intent(Intent.ACTION_SENDTO).also {
-                it.data = Uri.parse("mailto:$EMAIL_ADDRESS")
+            val intent = Intent(Intent.ACTION_SEND).also {
+                it.type = "message/rfc822"
                 it.putExtra(Intent.EXTRA_EMAIL, arrayOf(EMAIL_ADDRESS))
-                it.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.app_name))
-                it.putExtra(Intent.EXTRA_TEXT, makeSystemInformation(context))
+                it.putExtra(
+                    Intent.EXTRA_SUBJECT,
+                    context.getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME + " (${Build.MODEL}, Android ${Build.VERSION.RELEASE})"
+                )
             }
             context.startActivity(intent)
         } catch (e: Exception) {
             Logger.w(e)
         }
     }
-
-    private fun makeSystemInformation(context: Context): String = StringBuilder()
-        .append("----------system----------\n")
-        .append("APP: ")
-        .append(context.getString(R.string.app_name))
-        .append(" ")
-        .append(BuildConfig.VERSION_NAME)
-        .append("/")
-        .append(BuildConfig.VERSION_CODE)
-        .append("\n")
-        .append("DEVICE: ")
-        .append(Build.FINGERPRINT)
-        .append("\n")
-        .toString()
 }
