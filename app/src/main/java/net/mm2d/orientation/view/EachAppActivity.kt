@@ -36,7 +36,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
     private val settings by lazy {
         Settings.get()
     }
-    private var adapter: Adapter? = null
+    private var adapter: EachAppAdapter? = null
     private val job = Job()
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + job)
     private lateinit var binding: ActivityEachAppBinding
@@ -93,14 +93,12 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
 
     private fun setAdapter(list: List<AppInfo>) {
         ForegroundPackageSettings.updateInstalledPackages(list.map { it.packageName })
-        Adapter(this, list) { position, packageName ->
+        val adapter = EachAppAdapter(this, list) { position, packageName ->
             hideKeyboard()
             EachAppOrientationDialog.show(this, position, packageName)
-        }.let {
-            adapter = it
-            binding.recyclerView.adapter = it
-            search(binding.searchWindow.text.toString())
         }
+        this.adapter = adapter
+        binding.recyclerView.adapter = adapter
         binding.progressBar.visibility = View.GONE
     }
 
@@ -199,7 +197,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
             oldList[oldItemPosition].packageName == newList[newItemPosition].packageName
     }
 
-    class Adapter(
+    private class EachAppAdapter(
         private val context: Context,
         private val initialList: List<AppInfo>,
         private val listener: (position: Int, packageName: String) -> Unit
