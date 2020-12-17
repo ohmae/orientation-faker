@@ -13,8 +13,6 @@ import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import androidx.appcompat.app.AppCompatDelegate
 import net.mm2d.android.orientationfaker.BuildConfig
-import net.mm2d.log.Logger
-import net.mm2d.log.android.AndroidSenders
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.service.KeepAlive
@@ -43,10 +41,6 @@ class App : Application() {
         if (!BuildConfig.DEBUG) {
             return
         }
-        Logger.setSender(AndroidSenders.create())
-        Logger.setLogLevel(Logger.VERBOSE)
-        AndroidSenders.appendCaller(true)
-        AndroidSenders.appendThread(true)
     }
 
     private fun setStrictMode() {

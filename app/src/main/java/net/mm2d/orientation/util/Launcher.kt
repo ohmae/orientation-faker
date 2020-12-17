@@ -16,7 +16,6 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.log.Logger
 import net.mm2d.orientation.tabs.CustomTabsHelper
 
 object Launcher {
@@ -33,7 +32,6 @@ object Launcher {
             intent.addCategory(Intent.CATEGORY_BROWSABLE)
             context.startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            Logger.w(e)
             return false
         }
         return true
@@ -54,7 +52,6 @@ object Launcher {
             intent.intent.setPackage(CustomTabsHelper.packageNameToBind)
             intent.launchUrl(context, uri)
         } catch (e: ActivityNotFoundException) {
-            Logger.w(e)
             return false
         }
         return true
@@ -88,7 +85,6 @@ object Launcher {
             }
             context.startActivity(intent)
         } catch (e: Exception) {
-            Logger.w(e)
         }
     }
 }
