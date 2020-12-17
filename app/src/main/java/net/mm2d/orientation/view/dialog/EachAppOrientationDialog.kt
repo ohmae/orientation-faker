@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -93,10 +94,10 @@ class EachAppOrientationDialog : DialogFragment() {
             val manager = activity.supportFragmentManager
             if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
             EachAppOrientationDialog().also { dialog ->
-                dialog.arguments = Bundle().also {
-                    it.putInt(KEY_POSITION, position)
-                    it.putString(KEY_PACKAGE, packageName)
-                }
+                dialog.arguments = bundleOf(
+                    KEY_POSITION to position,
+                    KEY_PACKAGE to packageName,
+                )
             }.show(manager, TAG)
         }
     }
