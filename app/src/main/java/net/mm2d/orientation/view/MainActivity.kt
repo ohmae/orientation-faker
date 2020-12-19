@@ -17,12 +17,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Lifecycle.State
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.appupdate.AppUpdateOptions
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.UpdateAvailability
-import com.google.android.play.core.ktx.clientVersionStalenessDays
-import com.google.android.play.core.ktx.isImmediateUpdateAllowed
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.ActivityMainBinding
@@ -34,6 +28,7 @@ import net.mm2d.orientation.settings.NightModes
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.Launcher
 import net.mm2d.orientation.util.SystemSettings
+import net.mm2d.orientation.util.Updater
 import net.mm2d.orientation.view.dialog.NightModeDialog
 import net.mm2d.orientation.view.dialog.OverlayPermissionDialog
 
@@ -62,7 +57,7 @@ class MainActivity : AppCompatActivity(), NightModeDialog.Callback {
             if (Settings.get().shouldAutoStart()) {
                 MainController.start()
             }
-            checkUpdate()
+            Updater.startUpdateIfAvailable(this)
         }
     }
 
@@ -85,22 +80,6 @@ class MainActivity : AppCompatActivity(), NightModeDialog.Callback {
     override fun onPause() {
         super.onPause()
         handler.removeCallbacks(checkSystemSettingsTask)
-    }
-
-    private fun checkUpdate() {
-        val manager = AppUpdateManagerFactory.create(applicationContext)
-        manager.appUpdateInfo.addOnSuccessListener { info ->
-            if (info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
-                info.clientVersionStalenessDays.let { it != null && it >= DAYS_FOR_UPDATE } &&
-                info.isImmediateUpdateAllowed
-            ) {
-                try {
-                    val options = AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE)
-                    manager.startUpdateFlow(info, this, options)
-                } catch (ignored: Exception) {
-                }
-            }
-        }
     }
 
     private fun checkSystemSettings() {
@@ -208,6 +187,5 @@ class MainActivity : AppCompatActivity(), NightModeDialog.Callback {
 
     companion object {
         private const val CHECK_INTERVAL: Long = 5000L
-        private const val DAYS_FOR_UPDATE: Int = 2
     }
 }
