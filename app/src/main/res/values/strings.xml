@@ -112,6 +112,6 @@
     <string name="options_menu_license">Open source licenses</string>
     <string name="options_menu_source_code">Source code</string>
     <string name="options_menu_privacy_policy">Privacy policy</string>
-    <string name="options_menu_play_store">Google Play store</string>
     <string name="options_menu_mail_to_developer">Mail to developer</string>
+    <string name="options_menu_play_store">Google Play store</string>
 </resources>

@@ -112,6 +112,6 @@
     <string name="options_menu_license">オープンソースライセンス</string>
     <string name="options_menu_source_code">ソースコード</string>
     <string name="options_menu_privacy_policy">プライバシーポリシー</string>
-    <string name="options_menu_play_store">Google Playストア</string>
     <string name="options_menu_mail_to_developer">開発者へメール</string>
+    <string name="options_menu_play_store">Google Playストア</string>
 </resources>
