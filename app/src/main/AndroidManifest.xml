@@ -55,17 +55,14 @@
 
         <activity
             android:name="net.mm2d.orientation.view.MainActivity"
-            android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|keyboard"
             android:launchMode="singleTask"
             />
         <activity
             android:name="net.mm2d.orientation.view.DetailedSettingsActivity"
-            android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|keyboard"
             android:label="@string/menu_title_detailed_settings"
             />
         <activity
             android:name="net.mm2d.orientation.view.EachAppActivity"
-            android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|keyboard"
             android:label="@string/menu_title_setting_for_each_app"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"
