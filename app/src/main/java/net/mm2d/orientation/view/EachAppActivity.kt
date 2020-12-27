@@ -154,23 +154,26 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
     }
 
     private fun makeAppList(): List<AppInfo> {
-        val intent = Intent(Intent.ACTION_MAIN).also {
-            it.addCategory(Intent.CATEGORY_LAUNCHER)
-        }
         val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PackageManager.MATCH_ALL else 0
         val pm = packageManager
         val allApps = pm.getInstalledPackages(PackageManager.GET_ACTIVITIES)
             .mapNotNull { it.activities?.getOrNull(0) }
             .map { it to false }
-        val launcherApps = pm.queryIntentActivities(intent, flag)
+        val launcherApps = pm.queryIntentActivities(categoryIntent(Intent.CATEGORY_LAUNCHER), flag)
             .mapNotNull { it.activityInfo }
             .map { it to true }
-        return (launcherApps + allApps)
+        val launcher = pm.queryIntentActivities(categoryIntent(Intent.CATEGORY_HOME), flag)
+            .mapNotNull { it.activityInfo }
+            .map { it to true }
+        return (launcherApps + launcher + allApps)
             .filter { it.first.packageName != packageName }
             .distinctBy { it.first.packageName }
             .map { appInfo(pm, it.first, it.second) }
             .sortedBy { it.label }
     }
+
+    private fun categoryIntent(category: String): Intent =
+        Intent(Intent.ACTION_MAIN).also { it.addCategory(category) }
 
     private fun appInfo(pm: PackageManager, activityInfo: ActivityInfo, launcher: Boolean): AppInfo =
         AppInfo(activityInfo, activityInfo.loadLabel(pm).toString(), activityInfo.packageName, launcher)
@@ -249,10 +252,8 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
         override fun getItemCount(): Int = list.size
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            bind(holder.binding, position, list[position])
-        }
-
-        private fun bind(binding: ItemEachAppBinding, position: Int, info: AppInfo) {
+            val binding = holder.binding
+            val info = list[position]
             binding.root.tag = position
             if (info.icon != null) {
                 binding.appIcon.setImageDrawable(info.icon)
@@ -279,7 +280,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
                 binding.orientationName.text = ""
             }
             binding.root.setOnClickListener {
-                listener(position, info.packageName)
+                listener(holder.adapterPosition, info.packageName)
             }
         }
     }
