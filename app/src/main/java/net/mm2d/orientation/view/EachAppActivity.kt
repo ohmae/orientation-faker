@@ -84,6 +84,8 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
         binding.showAllCheck.setOnCheckedChangeListener { _, isChecked ->
             settings.showAllApps = isChecked
             adapter?.update()
+            binding.noAppCaution.isGone = adapter?.itemCount != 0
+            binding.recyclerView.scrollToPosition(0)
         }
         binding.resetButton.setOnClickListener {
             ForegroundPackageSettings.reset()
