@@ -2,7 +2,7 @@ package net.mm2d.orientation.view
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
+import android.content.pm.PackageItemInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -159,7 +159,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
         val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PackageManager.MATCH_ALL else 0
         val pm = packageManager
         val allApps = pm.getInstalledPackages(PackageManager.GET_ACTIVITIES)
-            .mapNotNull { it.activities?.getOrNull(0) }
+            .mapNotNull { it.applicationInfo }
             .map { it to false }
         val launcherApps = pm.queryIntentActivities(categoryIntent(Intent.CATEGORY_LAUNCHER), flag)
             .mapNotNull { it.activityInfo }
@@ -177,11 +177,11 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
     private fun categoryIntent(category: String): Intent =
         Intent(Intent.ACTION_MAIN).also { it.addCategory(category) }
 
-    private fun appInfo(pm: PackageManager, activityInfo: ActivityInfo, launcher: Boolean): AppInfo =
-        AppInfo(activityInfo, activityInfo.loadLabel(pm).toString(), activityInfo.packageName, launcher)
+    private fun appInfo(pm: PackageManager, info: PackageItemInfo, launcher: Boolean): AppInfo =
+        AppInfo(info, info.loadLabel(pm).toString(), info.packageName, launcher)
 
     data class AppInfo(
-        val activityInfo: ActivityInfo,
+        val info: PackageItemInfo,
         val label: String,
         val packageName: String,
         val launcher: Boolean
@@ -261,7 +261,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
                 binding.appIcon.setImageDrawable(info.icon)
             } else {
                 scope.launch {
-                    info.icon = info.activityInfo.loadIcon(context.packageManager) ?: defaultIcon
+                    info.icon = info.info.loadIcon(context.packageManager) ?: defaultIcon
                     withContext(Dispatchers.Main) {
                         if (binding.root.tag == position) {
                             binding.appIcon.setImageDrawable(info.icon)
