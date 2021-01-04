@@ -75,8 +75,8 @@ object Launcher {
 
     fun sendMailToDeveloper(context: Context) {
         try {
-            val intent = Intent(Intent.ACTION_SEND).also {
-                it.type = "message/rfc822"
+            val intent = Intent(Intent.ACTION_SENDTO).also {
+                it.data = Uri.parse("mailto:")
                 it.putExtra(Intent.EXTRA_EMAIL, arrayOf(EMAIL_ADDRESS))
                 it.putExtra(
                     Intent.EXTRA_SUBJECT,
