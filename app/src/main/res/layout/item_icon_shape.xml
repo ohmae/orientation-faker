@@ -17,7 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/accent"
+        app:tint="?attr/colorSecondary"
         tools:src="@drawable/bg_circle"
         />
 
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textColor="@color/fg_main"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="@dimen/text_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/icon"

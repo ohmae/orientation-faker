@@ -8,14 +8,14 @@ import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.Fragment
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.util.SystemSettings
 
 class OverlayPermissionDialog : DialogFragment() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val activity = activity ?: throw IllegalStateException()
+        val activity = requireActivity()
         val message = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q ||
             !activity.packageManager.hasSystemFeature(PackageManager.FEATURE_RAM_LOW)
         ) {
@@ -43,8 +43,8 @@ class OverlayPermissionDialog : DialogFragment() {
         private const val TAG = "OverlayPermissionDialog"
 
         @RequiresApi(Build.VERSION_CODES.M)
-        fun show(activity: FragmentActivity) {
-            val manager = activity.supportFragmentManager
+        fun show(activity: Fragment) {
+            val manager = activity.childFragmentManager
             if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
             OverlayPermissionDialog().show(manager, TAG)
         }

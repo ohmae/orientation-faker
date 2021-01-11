@@ -11,16 +11,17 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isGone
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.*
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.android.orientationfaker.databinding.ActivityEachAppBinding
+import net.mm2d.android.orientationfaker.databinding.FragmentEachAppBinding
 import net.mm2d.android.orientationfaker.databinding.ItemEachAppBinding
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.Orientation
@@ -29,25 +30,22 @@ import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.view.dialog.EachAppOrientationDialog
+import net.mm2d.orientation.view.dialog.EachAppOrientationDialogViewModel
 import net.mm2d.orientation.view.dialog.UsageAppPermissionDialog
 import java.util.*
 
-class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
+class EachAppFragment : Fragment(R.layout.fragment_each_app) {
     private val settings by lazy {
         Settings.get()
     }
     private var adapter: EachAppAdapter? = null
     private val job = Job()
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + job)
-    private lateinit var binding: ActivityEachAppBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityEachAppBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+    private lateinit var binding: FragmentEachAppBinding
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding = FragmentEachAppBinding.bind(view)
+        setHasOptionsMenu(true)
+        binding.recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         setUpSearch()
         setUpBottom()
         scope.launch {
@@ -56,6 +54,10 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
                 setAdapter(list)
             }
         }
+        ViewModelProvider(this)
+            .get(EachAppOrientationDialogViewModel::class.java)
+            .changedPositionLiveData()
+            .observe(viewLifecycleOwner, ::onChangeSettings)
     }
 
     private fun setUpSearch() {
@@ -95,7 +97,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
 
     private fun setAdapter(list: List<AppInfo>) {
         ForegroundPackageSettings.updateInstalledPackages(list.map { it.packageName })
-        val adapter = EachAppAdapter(this, list) { position, packageName ->
+        val adapter = EachAppAdapter(requireContext(), list) { position, packageName ->
             hideKeyboard()
             EachAppOrientationDialog.show(this, position, packageName)
         }
@@ -105,7 +107,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
     }
 
     private fun hideKeyboard() {
-        (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+        (requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
             .hideSoftInputFromWindow(binding.searchWindow.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
     }
 
@@ -117,17 +119,13 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
     override fun onResume() {
         super.onResume()
         binding.packageCheckDisabled.isGone = settings.foregroundPackageCheckEnabled
-    }
-
-    override fun onPostResume() {
-        super.onPostResume()
-        if (!SystemSettings.hasUsageAccessPermission(this)) {
+        if (!SystemSettings.hasUsageAccessPermission(requireContext())) {
             UsageAppPermissionDialog.show(this)
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.each_app, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.each_app, menu)
         (menu.findItem(R.id.package_check).actionView as SwitchCompat).also {
             it.isChecked = settings.foregroundPackageCheckEnabled
             it.setOnCheckedChangeListener { _, isChecked ->
@@ -137,18 +135,10 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
                 MainController.update()
             }
         }
-        return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onChangeSettings(position: Int) {
+    private fun onChangeSettings(position: Int?) {
+        position ?: return
         adapter?.notifyItemChanged(position)
         if (MainService.isStarted) {
             MainController.update()
@@ -157,7 +147,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
 
     private fun makeAppList(): List<AppInfo> {
         val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PackageManager.MATCH_ALL else 0
-        val pm = packageManager
+        val pm = requireContext().packageManager
         val allApps = pm.getInstalledPackages(PackageManager.GET_ACTIVITIES)
             .mapNotNull { it.applicationInfo }
             .map { it to false }
@@ -168,7 +158,7 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
             .mapNotNull { it.activityInfo }
             .map { it to true }
         return (launcherApps + launcher + allApps)
-            .filter { it.first.packageName != packageName }
+            .filter { it.first.packageName != requireContext().packageName }
             .distinctBy { it.first.packageName }
             .map { appInfo(pm, it.first, it.second) }
             .sortedBy { it.label }
@@ -288,10 +278,4 @@ class EachAppActivity : AppCompatActivity(), EachAppOrientationDialog.Callback {
     }
 
     class ViewHolder(val binding: ItemEachAppBinding) : RecyclerView.ViewHolder(binding.root)
-
-    companion object {
-        fun start(context: Context) {
-            context.startActivity(Intent(context, EachAppActivity::class.java))
-        }
-    }
 }

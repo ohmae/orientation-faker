@@ -38,7 +38,7 @@
         android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
+        android:theme="@style/Theme.Orientation.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning"
         >
         <activity-alias
@@ -58,19 +58,8 @@
             android:launchMode="singleTask"
             />
         <activity
-            android:name="net.mm2d.orientation.view.DetailedSettingsActivity"
-            android:label="@string/menu_title_detailed_settings"
-            />
-        <activity
-            android:name="net.mm2d.orientation.view.EachAppActivity"
-            android:label="@string/menu_title_setting_for_each_app"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            />
-        <activity
             android:name="net.mm2d.orientation.view.LicenseActivity"
             android:label="@string/options_menu_license"
-            android:theme="@style/AppTheme.NoActionBar"
             />
 
         <service

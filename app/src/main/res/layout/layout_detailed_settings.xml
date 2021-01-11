@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contents_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,9 +11,10 @@
     >
 
     <FrameLayout
+        android:id="@+id/notification_sample"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_sample"
+        android:background="?attr/colorPrimaryVariant"
         android:paddingStart="@dimen/margin_sample_horizontal"
         android:paddingTop="@dimen/margin_sample_vertical"
         android:paddingEnd="@dimen/margin_sample_horizontal"
@@ -46,10 +48,10 @@
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="@null"
                 android:scaleType="center"
-                app:srcCompat="@drawable/bg_sample"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/bg_sample"
                 />
 
             <ImageView
@@ -58,24 +60,24 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@null"
                 android:scaleType="center"
-                app:srcCompat="@drawable/ic_circle"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_circle"
                 />
 
             <TextView
                 android:id="@+id/label_foreground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_menu_sample"
                 android:text="@string/button_foreground_color"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="@dimen/text_color_title"
-                android:layout_marginTop="@dimen/margin_menu_sample"
-                app:layout_constraintTop_toBottomOf="@id/sample_foreground"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sample_foreground"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -95,10 +97,10 @@
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="@null"
                 android:scaleType="center"
-                app:srcCompat="@drawable/bg_sample"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/bg_sample"
                 />
 
             <ImageView
@@ -107,24 +109,24 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@null"
                 android:scaleType="center"
-                app:srcCompat="@drawable/ic_circle"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_circle"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_menu_sample"
                 android:text="@string/button_background_color"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="@dimen/text_color_title"
-                android:layout_marginTop="@dimen/margin_menu_sample"
-                app:layout_constraintTop_toBottomOf="@id/sample_background"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sample_background"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -144,10 +146,10 @@
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="@null"
                 android:scaleType="center"
-                app:srcCompat="@drawable/bg_sample"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/bg_sample"
                 />
 
             <ImageView
@@ -156,24 +158,24 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@null"
                 android:scaleType="center"
-                app:srcCompat="@drawable/ic_circle"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_circle"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_menu_sample"
                 android:text="@string/button_selected_foreground_color"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="@dimen/text_color_title"
-                android:layout_marginTop="@dimen/margin_menu_sample"
-                app:layout_constraintTop_toBottomOf="@id/sample_foreground_selected"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sample_foreground_selected"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -193,10 +195,10 @@
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="@null"
                 android:scaleType="center"
-                app:srcCompat="@drawable/bg_sample"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/bg_sample"
                 />
 
             <ImageView
@@ -205,24 +207,24 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@null"
                 android:scaleType="center"
-                app:srcCompat="@drawable/ic_circle"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_circle"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_menu_sample"
                 android:text="@string/button_selected_background_color"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="@dimen/text_color_title"
-                android:layout_marginTop="@dimen/margin_menu_sample"
-                app:layout_constraintTop_toBottomOf="@id/sample_background_selected"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sample_background_selected"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -243,10 +245,10 @@
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="@null"
                 android:scaleType="center"
-                app:srcCompat="@drawable/bg_sample"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/bg_sample"
                 />
 
             <ImageView
@@ -255,24 +257,24 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@null"
                 android:scaleType="center"
-                app:srcCompat="@drawable/ic_circle"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_circle"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_menu_sample"
                 android:text="@string/button_base_color"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="@dimen/text_color_title"
-                android:layout_marginTop="@dimen/margin_menu_sample"
-                app:layout_constraintTop_toBottomOf="@id/sample_base"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sample_base"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
@@ -347,7 +349,7 @@
         android:id="@+id/caution"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_caution"
+        android:background="?attr/colorSecondary"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:paddingStart="16dp"
@@ -355,9 +357,11 @@
         android:paddingEnd="16dp"
         android:paddingBottom="8dp"
         android:text="@string/caution_experimental_orientation"
-        android:textColor="@color/fg_caution"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/text_caution"
+        android:visibility="gone"
         app:drawableStartCompat="@drawable/ic_caution"
+        tools:visibility="visible"
         />
 
     <net.mm2d.orientation.view.view.SwitchMenuView
@@ -387,7 +391,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/bg_circle"
-            app:tint="@color/accent"
+            app:tint="?attr/colorSecondary"
             />
 
         <TextView
@@ -398,7 +402,7 @@
             android:layout_marginTop="@dimen/margin_menu_vertical"
             android:text="@string/menu_title_icon_shape"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textColor="@color/fg_main"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="@dimen/text_title"
             app:layout_constraintEnd_toStartOf="@+id/icon_shape_icon"
             app:layout_constraintStart_toStartOf="parent"
@@ -413,7 +417,7 @@
             android:layout_marginBottom="@dimen/margin_menu_vertical"
             android:text="@string/menu_description_icon_shape_circle"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textColor="@color/fg_sub"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="@dimen/text_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/icon_shape_icon"
@@ -471,7 +475,7 @@
             android:layout_marginTop="@dimen/margin_menu_vertical"
             android:text="@string/menu_title_system_notification"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textColor="@color/fg_main"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="@dimen/text_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -485,7 +489,7 @@
             android:layout_marginBottom="@dimen/margin_menu_vertical"
             android:text="@string/menu_description_system_notification_description"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textColor="@color/fg_sub"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="@dimen/text_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -509,7 +513,7 @@
             android:layout_marginTop="@dimen/margin_menu_vertical"
             android:text="@string/menu_title_system_app"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textColor="@color/fg_main"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="@dimen/text_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -523,7 +527,7 @@
             android:layout_marginBottom="@dimen/margin_menu_vertical"
             android:text="@string/menu_description_system_app_description"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textColor="@color/fg_sub"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="@dimen/text_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

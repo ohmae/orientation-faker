@@ -1,27 +1,17 @@
-/*
- * Copyright (c) 2018 大前良介 (OHMAE Ryosuke)
- *
- * This software is released under the MIT License.
- * http://opensource.org/licenses/MIT
- */
-
 package net.mm2d.orientation.view
 
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.ColorInt
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.gridlayout.widget.GridLayout
-import androidx.gridlayout.widget.GridLayout.spec
+import androidx.lifecycle.ViewModelProvider
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.android.orientationfaker.databinding.ActivityDetailedSettingsBinding
+import net.mm2d.android.orientationfaker.databinding.FragmentDetailedSettingsBinding
 import net.mm2d.color.chooser.ColorChooserDialog
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.event.EventRouter
@@ -34,17 +24,11 @@ import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.alpha
 import net.mm2d.orientation.util.opaque
-import net.mm2d.orientation.view.dialog.IconShapeDialog
-import net.mm2d.orientation.view.dialog.OrientationHelpDialog
-import net.mm2d.orientation.view.dialog.ResetLayoutDialog
-import net.mm2d.orientation.view.dialog.ResetThemeDialog
+import net.mm2d.orientation.view.dialog.*
 import net.mm2d.orientation.view.view.CheckItemView
 
-class DetailedSettingsActivity : AppCompatActivity(),
-    ResetThemeDialog.Callback,
-    ResetLayoutDialog.Callback,
-    ColorChooserDialog.Callback,
-    IconShapeDialog.Callback {
+class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
+    ColorChooserDialog.Callback {
     private val settings by lazy {
         Settings.get()
     }
@@ -52,32 +36,33 @@ class DetailedSettingsActivity : AppCompatActivity(),
     private lateinit var checkList: List<CheckItemView>
     private lateinit var orientationListStart: List<Int>
     private val orientationList: MutableList<Int> = mutableListOf()
-    private lateinit var binding: ActivityDetailedSettingsBinding
+    private lateinit var binding: FragmentDetailedSettingsBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityDetailedSettingsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding = FragmentDetailedSettingsBinding.bind(view)
+        setHasOptionsMenu(false)
         setUpViews()
         EventRouter.observeUpdate(this) { notificationSample.update() }
+        val provider = ViewModelProvider(this)
+        provider.get(ResetThemeDialogViewModel::class.java)
+            .resetThemeLiveData()
+            .observe(viewLifecycleOwner, ::resetTheme)
+        provider.get(ResetLayoutDialogViewModel::class.java)
+            .resetLayoutLiveData()
+            .observe(viewLifecycleOwner, ::resetLayout)
+        provider.get(IconShapeDialogViewModel::class.java)
+            .iconShapeLiveData()
+            .observe(viewLifecycleOwner, ::onSelectIconShape)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         if (!orientationList.contains(settings.orientation)) {
             settings.orientation = orientationList[0]
             MainController.update()
             if (!MainService.isStarted) {
                 EventRouter.notifyUpdate()
             }
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (orientationListStart != orientationList) {
-            finish()
         }
     }
 
@@ -91,16 +76,8 @@ class DetailedSettingsActivity : AppCompatActivity(),
         applyNotificationPrivacy()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     private fun setUpViews() {
-        notificationSample = NotificationSample(this)
+        notificationSample = NotificationSample(binding.content.notificationSample)
         setUpSample()
         setUpLayoutSelector()
         setUpUseIconBackground()
@@ -177,7 +154,8 @@ class DetailedSettingsActivity : AppCompatActivity(),
         MainController.update()
     }
 
-    override fun resetTheme() {
+    private fun resetTheme(unit: Unit?) {
+        unit ?: return
         settings.resetTheme()
         binding.content.sampleForeground.setImageColor(settings.foregroundColor)
         binding.content.sampleBackground.setImageColor(settings.backgroundColor)
@@ -198,7 +176,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
         orientationList.addAll(orientationListStart)
 
         checkList = Orientation.values.map { orientation ->
-            CheckItemView(this).also { view ->
+            CheckItemView(requireContext()).also { view ->
                 view.orientation = orientation.orientation
                 view.setIcon(orientation.icon)
                 view.setText(orientation.label)
@@ -210,8 +188,8 @@ class DetailedSettingsActivity : AppCompatActivity(),
         }
         checkList.forEachIndexed { index, view ->
             val params = GridLayout.LayoutParams(
-                spec(index / 4),
-                spec(index % 4, 1f)
+                GridLayout.spec(index / 4),
+                GridLayout.spec(index % 4, 1f)
             ).also {
                 it.width = 0
                 it.height = resources.getDimensionPixelSize(R.dimen.customize_height)
@@ -235,7 +213,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
     private fun onClickCheckItem(view: CheckItemView) {
         if (view.isChecked) {
             if (orientationList.size <= OrientationList.MIN) {
-                Toast.makeText(this, R.string.toast_select_item_min, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), R.string.toast_select_item_min, Toast.LENGTH_LONG).show()
             } else {
                 orientationList.remove(view.orientation)
                 view.isChecked = false
@@ -243,7 +221,7 @@ class DetailedSettingsActivity : AppCompatActivity(),
             }
         } else {
             if (orientationList.size >= OrientationList.MAX) {
-                Toast.makeText(this, R.string.toast_select_item_max, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), R.string.toast_select_item_max, Toast.LENGTH_LONG).show()
             } else {
                 orientationList.add(view.orientation)
                 view.isChecked = true
@@ -258,7 +236,8 @@ class DetailedSettingsActivity : AppCompatActivity(),
         MainController.update()
     }
 
-    override fun resetLayout() {
+    private fun resetLayout(unit: Unit?) {
+        unit ?: return
         orientationList.clear()
         orientationList.addAll(Default.orientationList)
         applyLayoutSelection()
@@ -303,7 +282,8 @@ class DetailedSettingsActivity : AppCompatActivity(),
         }
     }
 
-    override fun onSelectIconShape(iconShape: IconShape) {
+    private fun onSelectIconShape(iconShape: IconShape?) {
+        iconShape ?: return
         settings.iconShape = iconShape
         applyIconShape()
         MainController.update()
@@ -366,16 +346,10 @@ class DetailedSettingsActivity : AppCompatActivity(),
 
     private fun setUpSystemSetting() {
         binding.content.systemApp.setOnClickListener {
-            SystemSettings.startApplicationDetailsSettings(this)
+            SystemSettings.startApplicationDetailsSettings(requireActivity())
         }
         binding.content.systemNotification.setOnClickListener {
-            SystemSettings.startAppNotificationSettings(this)
-        }
-    }
-
-    companion object {
-        fun start(context: Context) {
-            context.startActivity(Intent(context, DetailedSettingsActivity::class.java))
+            SystemSettings.startAppNotificationSettings(requireActivity())
         }
     }
 }

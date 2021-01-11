@@ -11,20 +11,19 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.Fragment
 import net.mm2d.android.orientationfaker.R
+import net.mm2d.orientation.util.parentViewModels
 
 class ResetThemeDialog : DialogFragment() {
-    interface Callback {
-        fun resetTheme()
-    }
+    private val viewModel: ResetThemeDialogViewModel by parentViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.dialog_title_reset_theme)
             .setMessage(R.string.dialog_message_reset_theme)
             .setPositiveButton(R.string.ok) { _, _ ->
-                (activity as? Callback)?.resetTheme()
+                viewModel.postReset()
             }
             .setNegativeButton(R.string.cancel, null)
             .create()
@@ -32,8 +31,8 @@ class ResetThemeDialog : DialogFragment() {
     companion object {
         private const val TAG = "ResetThemeDialog"
 
-        fun show(activity: FragmentActivity) {
-            val manager = activity.supportFragmentManager
+        fun show(fragment: Fragment) {
+            val manager = fragment.childFragmentManager
             if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
             ResetThemeDialog().show(manager, TAG)
         }
