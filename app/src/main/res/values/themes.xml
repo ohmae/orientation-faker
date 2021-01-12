@@ -42,6 +42,7 @@
     <style name="Theme.Orientation.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="colorPrimary">@color/blue_a700</item>
         <item name="colorSecondary">@color/blue_a700</item>
+        <item name="colorSurface">@color/white</item>
         <item name="android:windowBackground">@color/white</item>
     </style>
 
