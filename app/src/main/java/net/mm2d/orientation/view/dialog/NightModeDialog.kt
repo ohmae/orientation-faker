@@ -1,15 +1,22 @@
+/*
+ * Copyright (c) 2020 大前良介 (OHMAE Ryosuke)
+ *
+ * This software is released under the MIT License.
+ * http://opensource.org/licenses/MIT
+ */
+
 package net.mm2d.orientation.view.dialog
 
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.app.AppCompatDelegate.NightMode
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.Fragment
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.settings.NightModes
 import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.util.parentViewModels
 
 class NightModeDialog : DialogFragment() {
     private val modes = listOf(
@@ -18,6 +25,7 @@ class NightModeDialog : DialogFragment() {
         AppCompatDelegate.MODE_NIGHT_YES,
     )
     private var mode: Int = Settings.get().nightMode
+    private val viewModel: NightModeDialogViewModel by parentViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         AlertDialog.Builder(requireContext())
@@ -30,20 +38,16 @@ class NightModeDialog : DialogFragment() {
             }
             .setPositiveButton(R.string.ok) { dialog, _ ->
                 dialog.cancel()
-                (activity as? Callback)?.onSelectNightMode(mode)
+                viewModel.postMode(mode)
             }
             .setNegativeButton(R.string.cancel, null)
             .create()
 
-    interface Callback {
-        fun onSelectNightMode(@NightMode mode: Int)
-    }
-
     companion object {
         private const val TAG = "NightModeDialog"
 
-        fun show(activity: FragmentActivity) {
-            val manager = activity.supportFragmentManager
+        fun show(fragment: Fragment) {
+            val manager = fragment.childFragmentManager
             if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
             NightModeDialog().show(manager, TAG)
         }

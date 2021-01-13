@@ -6,4 +6,7 @@
         <attr name="descriptionOff" format="string" />
         <attr name="checked" format="boolean" />
     </declare-styleable>
+    <attr name="colorStar" format="color"/>
+    <attr name="colorControlStart" format="color"/>
+    <attr name="colorControlStop" format="color"/>
 </resources>

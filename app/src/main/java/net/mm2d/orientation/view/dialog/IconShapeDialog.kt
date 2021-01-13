@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2020 大前良介 (OHMAE Ryosuke)
+ *
+ * This software is released under the MIT License.
+ * http://opensource.org/licenses/MIT
+ */
+
 package net.mm2d.orientation.view.dialog
 
 import android.app.Dialog
@@ -9,23 +16,22 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.Fragment
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.ItemIconShapeBinding
 import net.mm2d.orientation.settings.IconShape
+import net.mm2d.orientation.util.parentViewModels
 
 class IconShapeDialog : DialogFragment() {
+    private val viewModel: IconShapeDialogViewModel by parentViewModels()
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.menu_title_icon_shape)
             .setAdapter(IconShapeAdapter(requireContext())) { _, which ->
-                (activity as? Callback)?.onSelectIconShape(IconShape.values()[which])
+                viewModel.postIconShape(IconShape.values()[which])
             }
             .create()
-
-    interface Callback {
-        fun onSelectIconShape(iconShape: IconShape)
-    }
 
     class IconShapeAdapter(context: Context) : BaseAdapter() {
         private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
@@ -49,8 +55,8 @@ class IconShapeDialog : DialogFragment() {
     companion object {
         private const val TAG = "IconShapeDialog"
 
-        fun show(activity: FragmentActivity) {
-            val manager = activity.supportFragmentManager
+        fun show(fragment: Fragment) {
+            val manager = fragment.childFragmentManager
             if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
             IconShapeDialog().show(manager, TAG)
         }

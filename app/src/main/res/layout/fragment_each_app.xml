@@ -8,20 +8,11 @@
     android:orientation="vertical"
     >
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
     <TextView
         android:id="@+id/package_check_disabled"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_caution"
+        android:background="?attr/colorSecondary"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:paddingStart="8dp"
@@ -29,19 +20,19 @@
         android:paddingEnd="8dp"
         android:paddingBottom="8dp"
         android:text="@string/package_check_disabled"
-        android:textColor="@color/fg_caution"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/text_caution"
         app:drawableEndCompat="@drawable/ic_arrow_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <LinearLayout
         android:id="@+id/bottom_menu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/bg_window"
+        android:background="?attr/colorSurface"
         android:elevation="8dp"
         android:paddingStart="@dimen/margin_menu_horizontal"
         android:paddingTop="8dp"

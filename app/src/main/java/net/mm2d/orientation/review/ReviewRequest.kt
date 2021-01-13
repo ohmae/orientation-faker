@@ -7,7 +7,7 @@
 
 package net.mm2d.orientation.review
 
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.service.MainService
@@ -33,11 +33,11 @@ object ReviewRequest {
         }
     }
 
-    fun requestReviewIfNeed(activity: FragmentActivity) {
+    fun requestReviewIfNeed(fragment: Fragment) {
         if (!MainService.isStarted) {
             return
         }
-        if (activity.lifecycle.currentState != Lifecycle.State.RESUMED) {
+        if (fragment.lifecycle.currentState != Lifecycle.State.RESUMED) {
             return
         }
         val settings = Settings.get()
@@ -64,6 +64,6 @@ object ReviewRequest {
         if (settings.reviewCancelCount == 0) {
             settings.firstReviewTime = now
         }
-        ReviewDialog.show(activity)
+        ReviewDialog.show(fragment)
     }
 }

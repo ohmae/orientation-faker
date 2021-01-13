@@ -8,16 +8,6 @@
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
     >
 
-    <CheckBox
-        android:id="@+id/checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:clickable="false"
-        app:layout_constraintEnd_toStartOf="@id/icon"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
     <ImageView
         android:id="@+id/icon"
         android:layout_width="24dp"
@@ -29,6 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:tint="?android:attr/textColorPrimary"
         tools:src="@drawable/ic_portrait"
         />
 
@@ -39,12 +30,38 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="0dp"
-        android:textColor="@color/fg_main"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="@dimen/text_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/icon"
         tools:ignore="SmallSp,SpUsage"
         tools:text="@string/label_landscape"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"
+        />
+
+    <View
+        android:id="@+id/dummy"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="36dp"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        app:layout_constraintStart_toStartOf="@id/dummy"
+        app:layout_constraintTop_toTopOf="parent"
         />
 </merge>

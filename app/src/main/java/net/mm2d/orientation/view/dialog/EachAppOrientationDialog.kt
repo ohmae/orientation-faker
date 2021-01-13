@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2020 大前良介 (OHMAE Ryosuke)
+ *
+ * This software is released under the MIT License.
+ * http://opensource.org/licenses/MIT
+ */
+
 package net.mm2d.orientation.view.dialog
 
 import android.app.Dialog
@@ -9,7 +16,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,11 +25,10 @@ import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.LayoutOrientationItemBinding
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.Orientation
+import net.mm2d.orientation.util.parentViewModels
 
 class EachAppOrientationDialog : DialogFragment() {
-    interface Callback {
-        fun onChangeSettings(position: Int)
-    }
+    private val viewModel: EachAppOrientationDialogViewModel by parentViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val context = requireContext()
@@ -32,7 +38,7 @@ class EachAppOrientationDialog : DialogFragment() {
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = HelpAdapter(context) {
             ForegroundPackageSettings.put(packageName, it)
-            (activity as? Callback)?.onChangeSettings(position)
+            viewModel.postChangedPosition(position)
             dialog?.cancel()
         }
         recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
@@ -90,8 +96,8 @@ class EachAppOrientationDialog : DialogFragment() {
         private const val KEY_POSITION = "KEY_POSITION"
         private const val KEY_PACKAGE = "KEY_PACKAGE"
 
-        fun show(activity: FragmentActivity, position: Int, packageName: String) {
-            val manager = activity.supportFragmentManager
+        fun show(fragment: Fragment, position: Int, packageName: String) {
+            val manager = fragment.childFragmentManager
             if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
             EachAppOrientationDialog().also { dialog ->
                 dialog.arguments = bundleOf(

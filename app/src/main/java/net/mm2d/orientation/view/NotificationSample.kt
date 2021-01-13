@@ -7,7 +7,6 @@
 
 package net.mm2d.orientation.view
 
-import android.app.Activity
 import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
@@ -22,19 +21,19 @@ import net.mm2d.orientation.util.alpha
 import net.mm2d.orientation.util.opaque
 import net.mm2d.orientation.view.widget.ViewIds
 
-class NotificationSample(activity: Activity) {
+class NotificationSample(view: View) {
     val buttonList: List<ButtonViews> = ViewIds.list.map {
         ButtonViews(
-            activity.findViewById(it.buttonId),
-            activity.findViewById(it.iconId),
-            activity.findViewById(it.labelId),
-            activity.findViewById(it.shapeId),
+            view.findViewById(it.buttonId),
+            view.findViewById(it.iconId),
+            view.findViewById(it.labelId),
+            view.findViewById(it.shapeId),
         )
     }
-    private val base = activity.findViewById<View>(R.id.notification)
+    private val base = view.findViewById<View>(R.id.notification)
 
     init {
-        activity.findViewById<View>(R.id.remote_views_button_settings).visibility = View.GONE
+        view.findViewById<View>(R.id.remote_views_button_settings).visibility = View.GONE
     }
 
     fun update() {

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.OrientationCommon" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorStar">@color/green_a400</item>
+        <item name="colorControlStart">@color/green_600</item>
+        <item name="colorControlStop">@color/red_600</item>
+    </style>
+    <style name="Theme.OrientationBase" parent="Theme.OrientationCommon">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/gray_300</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorSecondary">@color/blue_a700</item>
+        <item name="colorSecondaryVariant">@color/blue_a700</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorOnBackground">@color/black</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="colorError">@color/red_a700</item>
+        <item name="colorOnError">@color/white</item>
+
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/gray_600</item>
+
+        <item name="alertDialogTheme">@style/Theme.Orientation.Dialog</item>
+    </style>
+    <style name="Theme.Orientation" parent="Theme.OrientationBase"/>
+
+    <style name="Theme.Orientation.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.Orientation.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar" >
+        <item name="colorPrimary">@color/white</item>
+    </style>
+    <style name="Theme.Orientation.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light">
+        <item name="colorSurface">@color/white</item>
+    </style>
+    <style name="Theme.Orientation.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="colorPrimary">@color/blue_a700</item>
+        <item name="colorSecondary">@color/blue_a700</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
+</resources>

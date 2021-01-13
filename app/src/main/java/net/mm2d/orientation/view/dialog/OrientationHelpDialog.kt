@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2020 大前良介 (OHMAE Ryosuke)
+ *
+ * This software is released under the MIT License.
+ * http://opensource.org/licenses/MIT
+ */
+
 package net.mm2d.orientation.view.dialog
 
 import android.app.Dialog
@@ -8,7 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -56,8 +63,8 @@ class OrientationHelpDialog : DialogFragment() {
     companion object {
         private const val TAG = "OrientationHelpDialog"
 
-        fun show(activity: FragmentActivity) {
-            val manager = activity.supportFragmentManager
+        fun show(fragment: Fragment) {
+            val manager = fragment.childFragmentManager
             if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
             OrientationHelpDialog().show(manager, TAG)
         }

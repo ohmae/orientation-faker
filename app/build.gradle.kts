@@ -5,6 +5,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("androidx.navigation.safeargs.kotlin")
     id("com.github.ben-manes.versions")
 }
 
@@ -82,8 +83,10 @@ dependencies {
     implementation("com.google.android.play:core-ktx:1.8.1")
     implementation("androidx.room:room-runtime:2.2.6")
     implementation("androidx.room:room-ktx:2.2.6")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.3.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.3.2")
     kapt("androidx.room:room-compiler:2.2.6")
-    implementation("net.mm2d:color-chooser:0.2.1")
+    implementation("net.mm2d:color-chooser:0.2.3")
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.5")
 }
 

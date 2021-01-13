@@ -13,7 +13,7 @@ import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.Fragment
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.LayoutReviewBinding
 import net.mm2d.orientation.settings.Settings
@@ -51,8 +51,8 @@ class ReviewDialog : DialogFragment() {
     companion object {
         private const val TAG = "ReviewDialog"
 
-        fun show(activity: FragmentActivity) {
-            val manager = activity.supportFragmentManager
+        fun show(fragment: Fragment) {
+            val manager = fragment.childFragmentManager
             if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
             ReviewDialog().show(manager, TAG)
         }
