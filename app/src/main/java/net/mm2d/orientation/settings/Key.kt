@@ -39,6 +39,7 @@ interface Key {
         NIGHT_MODE_INT,
         ICON_SHAPE_STRING,
         SHOW_ALL_APPS_BOOLEAN,
+        LANDSCAPE_DEVICE_BOOLEAN,
         ;
 
         companion object {

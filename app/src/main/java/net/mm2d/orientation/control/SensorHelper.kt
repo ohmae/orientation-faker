@@ -15,15 +15,13 @@ import net.mm2d.orientation.util.Powers
 
 class SensorHelper(
     private val context: Context,
-    private val controller: OrientationController,
-    private val orientationRequestSupplier: () -> Int,
-    private val orientationListener: (x: Float, y: Float, z: Float) -> Unit
+    private val sensorRequestedSupplier: () -> Boolean,
+    private val sensorResultListener: (x: Float, y: Float, z: Float) -> Unit
 ) {
     private var sensorManager: SensorManager? = null
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
-            if (!controller.isEnabled) return
-            if (Powers.isInteractive(context) && requestedOrientation.usesSensor()) {
+            if (Powers.isInteractive(context) && sensorRequestedSupplier()) {
                 startSensor()
             } else {
                 stopSensor()
@@ -33,12 +31,9 @@ class SensorHelper(
     private val listener: SensorEventListener = object : SensorEventListener {
         override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
         override fun onSensorChanged(event: SensorEvent) {
-            if (!controller.isEnabled) return
-            orientationListener(event.values[0], event.values[1], event.values[2])
+            sensorResultListener(event.values[0], event.values[1], event.values[2])
         }
     }
-    private val requestedOrientation: Int
-        get() = orientationRequestSupplier()
 
     init {
         context.registerReceiver(broadcastReceiver, IntentFilter().also {

@@ -117,6 +117,10 @@ class Settings private constructor(
         get() = preferences.readBoolean(Main.SHOW_ALL_APPS_BOOLEAN, false)
         set(value) = preferences.writeBoolean(Main.SHOW_ALL_APPS_BOOLEAN, value)
 
+    var isLandscapeDevice: Boolean
+        get() = preferences.readBoolean(Main.LANDSCAPE_DEVICE_BOOLEAN, false)
+        set(value) = preferences.writeBoolean(Main.LANDSCAPE_DEVICE_BOOLEAN, value)
+
     fun resetTheme() {
         foregroundColor = Default.color.foreground
         backgroundColor = Default.color.background
