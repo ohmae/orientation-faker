@@ -132,3 +132,12 @@ object Orientation {
         SENSOR_HEADSTAND,
     )
 }
+
+fun Int.usesSensor(): Boolean =
+    Orientation.sensor.contains(this)
+
+fun Int.isPortrait(): Boolean =
+    Orientation.portrait.contains(this)
+
+fun Int.isLandscape(): Boolean =
+    Orientation.landscape.contains(this)
