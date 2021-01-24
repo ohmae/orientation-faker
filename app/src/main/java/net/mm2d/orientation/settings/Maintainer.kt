@@ -63,7 +63,7 @@ internal object Maintainer {
         preferences.writeInt(Main.COUNT_REVIEW_DIALOG_CANCELED_INT, 0)
         preferences.writeBoolean(Main.REVIEW_REPORTED_BOOLEAN, false)
         preferences.writeBoolean(Main.REVIEW_REVIEWED_BOOLEAN, false)
-        preferences.writeInt(Main.ORIENTATION_INT, Orientation.UNSPECIFIED)
+        preferences.writeInt(Main.ORIENTATION_INT, Orientation.UNSPECIFIED.value)
         preferences.writeBoolean(Main.RESIDENT_BOOLEAN, false)
         preferences.writeInt(Main.COLOR_FOREGROUND_INT, Default.color.foreground)
         preferences.writeInt(Main.COLOR_BACKGROUND_INT, Default.color.background)
@@ -96,8 +96,8 @@ internal object Maintainer {
             boolean(OldKey.USE_BLANK_ICON_FOR_NOTIFICATION, Main.USE_BLANK_ICON_FOR_NOTIFICATION_BOOLEAN)
         }
         if (sharedPreferences.getBoolean(OldKey.USE_FULL_SENSOR.name, false)) {
-            if (sharedPreferences.getInt(OldKey.ORIENTATION.name, 0) == Orientation.UNSPECIFIED) {
-                preferences.writeInt(Main.ORIENTATION_INT, Orientation.FULL_SENSOR)
+            if (sharedPreferences.getInt(OldKey.ORIENTATION.name, 0) == Orientation.UNSPECIFIED.value) {
+                preferences.writeInt(Main.ORIENTATION_INT, Orientation.FULL_SENSOR.value)
             }
         }
         val list = Default.orientationList.toMutableList().also {

@@ -25,7 +25,7 @@ object OrientationHelper {
     private lateinit var controller: OrientationController
     private lateinit var sensorHelper: SensorHelper
     private lateinit var settings: Settings
-    private var requestedOrientation: Int = Orientation.INVALID
+    private var requestedOrientation: Orientation = Orientation.INVALID
     private var isLandscapeDevice: Boolean = false
 
     fun initialize(context: Context) {
@@ -40,7 +40,7 @@ object OrientationHelper {
         )
     }
 
-    fun update(orientation: Int) {
+    fun update(orientation: Orientation) {
         this.requestedOrientation = orientation
         ReviewRequest.updateOrientation(orientation)
         notifySystemSettingsIfNeed(orientation)
@@ -63,7 +63,7 @@ object OrientationHelper {
         sensorHelper.stopSensor()
     }
 
-    fun getOrientation(): Int =
+    fun getOrientation(): Orientation =
         if (controller.isEnabled) {
             requestedOrientation
         } else {
@@ -189,8 +189,8 @@ object OrientationHelper {
             if (y > 0) (if (it > 0) it else 1 + it) else 0.5 + it
         }
 
-    private fun notifySystemSettingsIfNeed(orientation: Int) {
-        if (!Orientation.requestSystemSettings.contains(orientation)) {
+    private fun notifySystemSettingsIfNeed(orientation: Orientation) {
+        if (!orientation.requestsSystemSettings()) {
             return
         }
         if (!Settings.get().autoRotateWarning) {

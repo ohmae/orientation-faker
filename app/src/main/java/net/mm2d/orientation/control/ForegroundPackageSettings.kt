@@ -20,7 +20,7 @@ import net.mm2d.orientation.settings.Settings
 object ForegroundPackageSettings {
     private const val DB_NAME = "package_settings.db"
     private lateinit var database: PackageSettingsDatabase
-    private val map: MutableMap<String, Int> = mutableMapOf()
+    private val map: MutableMap<String, Orientation> = mutableMapOf()
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
     private val settings: Settings by lazy { Settings.get() }
 
@@ -30,7 +30,7 @@ object ForegroundPackageSettings {
             val all = database.packageSettingsDao().getAll()
             withContext(Dispatchers.Main) {
                 all.forEach {
-                    map[it.packageName] = it.orientation
+                    map[it.packageName] = it.orientation.toOrientation()
                 }
             }
         }
@@ -49,9 +49,9 @@ object ForegroundPackageSettings {
 
     fun disabled(): Boolean = map.isEmpty() || !settings.foregroundPackageCheckEnabled
 
-    fun get(packageName: String): Int = map.getOrElse(packageName) { Orientation.INVALID }
+    fun get(packageName: String): Orientation = map.getOrElse(packageName) { Orientation.INVALID }
 
-    fun put(packageName: String, orientation: Int) {
+    fun put(packageName: String, orientation: Orientation) {
         if (orientation == Orientation.INVALID) {
             map.remove(packageName)
             scope.launch {
@@ -60,7 +60,7 @@ object ForegroundPackageSettings {
         } else {
             map[packageName] = orientation
             scope.launch {
-                val entity = PackageSettingEntity(packageName, orientation)
+                val entity = PackageSettingEntity(packageName, orientation.value)
                 database.packageSettingsDao().insert(entity)
             }
         }

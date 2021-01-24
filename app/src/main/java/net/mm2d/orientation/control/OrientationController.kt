@@ -45,14 +45,14 @@ class OrientationController(context: Context) {
             or LayoutParams.FLAG_LAYOUT_NO_LIMITS,
         PixelFormat.TRANSLUCENT
     ).also {
-        it.screenOrientation = Orientation.UNSPECIFIED
+        it.screenOrientation = Orientation.UNSPECIFIED.value
     }
 
     var isEnabled: Boolean = false
         private set
 
-    val orientation: Int
-        get() = layoutParams.screenOrientation
+    val orientation: Orientation
+        get() = layoutParams.screenOrientation.toOrientation()
 
     private var attached: Boolean = false
 
@@ -62,10 +62,10 @@ class OrientationController(context: Context) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) LayoutParams.TYPE_APPLICATION_OVERLAY
             else LayoutParams.TYPE_SYSTEM_ALERT
 
-    fun setOrientation(orientation: Int) {
+    fun setOrientation(orientation: Orientation) {
         isEnabled = true
-        if (layoutParams.screenOrientation == orientation) return
-        layoutParams.screenOrientation = orientation
+        if (layoutParams.screenOrientation == orientation.value) return
+        layoutParams.screenOrientation = orientation.value
         if (orientation == Orientation.UNSPECIFIED) {
             if (attached) {
                 windowManager.removeView(view)

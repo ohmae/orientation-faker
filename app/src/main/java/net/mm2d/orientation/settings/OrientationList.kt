@@ -7,14 +7,19 @@
 
 package net.mm2d.orientation.settings
 
+import net.mm2d.orientation.control.Orientation
+import net.mm2d.orientation.control.toOrientation
+
 object OrientationList {
     const val MAX = 5
     const val MIN = 1
     private const val DELIMITER = ","
 
-    fun toString(list: List<Int>): String =
-        list.joinToString(DELIMITER)
+    fun toString(list: List<Orientation>): String =
+        list.map { it.value }.joinToString(DELIMITER)
 
-    fun toList(string: String): List<Int> =
-        string.split(DELIMITER).mapNotNull { it.toIntOrNull() }
+    fun toList(string: String): List<Orientation> =
+        string.split(DELIMITER)
+            .mapNotNull { it.toIntOrNull() }
+            .map { it.toOrientation() }
 }

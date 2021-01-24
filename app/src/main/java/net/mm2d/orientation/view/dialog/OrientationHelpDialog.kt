@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.LayoutOrientationItemBinding
-import net.mm2d.orientation.control.Orientation
+import net.mm2d.orientation.control.Orientations
 
 class OrientationHelpDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -45,15 +45,15 @@ class OrientationHelpDialog : DialogFragment() {
             ViewHolder(LayoutOrientationItemBinding.inflate(layoutInflater, parent, false))
 
         override fun getItemCount(): Int =
-            Orientation.values.size
+            Orientations.entries.size
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.bind(Orientation.values[position])
+            holder.bind(Orientations.entries[position])
         }
     }
 
     class ViewHolder(private val binding: LayoutOrientationItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(entity: Orientation.Entity) {
+        fun bind(entity: Orientations.Entity) {
             binding.icon.setImageResource(entity.icon)
             binding.name.setText(entity.label)
             binding.description.setText(entity.description)

@@ -32,6 +32,7 @@ import net.mm2d.android.orientationfaker.databinding.FragmentEachAppBinding
 import net.mm2d.android.orientationfaker.databinding.ItemEachAppBinding
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.Orientation
+import net.mm2d.orientation.control.Orientations
 import net.mm2d.orientation.service.MainController
 import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.Settings
@@ -270,7 +271,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
             binding.appPackage.text = info.packageName
             val orientation = ForegroundPackageSettings.get(info.packageName)
             if (orientation != Orientation.INVALID) {
-                Orientation.values.find { it.orientation == orientation }?.let {
+                Orientations.entries.find { it.orientation == orientation }?.let {
                     binding.orientationIcon.setImageResource(it.icon)
                     binding.orientationName.setText(it.label)
                 }

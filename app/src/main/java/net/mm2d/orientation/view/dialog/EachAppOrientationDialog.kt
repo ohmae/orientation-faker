@@ -25,6 +25,7 @@ import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.LayoutOrientationItemBinding
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.Orientation
+import net.mm2d.orientation.control.Orientations
 import net.mm2d.orientation.util.parentViewModels
 
 class EachAppOrientationDialog : DialogFragment() {
@@ -52,23 +53,23 @@ class EachAppOrientationDialog : DialogFragment() {
 
     class HelpAdapter(
         context: Context,
-        private val onClickListener: (orientation: Int) -> Unit
+        private val onClickListener: (orientation: Orientation) -> Unit
     ) : Adapter<ViewHolder>() {
         private val layoutInflater = LayoutInflater.from(context)
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
             ViewHolder(LayoutOrientationItemBinding.inflate(layoutInflater, parent, false))
 
         override fun getItemCount(): Int =
-            Orientation.values.size + 1
+            Orientations.entries.size + 1
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            if (position == Orientation.values.size) {
+            if (position == Orientations.entries.size) {
                 holder.bind(null)
                 holder.itemView.setOnClickListener {
                     onClickListener(Orientation.INVALID)
                 }
             } else {
-                val entity = Orientation.values[position]
+                val entity = Orientations.entries[position]
                 holder.bind(entity)
                 holder.itemView.setOnClickListener {
                     onClickListener(entity.orientation)
@@ -78,7 +79,7 @@ class EachAppOrientationDialog : DialogFragment() {
     }
 
     class ViewHolder(private val binding: LayoutOrientationItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(entity: Orientation.Entity?) {
+        fun bind(entity: Orientations.Entity?) {
             if (entity != null) {
                 binding.icon.setImageResource(entity.icon)
                 binding.name.setText(entity.label)

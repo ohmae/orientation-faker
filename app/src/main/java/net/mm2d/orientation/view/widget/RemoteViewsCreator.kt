@@ -20,6 +20,7 @@ import androidx.annotation.StringRes
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationReceiver
+import net.mm2d.orientation.control.Orientations
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.alpha
 import net.mm2d.orientation.util.opaque
@@ -28,7 +29,7 @@ import net.mm2d.orientation.view.MainActivity
 import net.mm2d.orientation.view.widget.ViewIds.ViewId
 
 object RemoteViewsCreator {
-    fun create(context: Context, orientation: Int): RemoteViews =
+    fun create(context: Context, orientation: Orientation): RemoteViews =
         RemoteViews(context.packageName, R.layout.notification).also { views ->
             val settings = Settings.get()
             val fgColor = settings.foregroundColor
@@ -41,7 +42,7 @@ object RemoteViewsCreator {
             val orientationList = settings.orientationList
             orientationList.forEachIndexed { index, value ->
                 val button = ViewIds.list[index]
-                Orientation.values.find { it.orientation == value }?.let {
+                Orientations.entries.find { it.orientation == value }?.let {
                     val helpers = RemoteViewHelpers(views, button)
                     helpers.icon.setImageResource(it.icon)
                     helpers.label.setText(it.label)
@@ -133,14 +134,14 @@ object RemoteViewsCreator {
     private fun RemoteViews.helper(@IdRes id: Int): RemoteViewHelper =
         RemoteViewHelper(this, id)
 
-    private fun createOrientationIntent(context: Context, orientation: Int): PendingIntent {
+    private fun createOrientationIntent(context: Context, orientation: Orientation): PendingIntent {
         val intent = Intent(OrientationReceiver.ACTION_ORIENTATION).also {
-            it.putExtra(OrientationReceiver.EXTRA_ORIENTATION, orientation)
+            it.putExtra(OrientationReceiver.EXTRA_ORIENTATION, orientation.value)
             it.setClass(context, OrientationReceiver::class.java)
         }
         return PendingIntent.getBroadcast(
             context,
-            orientation + 1000,
+            orientation.value + 1000,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )

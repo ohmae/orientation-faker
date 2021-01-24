@@ -16,9 +16,6 @@ import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.service.MainService
 
-/**
- * Implementation of App Widget functionality.
- */
 class WidgetProvider : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         val orientation =
@@ -41,14 +38,14 @@ class WidgetProvider : AppWidgetProvider() {
             update(context, Orientation.INVALID)
         }
 
-        private fun update(context: Context, orientation: Int) {
+        private fun update(context: Context, orientation: Orientation) {
             val widgetManager: AppWidgetManager = context.getSystemService()!!
             widgetManager.getAppWidgetIds(ComponentName(context, WidgetProvider::class.java))?.forEach {
                 updateAppWidget(context, widgetManager, it, orientation)
             }
         }
 
-        fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, id: Int, orientation: Int) {
+        fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, id: Int, orientation: Orientation) {
             val views = RemoteViewsCreator.create(context, orientation)
             appWidgetManager.updateAppWidget(id, views)
         }

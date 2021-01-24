@@ -16,7 +16,7 @@ internal object Default {
     lateinit var color: Color
         private set
 
-    val orientationList: List<Int> = listOf(
+    val orientationList: List<Orientation> = listOf(
         Orientation.UNSPECIFIED,
         Orientation.PORTRAIT,
         Orientation.LANDSCAPE,

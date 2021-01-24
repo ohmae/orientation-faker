@@ -20,9 +20,9 @@ class OrientationReceiver : BroadcastReceiver() {
         }
         val orientation = intent.getIntExtra(
             EXTRA_ORIENTATION,
-            Orientation.UNSPECIFIED
+            Orientation.UNSPECIFIED.value
         )
-        Settings.get().orientation = orientation
+        Settings.get().orientation = orientation.toOrientation()
         MainController.start()
     }
 

@@ -22,7 +22,7 @@ object ReviewRequest {
     private val INTERVAL_SECOND_REVIEW = TimeUnit.DAYS.toMillis(42)
     private val INTERVAL_RANDOM_RANGE = TimeUnit.DAYS.toMillis(14)
 
-    fun updateOrientation(orientation: Int) {
+    fun updateOrientation(orientation: Orientation) {
         val settings = Settings.get()
         if (settings.firstUseTime == 0L) {
             settings.firstUseTime = System.currentTimeMillis()

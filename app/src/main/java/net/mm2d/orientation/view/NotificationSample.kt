@@ -16,6 +16,7 @@ import androidx.core.view.isVisible
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationHelper
+import net.mm2d.orientation.control.Orientations
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.alpha
 import net.mm2d.orientation.util.opaque
@@ -49,7 +50,7 @@ class NotificationSample(view: View) {
         val orientationList = settings.orientationList
         orientationList.forEachIndexed { index, value ->
             val button = buttonList[index]
-            Orientation.values.find { it.orientation == value }?.let {
+            Orientations.entries.find { it.orientation == value }?.let {
                 button.icon.setImageResource(it.icon)
                 button.label.setText(it.label)
                 button.orientation = value
@@ -96,6 +97,6 @@ class NotificationSample(view: View) {
         val icon: ImageView,
         val label: TextView,
         val shape: ImageView,
-        var orientation: Int = Orientation.INVALID
+        var orientation: Orientation = Orientation.INVALID
     )
 }
