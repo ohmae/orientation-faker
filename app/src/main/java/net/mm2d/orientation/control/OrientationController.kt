@@ -75,8 +75,11 @@ class OrientationController(context: Context) {
             if (attached) {
                 windowManager.updateViewLayout(view, layoutParams)
             } else {
-                windowManager.addView(view, layoutParams)
-                attached = true
+                try {
+                    windowManager.addView(view, layoutParams)
+                    attached = true
+                } catch (t: Throwable) {
+                }
             }
         }
     }
