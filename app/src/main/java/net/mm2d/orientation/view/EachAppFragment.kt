@@ -22,6 +22,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -50,22 +51,23 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
     private val job = Job()
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + job)
     private lateinit var binding: FragmentEachAppBinding
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentEachAppBinding.bind(view)
         setHasOptionsMenu(true)
         binding.recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         setUpSearch()
         setUpBottom()
-        scope.launch {
-            val list = makeAppList()
-            withContext(Dispatchers.Main) {
-                setAdapter(list)
-            }
-        }
         ViewModelProvider(this)
             .get(EachAppOrientationDialogViewModel::class.java)
             .changedPositionLiveData()
             .observe(viewLifecycleOwner, ::onChangeSettings)
+        val appListLiveData = MutableLiveData<List<AppInfo>>()
+        appListLiveData.observe(viewLifecycleOwner, ::setAdapter)
+        val context = requireContext()
+        scope.launch {
+            appListLiveData.postValue(makeAppList(context))
+        }
     }
 
     private fun setUpSearch() {
@@ -119,8 +121,8 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
             .hideSoftInputFromWindow(binding.searchWindow.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         job.cancel()
     }
 
@@ -153,9 +155,9 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
         }
     }
 
-    private fun makeAppList(): List<AppInfo> {
+    private fun makeAppList(context: Context): List<AppInfo> {
         val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PackageManager.MATCH_ALL else 0
-        val pm = requireContext().packageManager
+        val pm = context.packageManager
         val allApps = pm.getInstalledPackages(PackageManager.GET_ACTIVITIES)
             .mapNotNull { it.applicationInfo }
             .map { it to false }
