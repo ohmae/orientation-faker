@@ -66,21 +66,21 @@ class OrientationController(context: Context) {
         isEnabled = true
         if (layoutParams.screenOrientation == orientation.value) return
         layoutParams.screenOrientation = orientation.value
-        if (orientation == Orientation.UNSPECIFIED) {
-            if (attached) {
-                windowManager.removeView(view)
-                attached = false
-            }
-        } else {
-            if (attached) {
-                windowManager.updateViewLayout(view, layoutParams)
+        try {
+            if (orientation == Orientation.UNSPECIFIED) {
+                if (attached) {
+                    windowManager.removeView(view)
+                    attached = false
+                }
             } else {
-                try {
+                if (attached) {
+                    windowManager.updateViewLayout(view, layoutParams)
+                } else {
                     windowManager.addView(view, layoutParams)
                     attached = true
-                } catch (t: Throwable) {
                 }
             }
+        } catch (t: Throwable) {
         }
     }
 
