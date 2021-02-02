@@ -11,7 +11,7 @@ import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.toOrientation
 
 object OrientationList {
-    const val MAX = 5
+    const val MAX = 6
     const val MIN = 1
     private const val DELIMITER = ","
 

@@ -47,6 +47,12 @@ object ViewIds {
             id.remote_views_icon5,
             id.remote_views_label5,
             id.remote_views_shape5,
-        )
+        ),
+        ViewId(
+            id.remote_views_button6,
+            id.remote_views_icon6,
+            id.remote_views_label6,
+            id.remote_views_shape6,
+        ),
     )
 }
