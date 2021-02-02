@@ -88,8 +88,9 @@ class NestedScrollingWebView
             stopNestedScroll()
             scrolling = false
         }
-        val appBar = appBarLayout ?: return
-        appBar.setExpanded(appBar.bottom > appBar.height / 2)
+        appBarLayout?.let {
+            it.setExpanded(it.bottom > it.height / 2)
+        }
     }
 
     override fun setNestedScrollingEnabled(enabled: Boolean) {
