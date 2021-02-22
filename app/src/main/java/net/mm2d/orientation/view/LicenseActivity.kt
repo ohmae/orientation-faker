@@ -30,6 +30,7 @@ class LicenseActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.webView.setBackgroundColor(0)
         binding.webView.settings.let {
             it.setSupportZoom(false)
             it.displayZoomControls = false
