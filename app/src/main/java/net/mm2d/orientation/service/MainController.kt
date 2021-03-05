@@ -7,8 +7,10 @@
 
 package net.mm2d.orientation.service
 
+import android.annotation.SuppressLint
 import android.content.Context
 
+@SuppressLint("StaticFieldLeak")
 object MainController {
     private lateinit var context: Context
 

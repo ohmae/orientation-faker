@@ -60,6 +60,7 @@
             android:text="@string/menu_description_status_running"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="?android:attr/textColorPrimary"
+            android:textDirection="locale"
             android:textSize="@dimen/text_status"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
