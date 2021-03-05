@@ -7,6 +7,7 @@
 
 package net.mm2d.orientation.util
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -14,6 +15,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.app.ShareCompat
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.tabs.CustomTabsHelper
@@ -89,5 +91,15 @@ object Launcher {
             context.startActivity(intent)
         } catch (e: Exception) {
         }
+    }
+
+    fun shareThisApp(context: Activity) {
+        val url = "https://play.google.com/store/apps/details?id=$PACKAGE_NAME"
+        val hashTag = context.getString(R.string.app_hash_tag)
+        ShareCompat.IntentBuilder
+            .from(context)
+            .setText(" $hashTag $url")
+            .setType("text/plain")
+            .startChooser()
     }
 }

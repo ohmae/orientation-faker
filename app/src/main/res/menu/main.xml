@@ -28,8 +28,14 @@
         app:showAsAction="never"
         />
     <item
-        android:id="@+id/play_store"
+        android:id="@+id/share_this_app"
         android:orderInCategory="104"
+        android:title="@string/options_menu_share_this_app"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/play_store"
+        android:orderInCategory="105"
         android:title="@string/options_menu_play_store"
         app:showAsAction="never"
         />

@@ -104,12 +104,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val context = requireContext()
         when (item.itemId) {
-            R.id.license -> LicenseActivity.start(requireContext())
-            R.id.source_code -> Launcher.openSourceCode(requireContext())
-            R.id.privacy_policy -> Launcher.openPrivacyPolicy(requireContext())
-            R.id.mail_to_developer -> Launcher.sendMailToDeveloper(requireContext())
-            R.id.play_store -> Launcher.openGooglePlay(requireContext())
+            R.id.license -> LicenseActivity.start(context)
+            R.id.source_code -> Launcher.openSourceCode(context)
+            R.id.privacy_policy -> Launcher.openPrivacyPolicy(context)
+            R.id.mail_to_developer -> Launcher.sendMailToDeveloper(context)
+            R.id.share_this_app -> Launcher.shareThisApp(requireActivity())
+            R.id.play_store -> Launcher.openGooglePlay(context)
         }
         return true
     }

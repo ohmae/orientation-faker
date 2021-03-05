@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">回転制御</string>
+    <string name="app_hash_tag">#画面回転制御</string>
 
     <string name="notification_channel_name">@string/app_name</string>
 
@@ -113,5 +114,6 @@
     <string name="options_menu_source_code">ソースコード</string>
     <string name="options_menu_privacy_policy">プライバシーポリシー</string>
     <string name="options_menu_mail_to_developer">開発者へメール</string>
+    <string name="options_menu_share_this_app">アプリをシェア</string>
     <string name="options_menu_play_store">Google Playストア</string>
 </resources>

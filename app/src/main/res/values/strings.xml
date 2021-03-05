@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Orientation Control</string>
+    <string name="app_hash_tag">#ScreenOrientationControl</string>
 
     <string name="notification_channel_name">@string/app_name</string>
 
@@ -113,5 +114,6 @@
     <string name="options_menu_source_code">Source code</string>
     <string name="options_menu_privacy_policy">Privacy policy</string>
     <string name="options_menu_mail_to_developer">Mail to developer</string>
+    <string name="options_menu_share_this_app">Share this app</string>
     <string name="options_menu_play_store">Google Play store</string>
 </resources>
