@@ -12,7 +12,6 @@ import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import androidx.appcompat.app.AppCompatDelegate
-import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.service.KeepAlive
@@ -22,11 +21,10 @@ import net.mm2d.orientation.tabs.CustomTabsHelper
 import net.mm2d.orientation.view.notification.NotificationHelper
 
 @Suppress("unused")
-class App : Application() {
+open class App : Application() {
     override fun onCreate() {
         super.onCreate()
-        setUpLogger()
-        setStrictMode()
+        initializeOverrideWhenDebug()
         Settings.initialize(this)
         MainController.initialize(this)
         NotificationHelper.createChannel(this)
@@ -37,18 +35,12 @@ class App : Application() {
         AppCompatDelegate.setDefaultNightMode(Settings.get().nightMode)
     }
 
-    private fun setUpLogger() {
-        if (!BuildConfig.DEBUG) {
-            return
-        }
+    protected open fun initializeOverrideWhenDebug() {
+        setUpStrictMode()
     }
 
-    private fun setStrictMode() {
-        if (BuildConfig.DEBUG) {
-            StrictMode.enableDefaults()
-        } else {
-            StrictMode.setThreadPolicy(ThreadPolicy.LAX)
-            StrictMode.setVmPolicy(VmPolicy.LAX)
-        }
+    private fun setUpStrictMode() {
+        StrictMode.setThreadPolicy(ThreadPolicy.LAX)
+        StrictMode.setVmPolicy(VmPolicy.LAX)
     }
 }
