@@ -168,7 +168,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
             .mapNotNull { it.activityInfo }
             .map { it to true }
         return (launcherApps + launcher + allApps)
-            .filter { it.first.packageName != requireContext().packageName }
+            .filter { it.first.packageName != context.packageName }
             .distinctBy { it.first.packageName }
             .map { appInfo(pm, it.first, it.second) }
             .sortedBy { it.label }
