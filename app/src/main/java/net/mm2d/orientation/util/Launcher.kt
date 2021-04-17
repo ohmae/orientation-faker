@@ -18,8 +18,6 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ShareCompat
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.android.orientationfaker.R.attr
-import net.mm2d.android.orientationfaker.R.string
 import net.mm2d.orientation.tabs.CustomTabsHelper
 
 object Launcher {
@@ -45,7 +43,7 @@ object Launcher {
             if (context.isNightMode()) CustomTabsIntent.COLOR_SCHEME_DARK
             else CustomTabsIntent.COLOR_SCHEME_LIGHT
         val params = Builder()
-            .setToolbarColor(context.resolveColor(attr.colorPrimary))
+            .setToolbarColor(context.resolveColor(R.attr.colorPrimary))
             .build()
         val intent = CustomTabsIntent.Builder(CustomTabsHelper.session)
             .setShowTitle(true)
@@ -80,7 +78,7 @@ object Launcher {
                 it.putExtra(Intent.EXTRA_EMAIL, arrayOf(EMAIL_ADDRESS))
                 it.putExtra(
                     Intent.EXTRA_SUBJECT,
-                    context.getString(string.app_name) + " " + BuildConfig.VERSION_NAME + " (${Build.MODEL}, Android ${VERSION.RELEASE})"
+                    context.getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME + " (${Build.MODEL}, Android ${VERSION.RELEASE})"
                 )
             }
             context.startActivity(intent)
