@@ -25,6 +25,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         binding.toolbar.setupWithNavController(navHostFragment.navController)
+        navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.EachAppFragment) {
+                binding.appBar.elevation = 0f
+            } else {
+                binding.appBar.elevation = resources.getDimension(R.dimen.design_appbar_elevation)
+            }
+        }
         setSupportActionBar(binding.toolbar)
         DeviceOrientationChecker.check(this)
     }
