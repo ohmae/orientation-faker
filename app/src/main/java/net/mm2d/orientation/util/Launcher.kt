@@ -8,16 +8,18 @@
 package net.mm2d.orientation.util
 
 import android.app.Activity
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import androidx.browser.customtabs.CustomTabColorSchemeParams
+import android.os.Build.VERSION
+import androidx.browser.customtabs.CustomTabColorSchemeParams.Builder
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ShareCompat
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
+import net.mm2d.android.orientationfaker.R.attr
+import net.mm2d.android.orientationfaker.R.string
 import net.mm2d.orientation.tabs.CustomTabsHelper
 
 object Launcher {
@@ -28,44 +30,37 @@ object Launcher {
         "https://github.com/ohmae/orientation-faker/"
     private const val EMAIL_ADDRESS = "ryo@mm2d.net"
 
-    private fun openUri(context: Context, uri: String): Boolean {
-        try {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
-            intent.addCategory(Intent.CATEGORY_BROWSABLE)
-            context.startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
-            return false
-        }
-        return true
-    }
+    private fun openUri(context: Context, uri: String): Boolean = runCatching {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+        intent.addCategory(Intent.CATEGORY_BROWSABLE)
+        context.startActivity(intent)
+        true
+    }.getOrNull() ?: false
 
     private fun openCustomTabs(context: Context, uri: String): Boolean =
         openCustomTabs(context, Uri.parse(uri))
 
-    fun openCustomTabs(context: Context, uri: Uri): Boolean {
-        try {
-            val scheme =
-                if (context.isNightMode()) CustomTabsIntent.COLOR_SCHEME_DARK else CustomTabsIntent.COLOR_SCHEME_LIGHT
-            val params = CustomTabColorSchemeParams.Builder()
-                .setToolbarColor(context.resolveColor(R.attr.colorPrimary))
-                .build()
-            val intent = CustomTabsIntent.Builder(CustomTabsHelper.session)
-                .setShowTitle(true)
-                .setColorScheme(scheme)
-                .setDefaultColorSchemeParams(params)
-                .build()
-            intent.intent.setPackage(CustomTabsHelper.packageNameToBind)
-            intent.launchUrl(context, uri)
-        } catch (e: ActivityNotFoundException) {
-            return false
-        }
-        return true
-    }
+    fun openCustomTabs(context: Context, uri: Uri): Boolean = runCatching {
+        val scheme =
+            if (context.isNightMode()) CustomTabsIntent.COLOR_SCHEME_DARK
+            else CustomTabsIntent.COLOR_SCHEME_LIGHT
+        val params = Builder()
+            .setToolbarColor(context.resolveColor(attr.colorPrimary))
+            .build()
+        val intent = CustomTabsIntent.Builder(CustomTabsHelper.session)
+            .setShowTitle(true)
+            .setColorScheme(scheme)
+            .setDefaultColorSchemeParams(params)
+            .build()
+        intent.intent.setPackage(CustomTabsHelper.packageNameToBind)
+        intent.launchUrl(context, uri)
+        true
+    }.getOrNull() ?: false
 
-    private fun openGooglePlay(context: Context, packageName: String): Boolean {
-        return openUri(context, "market://details?id=$packageName") ||
+
+    private fun openGooglePlay(context: Context, packageName: String): Boolean =
+        openUri(context, "market://details?id=$packageName") ||
             openCustomTabs(context, "https://play.google.com/store/apps/details?id=$packageName")
-    }
 
     fun openGooglePlay(context: Context): Boolean =
         openGooglePlay(context, PACKAGE_NAME)
@@ -79,17 +74,16 @@ object Launcher {
     }
 
     fun sendMailToDeveloper(context: Context) {
-        try {
+        runCatching {
             val intent = Intent(Intent.ACTION_SENDTO).also {
                 it.data = Uri.parse("mailto:")
                 it.putExtra(Intent.EXTRA_EMAIL, arrayOf(EMAIL_ADDRESS))
                 it.putExtra(
                     Intent.EXTRA_SUBJECT,
-                    context.getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME + " (${Build.MODEL}, Android ${Build.VERSION.RELEASE})"
+                    context.getString(string.app_name) + " " + BuildConfig.VERSION_NAME + " (${Build.MODEL}, Android ${VERSION.RELEASE})"
                 )
             }
             context.startActivity(intent)
-        } catch (e: Exception) {
         }
     }
 

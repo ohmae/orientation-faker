@@ -9,10 +9,7 @@ package net.mm2d.orientation.control
 
 import android.content.Context
 import androidx.room.Room
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import net.mm2d.orientation.room.database.PackageSettingsDatabase
 import net.mm2d.orientation.room.entity.PackageSettingEntity
 import net.mm2d.orientation.settings.Settings
@@ -21,7 +18,9 @@ object ForegroundPackageSettings {
     private const val DB_NAME = "package_settings.db"
     private lateinit var database: PackageSettingsDatabase
     private val map: MutableMap<String, Orientation> = mutableMapOf()
-    private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+    private val exceptionHandler = CoroutineExceptionHandler { _, _ -> }
+    private val job = SupervisorJob()
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + job + exceptionHandler)
     private val settings: Settings by lazy { Settings.get() }
 
     fun initialize(context: Context) {

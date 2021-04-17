@@ -13,6 +13,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.os.Process
 import android.provider.Settings
 import android.provider.Settings.System
 import android.widget.Toast
@@ -52,11 +53,9 @@ object SystemSettings {
         }
     }
 
-    fun rotationIsFixed(context: Context): Boolean = try {
+    fun rotationIsFixed(context: Context): Boolean = runCatching {
         System.getInt(context.contentResolver, System.ACCELEROMETER_ROTATION) == 0
-    } catch (ignored: Exception) {
-        false
-    }
+    }.getOrNull() ?: false
 
     fun canDrawOverlays(context: Context): Boolean {
         return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) true
@@ -91,16 +90,14 @@ object SystemSettings {
     }
 
     fun hasUsageAccessPermission(context: Context) =
-        try {
+        runCatching {
             checkOpNoThrow(
                 context,
                 AppOpsManager.OPSTR_GET_USAGE_STATS,
-                android.os.Process.myUid(),
+                Process.myUid(),
                 BuildConfig.APPLICATION_ID
             ) == AppOpsManager.MODE_ALLOWED
-        } catch (ignored: Exception) {
-            false
-        }
+        }.getOrNull() ?: false
 
     @Suppress("SameParameterValue", "DEPRECATION")
     private fun checkOpNoThrow(context: Context, op: String, uid: Int, packageName: String): Int? =

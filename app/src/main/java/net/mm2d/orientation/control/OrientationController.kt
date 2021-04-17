@@ -66,7 +66,7 @@ class OrientationController(context: Context) {
         isEnabled = true
         if (layoutParams.screenOrientation == orientation.value) return
         layoutParams.screenOrientation = orientation.value
-        try {
+        runCatching {
             if (orientation == Orientation.UNSPECIFIED) {
                 if (attached) {
                     windowManager.removeView(view)
@@ -80,14 +80,15 @@ class OrientationController(context: Context) {
                     attached = true
                 }
             }
-        } catch (t: Throwable) {
         }
     }
 
     fun stop() {
         isEnabled = false
         if (attached) {
-            windowManager.removeViewImmediate(view)
+            runCatching {
+                windowManager.removeViewImmediate(view)
+            }
             attached = false
         }
     }
