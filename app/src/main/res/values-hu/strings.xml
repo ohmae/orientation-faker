@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Orientation Control</string>
+    <string name="app_hash_tag">#ScreenOrientationControl</string>
+
+    <string name="notification_channel_name">@string/app_name</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Mégse</string>
+
+    <string name="label_unspecified">apptól függő</string>
+    <string name="label_force_sensor">szenzor</string>
+    <string name="label_portrait">álló</string>
+    <string name="label_landscape">fekvő</string>
+    <string name="label_reverse_portrait">ford.fekvő</string>
+    <string name="label_reverse_landscape">ford.álló</string>
+    <string name="label_sensor_portrait">szenzor álló</string>
+    <string name="label_sensor_landscape">szenzor fekvő</string>
+    <string name="label_sensor_lie_left">balra fektet</string>
+    <string name="label_sensor_lie_right">jobbra fektet</string>
+    <string name="label_sensor_headstand">fejjel lefelé</string>
+    <string name="label_clear">törlés</string>
+
+    <string name="description_unspecified">A futtatott alkalmazás határozza meg a tájolást, felülbírálva az Orientation Control beállítását.</string>
+    <string name="description_force_sensor">Forgatás a szenzor alapján</string>
+    <string name="description_portrait">Mindig álló</string>
+    <string name="description_landscape">Mindig fekvő</string>
+    <string name="description_reverse_portrait">Mindig fordított álló</string>
+    <string name="description_reverse_landscape">Mindig fordított fekvő</string>
+    <string name="description_sensor_portrait">Álló helyzetben rögzítve, a szenzor 180 fokkal fordít</string>
+    <string name="description_sensor_landscape">Fekvő helyzetben rögzítve, a szenzor 180 fokkal fordít</string>
+    <string name="description_sensor_lie_left">90 fokkal balra forgat a szenzor alapján. Bal oldalon fekvő helyzetből forgatva a fent és a lent az eredeti lesz.</string>
+    <string name="description_sensor_lie_right">90 fokkal jobbra forgat a szenzor alapján. Jobb oldalon fekvő helyzetből forgatva a fent és a lent az eredeti lesz.</string>
+    <string name="description_sensor_headstand">180 fokkal forgat a szenzor alapján. Fejreállított helyzetből forgatva a fent és a lent az eredeti lesz.</string>
+    <string name="description_clear">Az egyéni alkalmazás tájolás törlése</string>
+
+    <string name="menu_title_status">Állapot</string>
+    <string name="menu_description_status_running">Fut</string>
+    <string name="menu_description_status_waiting">Leállítva</string>
+    <string name="button_status_start">FUTTAT</string>
+    <string name="button_status_stop">LEÁLLÍT</string>
+    <string name="menu_title_detailed_settings">Részletes beállítások</string>
+    <string name="menu_description_detailed_settings_description">Az értesítés témája és részletes viselkedési beállításai</string>
+    <string name="menu_title_setting_for_each_app">Kivételek (egyéni tájolás)</string>
+    <string name="menu_description_setting_for_each_app">Egyéni képernyő tájolás megadása egyes alkalmazásokhoz</string>
+    <string name="menu_title_app_theme">Az alkalmazás témája</string>
+    <string name="menu_description_app_theme_system">Rendszert követi</string>
+    <string name="menu_description_app_theme_light">Világos</string>
+    <string name="menu_description_app_theme_dark">Sötét</string>
+    <string name="menu_title_version">Verzió</string>
+    <string name="caution_auto_rotate">Kérjük, állítsd a rendszer beállítását automatikus forgatásra, máskülönben előfordulhat, hogy a 180 fokos fordítás nem lesz lehetséges</string>
+    <string name="caution_experimental_orientation">A \"szenzor álló\", \"szenzor fekvő\", \"balra fektet\", \"jobbra fektet\" és \"fejjel lefelé\" kísérleti funkciók. Hibásan működhetnek.</string>
+
+    <string name="package_check_disabled">A funkció engedélyezéséhez kapcsold be a kapcsolóval</string>
+    <string name="search_apps">Alkalmazás keresése</string>
+    <string name="no_app_caution">Nincs találat</string>
+    <string name="check_show_all_app">Rendszeralkalmazást is mutasson</string>
+    <string name="button_reset_each_app_setting">Visszaállítás</string>
+
+    <string name="button_reset_theme">Téma alaphelyzetbe</string>
+    <string name="button_reset_layout">Gombok alaphelyzetbe</string>
+    <string name="button_foreground_color">ikonszín</string>
+    <string name="button_background_color">háttér</string>
+    <string name="button_selected_foreground_color">kijelölt ikon színe</string>
+    <string name="button_selected_background_color">kijelölés háttere</string>
+    <string name="button_base_color">alap</string>
+    <string name="menu_title_use_icon_background">Ikon háttere</string>
+    <string name="menu_description_use_icon_background_on">Csak ikon megjelenítése leíró szöveg nélkül, ikon háttérrel</string>
+    <string name="menu_description_use_icon_background_off">Ikon és leíró szöveg megjelenítése téglalap alakú háttérrel</string>
+    <string name="menu_title_use_blank_icon_for_notification">Az állapotsor ikonja legyen átlátszó</string>
+    <string name="menu_description_use_blank_icon_for_notification_on">Átlátszó állapotsori ikon</string>
+    <string name="menu_description_use_blank_icon_for_notification_off">Állapotsori ikon, ami mutatja a kijelző tájolását</string>
+    <string name="menu_title_auto_rotate_warning">Rendszerbeállítás figyelmeztetés</string>
+    <string name="menu_description_auto_rotate_warning_on">Mutasson figyelmeztetést, ha a rendszer beállítása nem az automatikus forgatás</string>
+    <string name="menu_description_auto_rotate_warning_off">Ne mutasson figyelmeztetést, ha a rendszer beállítása nem az automatikus forgatás</string>
+    <string name="menu_title_notification_privacy">Értesítések adatvédelme</string>
+    <string name="menu_description_notification_privacy_on">Rejtett tartalom</string>
+    <string name="menu_description_notification_privacy_off">Publikus tartalom</string>
+    <string name="menu_title_system_notification">Értesítési beállítások</string>
+    <string name="menu_description_system_notification_description">A rendszer értesítési beállításainak megnyitása</string>
+    <string name="menu_title_system_app">Alkalmazás részletek</string>
+    <string name="menu_description_system_app_description">Az alkalmazás részletei az Androidban</string>
+    <string name="menu_title_icon_shape">Ikon alakja</string>
+    <string name="menu_description_icon_shape_circle">Kör</string>
+    <string name="menu_description_item_shape_squircle">Kerekded</string>
+    <string name="menu_description_icon_shape_rounded_square">Lekerekített négyzet</string>
+    <string name="menu_description_icon_shape_teardrop">Könycsepp</string>
+    <string name="menu_description_icon_shape_hexagon">Hatszög</string>
+
+    <string name="dialog_title_reset_theme">Megerősítés</string>
+    <string name="dialog_message_reset_theme">A témát alaphelyzetbe állítod?</string>
+    <string name="dialog_title_reset_layout">Megerősítés</string>
+    <string name="dialog_message_reset_layout">A gombok elrendezését alaphelyzetbe állítod?</string>
+    <string name="dialog_title_overlay_permission">Engedély szükséges</string>
+    <string name="dialog_message_overlay_permission">Az alkalmazás használatához szükséges a \"más alkalmazások eltakarására képes\" engedély.</string>
+    <string name="dialog_message_overlay_permission_go">Az alkalmazás használatához szükséges a \"más alkalmazások eltakarására képes\" engedély. Előfordulhat, hogy a Go Edition eszközök nem adhatnak engedélyt. Ebben az esetben az alkalmazás nem használható, azt el kell távolítani.</string>
+    <string name="dialog_title_usage_access">Engedély szükséges</string>
+    <string name="dialog_message_usage_access">A funkció használatához használati hozzáférési engedély szükséges</string>
+    <string name="dialog_button_open_settings">A beállításokhoz</string>
+
+    <string name="dialog_title_review">Elégedett vagy?</string>
+    <string name="dialog_message_review">Kérjük, örvendeztess meg egy 5 csillagos értékeléssel. Ha probléma merülne fel, kérem, jelezd nekem</string>
+    <string name="dialog_button_review">Értékelés</string>
+    <string name="dialog_button_send_mail">Jelentés</string>
+
+    <string name="toast_could_not_open_setting">A rendszerbeállításokat nem lehetett megnyitni</string>
+    <string name="toast_system_settings">Kérjük, állítsd be a rendszerbeállítást automatikus forgatásra</string>
+    <string name="toast_select_item_max">6-nál több nem adható hozzá</string>
+    <string name="toast_select_item_min">Legalább 1-et meg kell adni</string>
+    <string name="toast_fail_to_initialize_sensor">A gyorsulásmérő inicializálása nem sikerült</string>
+    <string name="toast_no_permission_to_usage_access">Nincs engedély a használati adatokhoz való hozzáférésre</string>
+
+    <string name="options_menu_license">Nyílt forráskódú licenszek</string>
+    <string name="options_menu_source_code">Forráskód</string>
+    <string name="options_menu_privacy_policy">Adatvédelem</string>
+    <string name="options_menu_mail_to_developer">Levél a fejlesztőnek</string>
+    <string name="options_menu_share_this_app">Az app megosztása</string>
+    <string name="options_menu_play_store">Google Play Áruház</string>
+    <string name="options_menu_relevant_ads">Személyre szabott hirdetések</string>
+</resources>
