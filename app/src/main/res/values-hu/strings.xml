@@ -116,4 +116,5 @@
     <string name="options_menu_mail_to_developer">Levél a fejlesztőnek</string>
     <string name="options_menu_share_this_app">Az app megosztása</string>
     <string name="options_menu_play_store">Google Play Áruház</string>
+    <string name="options_menu_relevant_ads">Személyre szabott hirdetések</string>
 </resources>
