@@ -64,6 +64,7 @@
     <string name="button_selected_foreground_color">選択前景</string>
     <string name="button_selected_background_color">選択背景</string>
     <string name="button_base_color">ベース</string>
+
     <string name="menu_title_use_icon_background">アイコン背景</string>
     <string name="menu_description_use_icon_background_on">説明テキストを表示しないでアイコンを表示します</string>
     <string name="menu_description_use_icon_background_off">アイコンと説明テキストを表示します</string>
@@ -116,4 +117,5 @@
     <string name="options_menu_mail_to_developer">開発者へメール</string>
     <string name="options_menu_share_this_app">アプリをシェア</string>
     <string name="options_menu_play_store">Google Playストア</string>
+    <string name="options_menu_relevant_ads">広告の関連性</string>
 </resources>

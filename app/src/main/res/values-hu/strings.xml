@@ -8,6 +8,7 @@
     <string name="ok">OK</string>
     <string name="cancel">Mégse</string>
 
+    <!-- icon label -->
     <string name="label_unspecified">apptól függő</string>
     <string name="label_force_sensor">szenzor</string>
     <string name="label_portrait">álló</string>
@@ -64,6 +65,7 @@
     <string name="button_selected_foreground_color">kijelölt ikon színe</string>
     <string name="button_selected_background_color">kijelölés háttere</string>
     <string name="button_base_color">alap</string>
+
     <string name="menu_title_use_icon_background">Ikon háttere</string>
     <string name="menu_description_use_icon_background_on">Csak ikon megjelenítése leíró szöveg nélkül, ikon háttérrel</string>
     <string name="menu_description_use_icon_background_off">Ikon és leíró szöveg megjelenítése téglalap alakú háttérrel</string>

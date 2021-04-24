@@ -8,6 +8,7 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
+    <!-- icon label -->
     <string name="label_unspecified">unspecified</string>
     <string name="label_force_sensor">force sensor</string>
     <string name="label_portrait">portrait</string>
@@ -64,6 +65,7 @@
     <string name="button_selected_foreground_color">sel. fg</string>
     <string name="button_selected_background_color">sel. bg</string>
     <string name="button_base_color">base</string>
+
     <string name="menu_title_use_icon_background">Icon background</string>
     <string name="menu_description_use_icon_background_on">Show only icon without descriptive text, with icon background</string>
     <string name="menu_description_use_icon_background_off">Show icon and descriptive text, with rectangular background</string>
@@ -116,4 +118,5 @@
     <string name="options_menu_mail_to_developer">Mail to developer</string>
     <string name="options_menu_share_this_app">Share this app</string>
     <string name="options_menu_play_store">Google Play store</string>
+    <string name="options_menu_relevant_ads">Relevant Ads</string>
 </resources>
