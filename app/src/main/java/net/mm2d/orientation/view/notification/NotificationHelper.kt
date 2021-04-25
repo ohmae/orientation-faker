@@ -12,8 +12,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
-import android.os.Build.VERSION
-import android.os.Build.VERSION_CODES
+import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
@@ -24,25 +23,19 @@ import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.view.widget.RemoteViewsCreator
 
 object NotificationHelper {
-    private const val OLD_CHANNEL_ID = "CHANNEL_ID"
     private const val CHANNEL_ID = "CONTROL"
     private const val NOTIFICATION_ID = 10
 
     fun createChannel(context: Context) {
-        if (VERSION.SDK_INT < VERSION_CODES.O) {
-            return
-        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
         val name = context.getString(R.string.notification_channel_name)
         val importance = NotificationManager.IMPORTANCE_LOW
         val channel = NotificationChannel(CHANNEL_ID, name, importance).also {
             it.enableLights(false)
             it.enableVibration(false)
         }
-        val manager = context.getSystemService<NotificationManager>() ?: return
-        if (manager.getNotificationChannel(OLD_CHANNEL_ID) != null) {
-            manager.deleteNotificationChannel(OLD_CHANNEL_ID)
-        }
-        manager.createNotificationChannel(channel)
+        context.getSystemService<NotificationManager>()
+            ?.createNotificationChannel(channel)
     }
 
     fun startForegroundEmpty(service: Service) {
