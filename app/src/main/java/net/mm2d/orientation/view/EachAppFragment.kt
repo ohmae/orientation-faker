@@ -218,7 +218,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
             if (settings.showAllApps) initialList else initialList.filter { it.launcher }
 
         fun search(word: String) {
-            val w = word.toLowerCase(Locale.ENGLISH)
+            val w = word.lowercase(Locale.ENGLISH)
             if (w == searchWord) return
             searchWord = w
             update()
@@ -245,8 +245,8 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
         }
 
         private fun AppInfo.contains(word: String): Boolean =
-            label.toLowerCase(Locale.ENGLISH).contains(word) ||
-                packageName.toLowerCase(Locale.ENGLISH).contains(word)
+            label.lowercase(Locale.ENGLISH).contains(word) ||
+                packageName.lowercase(Locale.ENGLISH).contains(word)
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
             ViewHolder(ItemEachAppBinding.inflate(inflater, parent, false))
