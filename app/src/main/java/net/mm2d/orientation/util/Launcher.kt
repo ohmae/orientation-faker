@@ -13,7 +13,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Build.VERSION
-import androidx.browser.customtabs.CustomTabColorSchemeParams.Builder
+import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ShareCompat
 import net.mm2d.android.orientationfaker.BuildConfig
@@ -42,7 +42,7 @@ object Launcher {
         val scheme =
             if (context.isNightMode()) CustomTabsIntent.COLOR_SCHEME_DARK
             else CustomTabsIntent.COLOR_SCHEME_LIGHT
-        val params = Builder()
+        val params = CustomTabColorSchemeParams.Builder()
             .setToolbarColor(context.resolveColor(R.attr.colorPrimary))
             .build()
         val intent = CustomTabsIntent.Builder(CustomTabsHelper.session)
