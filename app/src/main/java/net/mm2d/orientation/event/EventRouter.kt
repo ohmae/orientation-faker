@@ -10,23 +10,22 @@ package net.mm2d.orientation.event
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 object EventRouter {
-    private val updateChannel: BroadcastChannel<Unit> = BroadcastChannel(1)
+    private val updateFlow: MutableSharedFlow<Unit> = MutableSharedFlow(1)
 
     fun notifyUpdate() {
         GlobalScope.launch {
-            updateChannel.send(Unit)
+            updateFlow.emit(Unit)
         }
     }
 
     fun observeUpdate(owner: LifecycleOwner, callback: () -> Unit) {
         owner.lifecycleScope.launch {
-            updateChannel.asFlow().collect { callback() }
+            updateFlow.collect { callback() }
         }
     }
 }
