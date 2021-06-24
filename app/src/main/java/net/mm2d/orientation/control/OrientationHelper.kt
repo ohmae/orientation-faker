@@ -9,13 +9,13 @@ package net.mm2d.orientation.control
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.widget.Toast
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.OrientationHelper.Rotation.*
 import net.mm2d.orientation.review.ReviewRequest
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.Powers
 import net.mm2d.orientation.util.SystemSettings
+import net.mm2d.orientation.util.Toaster
 import kotlin.math.abs
 import kotlin.math.atan
 
@@ -197,7 +197,7 @@ object OrientationHelper {
             return
         }
         if (SystemSettings.rotationIsFixed(context)) {
-            Toast.makeText(context, R.string.toast_system_settings, Toast.LENGTH_LONG).show()
+            Toaster.showLong(context, R.string.toast_system_settings)
         }
     }
 }

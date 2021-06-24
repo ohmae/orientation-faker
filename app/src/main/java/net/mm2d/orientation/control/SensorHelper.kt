@@ -15,10 +15,10 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.widget.Toast
 import androidx.core.content.getSystemService
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.util.Powers
+import net.mm2d.orientation.util.Toaster
 
 class SensorHelper(
     private val context: Context,
@@ -53,12 +53,12 @@ class SensorHelper(
         if (sensorManager != null) return
         val manager: SensorManager? = context.getSystemService()
         if (manager == null) {
-            Toast.makeText(context, R.string.toast_fail_to_initialize_sensor, Toast.LENGTH_LONG).show()
+            Toaster.showLong(context, R.string.toast_fail_to_initialize_sensor)
             return
         }
         val sensor = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         if (sensor == null) {
-            Toast.makeText(context, R.string.toast_fail_to_initialize_sensor, Toast.LENGTH_LONG).show()
+            Toaster.showLong(context, R.string.toast_fail_to_initialize_sensor)
             return
         }
         sensorManager = manager

@@ -13,7 +13,6 @@ import android.content.Intent
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.os.IBinder
-import android.widget.Toast
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.ForegroundPackageChecker
 import net.mm2d.orientation.control.ForegroundPackageSettings
@@ -22,6 +21,7 @@ import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.event.EventRouter
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.SystemSettings
+import net.mm2d.orientation.util.Toaster
 import net.mm2d.orientation.view.notification.NotificationHelper
 import net.mm2d.orientation.view.widget.WidgetProvider
 
@@ -76,7 +76,7 @@ class MainService : Service() {
         }
         if (ForegroundPackageSettings.disabled()) return
         if (!SystemSettings.hasUsageAccessPermission(this)) {
-            Toast.makeText(this, R.string.toast_no_permission_to_usage_access, Toast.LENGTH_LONG).show()
+            Toaster.showLong(this, R.string.toast_no_permission_to_usage_access)
             return
         }
         checker = ForegroundPackageChecker(this, ::onUpdateForegroundPackage).also {

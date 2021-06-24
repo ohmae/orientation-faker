@@ -11,7 +11,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -29,10 +28,7 @@ import net.mm2d.orientation.settings.Default
 import net.mm2d.orientation.settings.IconShape
 import net.mm2d.orientation.settings.OrientationList
 import net.mm2d.orientation.settings.Settings
-import net.mm2d.orientation.util.SystemSettings
-import net.mm2d.orientation.util.alpha
-import net.mm2d.orientation.util.autoCleared
-import net.mm2d.orientation.util.opaque
+import net.mm2d.orientation.util.*
 import net.mm2d.orientation.view.dialog.*
 import net.mm2d.orientation.view.view.CheckItemView
 
@@ -222,7 +218,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
     private fun onClickCheckItem(view: CheckItemView) {
         if (view.isChecked) {
             if (orientationList.size <= OrientationList.MIN) {
-                Toast.makeText(requireContext(), R.string.toast_select_item_min, Toast.LENGTH_LONG).show()
+                Toaster.showLong(requireContext(), R.string.toast_select_item_min)
             } else {
                 orientationList.remove(view.orientation)
                 view.isChecked = false
@@ -230,7 +226,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
             }
         } else {
             if (orientationList.size >= OrientationList.MAX) {
-                Toast.makeText(requireContext(), R.string.toast_select_item_max, Toast.LENGTH_LONG).show()
+                Toaster.showLong(requireContext(), R.string.toast_select_item_max)
             } else {
                 orientationList.add(view.orientation)
                 view.isChecked = true

@@ -16,7 +16,6 @@ import android.os.Build
 import android.os.Process
 import android.provider.Settings
 import android.provider.Settings.System
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import net.mm2d.android.orientationfaker.BuildConfig
@@ -49,7 +48,7 @@ object SystemSettings {
             }
             activity.startActivity(intent)
         } catch (e: Exception) {
-            Toast.makeText(activity, R.string.toast_could_not_open_setting, Toast.LENGTH_LONG).show()
+            Toaster.showLong(activity, R.string.toast_could_not_open_setting)
         }
     }
 
@@ -80,7 +79,7 @@ object SystemSettings {
                 it.putExtra("android.provider.extra.APP_PACKAGE", BuildConfig.APPLICATION_ID)
             })
         } catch (e: Exception) {
-            Toast.makeText(activity, R.string.toast_could_not_open_setting, Toast.LENGTH_LONG).show()
+            Toaster.showLong(activity, R.string.toast_could_not_open_setting)
         }
     }
 
