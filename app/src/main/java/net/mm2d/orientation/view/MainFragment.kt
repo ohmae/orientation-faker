@@ -45,14 +45,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
     private val handler = Handler(Looper.getMainLooper())
     private val checkSystemSettingsTask = Runnable { checkSystemSettings() }
-    private lateinit var notificationSample: NotificationSample
+    private var notificationSample: NotificationSample by autoCleared()
     private var binding: FragmentMainBinding by autoCleared()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentMainBinding.bind(view)
         setHasOptionsMenu(true)
         setUpViews()
-        EventRouter.observeUpdate(this) {
+        EventRouter.observeUpdate(viewLifecycleOwner) {
             applyStatus()
             notificationSample.update()
         }
