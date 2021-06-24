@@ -17,8 +17,8 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle.State
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import net.mm2d.android.orientationfaker.BuildConfig
@@ -64,8 +64,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             }
             Updater.startUpdateIfAvailable(requireActivity())
         }
-        ViewModelProvider(this)
-            .get(NightModeDialogViewModel::class.java)
+        viewModels<NightModeDialogViewModel>().value
             .modeLiveData()
             .observe(viewLifecycleOwner, ::onSelectNightMode)
     }

@@ -14,8 +14,8 @@ import android.widget.ImageView
 import androidx.annotation.ColorInt
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.gridlayout.widget.GridLayout
-import androidx.lifecycle.ViewModelProvider
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.FragmentDetailedSettingsBinding
 import net.mm2d.color.chooser.ColorChooserDialog
@@ -48,14 +48,14 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
         setHasOptionsMenu(false)
         setUpViews()
         EventRouter.observeUpdate(viewLifecycleOwner) { notificationSample.update() }
-        val provider = ViewModelProvider(this)
-        provider.get(ResetThemeDialogViewModel::class.java)
+
+        viewModels<ResetThemeDialogViewModel>().value
             .resetThemeLiveData()
             .observe(viewLifecycleOwner, ::resetTheme)
-        provider.get(ResetLayoutDialogViewModel::class.java)
+        viewModels<ResetLayoutDialogViewModel>().value
             .resetLayoutLiveData()
             .observe(viewLifecycleOwner, ::resetLayout)
-        provider.get(IconShapeDialogViewModel::class.java)
+        viewModels<IconShapeDialogViewModel>().value
             .iconShapeLiveData()
             .observe(viewLifecycleOwner, ::onSelectIconShape)
     }

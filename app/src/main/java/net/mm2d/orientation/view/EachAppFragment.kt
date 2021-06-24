@@ -22,8 +22,8 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -59,8 +59,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
         binding.recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         setUpSearch()
         setUpBottom()
-        ViewModelProvider(this)
-            .get(EachAppOrientationDialogViewModel::class.java)
+        viewModels<EachAppOrientationDialogViewModel>().value
             .changedPositionLiveData()
             .observe(viewLifecycleOwner, ::onChangeSettings)
         val appListLiveData = MutableLiveData<List<AppInfo>>()
