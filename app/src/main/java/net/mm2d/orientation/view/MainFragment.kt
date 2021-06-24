@@ -34,6 +34,7 @@ import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.Launcher
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.Updater
+import net.mm2d.orientation.util.autoCleared
 import net.mm2d.orientation.view.dialog.NightModeDialog
 import net.mm2d.orientation.view.dialog.NightModeDialogViewModel
 import net.mm2d.orientation.view.dialog.OverlayPermissionDialog
@@ -45,7 +46,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private val handler = Handler(Looper.getMainLooper())
     private val checkSystemSettingsTask = Runnable { checkSystemSettings() }
     private lateinit var notificationSample: NotificationSample
-    private lateinit var binding: FragmentMainBinding
+    private var binding: FragmentMainBinding by autoCleared()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentMainBinding.bind(view)

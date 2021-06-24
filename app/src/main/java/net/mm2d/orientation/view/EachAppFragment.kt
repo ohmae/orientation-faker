@@ -38,6 +38,7 @@ import net.mm2d.orientation.service.MainController
 import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.SystemSettings
+import net.mm2d.orientation.util.autoCleared
 import net.mm2d.orientation.view.dialog.EachAppOrientationDialog
 import net.mm2d.orientation.view.dialog.EachAppOrientationDialogViewModel
 import net.mm2d.orientation.view.dialog.UsageAppPermissionDialog
@@ -50,7 +51,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
     private var adapter: EachAppAdapter? = null
     private val job = Job()
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + job)
-    private lateinit var binding: FragmentEachAppBinding
+    private var binding: FragmentEachAppBinding by autoCleared()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentEachAppBinding.bind(view)

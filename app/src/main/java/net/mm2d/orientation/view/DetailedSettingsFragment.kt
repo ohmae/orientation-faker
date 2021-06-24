@@ -31,6 +31,7 @@ import net.mm2d.orientation.settings.OrientationList
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.alpha
+import net.mm2d.orientation.util.autoCleared
 import net.mm2d.orientation.util.opaque
 import net.mm2d.orientation.view.dialog.*
 import net.mm2d.orientation.view.view.CheckItemView
@@ -44,7 +45,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
     private lateinit var checkList: List<CheckItemView>
     private lateinit var orientationListStart: List<Orientation>
     private val orientationList: MutableList<Orientation> = mutableListOf()
-    private lateinit var binding: FragmentDetailedSettingsBinding
+    private var binding: FragmentDetailedSettingsBinding by autoCleared()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentDetailedSettingsBinding.bind(view)
