@@ -47,7 +47,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
         binding = FragmentDetailedSettingsBinding.bind(view)
         setHasOptionsMenu(false)
         setUpViews()
-        EventRouter.observeUpdate(this) { notificationSample.update() }
+        EventRouter.observeUpdate(viewLifecycleOwner) { notificationSample.update() }
         val provider = ViewModelProvider(this)
         provider.get(ResetThemeDialogViewModel::class.java)
             .resetThemeLiveData()

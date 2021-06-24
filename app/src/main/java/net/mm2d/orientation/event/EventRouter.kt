@@ -8,6 +8,7 @@
 package net.mm2d.orientation.event
 
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -25,7 +26,7 @@ object EventRouter {
     }
 
     fun observeUpdate(owner: LifecycleOwner, callback: () -> Unit) {
-        owner.lifecycleScope.launch {
+        owner.lifecycleScope.launchWhenStarted {
             updateFlow.collect { callback() }
         }
     }
