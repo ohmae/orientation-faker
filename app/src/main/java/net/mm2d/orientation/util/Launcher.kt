@@ -88,8 +88,7 @@ object Launcher {
     fun shareThisApp(context: Activity) {
         val url = "https://play.google.com/store/apps/details?id=$PACKAGE_NAME"
         val hashTag = context.getString(R.string.app_hash_tag)
-        ShareCompat.IntentBuilder
-            .from(context)
+        ShareCompat.IntentBuilder(context)
             .setText(" $hashTag $url")
             .setType("text/plain")
             .startChooser()
