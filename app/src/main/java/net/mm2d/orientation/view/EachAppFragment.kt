@@ -24,6 +24,7 @@ import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -49,8 +50,6 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
         Settings.get()
     }
     private var adapter: EachAppAdapter? = null
-    private val job = Job()
-    private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + job)
     private var binding: FragmentEachAppBinding by autoCleared()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,7 +64,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
         val appListLiveData = MutableLiveData<List<AppInfo>>()
         appListLiveData.observe(viewLifecycleOwner, ::setAdapter)
         val context = requireContext()
-        scope.launch {
+        lifecycleScope.launch {
             appListLiveData.postValue(makeAppList(context))
         }
     }
@@ -119,11 +118,6 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
     private fun hideKeyboard() {
         (requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
             .hideSoftInputFromWindow(binding.searchWindow.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        job.cancel()
     }
 
     override fun onResume() {
