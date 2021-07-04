@@ -66,7 +66,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
     implementation("androidx.appcompat:appcompat:1.3.0")
-    implementation("androidx.core:core-ktx:1.5.0")
+    implementation("androidx.core:core-ktx:1.6.0")
     implementation("androidx.browser:browser:1.3.0")
     implementation("androidx.legacy:legacy-support-v13:1.0.0")
     implementation("androidx.lifecycle:lifecycle-process:2.3.1")
@@ -77,7 +77,7 @@ dependencies {
     implementation("androidx.gridlayout:gridlayout:1.0.0")
     implementation("androidx.preference:preference-ktx:1.1.1")
     implementation("androidx.webkit:webkit:1.4.0")
-    implementation("com.google.android.material:material:1.3.0")
+    implementation("com.google.android.material:material:1.4.0")
     implementation("com.google.android.play:core:1.10.0")
     implementation("com.google.android.play:core-ktx:1.8.1")
     implementation("androidx.room:room-runtime:2.3.0")
@@ -88,10 +88,10 @@ dependencies {
     implementation("net.mm2d.color-chooser:color-chooser:0.3.0")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
-    debugImplementation("com.facebook.flipper:flipper:0.95.0")
+    debugImplementation("com.facebook.flipper:flipper:0.96.1")
     debugImplementation("com.facebook.soloader:soloader:0.10.1")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.95.0")
-    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.95.0")
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.96.1")
+    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.96.1")
 }
 
 fun isStable(version: String): Boolean {
@@ -101,6 +101,6 @@ fun isStable(version: String): Boolean {
     return hasStableKeyword || regex.matches(version)
 }
 
-tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
+tasks.named<DependencyUpdatesTask>("dependencyUpdates") {
     rejectVersionIf { !isStable(candidate.version) }
 }
