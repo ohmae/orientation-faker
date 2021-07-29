@@ -15,12 +15,12 @@ val versionMinor = 8
 val versionPatch = 0
 
 android {
-    compileSdkVersion(30)
+    compileSdk = 30
 
     defaultConfig {
         applicationId = "net.mm2d.android.orientationfaker"
-        minSdkVersion(21)
-        targetSdkVersion(30)
+        minSdk = 21
+        targetSdk = 30
         versionCode = versionMajor * 10000 + versionMinor * 100 + versionPatch
         versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
         vectorDrawables.useSupportLibrary = true
@@ -63,9 +63,9 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
-    implementation("androidx.appcompat:appcompat:1.3.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
+    implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("androidx.core:core-ktx:1.6.0")
     implementation("androidx.browser:browser:1.3.0")
     implementation("androidx.legacy:legacy-support-v13:1.0.0")
@@ -88,10 +88,10 @@ dependencies {
     implementation("net.mm2d.color-chooser:color-chooser:0.3.0")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
-    debugImplementation("com.facebook.flipper:flipper:0.96.1")
+    debugImplementation("com.facebook.flipper:flipper:0.100.0")
     debugImplementation("com.facebook.soloader:soloader:0.10.1")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.96.1")
-    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.96.1")
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.100.0")
+    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.100.0")
 }
 
 fun isStable(version: String): Boolean {
