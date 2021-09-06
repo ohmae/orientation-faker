@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">旋转控制</string>
+    <string name="app_hash_tag">#屏幕旋转控制</string>
+
+    <string name="notification_channel_name">@string/app_name</string>
+
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+
+    <!-- icon label -->
+    <string name="label_unspecified">不指定</string>
+    <string name="label_force_sensor">强制自动</string>
+    <string name="label_portrait">竖屏</string>
+    <string name="label_landscape">横屏</string>
+    <string name="label_reverse_portrait">反向竖屏</string>
+    <string name="label_reverse_landscape">反向横屏</string>
+    <string name="label_sensor_portrait">竖屏自动</string>
+    <string name="label_sensor_landscape">横屏自动</string>
+    <string name="label_sensor_lie_left">左侧躺</string>
+    <string name="label_sensor_lie_right">右侧躺</string>
+    <string name="label_sensor_headstand">倒立</string>
+    <string name="label_clear">清除</string>
+
+    <string name="description_unspecified">此应用未指定方向. 设备会使用原始的方向.</string>
+    <string name="description_force_sensor">根据传感器信息旋转</string>
+    <string name="description_portrait">固定为竖屏</string>
+    <string name="description_landscape">固定为横屏</string>
+    <string name="description_reverse_portrait">固定为反向竖屏</string>
+    <string name="description_reverse_landscape">固定以反向横屏</string>
+    <string name="description_sensor_portrait">固定为竖屏, 通过传感器自动上下翻转</string>
+    <string name="description_sensor_landscape">固定为横屏, 通过传感器自动上下翻转</string>
+    <string name="description_sensor_lie_left">相对于传感器向左旋转 90 度. 和向左侧躺着时的上下一致.</string>
+    <string name="description_sensor_lie_right">相对于传感器向右旋转 90 度. 和向右侧躺着时的上下一致.</string>
+    <string name="description_sensor_headstand">相对于传感器旋转 180 度. 和把设备倒着拿的上下一致.</string>
+    <string name="description_clear">清除每个应用程序设置, 遵循全局设置</string>
+
+    <string name="menu_title_status">状态</string>
+    <string name="menu_description_status_running">运行中</string>
+    <string name="menu_description_status_waiting">待机中</string>
+    <string name="button_status_start">开始</string>
+    <string name="button_status_stop">停止</string>
+    <string name="menu_title_detailed_settings">详细设置</string>
+    <string name="menu_description_detailed_settings_description">通知的主题和详细行为设置</string>
+    <string name="menu_title_setting_for_each_app">每个应用程序的设置</string>
+    <string name="menu_description_setting_for_each_app">为每个应用设置默认屏幕方向</string>
+    <string name="menu_title_app_theme">应用主题</string>
+    <string name="menu_description_app_theme_system">跟随系统</string>
+    <string name="menu_description_app_theme_light">明亮</string>
+    <string name="menu_description_app_theme_dark">黑暗</string>
+    <string name="menu_title_version">版本</string>
+    <string name="caution_auto_rotate">请将系统设置更改为自动旋转.</string>
+    <string name="caution_experimental_orientation">\"竖屏自动\", \"横屏自动\", \"左侧躺\", \"右侧躺\" 和 \"倒立\" 是实验性功能.</string>
+
+    <string name="package_check_disabled">请打开开关启用此功能</string>
+    <string name="search_apps">搜索应用</string>
+    <string name="no_app_caution">没有符合搜索条件的应用</string>
+    <string name="check_show_all_app">显示所有应用</string>
+    <string name="button_reset_each_app_setting">重置</string>
+
+    <string name="button_reset_theme">重置主题</string>
+    <string name="button_reset_layout">重置按钮布局</string>
+    <string name="button_foreground_color">前景色</string>
+    <string name="button_background_color">背景色</string>
+    <string name="button_selected_foreground_color">选择的前景色</string>
+    <string name="button_selected_background_color">选择的背景色</string>
+    <string name="button_base_color">基色</string>
+
+    <string name="menu_title_use_icon_background">图标背景</string>
+    <string name="menu_description_use_icon_background_on">仅显示没有描述性文本的图标,带有图标背景</string>
+    <string name="menu_description_use_icon_background_off">显示图标和描述，带方形背景框</string>
+    <string name="menu_title_use_blank_icon_for_notification">状态栏透明</string>
+    <string name="menu_description_use_blank_icon_for_notification_on">状态栏显示透明图标</string>
+    <string name="menu_description_use_blank_icon_for_notification_off">在状态栏显示反应状态的图标</string>
+    <string name="menu_title_auto_rotate_warning">系统设置警告</string>
+    <string name="menu_description_auto_rotate_warning_on">系统未设置为自动旋转时警告</string>
+    <string name="menu_description_auto_rotate_warning_off">系统未设置为自动旋转时不警告</string>
+    <string name="menu_title_notification_privacy">通知隐私</string>
+    <string name="menu_description_notification_privacy_on">作为私密信息通知</string>
+    <string name="menu_description_notification_privacy_off">作为公开信息通知</string>
+    <string name="menu_title_system_notification">通知设置</string>
+    <string name="menu_description_system_notification_description">打开系统通知设置</string>
+    <string name="menu_title_system_app">应用信息</string>
+    <string name="menu_description_system_app_description">打开系统应用信息</string>
+    <string name="menu_title_icon_shape">图标形状</string>
+    <string name="menu_description_icon_shape_circle">圆</string>
+    <string name="menu_description_item_shape_squircle">椭圆矩形</string>
+    <string name="menu_description_icon_shape_rounded_square">圆角方形</string>
+    <string name="menu_description_icon_shape_teardrop">泪滴</string>
+    <string name="menu_description_icon_shape_hexagon">六边形</string>
+
+    <string name="dialog_title_reset_theme">确认</string>
+    <string name="dialog_message_reset_theme">您要重置主题吗?</string>
+    <string name="dialog_title_reset_layout">确认</string>
+    <string name="dialog_message_reset_layout">您要重置按钮布局吗?</string>
+    <string name="dialog_title_overlay_permission">需要权限</string>
+    <string name="dialog_message_overlay_permission">要使用这个应用, 需要允许 \"在其它应用上显示\".</string>
+    <string name="dialog_message_overlay_permission_go">要使用这个应用, 需要允许 \"在其它应用上显示\".\nGo edition 的设备无法获取此权限, 所以无法使用这个应用, 请删除本应用.</string>
+    <string name="dialog_title_usage_access">需要权限</string>
+    <string name="dialog_message_usage_access">这个功能需要获取使用情况的权限</string>
+    <string name="dialog_button_open_settings">打开设置</string>
+
+    <string name="dialog_title_review">您满意吗?</string>
+    <string name="dialog_message_review">请给我5星好评.\n如果有问题请您告诉我</string>
+    <string name="dialog_button_review">评论</string>
+    <string name="dialog_button_send_mail">报告</string>
+
+    <string name="toast_could_not_open_setting">无法打开系统设置</string>
+    <string name="toast_system_settings">请将系统设置为自动旋转</string>
+    <string name="toast_select_item_max">不能增加超过6个</string>
+    <string name="toast_select_item_min">至少要选一个</string>
+    <string name="toast_fail_to_initialize_sensor">加速度传感器初始化失败</string>
+    <string name="toast_no_permission_to_usage_access">没有获取使用情况的权限</string>
+
+    <string name="options_menu_license">开源许可</string>
+    <string name="options_menu_source_code">源码</string>
+    <string name="options_menu_privacy_policy">隐私政策</string>
+    <string name="options_menu_mail_to_developer">给开发者发邮件</string>
+    <string name="options_menu_share_this_app">分享这个App</string>
+    <string name="options_menu_play_store">Google Play 商店</string>
+    <string name="options_menu_relevant_ads">相关广告</string>
+</resources>
