@@ -9,9 +9,7 @@ package net.mm2d.orientation.view.widget
 
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
-import android.os.Build
 import android.view.View
 import android.widget.RemoteViews
 import androidx.annotation.ColorInt
@@ -20,22 +18,15 @@ import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.control.OrientationReceiver
 import net.mm2d.orientation.control.Orientations
+import net.mm2d.orientation.control.PendingIntentCreator
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.alpha
 import net.mm2d.orientation.util.opaque
 import net.mm2d.orientation.util.shouldUseWhiteForeground
-import net.mm2d.orientation.view.MainActivity
 import net.mm2d.orientation.view.widget.ViewIds.ViewId
 
 object RemoteViewsCreator {
-    private val FLAGS = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    } else {
-        PendingIntent.FLAG_UPDATE_CURRENT
-    }
-
     fun create(context: Context, orientation: Orientation): RemoteViews =
         RemoteViews(context.packageName, R.layout.notification).also { views ->
             val settings = Settings.get()
@@ -53,7 +44,7 @@ object RemoteViewsCreator {
                     val helpers = RemoteViewHelpers(views, button)
                     helpers.icon.setImageResource(it.icon)
                     helpers.label.setText(it.label)
-                    helpers.button.setOnClickPendingIntent(createOrientationIntent(context, it.orientation))
+                    helpers.button.setOnClickPendingIntent(PendingIntentCreator.orientation(context, it.orientation))
                 }
             }
             val iconShape = settings.iconShape
@@ -93,7 +84,7 @@ object RemoteViewsCreator {
             views.helper(R.id.remote_views_icon_settings).setImageColor(settingsColor)
             views.helper(R.id.remote_views_button_settings).also {
                 it.setBackgroundColor(Color.TRANSPARENT)
-                it.setOnClickPendingIntent(createActivityIntent(context))
+                it.setOnClickPendingIntent(PendingIntentCreator.activity(context))
             }
         }
 
@@ -140,19 +131,4 @@ object RemoteViewsCreator {
 
     private fun RemoteViews.helper(@IdRes id: Int): RemoteViewHelper =
         RemoteViewHelper(this, id)
-
-    private fun createOrientationIntent(context: Context, orientation: Orientation): PendingIntent {
-        val intent = Intent(OrientationReceiver.ACTION_ORIENTATION).also {
-            it.putExtra(OrientationReceiver.EXTRA_ORIENTATION, orientation.value)
-            it.setClass(context, OrientationReceiver::class.java)
-        }
-        return PendingIntent.getBroadcast(context, orientation.value + 1000, intent, FLAGS)
-    }
-
-    private fun createActivityIntent(context: Context): PendingIntent {
-        val intent = Intent(context, MainActivity::class.java).also {
-            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        }
-        return PendingIntent.getActivity(context, 100, intent, FLAGS)
-    }
 }

@@ -19,6 +19,7 @@ import androidx.core.content.getSystemService
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.control.Orientations
+import net.mm2d.orientation.control.PendingIntentCreator
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.view.widget.RemoteViewsCreator
 
@@ -74,11 +75,8 @@ object NotificationHelper {
             .setOngoing(true)
             .setCustomContentView(views)
             .setSmallIcon(icon)
-            .setNotificationSilent(settings.notifySecret)
+            .setSilent(settings.notifySecret)
+            .setContentIntent(PendingIntentCreator.activity(context))
             .build()
-    }
-
-    private fun NotificationCompat.Builder.setNotificationSilent(silent: Boolean): NotificationCompat.Builder = apply {
-        if (silent) setNotificationSilent()
     }
 }
