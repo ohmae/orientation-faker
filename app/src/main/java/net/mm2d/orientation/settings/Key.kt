@@ -40,6 +40,7 @@ interface Key {
         ICON_SHAPE_STRING,
         SHOW_ALL_APPS_BOOLEAN,
         LANDSCAPE_DEVICE_BOOLEAN,
+        SHOW_SETTINGS_ON_NOTIFICATION_BOOLEAN,
         ;
 
         companion object {

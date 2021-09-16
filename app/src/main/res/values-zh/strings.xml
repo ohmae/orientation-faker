@@ -72,6 +72,9 @@
     <string name="menu_title_use_blank_icon_for_notification">状态栏透明</string>
     <string name="menu_description_use_blank_icon_for_notification_on">状态栏显示透明图标</string>
     <string name="menu_description_use_blank_icon_for_notification_off">在状态栏显示反应状态的图标</string>
+    <string name="menu_title_settings_button_on_notification">在通知 UI 上显示设置按钮</string>
+    <string name="menu_description_settings_button_on_notification_on">显示设置按钮</string>
+    <string name="menu_description_settings_button_on_notification_off">不显示设置按钮</string>
     <string name="menu_title_auto_rotate_warning">系统设置警告</string>
     <string name="menu_description_auto_rotate_warning_on">系统未设置为自动旋转时警告</string>
     <string name="menu_description_auto_rotate_warning_off">系统未设置为自动旋转时不警告</string>

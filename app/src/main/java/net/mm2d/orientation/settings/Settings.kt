@@ -122,6 +122,10 @@ class Settings private constructor(
         get() = preferences.readBoolean(Main.LANDSCAPE_DEVICE_BOOLEAN, false)
         set(value) = preferences.writeBoolean(Main.LANDSCAPE_DEVICE_BOOLEAN, value)
 
+    var showSettingsOnNotification: Boolean
+        get() = preferences.readBoolean(Main.SHOW_SETTINGS_ON_NOTIFICATION_BOOLEAN, true)
+        set(value) = preferences.writeBoolean(Main.SHOW_SETTINGS_ON_NOTIFICATION_BOOLEAN, value)
+
     fun resetTheme() {
         foregroundColor = Default.color.foreground
         backgroundColor = Default.color.background

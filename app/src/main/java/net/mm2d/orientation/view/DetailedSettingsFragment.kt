@@ -77,6 +77,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
         applyLayoutSelection()
         applyUseIconBackground()
         applyUseBlankIcon()
+        applySettingsOnNotification()
         applyAutoRotateWarning()
         applyNotificationPrivacy()
     }
@@ -88,6 +89,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
         setUpUseIconBackground()
         setUpIconShape()
         setUpUseBlankIcon()
+        setUpSettingsOnNotification()
         setUpAutoRotateWarning()
         setUpNotificationPrivacy()
         setUpSystemSetting()
@@ -319,6 +321,20 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
     private fun toggleUseBlankIcon() {
         settings.shouldUseBlankIconForNotification = !settings.shouldUseBlankIconForNotification
         applyUseBlankIcon()
+        MainController.update()
+    }
+
+    private fun setUpSettingsOnNotification() {
+        binding.content.showSettingsOnNotification.setOnClickListener { toggleSettingsOnNotification() }
+    }
+
+    private fun applySettingsOnNotification() {
+        binding.content.showSettingsOnNotification.isChecked = settings.showSettingsOnNotification
+    }
+
+    private fun toggleSettingsOnNotification() {
+        settings.showSettingsOnNotification = !settings.showSettingsOnNotification
+        applySettingsOnNotification()
         MainController.update()
     }
 

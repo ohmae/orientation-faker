@@ -441,6 +441,18 @@
         app:title="@string/menu_title_use_blank_icon_for_notification"
         />
 
+
+    <net.mm2d.orientation.view.view.SwitchMenuView
+        android:id="@+id/show_settings_on_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        app:checked="true"
+        app:descriptionOff="@string/menu_description_settings_button_on_notification_off"
+        app:descriptionOn="@string/menu_description_settings_button_on_notification_on"
+        app:title="@string/menu_title_settings_button_on_notification"
+        />
+
     <net.mm2d.orientation.view.view.SwitchMenuView
         android:id="@+id/auto_rotate_warning"
         android:layout_width="match_parent"

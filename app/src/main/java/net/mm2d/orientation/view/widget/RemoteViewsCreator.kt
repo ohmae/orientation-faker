@@ -27,7 +27,7 @@ import net.mm2d.orientation.util.shouldUseWhiteForeground
 import net.mm2d.orientation.view.widget.ViewIds.ViewId
 
 object RemoteViewsCreator {
-    fun create(context: Context, orientation: Orientation): RemoteViews =
+    fun create(context: Context, orientation: Orientation, showSettings: Boolean = true): RemoteViews =
         RemoteViews(context.packageName, R.layout.notification).also { views ->
             val settings = Settings.get()
             val fgColor = settings.foregroundColor
@@ -85,6 +85,7 @@ object RemoteViewsCreator {
             views.helper(R.id.remote_views_button_settings).also {
                 it.setBackgroundColor(Color.TRANSPARENT)
                 it.setOnClickPendingIntent(PendingIntentCreator.activity(context))
+                it.setVisible(showSettings)
             }
         }
 
