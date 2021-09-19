@@ -8,6 +8,7 @@
 package net.mm2d.orientation.settings
 
 import android.content.Context
+import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.orientation.control.Orientation
@@ -131,10 +132,16 @@ class Settings private constructor(
         backgroundColor = Default.color.background
         foregroundColorSelected = Default.color.foregroundSelected
         backgroundColorSelected = Default.color.backgroundSelected
-        if (shouldUseIconBackground) {
-            baseColor = Default.color.background
-        } else {
-            preferences.remove(Main.COLOR_BASE_INT)
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+                baseColor = Default.color.base
+            }
+            shouldUseIconBackground -> {
+                baseColor = Default.color.background
+            }
+            else -> {
+                preferences.remove(Main.COLOR_BASE_INT)
+            }
         }
     }
 

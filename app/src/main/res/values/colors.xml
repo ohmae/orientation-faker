@@ -3,6 +3,7 @@
     <color name="fg_notification">#FFFFFF</color>
     <color name="bg_notification">#212121</color>
     <color name="bg_notification_selected">#448AFF</color>
+    <color name="bg_notification_base">#00000000</color>
 
     <color name="translucent_gray">#337F7F7F</color>
 

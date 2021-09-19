@@ -21,7 +21,7 @@ internal object Default {
         Orientation.PORTRAIT,
         Orientation.LANDSCAPE,
         Orientation.REVERSE_PORTRAIT,
-        Orientation.REVERSE_LANDSCAPE
+        Orientation.REVERSE_LANDSCAPE,
     )
 
     fun init(context: Context) {
@@ -29,7 +29,8 @@ internal object Default {
             ContextCompat.getColor(context, R.color.fg_notification),
             ContextCompat.getColor(context, R.color.bg_notification),
             ContextCompat.getColor(context, R.color.fg_notification),
-            ContextCompat.getColor(context, R.color.bg_notification_selected)
+            ContextCompat.getColor(context, R.color.bg_notification_selected),
+            ContextCompat.getColor(context, R.color.bg_notification_base),
         )
     }
 
@@ -37,6 +38,7 @@ internal object Default {
         val foreground: Int,
         val background: Int,
         val foregroundSelected: Int,
-        val backgroundSelected: Int
+        val backgroundSelected: Int,
+        val base: Int,
     )
 }

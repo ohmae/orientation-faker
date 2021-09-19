@@ -59,10 +59,12 @@
 
         <activity
             android:name="net.mm2d.orientation.view.MainActivity"
+            android:exported="false"
             android:launchMode="singleTask"
             />
         <activity
             android:name="net.mm2d.orientation.view.LicenseActivity"
+            android:exported="false"
             android:label="@string/options_menu_license"
             />
 
@@ -75,7 +77,8 @@
 
         <receiver
             android:name="net.mm2d.orientation.view.widget.WidgetProvider"
-            android:exported="true"
+            android:enabled="true"
+            android:exported="false"
             >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -89,7 +92,7 @@
         <receiver
             android:name="net.mm2d.orientation.service.WakeUpReceiver"
             android:enabled="true"
-            android:exported="true"
+            android:exported="false"
             >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -114,6 +117,7 @@
         </receiver>
         <receiver
             android:name="net.mm2d.orientation.control.OrientationReceiver"
+            android:enabled="true"
             android:exported="true"
             android:permission="${applicationId}.permission"
             >
