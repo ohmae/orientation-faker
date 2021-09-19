@@ -67,7 +67,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
         val appListLiveData = MutableLiveData<List<AppInfo>>()
         appListLiveData.observe(viewLifecycleOwner, ::setAdapter)
         val context = requireContext()
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             appListLiveData.postValue(makeAppList(context))
         }
     }
