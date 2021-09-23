@@ -78,7 +78,7 @@ dependencies {
     implementation("androidx.preference:preference-ktx:1.1.1")
     implementation("androidx.webkit:webkit:1.4.0")
     implementation("com.google.android.material:material:1.4.0")
-    implementation("com.google.android.play:core:1.10.1")
+    implementation("com.google.android.play:core:1.10.2")
     implementation("com.google.android.play:core-ktx:1.8.1")
     implementation("androidx.room:room-runtime:2.3.0")
     implementation("androidx.room:room-ktx:2.3.0")
@@ -88,10 +88,10 @@ dependencies {
     implementation("net.mm2d.color-chooser:color-chooser:0.3.0")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
-    debugImplementation("com.facebook.flipper:flipper:0.105.0")
+    debugImplementation("com.facebook.flipper:flipper:0.111.0")
     debugImplementation("com.facebook.soloader:soloader:0.10.1")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.105.0")
-    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.105.0")
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.111.0")
+    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.111.0")
 }
 
 fun isStable(version: String): Boolean {
