@@ -74,6 +74,11 @@ object NotificationHelper {
             .setVisibility(visibility)
             .setOngoing(true)
             .setCustomContentView(views)
+            .also {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    it.setCustomBigContentView(views)
+                }
+            }
             .setSmallIcon(icon)
             .setSilent(settings.notifySecret)
             .setContentIntent(PendingIntentCreator.activity(context))
