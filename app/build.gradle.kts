@@ -88,10 +88,10 @@ dependencies {
     implementation("net.mm2d.color-chooser:color-chooser:0.3.0")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
-    debugImplementation("com.facebook.flipper:flipper:0.112.0")
+    debugImplementation("com.facebook.flipper:flipper:0.115.0")
     debugImplementation("com.facebook.soloader:soloader:0.10.1")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.112.0")
-    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.112.0")
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.115.0")
+    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.115.0")
 }
 
 fun isStable(version: String): Boolean {
