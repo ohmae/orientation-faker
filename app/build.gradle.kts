@@ -65,7 +65,7 @@ android {
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
-    implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation("androidx.appcompat:appcompat:1.4.0")
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.browser:browser:1.4.0")
     implementation("androidx.legacy:legacy-support-v13:1.0.0")
@@ -73,7 +73,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
     implementation("androidx.lifecycle:lifecycle-common-java8:2.4.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.2")
     implementation("androidx.gridlayout:gridlayout:1.0.0")
     implementation("androidx.preference:preference-ktx:1.1.1")
     implementation("androidx.webkit:webkit:1.4.0")
@@ -88,10 +88,10 @@ dependencies {
     implementation("net.mm2d.color-chooser:color-chooser:0.3.0")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
-    debugImplementation("com.facebook.flipper:flipper:0.119.0")
+    debugImplementation("com.facebook.flipper:flipper:0.122.0")
     debugImplementation("com.facebook.soloader:soloader:0.10.3")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.119.0")
-    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.119.0")
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.122.0")
+    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.122.0")
 }
 
 fun isStable(version: String): Boolean {

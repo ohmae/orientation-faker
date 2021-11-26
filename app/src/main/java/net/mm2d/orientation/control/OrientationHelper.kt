@@ -110,6 +110,7 @@ object OrientationHelper {
                 sensorLieRight(rotation)
             Orientation.SENSOR_HEADSTAND ->
                 sensorHeadstand(rotation)
+            else -> Unit
         }
     }
 
