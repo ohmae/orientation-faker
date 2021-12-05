@@ -15,19 +15,6 @@
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions"
         />
-    <uses-permission
-        android:name="android.permission.READ_PHONE_STATE"
-        tools:node="remove"
-        />
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        tools:node="remove"
-        />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage"
-        tools:node="remove"
-        />
 
     <queries>
         <intent>

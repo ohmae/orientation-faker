@@ -7,7 +7,6 @@
 
 package net.mm2d.orientation.view
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -32,8 +31,7 @@ import net.mm2d.orientation.util.*
 import net.mm2d.orientation.view.dialog.*
 import net.mm2d.orientation.view.view.CheckItemView
 
-class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
-    ColorChooserDialog.Callback {
+class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
     private val settings by lazy {
         Settings.get()
     }
@@ -58,6 +56,8 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
         viewModels<IconShapeDialogViewModel>().value
             .iconShapeLiveData()
             .observe(viewLifecycleOwner, ::onSelectIconShape)
+
+        registerColorChooserListener()
     }
 
     override fun onDestroyView() {
@@ -95,6 +95,34 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
         setUpSystemSetting()
     }
 
+    private fun registerColorChooserListener() {
+        ColorChooserDialog.registerListener(REQUEST_KEY_FOREGROUND, this) {
+            settings.foregroundColor = it
+            binding.content.sampleForeground.setImageColor(it)
+            updateSample()
+        }
+        ColorChooserDialog.registerListener(REQUEST_KEY_BACKGROUND, this) {
+            settings.backgroundColor = it
+            binding.content.sampleBackground.setImageColor(it)
+            updateSample()
+        }
+        ColorChooserDialog.registerListener(REQUEST_KEY_FOREGROUND_SELECTED, this) {
+            settings.foregroundColorSelected = it
+            binding.content.sampleForegroundSelected.setImageColor(it)
+            updateSample()
+        }
+        ColorChooserDialog.registerListener(REQUEST_KEY_BACKGROUND_SELECTED, this) {
+            settings.backgroundColorSelected = it
+            binding.content.sampleBackgroundSelected.setImageColor(it)
+            updateSample()
+        }
+        ColorChooserDialog.registerListener(REQUEST_KEY_BASE, this) {
+            settings.baseColor = it
+            binding.content.sampleBase.setImageColor(it)
+            updateSample()
+        }
+    }
+
     private fun setUpSample() {
         binding.content.sampleForeground.setImageColor(settings.foregroundColor)
         binding.content.sampleBackground.setImageColor(settings.backgroundColor)
@@ -102,20 +130,20 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
         binding.content.sampleBackgroundSelected.setImageColor(settings.backgroundColorSelected)
         binding.content.sampleBase.setImageColor(settings.baseColor)
         binding.content.foreground.setOnClickListener {
-            ColorChooserDialog.show(this, it.id, settings.foregroundColor, true)
+            ColorChooserDialog.show(this, REQUEST_KEY_FOREGROUND, settings.foregroundColor, true)
         }
         binding.content.background.setOnClickListener {
-            ColorChooserDialog.show(this, it.id, settings.backgroundColor, true)
+            ColorChooserDialog.show(this, REQUEST_KEY_BACKGROUND, settings.backgroundColor, true)
         }
         binding.content.foregroundSelected.setOnClickListener {
-            ColorChooserDialog.show(this, it.id, settings.foregroundColorSelected, true)
+            ColorChooserDialog.show(this, REQUEST_KEY_FOREGROUND_SELECTED, settings.foregroundColorSelected, true)
         }
         binding.content.backgroundSelected.setOnClickListener {
-            ColorChooserDialog.show(this, it.id, settings.backgroundColorSelected, true)
+            ColorChooserDialog.show(this, REQUEST_KEY_BACKGROUND_SELECTED, settings.backgroundColorSelected, true)
         }
         binding.content.base.isVisible = settings.shouldUseIconBackground
         binding.content.base.setOnClickListener {
-            ColorChooserDialog.show(this, it.id, settings.baseColor, true)
+            ColorChooserDialog.show(this, REQUEST_KEY_BASE, settings.baseColor, true)
         }
         binding.content.resetTheme.setOnClickListener { ResetThemeDialog.show(this) }
         setUpOrientationIcons()
@@ -129,34 +157,10 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
 
     private fun updateOrientation(orientation: Orientation) {
         settings.orientation = orientation
-        notificationSample.update()
-        MainController.update()
+        updateSample()
     }
 
-    override fun onColorChooserResult(requestCode: Int, resultCode: Int, color: Int) {
-        if (resultCode != Activity.RESULT_OK) return
-        when (requestCode) {
-            R.id.foreground -> {
-                settings.foregroundColor = color
-                binding.content.sampleForeground.setImageColor(color)
-            }
-            R.id.background -> {
-                settings.backgroundColor = color
-                binding.content.sampleBackground.setImageColor(color)
-            }
-            R.id.foreground_selected -> {
-                settings.foregroundColorSelected = color
-                binding.content.sampleForegroundSelected.setImageColor(color)
-            }
-            R.id.background_selected -> {
-                settings.backgroundColorSelected = color
-                binding.content.sampleBackgroundSelected.setImageColor(color)
-            }
-            R.id.base -> {
-                settings.baseColor = color
-                binding.content.sampleBase.setImageColor(color)
-            }
-        }
+    private fun updateSample() {
         notificationSample.update()
         MainController.update()
     }
@@ -169,8 +173,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
         binding.content.sampleForegroundSelected.setImageColor(settings.foregroundColorSelected)
         binding.content.sampleBackgroundSelected.setImageColor(settings.backgroundColorSelected)
         binding.content.sampleBase.setImageColor(settings.baseColor)
-        notificationSample.update()
-        MainController.update()
+        updateSample()
     }
 
     private fun ImageView.setImageColor(@ColorInt color: Int) {
@@ -239,8 +242,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
 
     private fun updateLayoutSelector() {
         settings.orientationList = orientationList
-        notificationSample.update()
-        MainController.update()
+        updateSample()
     }
 
     private fun resetLayout(unit: Unit?) {
@@ -278,8 +280,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
         binding.content.base.isVisible = useIcon
         applyUseIconBackground()
         applyIconShape()
-        MainController.update()
-        notificationSample.update()
+        updateSample()
     }
 
     private fun setUpIconShape() {
@@ -293,8 +294,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
         iconShape ?: return
         settings.iconShape = iconShape
         applyIconShape()
-        MainController.update()
-        notificationSample.update()
+        updateSample()
     }
 
     private fun applyIconShape() {
@@ -372,5 +372,13 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings),
         binding.content.systemNotification.setOnClickListener {
             SystemSettings.startAppNotificationSettings(requireActivity())
         }
+    }
+
+    companion object {
+        private const val REQUEST_KEY_FOREGROUND = "REQUEST_KEY_FOREGROUND"
+        private const val REQUEST_KEY_BACKGROUND = "REQUEST_KEY_BACKGROUND"
+        private const val REQUEST_KEY_FOREGROUND_SELECTED = "REQUEST_KEY_FOREGROUND_SELECTED"
+        private const val REQUEST_KEY_BACKGROUND_SELECTED = "REQUEST_KEY_BACKGROUND_SELECTED"
+        private const val REQUEST_KEY_BASE = "REQUEST_KEY_BASE"
     }
 }

@@ -80,18 +80,18 @@ dependencies {
     implementation("com.google.android.material:material:1.4.0")
     implementation("com.google.android.play:core:1.10.2")
     implementation("com.google.android.play:core-ktx:1.8.1")
-    implementation("androidx.room:room-runtime:2.3.0")
-    implementation("androidx.room:room-ktx:2.3.0")
+    implementation("androidx.room:room-runtime:2.4.0-rc01")
+    implementation("androidx.room:room-ktx:2.4.0-rc01")
+    kapt("androidx.room:room-compiler:2.4.0-rc01")
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
-    kapt("androidx.room:room-compiler:2.3.0")
-    implementation("net.mm2d.color-chooser:color-chooser:0.3.0")
+    implementation("net.mm2d.color-chooser:color-chooser:0.4.0")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
-    debugImplementation("com.facebook.flipper:flipper:0.122.0")
+    debugImplementation("com.facebook.flipper:flipper:0.123.0")
     debugImplementation("com.facebook.soloader:soloader:0.10.3")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.122.0")
-    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.122.0")
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.123.0")
+    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.123.0")
 }
 
 fun isStable(version: String): Boolean {
