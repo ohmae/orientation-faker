@@ -34,6 +34,7 @@ object NotificationHelper {
         val channel = NotificationChannel(CHANNEL_ID, name, importance).also {
             it.enableLights(false)
             it.enableVibration(false)
+            it.setSound(null, null)
         }
         context.getSystemService<NotificationManager>()
             ?.createNotificationChannel(channel)
@@ -54,6 +55,7 @@ object NotificationHelper {
     private fun makeEmptyNotification(context: Context): Notification =
         NotificationCompat.Builder(context, CHANNEL_ID)
             .setDefaults(0)
+            .setSilent(true)
             .setCustomContentView(RemoteViews(context.packageName, R.layout.empty_notification))
             .setSmallIcon(R.drawable.ic_blank)
             .build()
@@ -70,6 +72,7 @@ object NotificationHelper {
         val views = RemoteViewsCreator.create(context, orientation, settings.showSettingsOnNotification)
         return NotificationCompat.Builder(context, CHANNEL_ID)
             .setDefaults(0)
+            .setSilent(true)
             .setContentTitle(context.getText(R.string.app_name))
             .setVisibility(visibility)
             .setOngoing(true)
@@ -80,7 +83,6 @@ object NotificationHelper {
                 }
             }
             .setSmallIcon(icon)
-            .setSilent(settings.notifySecret)
             .setContentIntent(PendingIntentCreator.activity(context))
             .build()
     }
