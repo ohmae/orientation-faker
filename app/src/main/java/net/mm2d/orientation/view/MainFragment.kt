@@ -15,8 +15,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle.State
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -43,6 +43,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
     private val handler = Handler(Looper.getMainLooper())
     private val checkSystemSettingsTask = Runnable { checkSystemSettings() }
+    private val viewModel: MainFragmentViewModel by viewModels()
     private var notificationSample: NotificationSample by autoCleared()
     private var binding: FragmentMainBinding by autoCleared()
 
@@ -63,7 +64,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             Updater.startUpdateIfAvailable(requireActivity())
         }
         NightModeDialog.registerListener(this, REQUEST_KEY_NIGHT_MODE) {
-            onSelectNightMode(it)
+            viewModel.updateNightMode(it)
+        }
+        viewModel.menu.observe(viewLifecycleOwner) { menu ->
+            binding.content.nightModeDescription.setText(NightModes.getTextId(menu.nightMode))
+            binding.content.nightMode.setOnClickListener {
+                NightModeDialog.show(this, REQUEST_KEY_NIGHT_MODE, menu.nightMode)
+            }
         }
     }
 
@@ -125,7 +132,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding.content.eachApp.setOnClickListener {
             navigate(MainFragmentDirections.actionMainFragmentToEachAppFragment())
         }
-        setUpNightMode()
     }
 
     private fun navigate(directions: NavDirections) {
@@ -145,25 +151,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 }
             }
         }
-    }
-
-    private fun setUpNightMode() {
-        binding.content.nightMode.setOnClickListener {
-            NightModeDialog.show(this, REQUEST_KEY_NIGHT_MODE, settings.nightMode)
-        }
-        applyNightMode()
-    }
-
-    private fun applyNightMode() {
-        binding.content.nightModeDescription.setText(NightModes.getTextId(settings.nightMode))
-    }
-
-    private fun onSelectNightMode(mode: Int?) {
-        if (mode == null) return
-        if (settings.nightMode == mode) return
-        settings.nightMode = mode
-        applyNightMode()
-        AppCompatDelegate.setDefaultNightMode(mode)
     }
 
     @SuppressLint("NewApi")

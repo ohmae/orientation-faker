@@ -8,6 +8,7 @@
 package net.mm2d.orientation.settings
 
 import android.content.Context
+import androidx.appcompat.app.AppCompatDelegate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class PreferenceRepository private constructor(context: Context) {
     private val scope: CoroutineScope = CoroutineScope(
-        SupervisorJob() + Dispatchers.IO
+        SupervisorJob() + Dispatchers.Main
     )
 
     val packagePreferenceRepository = PackagePreferenceRepository(context)
@@ -28,9 +29,19 @@ class PreferenceRepository private constructor(context: Context) {
     init {
         scope.launch {
             packagePreferenceRepository.flow.collect()
+        }
+        scope.launch {
             controlPreferenceRepository.flow.collect()
+        }
+        scope.launch {
             designPreferenceRepository.flow.collect()
-            menuPreferenceRepository.flow.collect()
+        }
+        scope.launch {
+            menuPreferenceRepository.flow.collect {
+                AppCompatDelegate.setDefaultNightMode(it.nightMode)
+            }
+        }
+        scope.launch {
             reviewPreferenceRepository.flow.collect()
         }
     }
