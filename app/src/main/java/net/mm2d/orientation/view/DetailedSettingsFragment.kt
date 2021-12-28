@@ -13,7 +13,6 @@ import android.widget.ImageView
 import androidx.annotation.ColorInt
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.gridlayout.widget.GridLayout
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.FragmentDetailedSettingsBinding
@@ -36,7 +35,6 @@ import net.mm2d.orientation.view.dialog.IconShapeDialog
 import net.mm2d.orientation.view.dialog.OrientationHelpDialog
 import net.mm2d.orientation.view.dialog.ResetLayoutDialog
 import net.mm2d.orientation.view.dialog.ResetThemeDialog
-import net.mm2d.orientation.view.dialog.ResetThemeDialogViewModel
 import net.mm2d.orientation.view.view.CheckItemView
 
 class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
@@ -55,17 +53,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         setUpViews()
         EventRouter.observeUpdate(viewLifecycleOwner) { notificationSample.update() }
 
-        viewModels<ResetThemeDialogViewModel>().value
-            .resetThemeLiveData()
-            .observe(viewLifecycleOwner, ::resetTheme)
-        ResetLayoutDialog.registerListener(this, REQUEST_KEY_RESET) {
-            resetLayout()
-        }
-        IconShapeDialog.registerListener(this, REQUEST_KEY_SHAPE) {
-            onSelectIconShape(it)
-        }
-
-        registerColorChooserListener()
+        registerDialogListener()
     }
 
     override fun onDestroyView() {
@@ -103,7 +91,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         setUpSystemSetting()
     }
 
-    private fun registerColorChooserListener() {
+    private fun registerDialogListener() {
         ColorChooserDialog.registerListener(this, REQUEST_KEY_FOREGROUND) {
             settings.foregroundColor = it
             binding.content.sampleForeground.setImageColor(it)
@@ -129,6 +117,15 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             binding.content.sampleBase.setImageColor(it)
             updateSample()
         }
+        ResetThemeDialog.registerListener(this, REQUEST_KEY_RESET_THEME) {
+            resetTheme()
+        }
+        ResetLayoutDialog.registerListener(this, REQUEST_KEY_RESET_LAYOUT) {
+            resetLayout()
+        }
+        IconShapeDialog.registerListener(this, REQUEST_KEY_SHAPE) {
+            onSelectIconShape(it)
+        }
     }
 
     private fun setUpSample() {
@@ -153,7 +150,9 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         binding.content.base.setOnClickListener {
             ColorChooserDialog.show(this, REQUEST_KEY_BASE, settings.baseColor, true)
         }
-        binding.content.resetTheme.setOnClickListener { ResetThemeDialog.show(this) }
+        binding.content.resetTheme.setOnClickListener {
+            ResetThemeDialog.show(this, REQUEST_KEY_RESET_THEME)
+        }
         setUpOrientationIcons()
     }
 
@@ -173,8 +172,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         MainController.update()
     }
 
-    private fun resetTheme(unit: Unit?) {
-        unit ?: return
+    private fun resetTheme() {
         settings.resetTheme()
         binding.content.sampleForeground.setImageColor(settings.foregroundColor)
         binding.content.sampleBackground.setImageColor(settings.backgroundColor)
@@ -215,7 +213,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             binding.content.checkHolder.addView(view, params)
         }
         applyLayoutSelection()
-        binding.content.resetLayout.setOnClickListener { ResetLayoutDialog.show(this, REQUEST_KEY_RESET) }
+        binding.content.resetLayout.setOnClickListener { ResetLayoutDialog.show(this, REQUEST_KEY_RESET_LAYOUT) }
         binding.content.helpLayout.setOnClickListener { OrientationHelpDialog.show(this) }
         updateCaution()
     }
@@ -389,6 +387,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         private const val REQUEST_KEY_BACKGROUND_SELECTED = PREFIX + "REQUEST_KEY_BACKGROUND_SELECTED"
         private const val REQUEST_KEY_BASE = PREFIX + "REQUEST_KEY_BASE"
         private const val REQUEST_KEY_SHAPE = PREFIX + "REQUEST_KEY_SHAPE"
-        private const val REQUEST_KEY_RESET = PREFIX + "REQUEST_KEY_RESET"
+        private const val REQUEST_KEY_RESET_LAYOUT = PREFIX + "REQUEST_KEY_RESET_LAYOUT"
+        private const val REQUEST_KEY_RESET_THEME = PREFIX + "REQUEST_KEY_RESET_THEME"
     }
 }
