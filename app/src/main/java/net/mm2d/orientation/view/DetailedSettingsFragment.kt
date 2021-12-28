@@ -53,9 +53,9 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         viewModels<ResetLayoutDialogViewModel>().value
             .resetLayoutLiveData()
             .observe(viewLifecycleOwner, ::resetLayout)
-        viewModels<IconShapeDialogViewModel>().value
-            .iconShapeLiveData()
-            .observe(viewLifecycleOwner, ::onSelectIconShape)
+        IconShapeDialog.registerListener(this, REQUEST_KEY_SHAPE) {
+            onSelectIconShape(it)
+        }
 
         registerColorChooserListener()
     }
@@ -286,7 +286,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
     private fun setUpIconShape() {
         applyIconShape()
         binding.content.iconShape.setOnClickListener {
-            IconShapeDialog.show(this)
+            IconShapeDialog.show(this, REQUEST_KEY_SHAPE)
         }
     }
 
@@ -381,5 +381,6 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         private const val REQUEST_KEY_FOREGROUND_SELECTED = PREFIX + "REQUEST_KEY_FOREGROUND_SELECTED"
         private const val REQUEST_KEY_BACKGROUND_SELECTED = PREFIX + "REQUEST_KEY_BACKGROUND_SELECTED"
         private const val REQUEST_KEY_BASE = PREFIX + "REQUEST_KEY_BASE"
+        private const val REQUEST_KEY_SHAPE = PREFIX + "REQUEST_KEY_SHAPE"
     }
 }

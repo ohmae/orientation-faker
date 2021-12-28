@@ -15,21 +15,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import androidx.appcompat.app.AlertDialog
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.ItemIconShapeBinding
 import net.mm2d.orientation.settings.IconShape
-import net.mm2d.orientation.util.parentViewModels
 
 class IconShapeDialog : DialogFragment() {
-    private val viewModel: IconShapeDialogViewModel by parentViewModels()
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.menu_title_icon_shape)
             .setAdapter(IconShapeAdapter(requireContext())) { _, which ->
-                viewModel.postIconShape(IconShape.values()[which])
+                val requestKey = requireArguments().getString(KEY_REQUEST_KEY, "")
+                parentFragmentManager.setFragmentResult(
+                    requestKey, bundleOf(RESULT_SHAPE to IconShape.values()[which])
+                )
             }
             .create()
 
@@ -54,11 +55,24 @@ class IconShapeDialog : DialogFragment() {
 
     companion object {
         private const val TAG = "IconShapeDialog"
+        private const val KEY_REQUEST_KEY = "KEY_REQUEST_KEY"
+        private const val RESULT_SHAPE = "RESULT_SHAPE"
 
-        fun show(fragment: Fragment) {
+        fun registerListener(fragment: Fragment, requestKey: String, listener: (IconShape) -> Unit) {
+            fragment.childFragmentManager
+                .setFragmentResultListener(requestKey, fragment) { _, result ->
+                    listener(result.getSerializable(RESULT_SHAPE) as IconShape)
+                }
+        }
+
+        fun show(fragment: Fragment, requestKey: String) {
             val manager = fragment.childFragmentManager
             if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
-            IconShapeDialog().show(manager, TAG)
+            IconShapeDialog().also { dialog ->
+                dialog.arguments = bundleOf(
+                    KEY_REQUEST_KEY to requestKey
+                )
+            }.show(manager, TAG)
         }
     }
 }
