@@ -17,7 +17,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle.State
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -36,7 +35,6 @@ import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.Updater
 import net.mm2d.orientation.util.autoCleared
 import net.mm2d.orientation.view.dialog.NightModeDialog
-import net.mm2d.orientation.view.dialog.NightModeDialogViewModel
 import net.mm2d.orientation.view.dialog.OverlayPermissionDialog
 
 class MainFragment : Fragment(R.layout.fragment_main) {
@@ -64,9 +62,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             }
             Updater.startUpdateIfAvailable(requireActivity())
         }
-        viewModels<NightModeDialogViewModel>().value
-            .modeLiveData()
-            .observe(viewLifecycleOwner, ::onSelectNightMode)
+        NightModeDialog.registerListener(this, REQUEST_KEY_NIGHT_MODE) {
+            onSelectNightMode(it)
+        }
     }
 
     @SuppressLint("NewApi")
@@ -151,7 +149,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private fun setUpNightMode() {
         binding.content.nightMode.setOnClickListener {
-            NightModeDialog.show(this)
+            NightModeDialog.show(this, REQUEST_KEY_NIGHT_MODE, settings.nightMode)
         }
         applyNightMode()
     }
@@ -204,5 +202,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     companion object {
         private const val CHECK_INTERVAL: Long = 5000L
+        private const val PREFIX = "MainFragment."
+        private const val REQUEST_KEY_NIGHT_MODE = PREFIX + "REQUEST_KEY_NIGHT_MODE"
     }
 }
