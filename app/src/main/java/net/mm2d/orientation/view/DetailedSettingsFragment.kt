@@ -27,8 +27,16 @@ import net.mm2d.orientation.settings.Default
 import net.mm2d.orientation.settings.IconShape
 import net.mm2d.orientation.settings.OrientationList
 import net.mm2d.orientation.settings.Settings
-import net.mm2d.orientation.util.*
-import net.mm2d.orientation.view.dialog.*
+import net.mm2d.orientation.util.SystemSettings
+import net.mm2d.orientation.util.Toaster
+import net.mm2d.orientation.util.alpha
+import net.mm2d.orientation.util.autoCleared
+import net.mm2d.orientation.util.opaque
+import net.mm2d.orientation.view.dialog.IconShapeDialog
+import net.mm2d.orientation.view.dialog.OrientationHelpDialog
+import net.mm2d.orientation.view.dialog.ResetLayoutDialog
+import net.mm2d.orientation.view.dialog.ResetThemeDialog
+import net.mm2d.orientation.view.dialog.ResetThemeDialogViewModel
 import net.mm2d.orientation.view.view.CheckItemView
 
 class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
@@ -50,9 +58,9 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         viewModels<ResetThemeDialogViewModel>().value
             .resetThemeLiveData()
             .observe(viewLifecycleOwner, ::resetTheme)
-        viewModels<ResetLayoutDialogViewModel>().value
-            .resetLayoutLiveData()
-            .observe(viewLifecycleOwner, ::resetLayout)
+        ResetLayoutDialog.registerListener(this, REQUEST_KEY_RESET) {
+            resetLayout()
+        }
         IconShapeDialog.registerListener(this, REQUEST_KEY_SHAPE) {
             onSelectIconShape(it)
         }
@@ -207,7 +215,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             binding.content.checkHolder.addView(view, params)
         }
         applyLayoutSelection()
-        binding.content.resetLayout.setOnClickListener { ResetLayoutDialog.show(this) }
+        binding.content.resetLayout.setOnClickListener { ResetLayoutDialog.show(this, REQUEST_KEY_RESET) }
         binding.content.helpLayout.setOnClickListener { OrientationHelpDialog.show(this) }
         updateCaution()
     }
@@ -245,8 +253,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         updateSample()
     }
 
-    private fun resetLayout(unit: Unit?) {
-        unit ?: return
+    private fun resetLayout() {
         orientationList.clear()
         orientationList.addAll(Default.orientationList)
         applyLayoutSelection()
@@ -382,5 +389,6 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         private const val REQUEST_KEY_BACKGROUND_SELECTED = PREFIX + "REQUEST_KEY_BACKGROUND_SELECTED"
         private const val REQUEST_KEY_BASE = PREFIX + "REQUEST_KEY_BASE"
         private const val REQUEST_KEY_SHAPE = PREFIX + "REQUEST_KEY_SHAPE"
+        private const val REQUEST_KEY_RESET = PREFIX + "REQUEST_KEY_RESET"
     }
 }
