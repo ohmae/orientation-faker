@@ -23,23 +23,26 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.LayoutOrientationItemBinding
-import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.Orientations
-import net.mm2d.orientation.util.parentViewModels
 
 class EachAppOrientationDialog : DialogFragment() {
-    private val viewModel: EachAppOrientationDialogViewModel by parentViewModels()
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val context = requireContext()
-        val position = arguments?.getInt(KEY_POSITION)!!
-        val packageName = arguments?.getString(KEY_PACKAGE)!!
+        val arguments = requireArguments()
+        val requestKey = arguments.getString(KEY_REQUEST_KEY, "")
+        val position = arguments.getInt(KEY_POSITION)
+        val packageName = arguments.getString(KEY_PACKAGE, "")
         val recyclerView = RecyclerView(context)
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = HelpAdapter(context) {
-            ForegroundPackageSettings.put(packageName, it)
-            viewModel.postChangedPosition(position)
+            parentFragmentManager.setFragmentResult(requestKey,
+                bundleOf(
+                    RESULT_POSITION to position,
+                    RESULT_PACKAGE to packageName,
+                    RESULT_ORIENTATION to it
+                )
+            )
             dialog?.cancel()
         }
         recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
@@ -96,12 +99,29 @@ class EachAppOrientationDialog : DialogFragment() {
         private const val TAG = "EachAppOrientationDialog"
         private const val KEY_POSITION = "KEY_POSITION"
         private const val KEY_PACKAGE = "KEY_PACKAGE"
+        private const val KEY_REQUEST_KEY = "KEY_REQUEST_KEY"
 
-        fun show(fragment: Fragment, position: Int, packageName: String) {
+        private const val RESULT_POSITION = "RESULT_POSITION"
+        private const val RESULT_PACKAGE = "RESULT_PACKAGE"
+        private const val RESULT_ORIENTATION = "RESULT_ORIENTATION"
+
+        fun registerListener(fragment: Fragment, requestKey: String, listener: (Int, String, Orientation) -> Unit) {
+            val manager = fragment.childFragmentManager
+            manager.setFragmentResultListener(requestKey, fragment) { _, result ->
+                listener(
+                    result.getInt(RESULT_POSITION),
+                    result.getString(RESULT_PACKAGE)!!,
+                    result.getSerializable(RESULT_ORIENTATION) as Orientation
+                )
+            }
+        }
+
+        fun show(fragment: Fragment, requestKey: String, position: Int, packageName: String) {
             val manager = fragment.childFragmentManager
             if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
             EachAppOrientationDialog().also { dialog ->
                 dialog.arguments = bundleOf(
+                    KEY_REQUEST_KEY to requestKey,
                     KEY_POSITION to position,
                     KEY_PACKAGE to packageName,
                 )

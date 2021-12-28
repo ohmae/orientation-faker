@@ -16,13 +16,16 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
@@ -44,7 +47,6 @@ import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.autoCleared
 import net.mm2d.orientation.view.dialog.EachAppOrientationDialog
-import net.mm2d.orientation.view.dialog.EachAppOrientationDialogViewModel
 import net.mm2d.orientation.view.dialog.UsageAppPermissionDialog
 import java.util.*
 
@@ -61,9 +63,15 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
         binding.recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         setUpSearch()
         setUpBottom()
-        viewModels<EachAppOrientationDialogViewModel>().value
-            .changedPositionLiveData()
-            .observe(viewLifecycleOwner, ::onChangeSettings)
+        EachAppOrientationDialog.registerListener(this, REQUEST_KEY_ORIENTATION)
+        { position, packageName, orientation ->
+            ForegroundPackageSettings.put(packageName, orientation)
+            adapter?.notifyItemChanged(position)
+            if (MainService.isStarted) {
+                MainController.update()
+            }
+        }
+
         val appListLiveData = MutableLiveData<List<AppInfo>>()
         appListLiveData.observe(viewLifecycleOwner, ::setAdapter)
         val context = requireContext()
@@ -113,7 +121,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
         ForegroundPackageSettings.updateInstalledPackages(list.map { it.packageName })
         val adapter = EachAppAdapter(requireContext(), list) { position, packageName ->
             hideKeyboard()
-            EachAppOrientationDialog.show(this, position, packageName)
+            EachAppOrientationDialog.show(this, REQUEST_KEY_ORIENTATION, position, packageName)
         }
         this.adapter = adapter
         binding.recyclerView.adapter = adapter
@@ -143,14 +151,6 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
                 binding.packageCheckDisabled.isGone = isChecked
                 MainController.update()
             }
-        }
-    }
-
-    private fun onChangeSettings(position: Int?) {
-        position ?: return
-        adapter?.notifyItemChanged(position)
-        if (MainService.isStarted) {
-            MainController.update()
         }
     }
 
@@ -287,4 +287,9 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
     }
 
     class ViewHolder(val binding: ItemEachAppBinding) : RecyclerView.ViewHolder(binding.root)
+
+    companion object {
+        private const val PREFIX = "EachAppFragment."
+        private const val REQUEST_KEY_ORIENTATION = PREFIX + "REQUEST_KEY_ORIENTATION"
+    }
 }
