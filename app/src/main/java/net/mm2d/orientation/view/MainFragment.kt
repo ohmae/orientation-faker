@@ -43,9 +43,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
     private val handler = Handler(Looper.getMainLooper())
     private val checkSystemSettingsTask = Runnable { checkSystemSettings() }
-    private val viewModel: MainFragmentViewModel by viewModels()
     private var notificationSample: NotificationSample by autoCleared()
     private var binding: FragmentMainBinding by autoCleared()
+    private val viewModel: MainFragmentViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentMainBinding.bind(view)

@@ -110,10 +110,6 @@ class Settings private constructor(
         get() = IconShape.of(preferences.readString(Main.ICON_SHAPE_STRING, ""))
         set(value) = preferences.writeString(Main.ICON_SHAPE_STRING, value.name)
 
-    var showAllApps: Boolean
-        get() = preferences.readBoolean(Main.SHOW_ALL_APPS_BOOLEAN, false)
-        set(value) = preferences.writeBoolean(Main.SHOW_ALL_APPS_BOOLEAN, value)
-
     var isLandscapeDevice: Boolean
         get() = preferences.readBoolean(Main.LANDSCAPE_DEVICE_BOOLEAN, false)
         set(value) = preferences.writeBoolean(Main.LANDSCAPE_DEVICE_BOOLEAN, value)

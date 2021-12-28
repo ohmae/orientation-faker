@@ -7,6 +7,7 @@
 
 package net.mm2d.orientation.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageItemInfo
@@ -26,10 +27,11 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -54,30 +56,43 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
     private val settings by lazy {
         Settings.get()
     }
-    private var adapter: EachAppAdapter? = null
+    private var adapter: EachAppAdapter by autoCleared()
     private var binding: FragmentEachAppBinding by autoCleared()
+    private val viewModel: EachAppFragmentViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentEachAppBinding.bind(view)
         setHasOptionsMenu(true)
         binding.recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        val adapter = EachAppAdapter(requireContext()) { position, packageName ->
+            hideKeyboard()
+            EachAppOrientationDialog.show(this, REQUEST_KEY_ORIENTATION, position, packageName)
+        }
+        this.adapter = adapter
+        binding.recyclerView.adapter = adapter
+
         setUpSearch()
         setUpBottom()
         EachAppOrientationDialog.registerListener(this, REQUEST_KEY_ORIENTATION)
         { position, packageName, orientation ->
             ForegroundPackageSettings.put(packageName, orientation)
-            adapter?.notifyItemChanged(position)
+            adapter.notifyItemChanged(position)
             if (MainService.isStarted) {
                 MainController.update()
             }
         }
+        viewModel.menu.observe(viewLifecycleOwner) {
+            binding.showAllCheck.isChecked = it.shouldShowAllApp
+            adapter.setShowAllApps(it.shouldShowAllApp)
+        }
 
-        val appListLiveData = MutableLiveData<List<AppInfo>>()
-        appListLiveData.observe(viewLifecycleOwner, ::setAdapter)
         val context = requireContext()
         lifecycleScope.launch(Dispatchers.IO) {
             runCatching {
-                appListLiveData.postValue(makeAppList(context))
+                val list = makeAppList(context)
+                withContext(Dispatchers.Main) {
+                    setAppList(list)
+                }
             }
         }
     }
@@ -97,34 +112,28 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
     }
 
     private fun search(word: String) {
-        val adapter = adapter ?: return
         adapter.search(word)
-        binding.noAppCaution.isGone = adapter.itemCount != 0
+        binding.noAppCaution.isGone = adapter.isNotEmpty()
         binding.recyclerView.scrollToPosition(0)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setUpBottom() {
-        binding.showAllCheck.isChecked = settings.showAllApps
         binding.showAllCheck.setOnCheckedChangeListener { _, isChecked ->
-            settings.showAllApps = isChecked
-            adapter?.update()
-            binding.noAppCaution.isGone = adapter?.itemCount != 0
+            viewModel.updateShowAllApps(isChecked)
+            binding.noAppCaution.isGone = adapter.isNotEmpty()
             binding.recyclerView.scrollToPosition(0)
         }
         binding.resetButton.setOnClickListener {
             ForegroundPackageSettings.reset()
-            adapter?.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
         }
     }
 
-    private fun setAdapter(list: List<AppInfo>) {
+    private fun setAppList(list: List<AppInfo>) {
         ForegroundPackageSettings.updateInstalledPackages(list.map { it.packageName })
-        val adapter = EachAppAdapter(requireContext(), list) { position, packageName ->
-            hideKeyboard()
-            EachAppOrientationDialog.show(this, REQUEST_KEY_ORIENTATION, position, packageName)
-        }
-        this.adapter = adapter
-        binding.recyclerView.adapter = adapter
+        adapter.updateList(list)
+        binding.noAppCaution.isGone = adapter.isNotEmpty()
         binding.progressBar.visibility = View.GONE
     }
 
@@ -154,6 +163,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
         }
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     private fun makeAppList(context: Context): List<AppInfo> {
         val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PackageManager.MATCH_ALL else 0
         val pm = context.packageManager
@@ -183,38 +193,29 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
         val info: PackageItemInfo,
         val label: String,
         val packageName: String,
-        val launcher: Boolean
-    ) {
+        val launcher: Boolean,
         var icon: Drawable? = null
-    }
-
-    private class DiffCallback(
-        private val oldList: List<AppInfo>,
-        private val newList: List<AppInfo>
-    ) : DiffUtil.Callback() {
-        override fun getOldListSize(): Int = oldList.size
-        override fun getNewListSize(): Int = newList.size
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            oldList[oldItemPosition].packageName == newList[newItemPosition].packageName
-
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            oldList[oldItemPosition].packageName == newList[newItemPosition].packageName
-    }
+    )
 
     private class EachAppAdapter(
         private val context: Context,
-        private val initialList: List<AppInfo>,
         private val listener: (position: Int, packageName: String) -> Unit
-    ) : RecyclerView.Adapter<ViewHolder>() {
+    ) : ListAdapter<AppInfo, ViewHolder>(object : DiffUtil.ItemCallback<AppInfo>() {
+        override fun areItemsTheSame(oldItem: AppInfo, newItem: AppInfo): Boolean =
+            oldItem.packageName == newItem.packageName
+
+        override fun areContentsTheSame(oldItem: AppInfo, newItem: AppInfo): Boolean =
+            oldItem == newItem
+    }) {
         private val inflater: LayoutInflater = LayoutInflater.from(context)
         private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
-        private val settings: Settings = Settings.get()
         private val defaultIcon: Drawable by lazy {
             AppCompatResources.getDrawable(context, R.drawable.ic_launcher_default)!!
         }
         private var searchWord: String = ""
-        private var list: List<AppInfo> =
-            if (settings.showAllApps) initialList else initialList.filter { it.launcher }
+        private var shouldShowAllApps: Boolean = false
+        private var allList: List<AppInfo> = emptyList()
+        private var filteredList: List<AppInfo> = emptyList()
 
         fun search(word: String) {
             val w = word.lowercase(Locale.ENGLISH)
@@ -223,22 +224,32 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
             update()
         }
 
-        fun update() {
-            val oldList = list
-            list = filter()
-            val result = DiffUtil.calculateDiff(DiffCallback(oldList, list))
-            result.dispatchUpdatesTo(this)
+        fun setShowAllApps(show: Boolean) {
+            shouldShowAllApps = show
+            update()
         }
+
+        fun updateList(list: List<AppInfo>) {
+            allList = list
+            update()
+        }
+
+        private fun update() {
+            filteredList = filter()
+            submitList(filteredList)
+        }
+
+        fun isNotEmpty(): Boolean = filteredList.isNotEmpty()
 
         private fun filter(): List<AppInfo> {
             val word = searchWord
             return if (word.isEmpty()) {
-                if (settings.showAllApps) initialList else initialList.filter { it.launcher }
+                if (shouldShowAllApps) allList else allList.filter { it.launcher }
             } else {
-                if (settings.showAllApps) {
-                    initialList.filter { it.contains(word) }
+                if (shouldShowAllApps) {
+                    allList.filter { it.contains(word) }
                 } else {
-                    initialList.filter { it.launcher && it.contains(word) }
+                    allList.filter { it.launcher && it.contains(word) }
                 }
             }
         }
@@ -250,11 +261,9 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
             ViewHolder(ItemEachAppBinding.inflate(inflater, parent, false))
 
-        override fun getItemCount(): Int = list.size
-
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val binding = holder.binding
-            val info = list[position]
+            val info = getItem(position)
             binding.root.tag = position
             if (info.icon != null) {
                 binding.appIcon.setImageDrawable(info.icon)

@@ -32,6 +32,12 @@ class MenuPreferenceRepository(context: Context) {
         }
     }
 
+    suspend fun updateShowAllApps(show: Boolean) {
+        dataStore.edit {
+            it[Key.SHOW_ALL_APPS] = show
+        }
+    }
+
     private class MigrationFromOldPreference(
         private val old: OldPreference
     ) : DataMigration<Preferences> {
