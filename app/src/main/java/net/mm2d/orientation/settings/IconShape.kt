@@ -36,7 +36,7 @@ enum class IconShape(
     ;
 
     companion object {
-        fun of(value: String): IconShape =
+        fun of(value: String?): IconShape =
             values().find { it.name == value } ?: CIRCLE
     }
 }

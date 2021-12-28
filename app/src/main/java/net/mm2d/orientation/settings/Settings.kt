@@ -17,7 +17,7 @@ import net.mm2d.orientation.settings.Key.Main
 import java.io.File
 
 class Settings private constructor(
-    private val preferences: Preferences<Main>
+    private val preferences: SettingsPreferences<Main>
 ) {
     var orientation: Orientation
         get() = preferences.readInt(Main.ORIENTATION_INT, Orientation.UNSPECIFIED.value).toOrientation()
@@ -162,7 +162,7 @@ class Settings private constructor(
         fun initialize(context: Context) {
             Default.init(context)
             tryMigrate(context)
-            Preferences<Main>(context, Main.FILE_NAME).also {
+            SettingsPreferences<Main>(context, Main.FILE_NAME).also {
                 Maintainer.maintain(context, it)
                 settings = Settings(it)
             }

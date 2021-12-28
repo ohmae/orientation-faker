@@ -78,4 +78,9 @@ enum class Orientation(
     }
 }
 
-fun Int.toOrientation(): Orientation = Orientation.of(this)
+fun Int?.toOrientation(): Orientation =
+    if (this == null) {
+        Orientation.UNSPECIFIED
+    } else {
+        Orientation.of(this)
+    }

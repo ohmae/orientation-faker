@@ -76,6 +76,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.2")
     implementation("androidx.gridlayout:gridlayout:1.0.0")
     implementation("androidx.preference:preference-ktx:1.1.1")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.webkit:webkit:1.4.0")
     implementation("com.google.android.material:material:1.4.0")
     implementation("com.google.android.play:core:1.10.2")

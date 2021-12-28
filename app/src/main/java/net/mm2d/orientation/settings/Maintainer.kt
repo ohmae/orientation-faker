@@ -22,8 +22,7 @@ internal object Maintainer {
     // 5 : 2021/09/19 : 5.0.0-
     private const val SETTINGS_VERSION = 5
 
-    fun maintain(context: Context, preferences: Preferences<Main>) {
-        Main.values().checkSuffix()
+    fun maintain(context: Context, preferences: SettingsPreferences<Main>) {
         if (preferences.readInt(Main.APP_VERSION_AT_LAST_LAUNCHED_INT, 0) != BuildConfig.VERSION_CODE) {
             preferences.writeInt(Main.APP_VERSION_AT_LAST_LAUNCHED_INT, BuildConfig.VERSION_CODE)
         }
@@ -64,7 +63,7 @@ internal object Maintainer {
         writeDefaultValue(preferences)
     }
 
-    private fun writeDefaultValue(preferences: Preferences<Main>) {
+    private fun writeDefaultValue(preferences: SettingsPreferences<Main>) {
         preferences.writeLong(Main.TIME_FIRST_USE_LONG, 0L)
         preferences.writeLong(Main.TIME_FIRST_REVIEW_LONG, 0L)
         preferences.writeInt(Main.COUNT_ORIENTATION_CHANGED_INT, 0)
