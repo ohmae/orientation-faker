@@ -85,7 +85,7 @@ dependencies {
     kapt("androidx.room:room-compiler:2.4.0")
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
-    implementation("net.mm2d.color-chooser:color-chooser:0.4.0")
+    implementation("net.mm2d.color-chooser:color-chooser:0.4.1")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
     debugImplementation("com.facebook.flipper:flipper:0.127.0")

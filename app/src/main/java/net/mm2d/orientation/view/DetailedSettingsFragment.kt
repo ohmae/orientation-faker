@@ -96,27 +96,27 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
     }
 
     private fun registerColorChooserListener() {
-        ColorChooserDialog.registerListener(REQUEST_KEY_FOREGROUND, this) {
+        ColorChooserDialog.registerListener(this, REQUEST_KEY_FOREGROUND) {
             settings.foregroundColor = it
             binding.content.sampleForeground.setImageColor(it)
             updateSample()
         }
-        ColorChooserDialog.registerListener(REQUEST_KEY_BACKGROUND, this) {
+        ColorChooserDialog.registerListener(this, REQUEST_KEY_BACKGROUND) {
             settings.backgroundColor = it
             binding.content.sampleBackground.setImageColor(it)
             updateSample()
         }
-        ColorChooserDialog.registerListener(REQUEST_KEY_FOREGROUND_SELECTED, this) {
+        ColorChooserDialog.registerListener(this, REQUEST_KEY_FOREGROUND_SELECTED) {
             settings.foregroundColorSelected = it
             binding.content.sampleForegroundSelected.setImageColor(it)
             updateSample()
         }
-        ColorChooserDialog.registerListener(REQUEST_KEY_BACKGROUND_SELECTED, this) {
+        ColorChooserDialog.registerListener(this, REQUEST_KEY_BACKGROUND_SELECTED) {
             settings.backgroundColorSelected = it
             binding.content.sampleBackgroundSelected.setImageColor(it)
             updateSample()
         }
-        ColorChooserDialog.registerListener(REQUEST_KEY_BASE, this) {
+        ColorChooserDialog.registerListener(this, REQUEST_KEY_BASE) {
             settings.baseColor = it
             binding.content.sampleBase.setImageColor(it)
             updateSample()
@@ -375,10 +375,11 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
     }
 
     companion object {
-        private const val REQUEST_KEY_FOREGROUND = "REQUEST_KEY_FOREGROUND"
-        private const val REQUEST_KEY_BACKGROUND = "REQUEST_KEY_BACKGROUND"
-        private const val REQUEST_KEY_FOREGROUND_SELECTED = "REQUEST_KEY_FOREGROUND_SELECTED"
-        private const val REQUEST_KEY_BACKGROUND_SELECTED = "REQUEST_KEY_BACKGROUND_SELECTED"
-        private const val REQUEST_KEY_BASE = "REQUEST_KEY_BASE"
+        private const val PREFIX = "DetailedSettingsFragment."
+        private const val REQUEST_KEY_FOREGROUND = PREFIX + "REQUEST_KEY_FOREGROUND"
+        private const val REQUEST_KEY_BACKGROUND = PREFIX + "REQUEST_KEY_BACKGROUND"
+        private const val REQUEST_KEY_FOREGROUND_SELECTED = PREFIX + "REQUEST_KEY_FOREGROUND_SELECTED"
+        private const val REQUEST_KEY_BACKGROUND_SELECTED = PREFIX + "REQUEST_KEY_BACKGROUND_SELECTED"
+        private const val REQUEST_KEY_BASE = PREFIX + "REQUEST_KEY_BASE"
     }
 }
