@@ -81,13 +81,17 @@ interface Key {
         REVIEWED_BOOLEAN,
     }
 
+    enum class Orientation : Key {
+        DATA_VERSION_INT,
+        ENABLED_BOOLEAN,
+        ORIENTATION_INT,
+        LANDSCAPE_DEVICE_BOOLEAN,
+    }
+
     enum class Control : Key {
         DATA_VERSION_INT,
-        ORIENTATION_INT,
-        AUTO_START_BOOLEAN,
         NOTIFY_SECRET_BOOLEAN,
         CONTROL_BY_FOREGROUND_APP_BOOLEAN,
-        LANDSCAPE_DEVICE_BOOLEAN,
         USE_BLANK_ICON_BOOLEAN,
     }
 
@@ -117,6 +121,7 @@ interface Key {
 enum class DataStoreFile {
     PACKAGE,
     REVIEW,
+    ORIENTATION,
     CONTROL,
     DESIGN,
     MENU,

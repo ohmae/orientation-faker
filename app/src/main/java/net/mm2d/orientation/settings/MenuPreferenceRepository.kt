@@ -7,8 +7,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import net.mm2d.orientation.settings.Key.Main
-import net.mm2d.orientation.settings.Key.Menu
 
 class MenuPreferenceRepository(context: Context) {
     private val Context.dataStoreField: DataStore<Preferences> by preferences(
@@ -20,27 +18,27 @@ class MenuPreferenceRepository(context: Context) {
     val flow: Flow<MenuPreference> = dataStore.data
         .map {
             MenuPreference(
-                warnSystemRotate = it[Key.WARN_SYSTEM_ROTATE] ?: true,
-                nightMode = it[Key.NIGHT_MODE] ?: Default.nightMode,
-                shouldShowAllApp = it[Key.SHOW_ALL_APPS] ?: false,
+                warnSystemRotate = it[WARN_SYSTEM_ROTATE] ?: true,
+                nightMode = it[NIGHT_MODE] ?: Default.nightMode,
+                shouldShowAllApp = it[SHOW_ALL_APPS] ?: false,
             )
         }
 
     suspend fun updateWarnSystemRotate(warn: Boolean) {
         dataStore.edit {
-            it[Key.WARN_SYSTEM_ROTATE] = warn
+            it[WARN_SYSTEM_ROTATE] = warn
         }
     }
 
     suspend fun updateNightMode(nightMode: Int) {
         dataStore.edit {
-            it[Key.NIGHT_MODE] = nightMode
+            it[NIGHT_MODE] = nightMode
         }
     }
 
     suspend fun updateShowAllApps(show: Boolean) {
         dataStore.edit {
-            it[Key.SHOW_ALL_APPS] = show
+            it[SHOW_ALL_APPS] = show
         }
     }
 
@@ -48,40 +46,37 @@ class MenuPreferenceRepository(context: Context) {
         private val old: OldPreference
     ) : DataMigration<Preferences> {
         override suspend fun shouldMigrate(currentData: Preferences): Boolean =
-            currentData[Key.DATA_VERSION] != VERSION
+            currentData[DATA_VERSION] != VERSION
 
         override suspend fun migrate(currentData: Preferences): Preferences =
             currentData.edit {
                 old.deleteIfTooOld()
-                it[Key.DATA_VERSION] = VERSION
+                it[DATA_VERSION] = VERSION
                 Migrator(old, it).apply {
-                    boolean(Main.AUTO_ROTATE_WARNING_BOOLEAN, Key.WARN_SYSTEM_ROTATE)
-                    int(Main.NIGHT_MODE_INT, Key.NIGHT_MODE)
-                    boolean(Main.SHOW_ALL_APPS_BOOLEAN, Key.SHOW_ALL_APPS)
+                    boolean(Key.Main.AUTO_ROTATE_WARNING_BOOLEAN, WARN_SYSTEM_ROTATE)
+                    int(Key.Main.NIGHT_MODE_INT, NIGHT_MODE)
+                    boolean(Key.Main.SHOW_ALL_APPS_BOOLEAN, SHOW_ALL_APPS)
                 }
             }
 
         override suspend fun cleanUp() {
             old.remove(
-                Main.AUTO_ROTATE_WARNING_BOOLEAN,
-                Main.NIGHT_MODE_INT,
-                Main.SHOW_ALL_APPS_BOOLEAN,
+                Key.Main.AUTO_ROTATE_WARNING_BOOLEAN,
+                Key.Main.NIGHT_MODE_INT,
+                Key.Main.SHOW_ALL_APPS_BOOLEAN,
             )
         }
     }
 
-    private object Key {
-        val DATA_VERSION =
-            Menu.DATA_VERSION_INT.intKey()
-        val WARN_SYSTEM_ROTATE =
-            Menu.AUTO_ROTATE_WARNING_BOOLEAN.booleanKey()
-        val NIGHT_MODE =
-            Menu.NIGHT_MODE_INT.intKey()
-        val SHOW_ALL_APPS =
-            Menu.SHOW_ALL_APPS_BOOLEAN.booleanKey()
-    }
-
     companion object {
         private const val VERSION = 1
+        private val DATA_VERSION =
+            Key.Menu.DATA_VERSION_INT.intKey()
+        private val WARN_SYSTEM_ROTATE =
+            Key.Menu.AUTO_ROTATE_WARNING_BOOLEAN.booleanKey()
+        private val NIGHT_MODE =
+            Key.Menu.NIGHT_MODE_INT.intKey()
+        private val SHOW_ALL_APPS =
+            Key.Menu.SHOW_ALL_APPS_BOOLEAN.booleanKey()
     }
 }

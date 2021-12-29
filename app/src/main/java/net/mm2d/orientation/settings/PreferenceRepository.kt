@@ -22,6 +22,7 @@ class PreferenceRepository private constructor(context: Context) {
     )
 
     val packagePreferenceRepository = PackagePreferenceRepository(context)
+    val orientationPreferenceRepository = OrientationPreferenceRepository(context)
     val controlPreferenceRepository = ControlPreferenceRepository(context)
     val designPreferenceRepository = DesignPreferenceRepository(context)
     val menuPreferenceRepository = MenuPreferenceRepository(context)
@@ -30,6 +31,9 @@ class PreferenceRepository private constructor(context: Context) {
     init {
         scope.launch {
             packagePreferenceRepository.flow.collect()
+        }
+        scope.launch {
+            orientationPreferenceRepository.flow.collect()
         }
         scope.launch {
             controlPreferenceRepository.flow.collect()

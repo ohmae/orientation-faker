@@ -7,13 +7,8 @@
 
 package net.mm2d.orientation.settings
 
-import net.mm2d.orientation.control.Orientation
-
 data class ControlPreference(
-    val orientation: Orientation,
-    val shouldAutoStart: Boolean,
     val shouldNotifySecret: Boolean,
-    val shouldControlByForegroundApp: Boolean,
-    val isLandscapeDevice: Boolean,
     val shouldUseBlankIcon: Boolean,
+    val shouldControlByForegroundApp: Boolean,
 )
