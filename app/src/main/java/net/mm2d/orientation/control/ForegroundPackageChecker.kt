@@ -16,7 +16,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Handler
 import android.os.Looper
-import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.Powers
 import net.mm2d.orientation.util.SystemSettings
 import java.util.concurrent.TimeUnit
@@ -28,7 +27,6 @@ class ForegroundPackageChecker(
     @SuppressLint("InlinedApi")
     private val usageStatsManager: UsageStatsManager =
         context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-    private val settings: Settings = Settings.get()
     private val handler: Handler = Handler(Looper.getMainLooper())
     private val checkTask: Runnable = object : Runnable {
         override fun run() {
@@ -54,7 +52,7 @@ class ForegroundPackageChecker(
             it.addAction(Intent.ACTION_SCREEN_OFF)
         })
         check()
-        onChangeForegroundPackage.invoke(settings.foregroundPackage)
+        onChangeForegroundPackage(foregroundPackage)
         if (Powers.isInteractive(context)) {
             handler.postDelayed(checkTask, CHECK_INTERVAL)
         }
@@ -63,20 +61,21 @@ class ForegroundPackageChecker(
     fun destroy() {
         enabled = false
         context.unregisterReceiver(broadcastReceiver)
+        onChangeForegroundPackage("")
     }
 
     private fun check() {
         if (!SystemSettings.hasUsageAccessPermission(context)) {
             return
         }
-        val lastCheckTime = settings.foregroundPackageCheckTime - CHECK_MARGIN
-        val lastPackage = settings.foregroundPackage
+        val lastCheckTime = foregroundPackageCheckTime - CHECK_MARGIN
+        val lastPackage = foregroundPackage
         val now = System.currentTimeMillis()
-        settings.foregroundPackageCheckTime = now
+        foregroundPackageCheckTime = now
         val packageName = searchLatestForegroundPackage(lastCheckTime, now) ?: return
         if (packageName == lastPackage) return
-        settings.foregroundPackage = packageName
-        onChangeForegroundPackage.invoke(packageName)
+        foregroundPackage = packageName
+        onChangeForegroundPackage(packageName)
     }
 
     private fun searchLatestForegroundPackage(before: Long, after: Long): String? =
@@ -110,5 +109,8 @@ class ForegroundPackageChecker(
         private val FIRST_DURATION: Long = TimeUnit.MINUTES.toMillis(5)
         private val SECOND_DURATION: Long = TimeUnit.HOURS.toMillis(1)
         private const val CHECK_MARGIN = 2000
+
+        private var foregroundPackageCheckTime: Long = 0L
+        private var foregroundPackage: String = ""
     }
 }

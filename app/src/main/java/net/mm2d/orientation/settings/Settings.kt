@@ -8,46 +8,13 @@
 package net.mm2d.orientation.settings
 
 import android.content.Context
-import android.os.Build
 import net.mm2d.android.orientationfaker.BuildConfig
-import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.control.toOrientation
 import net.mm2d.orientation.settings.Key.Main
 import java.io.File
 
 class Settings private constructor(
     private val preferences: SettingsPreferences<Main>
 ) {
-    var orientation: Orientation
-        get() = preferences.readInt(Main.ORIENTATION_INT, Orientation.UNSPECIFIED.value).toOrientation()
-        set(value) = preferences.writeInt(Main.ORIENTATION_INT, value.value)
-
-    var foregroundColor: Int
-        get() = preferences.readInt(Main.COLOR_FOREGROUND_INT, Default.color.foreground)
-        set(value) = preferences.writeInt(Main.COLOR_FOREGROUND_INT, value)
-
-    var backgroundColor: Int
-        get() = preferences.readInt(Main.COLOR_BACKGROUND_INT, Default.color.background)
-        set(value) = preferences.writeInt(Main.COLOR_BACKGROUND_INT, value)
-
-    var foregroundColorSelected: Int
-        get() = preferences.readInt(Main.COLOR_FOREGROUND_SELECTED_INT, Default.color.foregroundSelected)
-        set(value) = preferences.writeInt(Main.COLOR_FOREGROUND_SELECTED_INT, value)
-
-    var backgroundColorSelected: Int
-        get() = preferences.readInt(Main.COLOR_BACKGROUND_SELECTED_INT, Default.color.backgroundSelected)
-        set(value) = preferences.writeInt(Main.COLOR_BACKGROUND_SELECTED_INT, value)
-
-    var baseColor: Int
-        get() = preferences.readInt(Main.COLOR_BASE_INT, Default.color.background)
-        set(value) = preferences.writeInt(Main.COLOR_BASE_INT, value)
-
-    fun hasBaseColor(): Boolean = preferences.contains(Main.COLOR_BASE_INT)
-
-    var notifySecret: Boolean
-        get() = preferences.readBoolean(Main.NOTIFY_SECRET_BOOLEAN, false)
-        set(value) = preferences.writeBoolean(Main.NOTIFY_SECRET_BOOLEAN, value)
-
     var reviewIntervalRandomFactor: Long
         get() = preferences.readLong(Main.REVIEW_INTERVAL_RANDOM_FACTOR_LONG, 0L)
         set(value) = preferences.writeLong(Main.REVIEW_INTERVAL_RANDOM_FACTOR_LONG, value)
@@ -75,68 +42,6 @@ class Settings private constructor(
     var reported: Boolean
         get() = preferences.readBoolean(Main.REVIEW_REPORTED_BOOLEAN, false)
         set(value) = preferences.writeBoolean(Main.REVIEW_REPORTED_BOOLEAN, value)
-
-    var shouldUseBlankIconForNotification: Boolean
-        get() = preferences.readBoolean(Main.USE_BLANK_ICON_FOR_NOTIFICATION_BOOLEAN, false)
-        set(value) = preferences.writeBoolean(Main.USE_BLANK_ICON_FOR_NOTIFICATION_BOOLEAN, value)
-
-    var orientationList: List<Orientation>
-        get() = OrientationList.toList(preferences.readString(Main.ORIENTATION_LIST_STRING, "")).let {
-            if (it.isEmpty()) Default.orientationList else it
-        }
-        set(value) = preferences.writeString(Main.ORIENTATION_LIST_STRING, OrientationList.toString(value))
-
-    var foregroundPackage: String
-        get() = preferences.readString(Main.FOREGROUND_PACKAGE_STRING, "")
-        set(value) = preferences.writeString(Main.FOREGROUND_PACKAGE_STRING, value)
-
-    var foregroundPackageCheckTime: Long
-        get() = preferences.readLong(Main.FOREGROUND_PACKAGE_CHECK_TIME_LONG, 0L)
-        set(value) = preferences.writeLong(Main.FOREGROUND_PACKAGE_CHECK_TIME_LONG, value)
-
-    var foregroundPackageCheckEnabled: Boolean
-        get() = preferences.readBoolean(Main.FOREGROUND_PACKAGE_ENABLED_BOOLEAN, true)
-        set(value) = preferences.writeBoolean(Main.FOREGROUND_PACKAGE_ENABLED_BOOLEAN, value)
-
-    var shouldUseIconBackground: Boolean
-        get() = preferences.readBoolean(Main.USE_ROUND_BACKGROUND_BOOLEAN, false)
-        set(value) = preferences.writeBoolean(Main.USE_ROUND_BACKGROUND_BOOLEAN, value)
-
-    var iconShape: IconShape
-        get() = IconShape.of(preferences.readString(Main.ICON_SHAPE_STRING, ""))
-        set(value) = preferences.writeString(Main.ICON_SHAPE_STRING, value.name)
-
-    var isLandscapeDevice: Boolean
-        get() = preferences.readBoolean(Main.LANDSCAPE_DEVICE_BOOLEAN, false)
-        set(value) = preferences.writeBoolean(Main.LANDSCAPE_DEVICE_BOOLEAN, value)
-
-    var showSettingsOnNotification: Boolean
-        get() = preferences.readBoolean(Main.SHOW_SETTINGS_ON_NOTIFICATION_BOOLEAN, true)
-        set(value) = preferences.writeBoolean(Main.SHOW_SETTINGS_ON_NOTIFICATION_BOOLEAN, value)
-
-    fun resetTheme() {
-        foregroundColor = Default.color.foreground
-        backgroundColor = Default.color.background
-        foregroundColorSelected = Default.color.foregroundSelected
-        backgroundColorSelected = Default.color.backgroundSelected
-        when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-                baseColor = Default.color.base
-            }
-            shouldUseIconBackground -> {
-                baseColor = Default.color.background
-            }
-            else -> {
-                preferences.remove(Main.COLOR_BASE_INT)
-            }
-        }
-    }
-
-    fun setAutoStart(autoStart: Boolean) {
-        preferences.writeBoolean(Main.RESIDENT_BOOLEAN, autoStart)
-    }
-
-    fun shouldAutoStart(): Boolean = preferences.readBoolean(Main.RESIDENT_BOOLEAN, false)
 
     companion object {
         private lateinit var settings: Settings

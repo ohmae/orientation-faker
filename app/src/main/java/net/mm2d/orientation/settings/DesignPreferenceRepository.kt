@@ -12,8 +12,10 @@ import android.os.Build
 import androidx.datastore.core.DataMigration
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import net.mm2d.orientation.control.Orientation
 
 class DesignPreferenceRepository(context: Context) {
     private val Context.dataStoreField: DataStore<Preferences> by preferences(
@@ -38,6 +40,73 @@ class DesignPreferenceRepository(context: Context) {
                 },
             )
         }
+
+    suspend fun updateForeground(color: Int) {
+        dataStore.edit {
+            it[FOREGROUND] = color
+        }
+    }
+
+    suspend fun updateBackground(color: Int) {
+        dataStore.edit {
+            it[BACKGROUND] = color
+        }
+    }
+
+    suspend fun updateForegroundSelected(color: Int) {
+        dataStore.edit {
+            it[FOREGROUND_SELECTED] = color
+        }
+    }
+
+    suspend fun updateBackgroundSelected(color: Int) {
+        dataStore.edit {
+            it[BACKGROUND_SELECTED] = color
+        }
+    }
+
+    suspend fun updateBase(color: Int) {
+        dataStore.edit {
+            it[BASE] = color
+        }
+    }
+
+    suspend fun resetTheme() {
+        dataStore.edit {
+            it.remove(FOREGROUND)
+            it.remove(BACKGROUND)
+            it.remove(FOREGROUND_SELECTED)
+            it.remove(BACKGROUND_SELECTED)
+            it.remove(BASE)
+        }
+    }
+
+    suspend fun updateIconize(iconize: Boolean) {
+        dataStore.edit {
+            it[ICONIZE] = iconize
+            if (iconize && it[BASE] == null) {
+                it[BASE] = it[BACKGROUND] ?: Default.color.background
+            }
+        }
+    }
+
+    suspend fun updateShape(shape: IconShape) {
+        dataStore.edit {
+            it[SHAPE] = shape.name
+        }
+    }
+
+    suspend fun updateShowSettings(show: Boolean) {
+        dataStore.edit {
+            it[SHOW_SETTINGS] = show
+        }
+    }
+
+    suspend fun updateOrientations(orientations: List<Orientation>) {
+        dataStore.edit {
+            it[ORIENTATION_LIST] = OrientationList.toString(orientations)
+        }
+    }
 
     private class MigrationFromOldPreference(
         private val old: OldPreference

@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.mm2d.android.orientationfaker.R
@@ -43,9 +44,6 @@ import net.mm2d.android.orientationfaker.databinding.ItemEachAppBinding
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.Orientations
-import net.mm2d.orientation.service.MainController
-import net.mm2d.orientation.service.MainService
-import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.autoCleared
 import net.mm2d.orientation.view.dialog.EachAppOrientationDialog
@@ -53,12 +51,11 @@ import net.mm2d.orientation.view.dialog.UsageAppPermissionDialog
 import java.util.*
 
 class EachAppFragment : Fragment(R.layout.fragment_each_app) {
-    private val settings by lazy {
-        Settings.get()
-    }
     private var adapter: EachAppAdapter by autoCleared()
     private var binding: FragmentEachAppBinding by autoCleared()
     private val viewModel: EachAppFragmentViewModel by viewModels()
+    private var shouldControlByForegroundApp: Boolean = false
+    private var menuSwitch: SwitchCompat? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentEachAppBinding.bind(view)
@@ -77,13 +74,19 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
         { position, packageName, orientation ->
             ForegroundPackageSettings.put(packageName, orientation)
             adapter.notifyItemChanged(position)
-            if (MainService.isStarted) {
-                MainController.update()
-            }
         }
         viewModel.menu.observe(viewLifecycleOwner) {
             binding.showAllCheck.isChecked = it.shouldShowAllApp
             adapter.setShowAllApps(it.shouldShowAllApp)
+        }
+        viewModel.orientation.observe(viewLifecycleOwner) {
+            shouldControlByForegroundApp = it.shouldControlByForegroundApp
+            binding.packageCheckDisabled.isGone = it.shouldControlByForegroundApp
+            menuSwitch?.let { menuSwitch ->
+                if (menuSwitch.isChecked != it.shouldControlByForegroundApp) {
+                    menuSwitch.isChecked = it.shouldControlByForegroundApp
+                }
+            }
         }
 
         val context = requireContext()
@@ -144,7 +147,6 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
 
     override fun onResume() {
         super.onResume()
-        binding.packageCheckDisabled.isGone = settings.foregroundPackageCheckEnabled
         if (!SystemSettings.hasUsageAccessPermission(requireContext())) {
             UsageAppPermissionDialog.show(this)
         }
@@ -153,12 +155,11 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.each_app, menu)
         (menu.findItem(R.id.package_check).actionView as SwitchCompat).also {
-            it.isChecked = settings.foregroundPackageCheckEnabled
+            menuSwitch = it
+            it.isChecked = shouldControlByForegroundApp
             it.setOnCheckedChangeListener { _, isChecked ->
                 hideKeyboard()
-                settings.foregroundPackageCheckEnabled = isChecked
-                binding.packageCheckDisabled.isGone = isChecked
-                MainController.update()
+                viewModel.updateControlByForegroundApp(isChecked)
             }
         }
     }
@@ -208,7 +209,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
             oldItem == newItem
     }) {
         private val inflater: LayoutInflater = LayoutInflater.from(context)
-        private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+        private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
         private val defaultIcon: Drawable by lazy {
             AppCompatResources.getDrawable(context, R.drawable.ic_launcher_default)!!
         }

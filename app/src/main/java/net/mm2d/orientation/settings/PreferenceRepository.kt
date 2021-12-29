@@ -12,14 +12,16 @@ import androidx.appcompat.app.AppCompatDelegate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
+import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationHelper
 
 class PreferenceRepository private constructor(context: Context) {
-    private val scope: CoroutineScope = CoroutineScope(
-        SupervisorJob() + Dispatchers.Main
-    )
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     val packagePreferenceRepository = PackagePreferenceRepository(context)
     val orientationPreferenceRepository = OrientationPreferenceRepository(context)
@@ -28,12 +30,23 @@ class PreferenceRepository private constructor(context: Context) {
     val menuPreferenceRepository = MenuPreferenceRepository(context)
     val reviewPreferenceRepository = ReviewPreferenceRepository(context)
 
+    val preferredOrientationFlow: MutableStateFlow<Orientation> = MutableStateFlow(Orientation.INVALID)
+    val orientationPreferenceFlow = combine(
+        orientationPreferenceRepository.flow,
+        preferredOrientationFlow
+    ) { preferences, preferred ->
+        val orientation = if (preferred == Orientation.INVALID) preferences.orientation else preferred
+        preferences.copy(orientation = orientation)
+    }
+
     init {
         scope.launch {
             packagePreferenceRepository.flow.collect()
         }
         scope.launch {
-            orientationPreferenceRepository.flow.collect()
+            orientationPreferenceRepository.flow.collect {
+                preferredOrientationFlow.emit(it.orientation)
+            }
         }
         scope.launch {
             controlPreferenceRepository.flow.collect()
@@ -49,6 +62,27 @@ class PreferenceRepository private constructor(context: Context) {
         }
         scope.launch {
             reviewPreferenceRepository.flow.collect()
+        }
+    }
+
+    fun enableAndOrientation(orientation: Orientation) {
+        scope.launch {
+            orientationPreferenceRepository.updateEnabled(true)
+            orientationPreferenceRepository.updateOrientation(orientation)
+        }
+    }
+
+    fun adjustOrientation() {
+        scope.launch {
+            combine(
+                orientationPreferenceRepository.flow,
+                designPreferenceRepository.flow,
+                ::Pair
+            ).take(1).collect { (orientation, design) ->
+                if (!design.orientations.contains(orientation.orientation)) {
+                    orientationPreferenceRepository.updateOrientation(design.orientations[0])
+                }
+            }
         }
     }
 

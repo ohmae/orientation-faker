@@ -15,6 +15,5 @@ import android.content.Intent
 class WakeUpReceiver : BroadcastReceiver() {
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context, intent: Intent) {
-        KeepAlive.ensureResident()
     }
 }

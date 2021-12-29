@@ -10,9 +10,11 @@ package net.mm2d.orientation.control
 import android.annotation.SuppressLint
 import android.content.Context
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.orientation.control.OrientationHelper.Rotation.*
+import net.mm2d.orientation.control.OrientationHelper.Rotation.ROTATION_0
+import net.mm2d.orientation.control.OrientationHelper.Rotation.ROTATION_180
+import net.mm2d.orientation.control.OrientationHelper.Rotation.ROTATION_270
+import net.mm2d.orientation.control.OrientationHelper.Rotation.ROTATION_90
 import net.mm2d.orientation.review.ReviewRequest
-import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.Powers
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.Toaster
@@ -24,16 +26,13 @@ object OrientationHelper {
     private lateinit var context: Context
     private lateinit var controller: OrientationController
     private lateinit var sensorHelper: SensorHelper
-    private lateinit var settings: Settings
     private var requestedOrientation: Orientation = Orientation.INVALID
     private var isLandscapeDevice: Boolean = false
     private var warnSystemRotate: Boolean = false
 
-    fun initialize(context: Context) {
-        val appContext = context.applicationContext
-        this.context = appContext
-        settings = Settings.get()
-        controller = OrientationController(appContext)
+    fun initialize(c: Context) {
+        context = c.applicationContext
+        controller = OrientationController(context)
         sensorHelper = SensorHelper(
             context,
             { controller.isEnabled && requestedOrientation.usesSensor() },
@@ -41,11 +40,17 @@ object OrientationHelper {
         )
     }
 
-    fun update(orientation: Orientation) {
-        this.requestedOrientation = orientation
+    fun update(orientation: Orientation, landscapeDevice: Boolean) {
+        if (requestedOrientation == orientation &&
+            controller.isEnabled &&
+            isLandscapeDevice == landscapeDevice
+        ) {
+            return
+        }
+        requestedOrientation = orientation
         ReviewRequest.updateOrientation(orientation)
         notifySystemSettingsIfNeed(orientation)
-        isLandscapeDevice = settings.isLandscapeDevice
+        isLandscapeDevice = landscapeDevice
         if (orientation.usesSensor()) {
             if (!controller.isEnabled) {
                 controller.setOrientation(Orientation.UNSPECIFIED)
@@ -63,13 +68,6 @@ object OrientationHelper {
         controller.stop()
         sensorHelper.stopSensor()
     }
-
-    fun getOrientation(): Orientation =
-        if (controller.isEnabled) {
-            requestedOrientation
-        } else {
-            Settings.get().orientation
-        }
 
     fun setWarnSystemRotate(warn: Boolean) {
         warnSystemRotate = warn

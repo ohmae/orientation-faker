@@ -23,13 +23,9 @@ import androidx.navigation.fragment.findNavController
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.FragmentMainBinding
-import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.event.EventRouter
 import net.mm2d.orientation.review.ReviewRequest
-import net.mm2d.orientation.service.MainController
 import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.NightModes
-import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.Launcher
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.Updater
@@ -38,9 +34,6 @@ import net.mm2d.orientation.view.dialog.NightModeDialog
 import net.mm2d.orientation.view.dialog.OverlayPermissionDialog
 
 class MainFragment : Fragment(R.layout.fragment_main) {
-    private val settings by lazy {
-        Settings.get()
-    }
     private val handler = Handler(Looper.getMainLooper())
     private val checkSystemSettingsTask = Runnable { checkSystemSettings() }
     private var notificationSample: NotificationSample by autoCleared()
@@ -52,16 +45,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding = FragmentMainBinding.bind(view)
         setHasOptionsMenu(true)
         setUpViews()
-        EventRouter.observeUpdate(viewLifecycleOwner) {
-            applyStatus()
-            notificationSample.update()
-        }
         if (!SystemSettings.canDrawOverlays(requireContext())) {
-            MainController.stop()
+            viewModel.updateEnabled(false)
         } else {
-            if (Settings.get().shouldAutoStart()) {
-                MainController.start()
-            }
             Updater.startUpdateIfAvailable(requireActivity())
         }
         NightModeDialog.registerListener(this, REQUEST_KEY_NIGHT_MODE) {
@@ -74,15 +60,26 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             }
             warnSystemRotate = menu.warnSystemRotate
         }
+        viewModel.sample.observe(viewLifecycleOwner) { (orientation, design) ->
+            notificationSample.update(orientation, design)
+            if (orientation.enabled) {
+                binding.content.statusButton.setText(R.string.button_status_stop)
+                binding.content.statusButton.setBackgroundResource(R.drawable.bg_stop_button)
+                binding.content.statusDescription.setText(R.string.menu_description_status_running)
+            } else {
+                binding.content.statusButton.setText(R.string.button_status_start)
+                binding.content.statusButton.setBackgroundResource(R.drawable.bg_start_button)
+                binding.content.statusDescription.setText(R.string.menu_description_status_waiting)
+            }
+        }
     }
 
     @SuppressLint("NewApi")
     override fun onResume() {
         super.onResume()
-        notificationSample.update()
         handler.removeCallbacks(checkSystemSettingsTask)
         handler.post(checkSystemSettingsTask)
-        applyStatus()
+        ReviewRequest.requestReviewIfNeed(this)
         if (!SystemSettings.canDrawOverlays(requireContext())) {
             OverlayPermissionDialog.show(this)
         }
@@ -146,10 +143,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private fun setUpOrientationIcons() {
         notificationSample.buttonList.forEach { view ->
             view.button.setOnClickListener {
-                updateOrientation(view.orientation)
+                viewModel.updateOrientation(view.orientation)
                 if (!MainService.isStarted && SystemSettings.canDrawOverlays(requireContext())) {
-                    MainController.start()
-                    settings.setAutoStart(true)
+                    viewModel.updateEnabled(true)
                 }
             }
         }
@@ -158,35 +154,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     @SuppressLint("NewApi")
     private fun toggleStatus() {
         if (MainService.isStarted) {
-            MainController.stop()
-            settings.setAutoStart(false)
+            viewModel.updateEnabled(false)
         } else {
             if (SystemSettings.canDrawOverlays(requireContext())) {
-                MainController.start()
-                settings.setAutoStart(true)
+                viewModel.updateEnabled(true)
             } else {
                 OverlayPermissionDialog.show(this)
             }
         }
-    }
-
-    private fun applyStatus() {
-        if (MainService.isStarted) {
-            binding.content.statusButton.setText(R.string.button_status_stop)
-            binding.content.statusButton.setBackgroundResource(R.drawable.bg_stop_button)
-            binding.content.statusDescription.setText(R.string.menu_description_status_running)
-        } else {
-            binding.content.statusButton.setText(R.string.button_status_start)
-            binding.content.statusButton.setBackgroundResource(R.drawable.bg_start_button)
-            binding.content.statusDescription.setText(R.string.menu_description_status_waiting)
-        }
-        ReviewRequest.requestReviewIfNeed(this)
-    }
-
-    private fun updateOrientation(orientation: Orientation) {
-        settings.orientation = orientation
-        notificationSample.update()
-        MainController.update()
     }
 
     companion object {

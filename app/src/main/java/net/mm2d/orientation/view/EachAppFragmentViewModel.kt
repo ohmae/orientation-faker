@@ -7,11 +7,22 @@ import kotlinx.coroutines.launch
 import net.mm2d.orientation.settings.PreferenceRepository
 
 class EachAppFragmentViewModel : ViewModel() {
+    private val orientationPreferenceRepository =
+        PreferenceRepository.get().orientationPreferenceRepository
     private val menuPreferenceRepository =
         PreferenceRepository.get().menuPreferenceRepository
 
+    val orientation = orientationPreferenceRepository.flow
+        .asLiveData()
+
     val menu = menuPreferenceRepository.flow
         .asLiveData()
+
+    fun updateControlByForegroundApp(enable: Boolean) {
+        viewModelScope.launch {
+            orientationPreferenceRepository.updateControlByForegroundApp(enable)
+        }
+    }
 
     fun updateShowAllApps(show: Boolean) {
         viewModelScope.launch {

@@ -13,12 +13,12 @@ import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.OrientationHelper
-import net.mm2d.orientation.service.KeepAlive
 import net.mm2d.orientation.service.MainController
 import net.mm2d.orientation.settings.PreferenceRepository
 import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.tabs.CustomTabsHelper
 import net.mm2d.orientation.view.notification.NotificationHelper
+import net.mm2d.orientation.view.widget.WidgetProvider
 
 @Suppress("unused")
 open class App : Application() {
@@ -32,7 +32,7 @@ open class App : Application() {
         ForegroundPackageSettings.initialize(this)
         CustomTabsHelper.initialize(this)
         OrientationHelper.initialize(this)
-        KeepAlive.ensureResident()
+        WidgetProvider.initialize(this)
     }
 
     protected open fun initializeOverrideWhenDebug() {

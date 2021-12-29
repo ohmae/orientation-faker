@@ -13,20 +13,31 @@ import android.content.Intent
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.os.IBinder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.ForegroundPackageChecker
 import net.mm2d.orientation.control.ForegroundPackageSettings
-import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationHelper
-import net.mm2d.orientation.event.EventRouter
-import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.settings.OrientationPreference
+import net.mm2d.orientation.settings.PreferenceRepository
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.Toaster
 import net.mm2d.orientation.view.notification.NotificationHelper
-import net.mm2d.orientation.view.widget.WidgetProvider
 
 class MainService : Service() {
     private var checker: ForegroundPackageChecker? = null
+    private val job = SupervisorJob()
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + job)
+    private val controlPreferenceFlow = PreferenceRepository.get().controlPreferenceRepository.flow
+    private val designPreferenceFlow = PreferenceRepository.get().designPreferenceRepository.flow
+    private val orientationPreferenceFlow = PreferenceRepository.get().orientationPreferenceFlow
+    private val packageNameFlow: MutableStateFlow<String> = MutableStateFlow("")
 
     override fun onBind(intent: Intent): IBinder? {
         throw UnsupportedOperationException("Not yet implemented")
@@ -44,6 +55,12 @@ class MainService : Service() {
         return START_STICKY
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        isStarted = false
+        job.cancel()
+    }
+
     private fun shouldStop(intent: Intent?): Boolean {
         if (!SystemSettings.canDrawOverlays(this)) {
             return true
@@ -52,35 +69,59 @@ class MainService : Service() {
     }
 
     private fun start() {
-        OrientationHelper.update(Settings.get().orientation)
-        NotificationHelper.startForeground(this)
-        WidgetProvider.start(this)
-        EventRouter.notifyUpdate()
-        startForegroundChecker()
+        scope.launch {
+            packageNameFlow
+                .map { ForegroundPackageSettings.get(it) }
+                .collect {
+                    PreferenceRepository.get().preferredOrientationFlow.emit(it)
+                }
+        }
+        scope.launch {
+            orientationPreferenceFlow.collect { preferences ->
+                if (preferences.enabled) {
+                    OrientationHelper.update(preferences.orientation, preferences.isLandscapeDevice)
+                } else {
+                    stop()
+                }
+                startForegroundChecker(preferences)
+            }
+        }
+        scope.launch {
+            combine(
+                orientationPreferenceFlow,
+                controlPreferenceFlow,
+                designPreferenceFlow,
+                ::Triple
+            ).collect { (orientation, control, design) ->
+                NotificationHelper.startForeground(this@MainService, orientation, control, design)
+            }
+        }
     }
 
     private fun stop() {
-        OrientationHelper.cancel()
         NotificationHelper.stopForeground(this)
-        EventRouter.notifyUpdate()
+        OrientationHelper.cancel()
         stopForegroundChecker()
         stopSelf()
     }
 
-    private fun startForegroundChecker() {
+    private fun startForegroundChecker(preference: OrientationPreference) {
+        val disable = ForegroundPackageSettings.isEmpty() || !preference.shouldControlByForegroundApp
         if (checker != null) {
-            if (ForegroundPackageSettings.disabled()) {
+            if (disable) {
                 stopForegroundChecker()
             }
             return
         }
-        if (ForegroundPackageSettings.disabled()) return
+        if (disable) return
         if (!SystemSettings.hasUsageAccessPermission(this)) {
             Toaster.showLong(this, R.string.toast_no_permission_to_usage_access)
             return
         }
-        checker = ForegroundPackageChecker(this, ::onUpdateForegroundPackage).also {
-            it.start()
+        checker = ForegroundPackageChecker(this) {
+            scope.launch { packageNameFlow.emit(it) }
+        }.also { checker ->
+            checker.start()
         }
     }
 
@@ -89,31 +130,11 @@ class MainService : Service() {
         checker = null
     }
 
-    private fun onUpdateForegroundPackage(packageName: String) {
-        val orientation = ForegroundPackageSettings.get(packageName).let {
-            if (it == Orientation.INVALID) Settings.get().orientation else it
-        }
-        if (!isStarted || OrientationHelper.getOrientation() == orientation) {
-            return
-        }
-        OrientationHelper.update(orientation)
-        NotificationHelper.startForeground(this)
-        EventRouter.notifyUpdate()
-    }
-
     companion object {
         private const val ACTION_START = "ACTION_START"
         private const val ACTION_STOP = "ACTION_STOP"
         var isStarted: Boolean = false
             private set
-
-        fun update(context: Context) {
-            if (isStarted) {
-                start(context)
-            } else {
-                WidgetProvider.start(context)
-            }
-        }
 
         fun start(context: Context) {
             startService(
@@ -123,7 +144,6 @@ class MainService : Service() {
         }
 
         fun stop(context: Context) {
-            WidgetProvider.stop(context)
             if (!isStarted) {
                 return
             }

@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.datastore.core.DataMigration
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.toOrientation
 
 class OrientationPreferenceRepository(context: Context) {
@@ -24,6 +26,30 @@ class OrientationPreferenceRepository(context: Context) {
                 shouldControlByForegroundApp = it[CONTROL_BY_FOREGROUND_APP] ?: true,
             )
         }
+
+    suspend fun updateEnabled(enabled: Boolean) {
+        dataStore.edit {
+            it[ENABLED] = enabled
+        }
+    }
+
+    suspend fun updateOrientation(orientation: Orientation) {
+        dataStore.edit {
+            it[ORIENTATION] = orientation.value
+        }
+    }
+
+    suspend fun updateLandscapeDevice(landscape: Boolean) {
+        dataStore.edit {
+            it[LANDSCAPE_DEVICE] = landscape
+        }
+    }
+
+    suspend fun updateControlByForegroundApp(enable: Boolean) {
+        dataStore.edit {
+            it[CONTROL_BY_FOREGROUND_APP] = enable
+        }
+    }
 
     private class MigrationFromOldPreference(
         private val old: OldPreference
