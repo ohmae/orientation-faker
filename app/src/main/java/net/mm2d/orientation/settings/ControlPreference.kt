@@ -10,5 +10,4 @@ package net.mm2d.orientation.settings
 data class ControlPreference(
     val shouldNotifySecret: Boolean,
     val shouldUseBlankIcon: Boolean,
-    val shouldControlByForegroundApp: Boolean,
 )

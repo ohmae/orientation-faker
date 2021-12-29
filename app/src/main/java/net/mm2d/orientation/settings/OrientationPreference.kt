@@ -6,4 +6,5 @@ data class OrientationPreference(
     val enabled: Boolean,
     val orientation: Orientation,
     val isLandscapeDevice: Boolean,
+    val shouldControlByForegroundApp: Boolean,
 )

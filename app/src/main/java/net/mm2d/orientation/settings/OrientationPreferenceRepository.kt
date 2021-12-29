@@ -21,6 +21,7 @@ class OrientationPreferenceRepository(context: Context) {
                 enabled = it[ENABLED] ?: false,
                 orientation = it[ORIENTATION].toOrientation(),
                 isLandscapeDevice = it[LANDSCAPE_DEVICE] ?: false,
+                shouldControlByForegroundApp = it[CONTROL_BY_FOREGROUND_APP] ?: true,
             )
         }
 
@@ -38,6 +39,7 @@ class OrientationPreferenceRepository(context: Context) {
                     boolean(Key.Main.RESIDENT_BOOLEAN, ENABLED)
                     int(Key.Main.ORIENTATION_INT, ORIENTATION)
                     boolean(Key.Main.LANDSCAPE_DEVICE_BOOLEAN, LANDSCAPE_DEVICE)
+                    boolean(Key.Main.FOREGROUND_PACKAGE_ENABLED_BOOLEAN, CONTROL_BY_FOREGROUND_APP)
                 }
             }
 
@@ -46,6 +48,9 @@ class OrientationPreferenceRepository(context: Context) {
                 Key.Main.RESIDENT_BOOLEAN,
                 Key.Main.ORIENTATION_INT,
                 Key.Main.LANDSCAPE_DEVICE_BOOLEAN,
+                Key.Main.FOREGROUND_PACKAGE_STRING,
+                Key.Main.FOREGROUND_PACKAGE_CHECK_TIME_LONG,
+                Key.Main.FOREGROUND_PACKAGE_ENABLED_BOOLEAN,
             )
         }
     }
@@ -60,5 +65,7 @@ class OrientationPreferenceRepository(context: Context) {
             Key.Orientation.ORIENTATION_INT.intKey()
         private val LANDSCAPE_DEVICE =
             Key.Orientation.LANDSCAPE_DEVICE_BOOLEAN.booleanKey()
+        private val CONTROL_BY_FOREGROUND_APP =
+            Key.Orientation.CONTROL_BY_FOREGROUND_APP_BOOLEAN.booleanKey()
     }
 }

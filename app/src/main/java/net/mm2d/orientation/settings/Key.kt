@@ -86,12 +86,12 @@ interface Key {
         ENABLED_BOOLEAN,
         ORIENTATION_INT,
         LANDSCAPE_DEVICE_BOOLEAN,
+        CONTROL_BY_FOREGROUND_APP_BOOLEAN,
     }
 
     enum class Control : Key {
         DATA_VERSION_INT,
         NOTIFY_SECRET_BOOLEAN,
-        CONTROL_BY_FOREGROUND_APP_BOOLEAN,
         USE_BLANK_ICON_BOOLEAN,
     }
 
@@ -104,7 +104,6 @@ interface Key {
         BASE_INT,
         ICONIZE_BOOLEAN,
         SHAPE_STRING,
-
         SHOW_SETTINGS_BOOLEAN,
         ORIENTATION_LIST_STRING,
     }

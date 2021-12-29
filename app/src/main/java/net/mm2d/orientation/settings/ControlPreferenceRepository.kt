@@ -26,7 +26,6 @@ class ControlPreferenceRepository(context: Context) {
             ControlPreference(
                 shouldNotifySecret = it[NOTIFY_SECRET] ?: false,
                 shouldUseBlankIcon = it[USE_BLANK_ICON] ?: false,
-                shouldControlByForegroundApp = it[CONTROL_BY_FOREGROUND_APP] ?: true,
             )
         }
 
@@ -43,7 +42,6 @@ class ControlPreferenceRepository(context: Context) {
                 Migrator(old, it).apply {
                     boolean(Key.Main.NOTIFY_SECRET_BOOLEAN, NOTIFY_SECRET)
                     boolean(Key.Main.USE_BLANK_ICON_FOR_NOTIFICATION_BOOLEAN, USE_BLANK_ICON)
-                    boolean(Key.Main.FOREGROUND_PACKAGE_ENABLED_BOOLEAN, CONTROL_BY_FOREGROUND_APP)
                 }
             }
 
@@ -52,9 +50,6 @@ class ControlPreferenceRepository(context: Context) {
                 Key.Main.ORIENTATION_INT,
                 Key.Main.NOTIFY_SECRET_BOOLEAN,
                 Key.Main.USE_BLANK_ICON_FOR_NOTIFICATION_BOOLEAN,
-                Key.Main.FOREGROUND_PACKAGE_STRING,
-                Key.Main.FOREGROUND_PACKAGE_CHECK_TIME_LONG,
-                Key.Main.FOREGROUND_PACKAGE_ENABLED_BOOLEAN,
             )
         }
     }
@@ -67,7 +62,5 @@ class ControlPreferenceRepository(context: Context) {
             Key.Control.NOTIFY_SECRET_BOOLEAN.booleanKey()
         private val USE_BLANK_ICON =
             Key.Control.USE_BLANK_ICON_BOOLEAN.booleanKey()
-        private val CONTROL_BY_FOREGROUND_APP =
-            Key.Control.CONTROL_BY_FOREGROUND_APP_BOOLEAN.booleanKey()
     }
 }
