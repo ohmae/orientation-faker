@@ -13,6 +13,7 @@ import android.widget.ImageView
 import androidx.annotation.ColorInt
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.gridlayout.widget.GridLayout
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.FragmentDetailedSettingsBinding
@@ -46,6 +47,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
     private lateinit var orientationListStart: List<Orientation>
     private val orientationList: MutableList<Orientation> = mutableListOf()
     private var binding: FragmentDetailedSettingsBinding by autoCleared()
+    private val viewModel: DetailedSettingsFragmentViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentDetailedSettingsBinding.bind(view)
@@ -53,6 +55,9 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         setUpViews()
         EventRouter.observeUpdate(viewLifecycleOwner) { notificationSample.update() }
 
+        viewModel.menu.observe(viewLifecycleOwner) {
+            binding.content.autoRotateWarning.isChecked = it.warnSystemRotate
+        }
         registerDialogListener()
     }
 
@@ -74,7 +79,6 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         applyUseIconBackground()
         applyUseBlankIcon()
         applySettingsOnNotification()
-        applyAutoRotateWarning()
         applyNotificationPrivacy()
     }
 
@@ -344,16 +348,9 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
     }
 
     private fun setUpAutoRotateWarning() {
-        binding.content.autoRotateWarning.setOnClickListener { toggleAutoRotateWarning() }
-    }
-
-    private fun applyAutoRotateWarning() {
-        binding.content.autoRotateWarning.isChecked = settings.autoRotateWarning
-    }
-
-    private fun toggleAutoRotateWarning() {
-        settings.autoRotateWarning = !settings.autoRotateWarning
-        applyAutoRotateWarning()
+        binding.content.autoRotateWarning.setOnClickListener {
+            viewModel.updateWarnSystemRotate(!binding.content.autoRotateWarning.isChecked)
+        }
     }
 
     private fun setUpNotificationPrivacy() {

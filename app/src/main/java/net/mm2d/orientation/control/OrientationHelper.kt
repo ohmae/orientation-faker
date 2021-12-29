@@ -27,6 +27,7 @@ object OrientationHelper {
     private lateinit var settings: Settings
     private var requestedOrientation: Orientation = Orientation.INVALID
     private var isLandscapeDevice: Boolean = false
+    private var warnSystemRotate: Boolean = false
 
     fun initialize(context: Context) {
         val appContext = context.applicationContext
@@ -69,6 +70,10 @@ object OrientationHelper {
         } else {
             Settings.get().orientation
         }
+
+    fun setWarnSystemRotate(warn: Boolean) {
+        warnSystemRotate = warn
+    }
 
     private fun minimumCoercion(x: Float, y: Float): Boolean {
         if (requestedOrientation == Orientation.SENSOR_PORTRAIT) {
@@ -194,7 +199,7 @@ object OrientationHelper {
         if (!orientation.requestsSystemSettings()) {
             return
         }
-        if (!Settings.get().autoRotateWarning) {
+        if (!warnSystemRotate) {
             return
         }
         if (SystemSettings.rotationIsFixed(context)) {

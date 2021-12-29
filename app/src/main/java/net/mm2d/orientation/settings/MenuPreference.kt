@@ -8,7 +8,7 @@
 package net.mm2d.orientation.settings
 
 data class MenuPreference(
-    val warnSystemRotateSetting: Boolean,
+    val warnSystemRotate: Boolean,
     val nightMode: Int,
     val shouldShowAllApp: Boolean,
 )

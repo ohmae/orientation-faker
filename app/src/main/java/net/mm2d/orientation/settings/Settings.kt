@@ -48,10 +48,6 @@ class Settings private constructor(
         get() = preferences.readBoolean(Main.NOTIFY_SECRET_BOOLEAN, false)
         set(value) = preferences.writeBoolean(Main.NOTIFY_SECRET_BOOLEAN, value)
 
-    var autoRotateWarning: Boolean
-        get() = preferences.readBoolean(Main.AUTO_ROTATE_WARNING_BOOLEAN, true)
-        set(value) = preferences.writeBoolean(Main.AUTO_ROTATE_WARNING_BOOLEAN, value)
-
     var reviewIntervalRandomFactor: Long
         get() = preferences.readLong(Main.REVIEW_INTERVAL_RANDOM_FACTOR_LONG, 0L)
         set(value) = preferences.writeLong(Main.REVIEW_INTERVAL_RANDOM_FACTOR_LONG, value)

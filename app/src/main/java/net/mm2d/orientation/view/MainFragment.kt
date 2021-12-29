@@ -46,6 +46,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private var notificationSample: NotificationSample by autoCleared()
     private var binding: FragmentMainBinding by autoCleared()
     private val viewModel: MainFragmentViewModel by viewModels()
+    private var warnSystemRotate: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentMainBinding.bind(view)
@@ -71,6 +72,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             binding.content.nightMode.setOnClickListener {
                 NightModeDialog.show(this, REQUEST_KEY_NIGHT_MODE, menu.nightMode)
             }
+            warnSystemRotate = menu.warnSystemRotate
         }
     }
 
@@ -95,7 +97,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         if (lifecycle.currentState != State.RESUMED) {
             return
         }
-        if (!settings.autoRotateWarning) {
+        if (!warnSystemRotate) {
             binding.content.caution.visibility = View.GONE
             return
         }

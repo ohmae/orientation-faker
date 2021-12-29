@@ -20,11 +20,17 @@ class MenuPreferenceRepository(context: Context) {
     val flow: Flow<MenuPreference> = dataStore.data
         .map {
             MenuPreference(
-                warnSystemRotateSetting = it[Key.WARN_SYSTEM_ROTATE] ?: true,
+                warnSystemRotate = it[Key.WARN_SYSTEM_ROTATE] ?: true,
                 nightMode = it[Key.NIGHT_MODE] ?: Default.nightMode,
                 shouldShowAllApp = it[Key.SHOW_ALL_APPS] ?: false,
             )
         }
+
+    suspend fun updateWarnSystemRotate(warn: Boolean) {
+        dataStore.edit {
+            it[Key.WARN_SYSTEM_ROTATE] = warn
+        }
+    }
 
     suspend fun updateNightMode(nightMode: Int) {
         dataStore.edit {
