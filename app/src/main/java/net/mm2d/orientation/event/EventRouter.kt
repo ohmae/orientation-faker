@@ -11,14 +11,14 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
 object EventRouter {
     private val updateFlow: MutableSharedFlow<Unit> = MutableSharedFlow()
-    private val job = Job()
-    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + job)
+    private val job = SupervisorJob()
+    private val scope: CoroutineScope = CoroutineScope(job + Dispatchers.Main)
 
     fun notifyUpdate() {
         scope.launch {

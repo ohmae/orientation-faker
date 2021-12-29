@@ -84,7 +84,7 @@ interface Key {
     enum class Control : Key {
         DATA_VERSION_INT,
         ORIENTATION_INT,
-        RESIDENT_BOOLEAN,
+        AUTO_START_BOOLEAN,
         NOTIFY_SECRET_BOOLEAN,
         CONTROL_BY_FOREGROUND_APP_BOOLEAN,
         LANDSCAPE_DEVICE_BOOLEAN,

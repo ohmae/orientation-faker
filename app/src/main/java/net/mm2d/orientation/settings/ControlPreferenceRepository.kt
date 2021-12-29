@@ -28,7 +28,7 @@ class ControlPreferenceRepository(context: Context) {
         .map {
             ControlPreference(
                 orientation = it[Key.ORIENTATION].toOrientation(),
-                shouldBeResident = it[Key.RESIDENT] ?: false,
+                shouldAutoStart = it[Key.AUTO_START] ?: false,
                 shouldNotifySecret = it[Key.NOTIFY_SECRET] ?: false,
                 shouldControlByForegroundApp = it[Key.CONTROL_BY_FOREGROUND_APP] ?: true,
                 isLandscapeDevice = it[Key.LANDSCAPE_DEVICE] ?: false,
@@ -48,7 +48,7 @@ class ControlPreferenceRepository(context: Context) {
                 it[Key.DATA_VERSION] = VERSION
                 Migrator(old, it).apply {
                     int(Main.ORIENTATION_INT, Key.ORIENTATION)
-                    boolean(Main.RESIDENT_BOOLEAN, Key.RESIDENT)
+                    boolean(Main.RESIDENT_BOOLEAN, Key.AUTO_START)
                     boolean(Main.NOTIFY_SECRET_BOOLEAN, Key.NOTIFY_SECRET)
                     boolean(Main.FOREGROUND_PACKAGE_ENABLED_BOOLEAN, Key.CONTROL_BY_FOREGROUND_APP)
                     boolean(Main.LANDSCAPE_DEVICE_BOOLEAN, Key.LANDSCAPE_DEVICE)
@@ -75,8 +75,8 @@ class ControlPreferenceRepository(context: Context) {
             Control.DATA_VERSION_INT.intKey()
         val ORIENTATION =
             Control.ORIENTATION_INT.intKey()
-        val RESIDENT =
-            Control.RESIDENT_BOOLEAN.booleanKey()
+        val AUTO_START =
+            Control.AUTO_START_BOOLEAN.booleanKey()
         val NOTIFY_SECRET =
             Control.NOTIFY_SECRET_BOOLEAN.booleanKey()
         val CONTROL_BY_FOREGROUND_APP =
