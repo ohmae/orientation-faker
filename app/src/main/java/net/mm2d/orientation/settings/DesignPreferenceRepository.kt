@@ -130,6 +130,8 @@ class DesignPreferenceRepository(context: Context) {
                     )
                     boolean(Key.Main.USE_ROUND_BACKGROUND_BOOLEAN, ICONIZE)
                     string(Key.Main.ICON_SHAPE_STRING, SHAPE)
+                    boolean(Key.Main.SHOW_SETTINGS_ON_NOTIFICATION_BOOLEAN, SHOW_SETTINGS)
+                    string(Key.Main.ORIENTATION_LIST_STRING, ORIENTATION_LIST)
                 }
             }
 
