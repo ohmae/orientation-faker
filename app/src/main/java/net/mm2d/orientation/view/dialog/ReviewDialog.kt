@@ -16,7 +16,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.LayoutReviewBinding
-import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.settings.PreferenceRepository
 import net.mm2d.orientation.util.Launcher
 
 class ReviewDialog : DialogFragment() {
@@ -24,18 +24,17 @@ class ReviewDialog : DialogFragment() {
         val activity = requireActivity()
         val parent = activity.window.decorView as ViewGroup
         val view = LayoutReviewBinding.inflate(activity.layoutInflater, parent, false).root
-        val settings = Settings.get()
         return AlertDialog.Builder(activity)
             .setIcon(R.drawable.ic_launcher)
             .setTitle(R.string.app_name)
             .setView(view)
             .setPositiveButton(R.string.dialog_button_review) { _, _ ->
                 Launcher.openGooglePlay(activity)
-                settings.reviewed = true
+                PreferenceRepository.get().updateReviewed(true)
             }
             .setNeutralButton(R.string.dialog_button_send_mail) { _, _ ->
                 Launcher.sendMailToDeveloper(activity)
-                settings.reported = true
+                PreferenceRepository.get().updateReported(true)
             }
             .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.cancel()
@@ -45,16 +44,17 @@ class ReviewDialog : DialogFragment() {
 
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
-        Settings.get().reviewCancelCount++
+        PreferenceRepository.get().inclementCancelCount()
     }
 
     companion object {
         private const val TAG = "ReviewDialog"
 
-        fun show(fragment: Fragment) {
+        fun show(fragment: Fragment): Boolean {
             val manager = fragment.childFragmentManager
-            if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return
+            if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return false
             ReviewDialog().show(manager, TAG)
+            return true
         }
     }
 }

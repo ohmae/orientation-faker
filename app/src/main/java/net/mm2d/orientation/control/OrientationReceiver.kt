@@ -10,8 +10,7 @@ package net.mm2d.orientation.control
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import net.mm2d.orientation.service.MainController
-import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.settings.PreferenceRepository
 
 class OrientationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
@@ -21,9 +20,8 @@ class OrientationReceiver : BroadcastReceiver() {
         val orientation = intent.getIntExtra(
             EXTRA_ORIENTATION,
             Orientation.UNSPECIFIED.value
-        )
-        Settings.get().orientation = orientation.toOrientation()
-        MainController.start()
+        ).toOrientation()
+        PreferenceRepository.get().enableAndOrientation(orientation)
     }
 
     companion object {

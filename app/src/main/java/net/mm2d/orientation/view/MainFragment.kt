@@ -15,21 +15,17 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle.State
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.FragmentMainBinding
-import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.event.EventRouter
 import net.mm2d.orientation.review.ReviewRequest
-import net.mm2d.orientation.service.MainController
 import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.NightModes
-import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.util.Launcher
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.Updater
@@ -38,42 +34,52 @@ import net.mm2d.orientation.view.dialog.NightModeDialog
 import net.mm2d.orientation.view.dialog.OverlayPermissionDialog
 
 class MainFragment : Fragment(R.layout.fragment_main) {
-    private val settings by lazy {
-        Settings.get()
-    }
     private val handler = Handler(Looper.getMainLooper())
     private val checkSystemSettingsTask = Runnable { checkSystemSettings() }
     private var notificationSample: NotificationSample by autoCleared()
     private var binding: FragmentMainBinding by autoCleared()
+    private val viewModel: MainFragmentViewModel by viewModels()
+    private var warnSystemRotate: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentMainBinding.bind(view)
         setHasOptionsMenu(true)
         setUpViews()
-        EventRouter.observeUpdate(viewLifecycleOwner) {
-            applyStatus()
-            notificationSample.update()
-        }
         if (!SystemSettings.canDrawOverlays(requireContext())) {
-            MainController.stop()
+            viewModel.updateEnabled(false)
         } else {
-            if (Settings.get().shouldAutoStart()) {
-                MainController.start()
-            }
             Updater.startUpdateIfAvailable(requireActivity())
         }
         NightModeDialog.registerListener(this, REQUEST_KEY_NIGHT_MODE) {
-            onSelectNightMode(it)
+            viewModel.updateNightMode(it)
+        }
+        viewModel.menu.observe(viewLifecycleOwner) { menu ->
+            binding.content.nightModeDescription.setText(NightModes.getTextId(menu.nightMode))
+            binding.content.nightMode.setOnClickListener {
+                NightModeDialog.show(this, REQUEST_KEY_NIGHT_MODE, menu.nightMode)
+            }
+            warnSystemRotate = menu.warnSystemRotate
+        }
+        viewModel.sample.observe(viewLifecycleOwner) { (orientation, design) ->
+            notificationSample.update(orientation, design)
+            if (orientation.enabled) {
+                binding.content.statusButton.setText(R.string.button_status_stop)
+                binding.content.statusButton.setBackgroundResource(R.drawable.bg_stop_button)
+                binding.content.statusDescription.setText(R.string.menu_description_status_running)
+            } else {
+                binding.content.statusButton.setText(R.string.button_status_start)
+                binding.content.statusButton.setBackgroundResource(R.drawable.bg_start_button)
+                binding.content.statusDescription.setText(R.string.menu_description_status_waiting)
+            }
         }
     }
 
     @SuppressLint("NewApi")
     override fun onResume() {
         super.onResume()
-        notificationSample.update()
         handler.removeCallbacks(checkSystemSettingsTask)
         handler.post(checkSystemSettingsTask)
-        applyStatus()
+        ReviewRequest.requestReviewIfNeed(this)
         if (!SystemSettings.canDrawOverlays(requireContext())) {
             OverlayPermissionDialog.show(this)
         }
@@ -88,7 +94,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         if (lifecycle.currentState != State.RESUMED) {
             return
         }
-        if (!settings.autoRotateWarning) {
+        if (!warnSystemRotate) {
             binding.content.caution.visibility = View.GONE
             return
         }
@@ -125,7 +131,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding.content.eachApp.setOnClickListener {
             navigate(MainFragmentDirections.actionMainFragmentToEachAppFragment())
         }
-        setUpNightMode()
     }
 
     private fun navigate(directions: NavDirections) {
@@ -138,66 +143,25 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private fun setUpOrientationIcons() {
         notificationSample.buttonList.forEach { view ->
             view.button.setOnClickListener {
-                updateOrientation(view.orientation)
+                viewModel.updateOrientation(view.orientation)
                 if (!MainService.isStarted && SystemSettings.canDrawOverlays(requireContext())) {
-                    MainController.start()
-                    settings.setAutoStart(true)
+                    viewModel.updateEnabled(true)
                 }
             }
         }
     }
 
-    private fun setUpNightMode() {
-        binding.content.nightMode.setOnClickListener {
-            NightModeDialog.show(this, REQUEST_KEY_NIGHT_MODE, settings.nightMode)
-        }
-        applyNightMode()
-    }
-
-    private fun applyNightMode() {
-        binding.content.nightModeDescription.setText(NightModes.getTextId(settings.nightMode))
-    }
-
-    private fun onSelectNightMode(mode: Int?) {
-        if (mode == null) return
-        if (settings.nightMode == mode) return
-        settings.nightMode = mode
-        applyNightMode()
-        AppCompatDelegate.setDefaultNightMode(mode)
-    }
-
     @SuppressLint("NewApi")
     private fun toggleStatus() {
         if (MainService.isStarted) {
-            MainController.stop()
-            settings.setAutoStart(false)
+            viewModel.updateEnabled(false)
         } else {
             if (SystemSettings.canDrawOverlays(requireContext())) {
-                MainController.start()
-                settings.setAutoStart(true)
+                viewModel.updateEnabled(true)
             } else {
                 OverlayPermissionDialog.show(this)
             }
         }
-    }
-
-    private fun applyStatus() {
-        if (MainService.isStarted) {
-            binding.content.statusButton.setText(R.string.button_status_stop)
-            binding.content.statusButton.setBackgroundResource(R.drawable.bg_stop_button)
-            binding.content.statusDescription.setText(R.string.menu_description_status_running)
-        } else {
-            binding.content.statusButton.setText(R.string.button_status_start)
-            binding.content.statusButton.setBackgroundResource(R.drawable.bg_start_button)
-            binding.content.statusDescription.setText(R.string.menu_description_status_waiting)
-        }
-        ReviewRequest.requestReviewIfNeed(this)
-    }
-
-    private fun updateOrientation(orientation: Orientation) {
-        settings.orientation = orientation
-        notificationSample.update()
-        MainController.update()
     }
 
     companion object {

@@ -13,19 +13,16 @@ import android.widget.ImageView
 import androidx.annotation.ColorInt
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.gridlayout.widget.GridLayout
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.FragmentDetailedSettingsBinding
 import net.mm2d.color.chooser.ColorChooserDialog
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.Orientations
-import net.mm2d.orientation.event.EventRouter
-import net.mm2d.orientation.service.MainController
-import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.Default
-import net.mm2d.orientation.settings.IconShape
 import net.mm2d.orientation.settings.OrientationList
-import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.settings.PreferenceRepository
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.Toaster
 import net.mm2d.orientation.util.alpha
@@ -36,46 +33,80 @@ import net.mm2d.orientation.view.dialog.OrientationHelpDialog
 import net.mm2d.orientation.view.dialog.ResetLayoutDialog
 import net.mm2d.orientation.view.dialog.ResetThemeDialog
 import net.mm2d.orientation.view.view.CheckItemView
+import net.mm2d.orientation.view.view.SwitchMenuView
 
 class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
-    private val settings by lazy {
-        Settings.get()
-    }
     private lateinit var notificationSample: NotificationSample
     private lateinit var checkList: List<CheckItemView>
-    private lateinit var orientationListStart: List<Orientation>
     private val orientationList: MutableList<Orientation> = mutableListOf()
     private var binding: FragmentDetailedSettingsBinding by autoCleared()
+    private val viewModel: DetailedSettingsFragmentViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentDetailedSettingsBinding.bind(view)
         setHasOptionsMenu(false)
         setUpViews()
-        EventRouter.observeUpdate(viewLifecycleOwner) { notificationSample.update() }
+        viewModel.menu.observe(viewLifecycleOwner) {
+            binding.content.autoRotateWarning.isChecked = it.warnSystemRotate
+        }
+        viewModel.sample.observe(viewLifecycleOwner) { (orientation, design) ->
+            notificationSample.update(orientation, design)
+        }
+        viewModel.control.observe(viewLifecycleOwner) {
+            binding.content.notificationPrivacy.isChecked = it.shouldNotifySecret
+            binding.content.useBlankIconForNotification.isChecked = it.shouldUseBlankIcon
+        }
+        viewModel.design.observe(viewLifecycleOwner) { design ->
+            binding.content.sampleForeground.setImageColor(design.foreground)
+            binding.content.foreground.setOnClickListener {
+                ColorChooserDialog.show(this, REQUEST_KEY_FOREGROUND, design.foreground, true)
+            }
+            binding.content.sampleBackground.setImageColor(design.background)
+            binding.content.background.setOnClickListener {
+                ColorChooserDialog.show(this, REQUEST_KEY_BACKGROUND, design.background, true)
+            }
+            binding.content.sampleForegroundSelected.setImageColor(design.foregroundSelected)
+            binding.content.foregroundSelected.setOnClickListener {
+                ColorChooserDialog.show(this, REQUEST_KEY_FOREGROUND_SELECTED, design.foregroundSelected, true)
+            }
+            binding.content.sampleBackgroundSelected.setImageColor(design.backgroundSelected)
+            binding.content.backgroundSelected.setOnClickListener {
+                ColorChooserDialog.show(this, REQUEST_KEY_BACKGROUND_SELECTED, design.backgroundSelected, true)
+            }
+            binding.content.sampleBase.setImageColor(design.base ?: 0)
+            binding.content.base.setOnClickListener {
+                ColorChooserDialog.show(this, REQUEST_KEY_BASE, design.base ?: 0, true)
+            }
+            binding.content.base.isVisible = design.iconize
+            binding.content.useIconBackground.isChecked = design.iconize
 
+            if (design.iconize) {
+                binding.content.iconShape.isEnabled = true
+                binding.content.iconShape.alpha = 1.0f
+            } else {
+                binding.content.iconShape.isEnabled = false
+                binding.content.iconShape.alpha = 0.5f
+            }
+            binding.content.iconShapeIcon.setImageResource(design.shape.iconId)
+            binding.content.iconShapeDescription.setText(design.shape.textId)
+            checkList.forEach { view ->
+                view.isChecked = design.orientations.contains(view.orientation)
+            }
+            if (design.orientations.any { it.isExperimental() }) {
+                binding.content.caution.visibility = View.VISIBLE
+            } else {
+                binding.content.caution.visibility = View.GONE
+            }
+            orientationList.clear()
+            orientationList.addAll(design.orientations)
+            binding.content.showSettingsOnNotification.isChecked = design.shouldShowSettings
+        }
         registerDialogListener()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        if (!orientationList.contains(settings.orientation)) {
-            settings.orientation = orientationList[0]
-            MainController.update()
-            if (!MainService.isStarted) {
-                EventRouter.notifyUpdate()
-            }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        notificationSample.update()
-        applyLayoutSelection()
-        applyUseIconBackground()
-        applyUseBlankIcon()
-        applySettingsOnNotification()
-        applyAutoRotateWarning()
-        applyNotificationPrivacy()
+        PreferenceRepository.get().adjustOrientation()
     }
 
     private fun setUpViews() {
@@ -93,93 +124,38 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
 
     private fun registerDialogListener() {
         ColorChooserDialog.registerListener(this, REQUEST_KEY_FOREGROUND) {
-            settings.foregroundColor = it
-            binding.content.sampleForeground.setImageColor(it)
-            updateSample()
+            viewModel.updateForeground(it)
         }
         ColorChooserDialog.registerListener(this, REQUEST_KEY_BACKGROUND) {
-            settings.backgroundColor = it
-            binding.content.sampleBackground.setImageColor(it)
-            updateSample()
+            viewModel.updateBackground(it)
         }
         ColorChooserDialog.registerListener(this, REQUEST_KEY_FOREGROUND_SELECTED) {
-            settings.foregroundColorSelected = it
-            binding.content.sampleForegroundSelected.setImageColor(it)
-            updateSample()
+            viewModel.updateForegroundSelected(it)
         }
         ColorChooserDialog.registerListener(this, REQUEST_KEY_BACKGROUND_SELECTED) {
-            settings.backgroundColorSelected = it
-            binding.content.sampleBackgroundSelected.setImageColor(it)
-            updateSample()
+            viewModel.updateBackgroundSelected(it)
         }
         ColorChooserDialog.registerListener(this, REQUEST_KEY_BASE) {
-            settings.baseColor = it
-            binding.content.sampleBase.setImageColor(it)
-            updateSample()
+            viewModel.updateBase(it)
         }
         ResetThemeDialog.registerListener(this, REQUEST_KEY_RESET_THEME) {
-            resetTheme()
+            viewModel.resetTheme()
         }
         ResetLayoutDialog.registerListener(this, REQUEST_KEY_RESET_LAYOUT) {
             resetLayout()
         }
         IconShapeDialog.registerListener(this, REQUEST_KEY_SHAPE) {
-            onSelectIconShape(it)
+            viewModel.updateShape(it)
         }
     }
 
     private fun setUpSample() {
-        binding.content.sampleForeground.setImageColor(settings.foregroundColor)
-        binding.content.sampleBackground.setImageColor(settings.backgroundColor)
-        binding.content.sampleForegroundSelected.setImageColor(settings.foregroundColorSelected)
-        binding.content.sampleBackgroundSelected.setImageColor(settings.backgroundColorSelected)
-        binding.content.sampleBase.setImageColor(settings.baseColor)
-        binding.content.foreground.setOnClickListener {
-            ColorChooserDialog.show(this, REQUEST_KEY_FOREGROUND, settings.foregroundColor, true)
-        }
-        binding.content.background.setOnClickListener {
-            ColorChooserDialog.show(this, REQUEST_KEY_BACKGROUND, settings.backgroundColor, true)
-        }
-        binding.content.foregroundSelected.setOnClickListener {
-            ColorChooserDialog.show(this, REQUEST_KEY_FOREGROUND_SELECTED, settings.foregroundColorSelected, true)
-        }
-        binding.content.backgroundSelected.setOnClickListener {
-            ColorChooserDialog.show(this, REQUEST_KEY_BACKGROUND_SELECTED, settings.backgroundColorSelected, true)
-        }
-        binding.content.base.isVisible = settings.shouldUseIconBackground
-        binding.content.base.setOnClickListener {
-            ColorChooserDialog.show(this, REQUEST_KEY_BASE, settings.baseColor, true)
-        }
         binding.content.resetTheme.setOnClickListener {
             ResetThemeDialog.show(this, REQUEST_KEY_RESET_THEME)
         }
-        setUpOrientationIcons()
-    }
-
-    private fun setUpOrientationIcons() {
         notificationSample.buttonList.forEach { view ->
-            view.button.setOnClickListener { updateOrientation(view.orientation) }
+            view.button.setOnClickListener { viewModel.updateOrientation(view.orientation) }
         }
-    }
-
-    private fun updateOrientation(orientation: Orientation) {
-        settings.orientation = orientation
-        updateSample()
-    }
-
-    private fun updateSample() {
-        notificationSample.update()
-        MainController.update()
-    }
-
-    private fun resetTheme() {
-        settings.resetTheme()
-        binding.content.sampleForeground.setImageColor(settings.foregroundColor)
-        binding.content.sampleBackground.setImageColor(settings.backgroundColor)
-        binding.content.sampleForegroundSelected.setImageColor(settings.foregroundColorSelected)
-        binding.content.sampleBackgroundSelected.setImageColor(settings.backgroundColorSelected)
-        binding.content.sampleBase.setImageColor(settings.baseColor)
-        updateSample()
     }
 
     private fun ImageView.setImageColor(@ColorInt color: Int) {
@@ -188,9 +164,6 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
     }
 
     private fun setUpLayoutSelector() {
-        orientationListStart = settings.orientationList
-        orientationList.addAll(orientationListStart)
-
         checkList = Orientations.entries.map { orientation ->
             CheckItemView(requireContext()).also { view ->
                 view.orientation = orientation.orientation
@@ -198,7 +171,6 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
                 view.setText(orientation.label)
                 view.setOnClickListener {
                     onClickCheckItem(view)
-                    updateCaution()
                 }
             }
         }
@@ -212,18 +184,8 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             }
             binding.content.checkHolder.addView(view, params)
         }
-        applyLayoutSelection()
         binding.content.resetLayout.setOnClickListener { ResetLayoutDialog.show(this, REQUEST_KEY_RESET_LAYOUT) }
         binding.content.helpLayout.setOnClickListener { OrientationHelpDialog.show(this) }
-        updateCaution()
-    }
-
-    private fun updateCaution() {
-        if (orientationList.any { it.isExperimental() }) {
-            binding.content.caution.visibility = View.VISIBLE
-        } else {
-            binding.content.caution.visibility = View.GONE
-        }
     }
 
     private fun onClickCheckItem(view: CheckItemView) {
@@ -233,7 +195,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             } else {
                 orientationList.remove(view.orientation)
                 view.isChecked = false
-                updateLayoutSelector()
+                viewModel.updateOrientations(orientationList)
             }
         } else {
             if (orientationList.size >= OrientationList.MAX) {
@@ -241,133 +203,49 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             } else {
                 orientationList.add(view.orientation)
                 view.isChecked = true
-                updateLayoutSelector()
+                viewModel.updateOrientations(orientationList)
             }
         }
     }
 
-    private fun updateLayoutSelector() {
-        settings.orientationList = orientationList
-        updateSample()
-    }
-
     private fun resetLayout() {
-        orientationList.clear()
-        orientationList.addAll(Default.orientationList)
-        applyLayoutSelection()
-        updateLayoutSelector()
-        updateCaution()
-    }
-
-    private fun applyLayoutSelection() {
-        checkList.forEach { view ->
-            view.isChecked = orientationList.contains(view.orientation)
-        }
+        viewModel.updateOrientations(Default.orientationList)
     }
 
     private fun setUpUseIconBackground() {
         binding.content.useIconBackground.setOnClickListener {
-            toggleUseIconBackground()
+            viewModel.updateIconize(!binding.content.useIconBackground.isChecked)
         }
-    }
-
-    private fun applyUseIconBackground() {
-        binding.content.useIconBackground.isChecked = settings.shouldUseIconBackground
-    }
-
-    private fun toggleUseIconBackground() {
-        val useIcon = !settings.shouldUseIconBackground
-        settings.shouldUseIconBackground = useIcon
-        if (useIcon && !settings.hasBaseColor()) {
-            settings.baseColor = settings.backgroundColor
-            binding.content.sampleBase.setColorFilter(settings.baseColor)
-        }
-        binding.content.base.isVisible = useIcon
-        applyUseIconBackground()
-        applyIconShape()
-        updateSample()
     }
 
     private fun setUpIconShape() {
-        applyIconShape()
         binding.content.iconShape.setOnClickListener {
             IconShapeDialog.show(this, REQUEST_KEY_SHAPE)
         }
     }
 
-    private fun onSelectIconShape(iconShape: IconShape?) {
-        iconShape ?: return
-        settings.iconShape = iconShape
-        applyIconShape()
-        updateSample()
-    }
-
-    private fun applyIconShape() {
-        if (settings.shouldUseIconBackground) {
-            binding.content.iconShape.isEnabled = true
-            binding.content.iconShape.alpha = 1.0f
-        } else {
-            binding.content.iconShape.isEnabled = false
-            binding.content.iconShape.alpha = 0.5f
-        }
-        val iconShape = settings.iconShape
-        binding.content.iconShapeIcon.setImageResource(iconShape.iconId)
-        binding.content.iconShapeDescription.setText(iconShape.textId)
-    }
-
     private fun setUpUseBlankIcon() {
-        binding.content.useBlankIconForNotification.setOnClickListener { toggleUseBlankIcon() }
-    }
-
-    private fun applyUseBlankIcon() {
-        binding.content.useBlankIconForNotification.isChecked = settings.shouldUseBlankIconForNotification
-    }
-
-    private fun toggleUseBlankIcon() {
-        settings.shouldUseBlankIconForNotification = !settings.shouldUseBlankIconForNotification
-        applyUseBlankIcon()
-        MainController.update()
+        binding.content.useBlankIconForNotification.setOnClickListener {
+            viewModel.updateUseBlankIcon(!(it as SwitchMenuView).isChecked)
+        }
     }
 
     private fun setUpSettingsOnNotification() {
-        binding.content.showSettingsOnNotification.setOnClickListener { toggleSettingsOnNotification() }
-    }
-
-    private fun applySettingsOnNotification() {
-        binding.content.showSettingsOnNotification.isChecked = settings.showSettingsOnNotification
-    }
-
-    private fun toggleSettingsOnNotification() {
-        settings.showSettingsOnNotification = !settings.showSettingsOnNotification
-        applySettingsOnNotification()
-        MainController.update()
+        binding.content.showSettingsOnNotification.setOnClickListener {
+            viewModel.updateShowSettings(!(it as SwitchMenuView).isChecked)
+        }
     }
 
     private fun setUpAutoRotateWarning() {
-        binding.content.autoRotateWarning.setOnClickListener { toggleAutoRotateWarning() }
-    }
-
-    private fun applyAutoRotateWarning() {
-        binding.content.autoRotateWarning.isChecked = settings.autoRotateWarning
-    }
-
-    private fun toggleAutoRotateWarning() {
-        settings.autoRotateWarning = !settings.autoRotateWarning
-        applyAutoRotateWarning()
+        binding.content.autoRotateWarning.setOnClickListener {
+            viewModel.updateWarnSystemRotate(!(it as SwitchMenuView).isChecked)
+        }
     }
 
     private fun setUpNotificationPrivacy() {
-        binding.content.notificationPrivacy.setOnClickListener { toggleNotificationPrivacy() }
-    }
-
-    private fun applyNotificationPrivacy() {
-        binding.content.notificationPrivacy.isChecked = settings.notifySecret
-    }
-
-    private fun toggleNotificationPrivacy() {
-        settings.notifySecret = !settings.notifySecret
-        applyNotificationPrivacy()
-        MainController.update()
+        binding.content.notificationPrivacy.setOnClickListener {
+            viewModel.updateNotifySecret(!(it as SwitchMenuView).isChecked)
+        }
     }
 
     private fun setUpSystemSetting() {

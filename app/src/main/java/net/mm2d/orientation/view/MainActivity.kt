@@ -10,6 +10,7 @@ package net.mm2d.orientation.view
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.onNavDestinationSelected
@@ -33,7 +34,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
         setSupportActionBar(binding.toolbar)
-        DeviceOrientationChecker.check(this)
+        lifecycleScope.launchWhenCreated {
+            DeviceOrientationChecker.check(this@MainActivity)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

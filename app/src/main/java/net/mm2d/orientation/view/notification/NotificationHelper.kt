@@ -17,10 +17,11 @@ import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.control.Orientations
 import net.mm2d.orientation.control.PendingIntentCreator
-import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.settings.ControlPreference
+import net.mm2d.orientation.settings.DesignPreference
+import net.mm2d.orientation.settings.OrientationPreference
 import net.mm2d.orientation.view.widget.RemoteViewsCreator
 
 object NotificationHelper {
@@ -44,8 +45,13 @@ object NotificationHelper {
         service.startForeground(NOTIFICATION_ID, makeEmptyNotification(service))
     }
 
-    fun startForeground(service: Service) {
-        service.startForeground(NOTIFICATION_ID, makeNotification(service))
+    fun startForeground(
+        service: Service,
+        orientation: OrientationPreference,
+        control: ControlPreference,
+        design: DesignPreference
+    ) {
+        service.startForeground(NOTIFICATION_ID, makeNotification(service, orientation, control, design))
     }
 
     fun stopForeground(service: Service) {
@@ -60,16 +66,19 @@ object NotificationHelper {
             .setSmallIcon(R.drawable.ic_blank)
             .build()
 
-    private fun makeNotification(context: Context): Notification {
-        val orientation = OrientationHelper.getOrientation()
-        val settings = Settings.get()
+    private fun makeNotification(
+        context: Context,
+        orientation: OrientationPreference,
+        control: ControlPreference,
+        design: DesignPreference
+    ): Notification {
         val visibility =
-            if (settings.notifySecret) NotificationCompat.VISIBILITY_SECRET
+            if (control.shouldNotifySecret) NotificationCompat.VISIBILITY_SECRET
             else NotificationCompat.VISIBILITY_PUBLIC
         val icon =
-            if (settings.shouldUseBlankIconForNotification) R.drawable.ic_blank
-            else Orientations.entries.find { it.orientation == orientation }?.icon ?: R.drawable.ic_blank
-        val views = RemoteViewsCreator.create(context, orientation, settings.showSettingsOnNotification)
+            if (control.shouldUseBlankIcon) R.drawable.ic_blank
+            else Orientations.entries.find { it.orientation == orientation.orientation }?.icon ?: R.drawable.ic_blank
+        val views = RemoteViewsCreator.create(context, orientation, design)
         return NotificationCompat.Builder(context, CHANNEL_ID)
             .setDefaults(0)
             .setSilent(true)

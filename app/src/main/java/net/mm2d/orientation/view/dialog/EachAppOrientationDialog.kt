@@ -36,7 +36,8 @@ class EachAppOrientationDialog : DialogFragment() {
         val recyclerView = RecyclerView(context)
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = HelpAdapter(context) {
-            parentFragmentManager.setFragmentResult(requestKey,
+            parentFragmentManager.setFragmentResult(
+                requestKey,
                 bundleOf(
                     RESULT_POSITION to position,
                     RESULT_PACKAGE to packageName,

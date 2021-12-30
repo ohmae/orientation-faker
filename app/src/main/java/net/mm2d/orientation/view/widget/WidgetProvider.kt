@@ -12,41 +12,65 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import androidx.core.content.getSystemService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.launch
 import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.control.OrientationHelper
-import net.mm2d.orientation.service.MainService
+import net.mm2d.orientation.settings.DesignPreference
+import net.mm2d.orientation.settings.OrientationPreference
+import net.mm2d.orientation.settings.PreferenceRepository
 
 class WidgetProvider : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        val orientation =
-            if (MainService.isStarted) {
-                OrientationHelper.getOrientation()
-            } else {
-                Orientation.INVALID
-            }
-        appWidgetIds.forEach {
-            updateAppWidget(context, appWidgetManager, it, orientation)
-        }
+        updateAppWidget(context, appWidgetManager, appWidgetIds)
     }
 
     companion object {
-        fun start(context: Context) {
-            update(context, OrientationHelper.getOrientation())
+        private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+        private val preferenceFlow = combine(
+            PreferenceRepository.get().orientationPreferenceFlow,
+            PreferenceRepository.get().designPreferenceRepository.flow,
+        ) { orientation, desing ->
+            val o = if (orientation.enabled) orientation.orientation else Orientation.INVALID
+            orientation.copy(orientation = o) to desing
         }
 
-        fun stop(context: Context) {
-            update(context, Orientation.INVALID)
-        }
-
-        private fun update(context: Context, orientation: Orientation) {
+        fun initialize(context: Context) {
             val widgetManager: AppWidgetManager = context.getSystemService()!!
-            widgetManager.getAppWidgetIds(ComponentName(context, WidgetProvider::class.java))?.forEach {
-                updateAppWidget(context, widgetManager, it, orientation)
+            scope.launch {
+                preferenceFlow.take(1).collect { (orientation, design) ->
+                    widgetManager.getAppWidgetIds(ComponentName(context, WidgetProvider::class.java))?.forEach {
+                        updateAppWidget(context, widgetManager, it, orientation, design)
+                    }
+                }
             }
         }
 
-        fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, id: Int, orientation: Orientation) {
-            val views = RemoteViewsCreator.create(context, orientation)
+        private fun updateAppWidget(
+            context: Context,
+            widgetManager: AppWidgetManager,
+            widgetIds: IntArray
+        ) {
+            scope.launch {
+                preferenceFlow.take(1).collect { (orientation, design) ->
+                    widgetIds.forEach {
+                        updateAppWidget(context, widgetManager, it, orientation, design)
+                    }
+                }
+            }
+        }
+
+        private fun updateAppWidget(
+            context: Context,
+            appWidgetManager: AppWidgetManager,
+            id: Int,
+            orientation: OrientationPreference,
+            design: DesignPreference
+        ) {
+            val views = RemoteViewsCreator.create(context, orientation, design, true)
             appWidgetManager.updateAppWidget(id, views)
         }
     }

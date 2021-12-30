@@ -9,10 +9,14 @@ package net.mm2d.orientation.control
 
 import android.content.Context
 import androidx.room.Room
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.mm2d.orientation.room.database.PackageSettingsDatabase
 import net.mm2d.orientation.room.entity.PackageSettingEntity
-import net.mm2d.orientation.settings.Settings
 
 object ForegroundPackageSettings {
     private const val DB_NAME = "package_settings.db"
@@ -21,7 +25,6 @@ object ForegroundPackageSettings {
     private val exceptionHandler = CoroutineExceptionHandler { _, _ -> }
     private val job = SupervisorJob()
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + job + exceptionHandler)
-    private val settings: Settings by lazy { Settings.get() }
 
     fun initialize(context: Context) {
         database = Room.databaseBuilder(context, PackageSettingsDatabase::class.java, DB_NAME).build()
@@ -46,7 +49,7 @@ object ForegroundPackageSettings {
         }
     }
 
-    fun disabled(): Boolean = map.isEmpty() || !settings.foregroundPackageCheckEnabled
+    fun isEmpty(): Boolean = map.isEmpty()
 
     fun get(packageName: String): Orientation = map.getOrElse(packageName) { Orientation.INVALID }
 

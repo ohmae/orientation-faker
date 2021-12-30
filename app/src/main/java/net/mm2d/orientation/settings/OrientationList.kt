@@ -18,8 +18,8 @@ object OrientationList {
     fun toString(list: List<Orientation>): String =
         list.map { it.value }.joinToString(DELIMITER)
 
-    fun toList(string: String): List<Orientation> =
-        string.split(DELIMITER)
+    fun toList(string: String?): List<Orientation> =
+        (string ?: "").split(DELIMITER)
             .mapNotNull { it.toIntOrNull() }
             .map { it.toOrientation() }
 }

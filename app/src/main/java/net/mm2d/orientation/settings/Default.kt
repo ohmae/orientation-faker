@@ -8,6 +8,7 @@
 package net.mm2d.orientation.settings
 
 import android.content.Context
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.Orientation
@@ -24,7 +25,9 @@ internal object Default {
         Orientation.REVERSE_LANDSCAPE,
     )
 
-    fun init(context: Context) {
+    const val nightMode: Int = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+
+    fun initialize(context: Context) {
         color = Color(
             ContextCompat.getColor(context, R.color.fg_notification),
             ContextCompat.getColor(context, R.color.bg_notification),

@@ -15,9 +15,9 @@ import androidx.annotation.ColorInt
 import androidx.core.view.isVisible
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.control.Orientations
-import net.mm2d.orientation.settings.Settings
+import net.mm2d.orientation.settings.DesignPreference
+import net.mm2d.orientation.settings.OrientationPreference
 import net.mm2d.orientation.util.alpha
 import net.mm2d.orientation.util.opaque
 import net.mm2d.orientation.view.widget.ViewIds
@@ -37,17 +37,10 @@ class NotificationSample(view: View) {
         view.findViewById<View>(R.id.remote_views_button_settings).visibility = View.GONE
     }
 
-    fun update() {
-        val settings = Settings.get()
-        val orientation = OrientationHelper.getOrientation()
-        val foreground = settings.foregroundColor
-        val background = settings.backgroundColor
-        val selectedForeground = settings.foregroundColorSelected
-        val selectedBackground = settings.backgroundColorSelected
-        val shouldUseIconBackground = settings.shouldUseIconBackground
-        val baseColor = if (shouldUseIconBackground) settings.baseColor else background
+    fun update(orientation: OrientationPreference, design: DesignPreference) {
+        val baseColor = if (design.iconize) design.base ?: 0 else design.background
         base.setBackgroundColor(baseColor)
-        val orientationList = settings.orientationList
+        val orientationList = design.orientations
         orientationList.forEachIndexed { index, value ->
             val button = buttonList[index]
             Orientations.entries.find { it.orientation == value }?.let {
@@ -56,33 +49,33 @@ class NotificationSample(view: View) {
                 button.orientation = value
             }
         }
-        val iconShape = settings.iconShape
-        val selectedIndex = orientationList.indexOf(orientation)
+        val iconShape = design.shape
+        val selectedIndex = orientationList.indexOf(orientation.orientation)
         buttonList.forEachIndexed { index, it ->
             it.shape.setImageResource(iconShape.iconId)
             if (index == selectedIndex) {
-                if (shouldUseIconBackground) {
+                if (design.iconize) {
                     it.button.setBackgroundColor(Color.TRANSPARENT)
                     it.shape.isVisible = true
-                    it.shape.setImageColor(selectedBackground)
+                    it.shape.setImageColor(design.backgroundSelected)
                 } else {
-                    it.button.setBackgroundColor(selectedBackground)
+                    it.button.setBackgroundColor(design.backgroundSelected)
                     it.shape.isVisible = false
                 }
-                it.icon.setImageColor(selectedForeground)
-                it.label.setTextColor(selectedForeground)
+                it.icon.setImageColor(design.foregroundSelected)
+                it.label.setTextColor(design.foregroundSelected)
             } else {
-                if (shouldUseIconBackground) {
+                if (design.iconize) {
                     it.shape.isVisible = true
-                    it.shape.setImageColor(background)
+                    it.shape.setImageColor(design.background)
                 } else {
                     it.shape.isVisible = false
                 }
                 it.button.setBackgroundColor(Color.TRANSPARENT)
-                it.icon.setImageColor(foreground)
-                it.label.setTextColor(foreground)
+                it.icon.setImageColor(design.foreground)
+                it.label.setTextColor(design.foreground)
             }
-            it.label.isVisible = !shouldUseIconBackground
+            it.label.isVisible = !design.iconize
             it.button.isVisible = index < orientationList.size
         }
     }

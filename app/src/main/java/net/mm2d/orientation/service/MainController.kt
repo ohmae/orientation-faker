@@ -9,24 +9,28 @@ package net.mm2d.orientation.service
 
 import android.annotation.SuppressLint
 import android.content.Context
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import net.mm2d.orientation.settings.PreferenceRepository
 
 @SuppressLint("StaticFieldLeak")
 object MainController {
     private lateinit var context: Context
+    private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
-    fun initialize(context: Context) {
-        this.context = context.applicationContext
-    }
-
-    fun update() {
-        MainService.update(context)
-    }
-
-    fun start() {
-        MainService.start(context)
-    }
-
-    fun stop() {
-        MainService.stop(context)
+    fun initialize(c: Context) {
+        context = c.applicationContext
+        scope.launch {
+            PreferenceRepository.get()
+                .orientationPreferenceRepository
+                .flow
+                .collect {
+                    if (it.enabled && !MainService.isStarted) {
+                        MainService.start(context)
+                    }
+                }
+        }
     }
 }
