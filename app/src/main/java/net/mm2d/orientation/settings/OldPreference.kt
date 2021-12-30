@@ -22,8 +22,10 @@ class OldPreference(
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences(fileName, Context.MODE_PRIVATE)
 
-    fun deleteDefaultSharedPreferences() {
+    fun deleteOldSharedPreferences() {
         deleteSharedPreferences(context.packageName + "_preferences")
+        // 2020/11/2 4.6.0
+        deleteSharedPreferences(context.packageName + ".b")
     }
 
     private fun deleteSharedPreferences(name: String) {

@@ -26,15 +26,16 @@ class DesignPreferenceRepository(context: Context) {
 
     val flow: Flow<DesignPreference> = dataStore.data
         .map {
+            val overS = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
             DesignPreference(
                 foreground = it[FOREGROUND] ?: Default.color.foreground,
                 background = it[BACKGROUND] ?: Default.color.background,
                 foregroundSelected = it[FOREGROUND_SELECTED] ?: Default.color.foregroundSelected,
                 backgroundSelected = it[BACKGROUND_SELECTED] ?: Default.color.backgroundSelected,
-                base = it[BASE] ?: getDefaultBaseColor(),
-                iconize = it[ICONIZE] ?: false,
+                base = it[BASE] ?: Default.color.base,
+                iconize = it[ICONIZE] ?: overS,
                 shape = IconShape.of(it[SHAPE]),
-                shouldShowSettings = it[SHOW_SETTINGS] ?: true,
+                shouldShowSettings = it[SHOW_SETTINGS] ?: !overS,
                 orientations = OrientationList.toList(it[ORIENTATION_LIST]).let { list ->
                     if (list.isEmpty()) Default.orientationList else list
                 },
@@ -123,10 +124,12 @@ class DesignPreferenceRepository(context: Context) {
                     int(Key.Main.COLOR_BACKGROUND_INT, BACKGROUND)
                     int(Key.Main.COLOR_FOREGROUND_SELECTED_INT, FOREGROUND_SELECTED)
                     int(Key.Main.COLOR_BACKGROUND_SELECTED_INT, BACKGROUND_SELECTED)
-                    int(Key.Main.COLOR_BASE_INT, BASE)
+                    int(
+                        Key.Main.COLOR_BASE_INT, BASE,
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) Default.color.base else null
+                    )
                     boolean(Key.Main.USE_ROUND_BACKGROUND_BOOLEAN, ICONIZE)
                     string(Key.Main.ICON_SHAPE_STRING, SHAPE)
-
                 }
             }
 
@@ -146,6 +149,7 @@ class DesignPreferenceRepository(context: Context) {
     }
 
     companion object {
+        // 1 : 2022/01/XX : 5.1.0-
         private const val VERSION = 1
         private val DATA_VERSION =
             Key.Design.DATA_VERSION_INT.intKey()
@@ -167,8 +171,5 @@ class DesignPreferenceRepository(context: Context) {
             Key.Design.SHOW_SETTINGS_BOOLEAN.booleanKey()
         private val ORIENTATION_LIST =
             Key.Design.ORIENTATION_LIST_STRING.stringKey()
-
-        private fun getDefaultBaseColor(): Int? =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) Default.color.base else null
     }
 }

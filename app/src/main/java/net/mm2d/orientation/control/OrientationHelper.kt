@@ -40,7 +40,7 @@ object OrientationHelper {
         )
     }
 
-    fun update(orientation: Orientation, landscapeDevice: Boolean) {
+    suspend fun update(orientation: Orientation, landscapeDevice: Boolean) {
         if (requestedOrientation == orientation &&
             controller.isEnabled &&
             isLandscapeDevice == landscapeDevice

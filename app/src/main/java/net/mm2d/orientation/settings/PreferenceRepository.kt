@@ -86,6 +86,24 @@ class PreferenceRepository private constructor(context: Context) {
         }
     }
 
+    fun inclementCancelCount() {
+        scope.launch {
+            reviewPreferenceRepository.inclementCancelCount()
+        }
+    }
+
+    fun updateReviewed(reviewed: Boolean) {
+        scope.launch {
+            reviewPreferenceRepository.updateReviewed(reviewed)
+        }
+    }
+
+    fun updateReported(reported: Boolean) {
+        scope.launch {
+            reviewPreferenceRepository.updateReported(reported)
+        }
+    }
+
     companion object {
         private lateinit var INSTANCE: PreferenceRepository
 

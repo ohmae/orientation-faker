@@ -15,7 +15,6 @@ import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.service.MainController
 import net.mm2d.orientation.settings.PreferenceRepository
-import net.mm2d.orientation.settings.Settings
 import net.mm2d.orientation.tabs.CustomTabsHelper
 import net.mm2d.orientation.view.notification.NotificationHelper
 import net.mm2d.orientation.view.widget.WidgetProvider
@@ -25,7 +24,6 @@ open class App : Application() {
     override fun onCreate() {
         super.onCreate()
         initializeOverrideWhenDebug()
-        Settings.initialize(this)
         PreferenceRepository.initialize(this)
         MainController.initialize(this)
         NotificationHelper.createChannel(this)

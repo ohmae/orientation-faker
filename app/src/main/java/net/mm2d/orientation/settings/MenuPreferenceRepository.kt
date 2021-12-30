@@ -69,6 +69,7 @@ class MenuPreferenceRepository(context: Context) {
     }
 
     companion object {
+        // 1 : 2022/01/XX : 5.1.0-
         private const val VERSION = 1
         private val DATA_VERSION =
             Key.Menu.DATA_VERSION_INT.intKey()

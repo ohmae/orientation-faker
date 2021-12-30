@@ -11,6 +11,7 @@ import android.content.Context
 import androidx.datastore.core.DataMigration
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.concurrent.TimeUnit
@@ -35,6 +36,46 @@ class ReviewPreferenceRepository(context: Context) {
                 reported = it[REPORTED] ?: false,
             )
         }
+
+    suspend fun updateFirstUseTimeIfZero(time: Long) {
+        dataStore.edit {
+            if ((it[FIRST_USE_TIME] ?: 0L) == 0L) {
+                it[FIRST_USE_TIME] = time
+            }
+        }
+    }
+
+    suspend fun updateFirstReviewTime(time: Long) {
+        dataStore.edit {
+            it[FIRST_REVIEW_TIME] = time
+        }
+    }
+
+    suspend fun inclementOrientationChangeCount() {
+        dataStore.edit {
+            val count = it[ORIENTATION_CHANGE_COUNT] ?: 0
+            it[ORIENTATION_CHANGE_COUNT] = count + 1
+        }
+    }
+
+    suspend fun inclementCancelCount() {
+        dataStore.edit {
+            val count = it[CANCEL_COUNT] ?: 0
+            it[CANCEL_COUNT] = count + 1
+        }
+    }
+
+    suspend fun updateReviewed(reviewed: Boolean) {
+        dataStore.edit {
+            it[REVIEWED] = reviewed
+        }
+    }
+
+    suspend fun updateReported(reported: Boolean) {
+        dataStore.edit {
+            it[REPORTED] = reported
+        }
+    }
 
     private class MigrationFromOldPreference(
         private val old: OldPreference
@@ -75,6 +116,7 @@ class ReviewPreferenceRepository(context: Context) {
     }
 
     companion object {
+        // 1 : 2022/01/XX : 5.1.0-
         private const val VERSION = 1
         private val DATA_VERSION =
             Key.Review.DATA_VERSION_INT.intKey()
