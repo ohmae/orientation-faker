@@ -108,6 +108,7 @@ class PreferenceRepository private constructor(context: Context) {
         private lateinit var INSTANCE: PreferenceRepository
 
         fun initialize(context: Context) {
+            Default.initialize(context)
             INSTANCE = PreferenceRepository(context.applicationContext)
         }
 
