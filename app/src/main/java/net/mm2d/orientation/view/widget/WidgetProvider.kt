@@ -41,7 +41,7 @@ class WidgetProvider : AppWidgetProvider() {
         fun initialize(context: Context) {
             val widgetManager: AppWidgetManager = context.getSystemService()!!
             scope.launch {
-                preferenceFlow.take(1).collect { (orientation, design) ->
+                preferenceFlow.collect { (orientation, design) ->
                     widgetManager.getAppWidgetIds(ComponentName(context, WidgetProvider::class.java))?.forEach {
                         updateAppWidget(context, widgetManager, it, orientation, design)
                     }

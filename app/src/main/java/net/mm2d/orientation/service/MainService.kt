@@ -45,7 +45,7 @@ class MainService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         NotificationHelper.startForegroundEmpty(this)
-        if (shouldStop(intent)) {
+        if (!SystemSettings.canDrawOverlays(this)) {
             isStarted = false
             stop()
             return START_NOT_STICKY
@@ -59,13 +59,6 @@ class MainService : Service() {
         super.onDestroy()
         isStarted = false
         job.cancel()
-    }
-
-    private fun shouldStop(intent: Intent?): Boolean {
-        if (!SystemSettings.canDrawOverlays(this)) {
-            return true
-        }
-        return intent != null && intent.action == ACTION_STOP
     }
 
     private fun start() {
@@ -132,40 +125,19 @@ class MainService : Service() {
 
     companion object {
         private const val ACTION_START = "ACTION_START"
-        private const val ACTION_STOP = "ACTION_STOP"
+
         var isStarted: Boolean = false
             private set
 
         fun start(context: Context) {
-            startService(
-                context,
-                ACTION_START
-            )
-        }
-
-        fun stop(context: Context) {
-            if (!isStarted) {
-                return
+            val intent = Intent(context, MainService::class.java).also {
+                it.action = ACTION_START
             }
-            startService(
-                context,
-                ACTION_STOP
-            )
-        }
-
-        private fun startService(context: Context, action: String) {
-            val intent =
-                makeIntent(context, action)
             if (VERSION.SDK_INT >= VERSION_CODES.O) {
                 context.startForegroundService(intent)
             } else {
                 context.startService(intent)
             }
         }
-
-        private fun makeIntent(context: Context, action: String) =
-            Intent(context, MainService::class.java).also {
-                it.action = action
-            }
     }
 }
