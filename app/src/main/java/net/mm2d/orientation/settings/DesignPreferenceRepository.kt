@@ -118,19 +118,26 @@ class DesignPreferenceRepository(context: Context) {
         override suspend fun migrate(currentData: Preferences): Preferences =
             currentData.edit {
                 old.deleteIfTooOld()
+                // 4 : 2020/12/05 : 4.7.0-
+                // 5 : 2021/09/19 : 5.0.0-
+                val oldVersion = old.getInt(Key.Main.PREFERENCES_VERSION_INT)
                 it[DATA_VERSION] = VERSION
                 Migrator(old, it).apply {
                     int(Key.Main.COLOR_FOREGROUND_INT, FOREGROUND)
                     int(Key.Main.COLOR_BACKGROUND_INT, BACKGROUND)
                     int(Key.Main.COLOR_FOREGROUND_SELECTED_INT, FOREGROUND_SELECTED)
                     int(Key.Main.COLOR_BACKGROUND_SELECTED_INT, BACKGROUND_SELECTED)
-                    int(
-                        Key.Main.COLOR_BASE_INT, BASE,
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) Default.color.base else null
-                    )
-                    boolean(Key.Main.USE_ROUND_BACKGROUND_BOOLEAN, ICONIZE)
+                    if (oldVersion == 4 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        it[BASE] = Default.color.base
+                    } else {
+                        int(
+                            Key.Main.COLOR_BASE_INT, BASE,
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) Default.color.base else null
+                        )
+                        boolean(Key.Main.USE_ROUND_BACKGROUND_BOOLEAN, ICONIZE)
+                        boolean(Key.Main.SHOW_SETTINGS_ON_NOTIFICATION_BOOLEAN, SHOW_SETTINGS)
+                    }
                     string(Key.Main.ICON_SHAPE_STRING, SHAPE)
-                    boolean(Key.Main.SHOW_SETTINGS_ON_NOTIFICATION_BOOLEAN, SHOW_SETTINGS)
                     string(Key.Main.ORIENTATION_LIST_STRING, ORIENTATION_LIST)
                 }
             }
@@ -151,7 +158,7 @@ class DesignPreferenceRepository(context: Context) {
     }
 
     companion object {
-        // 1 : 2022/01/XX : 5.1.0-
+        // 1 : 2022/01/02 : 5.1.0-
         private const val VERSION = 1
         private val DATA_VERSION =
             Key.Design.DATA_VERSION_INT.intKey()
