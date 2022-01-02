@@ -45,11 +45,9 @@ class MainService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         NotificationHelper.startForegroundEmpty(this)
         if (!SystemSettings.canDrawOverlays(this)) {
-            isStarted = false
             stop()
             return START_NOT_STICKY
         }
-        isStarted = true
         start()
         return START_STICKY
     }
@@ -61,6 +59,7 @@ class MainService : Service() {
     }
 
     private fun start() {
+        isStarted = true
         scope.launch {
             packageNameFlow
                 .map { ForegroundPackageSettings.get(it) }
@@ -91,6 +90,7 @@ class MainService : Service() {
     }
 
     private fun stop() {
+        isStarted = false
         NotificationHelper.stopForeground(this)
         OrientationHelper.cancel()
         stopForegroundChecker()
