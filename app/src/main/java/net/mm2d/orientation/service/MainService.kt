@@ -123,8 +123,23 @@ class MainService : Service() {
     }
 
     companion object {
+        private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
         var isStarted: Boolean = false
             private set
+
+        fun initialize(c: Context) {
+            val context = c.applicationContext
+            scope.launch {
+                PreferenceRepository.get()
+                    .orientationPreferenceRepository
+                    .flow
+                    .collect {
+                        if (it.enabled && !isStarted) {
+                            start(context)
+                        }
+                    }
+            }
+        }
 
         fun start(context: Context) {
             val intent = Intent(context, MainService::class.java)

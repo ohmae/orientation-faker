@@ -13,7 +13,7 @@ import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.OrientationHelper
-import net.mm2d.orientation.service.MainController
+import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.PreferenceRepository
 import net.mm2d.orientation.tabs.CustomTabsHelper
 import net.mm2d.orientation.view.notification.NotificationHelper
@@ -25,7 +25,7 @@ open class App : Application() {
         super.onCreate()
         initializeOverrideWhenDebug()
         PreferenceRepository.initialize(this)
-        MainController.initialize(this)
+        MainService.initialize(this)
         NotificationHelper.createChannel(this)
         ForegroundPackageSettings.initialize(this)
         CustomTabsHelper.initialize(this)
