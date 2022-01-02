@@ -8,12 +8,13 @@
 package net.mm2d.orientation.review
 
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.take
 import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.service.MainService
+import net.mm2d.orientation.settings.OrientationPreference
 import net.mm2d.orientation.settings.PreferenceRepository
+import net.mm2d.orientation.settings.ReviewPreference
 import net.mm2d.orientation.view.dialog.ReviewDialog
 import java.util.concurrent.TimeUnit
 
@@ -31,41 +32,49 @@ object ReviewRequest {
     }
 
     fun requestReviewIfNeed(fragment: Fragment) {
-        if (!MainService.isStarted) {
-            return
-        }
-        if (fragment.lifecycle.currentState != Lifecycle.State.RESUMED) {
-            return
-        }
         fragment.lifecycleScope.launchWhenResumed {
-            val reviewPreferenceRepository = PreferenceRepository.get().reviewPreferenceRepository
-            reviewPreferenceRepository.flow
+            val orientationFlow = PreferenceRepository.get().orientationPreferenceRepository.flow
+            val reviewFlow = PreferenceRepository.get().reviewPreferenceRepository.flow
+            combine(orientationFlow, reviewFlow, ::Pair)
                 .take(1)
-                .collect {
-                    if (it.reported || it.reviewed) {
-                        return@collect
-                    }
-                    if (it.cancelCount >= 0) {
-                        return@collect
-                    }
-                    if (it.orientationChangeCount < ORIENTATION_CHANGE_COUNT) {
-                        return@collect
-                    }
-                    val now = System.currentTimeMillis()
-                    if (it.cancelCount == 0 &&
-                        now - it.firstUseTime < INTERVAL_FIRST_REVIEW + it.intervalRandomFactor
-                    ) {
-                        return@collect
-                    }
-                    if (it.cancelCount == 1 &&
-                        now - it.firstReviewTime < INTERVAL_SECOND_REVIEW
-                    ) {
-                        return@collect
-                    }
-                    if (ReviewDialog.show(fragment) && it.cancelCount == 0) {
-                        reviewPreferenceRepository.updateFirstReviewTime(now)
-                    }
+                .collect { (orientation, review) ->
+                    requestReviewIfNeed(fragment, orientation, review)
                 }
+        }
+    }
+
+    private suspend fun requestReviewIfNeed(
+        fragment: Fragment,
+        orientation: OrientationPreference,
+        review: ReviewPreference
+    ) {
+        if (!orientation.enabled) {
+            return
+        }
+        if (review.reported || review.reviewed) {
+            return
+        }
+        if (review.cancelCount >= 2) {
+            return
+        }
+        if (review.orientationChangeCount < ORIENTATION_CHANGE_COUNT) {
+            return
+        }
+        val now = System.currentTimeMillis()
+        if (review.cancelCount == 0 &&
+            now - review.firstUseTime < INTERVAL_FIRST_REVIEW + review.intervalRandomFactor
+        ) {
+            return
+        }
+        if (review.cancelCount == 1 &&
+            now - review.firstReviewTime < INTERVAL_SECOND_REVIEW
+        ) {
+            return
+        }
+        if (ReviewDialog.show(fragment) && review.cancelCount == 0) {
+            PreferenceRepository.get()
+                .reviewPreferenceRepository
+                .updateFirstReviewTime(now)
         }
     }
 }
