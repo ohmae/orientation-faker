@@ -10,8 +10,7 @@ package net.mm2d.orientation.service
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.os.Build.VERSION
-import android.os.Build.VERSION_CODES
+import android.os.Build
 import android.os.IBinder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -124,16 +123,12 @@ class MainService : Service() {
     }
 
     companion object {
-        private const val ACTION_START = "ACTION_START"
-
         var isStarted: Boolean = false
             private set
 
         fun start(context: Context) {
-            val intent = Intent(context, MainService::class.java).also {
-                it.action = ACTION_START
-            }
-            if (VERSION.SDK_INT >= VERSION_CODES.O) {
+            val intent = Intent(context, MainService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.startForegroundService(intent)
             } else {
                 context.startService(intent)
