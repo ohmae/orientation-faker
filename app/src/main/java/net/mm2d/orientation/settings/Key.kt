@@ -87,6 +87,7 @@ interface Key {
         ORIENTATION_INT,
         LANDSCAPE_DEVICE_BOOLEAN,
         CONTROL_BY_FOREGROUND_APP_BOOLEAN,
+        ORIENTATION_WHEN_POWER_IS_CONNECTED_INT,
     }
 
     enum class Control : Key {

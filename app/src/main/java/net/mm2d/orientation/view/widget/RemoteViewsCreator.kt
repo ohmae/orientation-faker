@@ -38,7 +38,7 @@ object RemoteViewsCreator {
             views.helper(R.id.notification).setBackgroundColor(baseColor)
             design.orientations.forEachIndexed { index, value ->
                 val button = ViewIds.list[index]
-                Orientations.entries.find { it.orientation == value }?.let {
+                Orientations.find(value)?.let {
                     val helpers = RemoteViewHelpers(views, button)
                     helpers.icon.setImageResource(it.icon)
                     helpers.label.setText(it.label)

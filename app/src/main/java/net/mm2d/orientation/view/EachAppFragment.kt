@@ -282,7 +282,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
             binding.appPackage.text = info.packageName
             val orientation = ForegroundPackageSettings.get(info.packageName)
             if (orientation != Orientation.INVALID) {
-                Orientations.entries.find { it.orientation == orientation }?.let {
+                Orientations.find(orientation)?.let {
                     binding.orientationIcon.setImageResource(it.icon)
                     binding.orientationName.setText(it.label)
                 }

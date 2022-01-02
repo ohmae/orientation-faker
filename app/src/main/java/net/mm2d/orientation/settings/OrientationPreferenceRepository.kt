@@ -21,9 +21,12 @@ class OrientationPreferenceRepository(context: Context) {
         .map {
             OrientationPreference(
                 enabled = it[ENABLED] ?: false,
-                orientation = it[ORIENTATION].toOrientation(),
+                orientation = it[ORIENTATION]
+                    ?.toOrientation() ?: Orientation.UNSPECIFIED,
                 isLandscapeDevice = it[LANDSCAPE_DEVICE] ?: false,
                 shouldControlByForegroundApp = it[CONTROL_BY_FOREGROUND_APP] ?: true,
+                orientationWhenPowerIsConnected = it[ORIENTATION_WHEN_POWER_IS_CONNECTED]
+                    ?.toOrientation() ?: Orientation.INVALID,
             )
         }
 
@@ -48,6 +51,12 @@ class OrientationPreferenceRepository(context: Context) {
     suspend fun updateControlByForegroundApp(enable: Boolean) {
         dataStore.edit {
             it[CONTROL_BY_FOREGROUND_APP] = enable
+        }
+    }
+
+    suspend fun updateOrientationWhenPowerIsConnected(orientation: Orientation) {
+        dataStore.edit {
+            it[ORIENTATION_WHEN_POWER_IS_CONNECTED] = orientation.value
         }
     }
 
@@ -94,5 +103,7 @@ class OrientationPreferenceRepository(context: Context) {
             Key.Orientation.LANDSCAPE_DEVICE_BOOLEAN.booleanKey()
         private val CONTROL_BY_FOREGROUND_APP =
             Key.Orientation.CONTROL_BY_FOREGROUND_APP_BOOLEAN.booleanKey()
+        private val ORIENTATION_WHEN_POWER_IS_CONNECTED =
+            Key.Orientation.ORIENTATION_WHEN_POWER_IS_CONNECTED_INT.intKey()
     }
 }

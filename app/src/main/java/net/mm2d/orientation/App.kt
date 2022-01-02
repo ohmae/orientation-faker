@@ -14,6 +14,7 @@ import android.os.StrictMode.VmPolicy
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.OrientationHelper
 import net.mm2d.orientation.service.MainService
+import net.mm2d.orientation.service.PowerConnectionReceiver
 import net.mm2d.orientation.settings.PreferenceRepository
 import net.mm2d.orientation.tabs.CustomTabsHelper
 import net.mm2d.orientation.view.notification.NotificationHelper
@@ -31,6 +32,7 @@ open class App : Application() {
         CustomTabsHelper.initialize(this)
         OrientationHelper.initialize(this)
         WidgetProvider.initialize(this)
+        PowerConnectionReceiver.initialize(this)
     }
 
     protected open fun initializeOverrideWhenDebug() {

@@ -85,4 +85,6 @@ object Orientations {
             R.string.description_sensor_headstand
         )
     )
+
+    fun find(orientation: Orientation): Entity? = entries.find { it.orientation == orientation }
 }

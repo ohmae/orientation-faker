@@ -12,9 +12,12 @@ import androidx.appcompat.app.AppCompatDelegate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import net.mm2d.orientation.control.Orientation
@@ -30,13 +33,35 @@ class PreferenceRepository private constructor(context: Context) {
     val menuPreferenceRepository = MenuPreferenceRepository(context)
     val reviewPreferenceRepository = ReviewPreferenceRepository(context)
 
-    val preferredOrientationFlow: MutableStateFlow<Orientation> = MutableStateFlow(Orientation.INVALID)
+    private val powerPluggedFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val manualOrientationFlow: Flow<OrientationRequest> =
+        orientationPreferenceRepository.flow
+            .distinctUntilChanged { old, new -> old.orientation == new.orientation }
+            .map { OrientationRequest(it.orientation) }
+    private val packageOrientationFlow: MutableStateFlow<OrientationRequest> = MutableStateFlow(OrientationRequest())
+    private val powerOrientationFlow: Flow<OrientationRequest> = combine(
+        orientationPreferenceRepository.flow
+            .distinctUntilChanged { old, new -> old.orientationWhenPowerIsConnected == new.orientationWhenPowerIsConnected },
+        powerPluggedFlow
+    ) { orientation, plugged ->
+        OrientationRequest(if (plugged) orientation.orientationWhenPowerIsConnected else Orientation.INVALID)
+    }
+    private val preferredOrientationFlow: Flow<Orientation> = combine(
+        manualOrientationFlow,
+        packageOrientationFlow,
+        powerOrientationFlow,
+    ) { o1, o2, o3 ->
+        listOf(o1, o2, o3)
+            .sortedByDescending { it.timestamp }
+            .firstOrNull { it.orientation != Orientation.INVALID }
+            ?.orientation ?: Orientation.INVALID
+    }
+
     val orientationPreferenceFlow = combine(
         orientationPreferenceRepository.flow,
         preferredOrientationFlow
     ) { preferences, preferred ->
-        val orientation = if (preferred == Orientation.INVALID) preferences.orientation else preferred
-        preferences.copy(orientation = orientation)
+        if (preferred == Orientation.INVALID) preferences else preferences.copy(orientation = preferred)
     }
 
     init {
@@ -44,9 +69,7 @@ class PreferenceRepository private constructor(context: Context) {
             packagePreferenceRepository.flow.collect()
         }
         scope.launch {
-            orientationPreferenceRepository.flow.collect {
-                preferredOrientationFlow.emit(it.orientation)
-            }
+            orientationPreferenceRepository.flow.collect()
         }
         scope.launch {
             controlPreferenceRepository.flow.collect()
@@ -103,6 +126,23 @@ class PreferenceRepository private constructor(context: Context) {
             reviewPreferenceRepository.updateReported(reported)
         }
     }
+
+    fun updatePackageOrientation(orientation: Orientation) {
+        scope.launch {
+            packageOrientationFlow.emit(OrientationRequest(orientation))
+        }
+    }
+
+    fun updatePowerPlugged(plugged: Boolean) {
+        scope.launch {
+            powerPluggedFlow.emit(plugged)
+        }
+    }
+
+    private data class OrientationRequest(
+        val orientation: Orientation = Orientation.INVALID,
+        val timestamp: Long = System.currentTimeMillis(),
+    )
 
     companion object {
         private lateinit var INSTANCE: PreferenceRepository

@@ -453,6 +453,85 @@
         app:title="@string/menu_title_settings_button_on_notification"
         />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/plugged_orientation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        >
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="64dp"
+            />
+
+        <ImageView
+            android:id="@+id/plugged_orientation_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@null"
+            app:layout_constraintBottom_toTopOf="@id/plugged_orientation_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:tint="?android:attr/textColorPrimary"
+            tools:src="@drawable/ic_portrait"
+            />
+
+        <TextView
+            android:id="@+id/plugged_orientation_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="@dimen/text_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/plugged_orientation_icon"
+            tools:ignore="SmallSp,SpUsage"
+            tools:text="@string/label_landscape"
+            />
+
+        <TextView
+            android:id="@+id/plugged_orientation_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_menu_horizontal"
+            android:layout_marginTop="@dimen/margin_menu_vertical"
+            android:text="@string/menu_title_plugged_orientation"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textDirection="locale"
+            android:textSize="@dimen/text_title"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/plugged_orientation_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_menu_horizontal"
+            android:layout_marginBottom="@dimen/margin_menu_vertical"
+            android:text="@string/menu_description_plugged_orientation"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textDirection="locale"
+            android:textSize="@dimen/text_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/plugged_orientation_title"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <net.mm2d.orientation.view.view.SwitchMenuView
         android:id="@+id/auto_rotate_warning"
         android:layout_width="match_parent"

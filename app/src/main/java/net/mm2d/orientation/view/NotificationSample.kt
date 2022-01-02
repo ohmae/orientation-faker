@@ -43,7 +43,7 @@ class NotificationSample(view: View) {
         val orientationList = design.orientations
         orientationList.forEachIndexed { index, value ->
             val button = buttonList[index]
-            Orientations.entries.find { it.orientation == value }?.let {
+            Orientations.find(value)?.let {
                 button.icon.setImageResource(it.icon)
                 button.label.setText(it.label)
                 button.orientation = value

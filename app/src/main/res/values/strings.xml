@@ -91,6 +91,8 @@
     <string name="menu_description_icon_shape_rounded_square">Rounded square</string>
     <string name="menu_description_icon_shape_teardrop">Teardrop</string>
     <string name="menu_description_icon_shape_hexagon">Hexagon</string>
+    <string name="menu_title_plugged_orientation">Orientation when power is connected</string>
+    <string name="menu_description_plugged_orientation">Changes to the orientation set when the power is connected</string>
 
     <string name="dialog_title_reset_theme">Confirmation</string>
     <string name="dialog_message_reset_theme">Would you like to reset theme?</string>

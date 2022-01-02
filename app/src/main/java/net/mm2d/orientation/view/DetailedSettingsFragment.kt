@@ -30,6 +30,7 @@ import net.mm2d.orientation.util.autoCleared
 import net.mm2d.orientation.util.opaque
 import net.mm2d.orientation.view.dialog.IconShapeDialog
 import net.mm2d.orientation.view.dialog.OrientationHelpDialog
+import net.mm2d.orientation.view.dialog.OrientationSelectDialog
 import net.mm2d.orientation.view.dialog.ResetLayoutDialog
 import net.mm2d.orientation.view.dialog.ResetThemeDialog
 import net.mm2d.orientation.view.view.CheckItemView
@@ -101,6 +102,17 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             orientationList.addAll(design.orientations)
             binding.content.showSettingsOnNotification.isChecked = design.shouldShowSettings
         }
+        viewModel.orientation.observe(viewLifecycleOwner) {
+            if (it.orientationWhenPowerIsConnected != Orientation.INVALID) {
+                Orientations.find(it.orientationWhenPowerIsConnected)?.let { entity ->
+                    binding.content.pluggedOrientationIcon.setImageResource(entity.icon)
+                    binding.content.pluggedOrientationName.setText(entity.label)
+                }
+            } else {
+                binding.content.pluggedOrientationIcon.setImageResource(0)
+                binding.content.pluggedOrientationName.text = ""
+            }
+        }
         registerDialogListener()
     }
 
@@ -117,6 +129,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         setUpIconShape()
         setUpUseBlankIcon()
         setUpSettingsOnNotification()
+        setUpOrientationWhenPowerIsConnected()
         setUpAutoRotateWarning()
         setUpNotificationPrivacy()
         setUpSystemSetting()
@@ -146,6 +159,9 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         }
         IconShapeDialog.registerListener(this, REQUEST_KEY_SHAPE) {
             viewModel.updateShape(it)
+        }
+        OrientationSelectDialog.registerListener(this, REQUEST_KEY_ORIENTATION) {
+            viewModel.updateOrientationWhenPowerIsConnected(it)
         }
     }
 
@@ -236,6 +252,12 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         }
     }
 
+    private fun setUpOrientationWhenPowerIsConnected() {
+        binding.content.pluggedOrientation.setOnClickListener {
+            OrientationSelectDialog.show(this, REQUEST_KEY_ORIENTATION)
+        }
+    }
+
     private fun setUpAutoRotateWarning() {
         binding.content.autoRotateWarning.setOnClickListener {
             viewModel.updateWarnSystemRotate(!(it as SwitchMenuView).isChecked)
@@ -267,5 +289,6 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         private const val REQUEST_KEY_SHAPE = PREFIX + "REQUEST_KEY_SHAPE"
         private const val REQUEST_KEY_RESET_LAYOUT = PREFIX + "REQUEST_KEY_RESET_LAYOUT"
         private const val REQUEST_KEY_RESET_THEME = PREFIX + "REQUEST_KEY_RESET_THEME"
+        private const val REQUEST_KEY_ORIENTATION = PREFIX + "REQUEST_KEY_ORIENTATION"
     }
 }

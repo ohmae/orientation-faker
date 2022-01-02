@@ -64,7 +64,7 @@ class MainService : Service() {
             packageNameFlow
                 .map { ForegroundPackageSettings.get(it) }
                 .collect {
-                    PreferenceRepository.get().preferredOrientationFlow.emit(it)
+                    PreferenceRepository.get().updatePackageOrientation(it)
                 }
         }
         scope.launch {

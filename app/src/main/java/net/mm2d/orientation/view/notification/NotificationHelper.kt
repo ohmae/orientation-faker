@@ -77,7 +77,7 @@ object NotificationHelper {
             else NotificationCompat.VISIBILITY_PUBLIC
         val icon =
             if (control.shouldUseBlankIcon) R.drawable.ic_blank
-            else Orientations.entries.find { it.orientation == orientation.orientation }?.icon ?: R.drawable.ic_blank
+            else Orientations.find(orientation.orientation)?.icon ?: R.drawable.ic_blank
         val views = RemoteViewsCreator.create(context, orientation, design)
         return NotificationCompat.Builder(context, CHANNEL_ID)
             .setDefaults(0)

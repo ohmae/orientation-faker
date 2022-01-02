@@ -23,15 +23,13 @@ class DetailedSettingsFragmentViewModel : ViewModel() {
 
     val menu = menuPreferenceRepository.flow
         .asLiveData()
-
     val sample = combine(
         orientationPreferenceFlow,
         designPreferenceRepository.flow,
         ::Pair
     ).asLiveData()
-
+    val orientation = orientationPreferenceRepository.flow.asLiveData()
     val control = controlPreferenceRepository.flow.asLiveData()
-
     val design = designPreferenceRepository.flow.asLiveData()
 
     fun updateOrientation(orientation: Orientation) {
@@ -115,6 +113,12 @@ class DetailedSettingsFragmentViewModel : ViewModel() {
     fun updateWarnSystemRotate(warn: Boolean) {
         viewModelScope.launch {
             menuPreferenceRepository.updateWarnSystemRotate(warn)
+        }
+    }
+
+    fun updateOrientationWhenPowerIsConnected(orientation: Orientation) {
+        viewModelScope.launch {
+            orientationPreferenceRepository.updateOrientationWhenPowerIsConnected(orientation)
         }
     }
 }
