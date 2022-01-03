@@ -13,6 +13,8 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.mm2d.orientation.room.database.PackageSettingsDatabase
@@ -25,6 +27,7 @@ object ForegroundPackageSettings {
     private val exceptionHandler = CoroutineExceptionHandler { _, _ -> }
     private val job = SupervisorJob()
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + job + exceptionHandler)
+    private val emptyFlow: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
     fun initialize(context: Context) {
         database = Room.databaseBuilder(context, PackageSettingsDatabase::class.java, DB_NAME).build()
@@ -34,6 +37,7 @@ object ForegroundPackageSettings {
                 all.forEach {
                     map[it.packageName] = it.orientation.toOrientation()
                 }
+                emptyFlow.emit(map.isEmpty())
             }
         }
     }
@@ -49,7 +53,7 @@ object ForegroundPackageSettings {
         }
     }
 
-    fun isEmpty(): Boolean = map.isEmpty()
+    fun emptyFlow(): Flow<Boolean> = emptyFlow
 
     fun get(packageName: String): Orientation = map.getOrElse(packageName) { Orientation.INVALID }
 
@@ -66,12 +70,18 @@ object ForegroundPackageSettings {
                 database.packageSettingsDao().insert(entity)
             }
         }
+        scope.launch {
+            emptyFlow.emit(map.isEmpty())
+        }
     }
 
     fun reset() {
         map.clear()
         scope.launch {
             database.packageSettingsDao().deleteAll()
+        }
+        scope.launch {
+            emptyFlow.emit(map.isEmpty())
         }
     }
 }

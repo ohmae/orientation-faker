@@ -74,7 +74,16 @@ class MainService : Service() {
                 } else {
                     stop()
                 }
-                startForegroundChecker(preferences)
+            }
+        }
+        scope.launch {
+            combine(
+                PreferenceRepository.get().orientationPreferenceRepository.flow,
+                ForegroundPackageSettings.emptyFlow(),
+            ) { orientation: OrientationPreference, empty: Boolean ->
+                orientation.enabled && orientation.shouldControlByForegroundApp && !empty
+            }.collect {
+                startForegroundChecker(it)
             }
         }
         scope.launch {
@@ -97,15 +106,14 @@ class MainService : Service() {
         stopSelf()
     }
 
-    private fun startForegroundChecker(preference: OrientationPreference) {
-        val disable = ForegroundPackageSettings.isEmpty() || !preference.shouldControlByForegroundApp
+    private fun startForegroundChecker(enable: Boolean) {
         if (checker != null) {
-            if (disable) {
+            if (!enable) {
                 stopForegroundChecker()
             }
             return
         }
-        if (disable) return
+        if (!enable) return
         if (!SystemSettings.hasUsageAccessPermission(this)) {
             Toaster.showLong(this, R.string.toast_no_permission_to_usage_access)
             return

@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
@@ -40,7 +41,7 @@ class PreferenceRepository private constructor(context: Context) {
     private val packageOrientationFlow: MutableStateFlow<OrientationRequest> = MutableStateFlow(OrientationRequest())
     private val powerOrientationFlow: Flow<OrientationRequest> = combine(
         orientationPreferenceRepository.flow
-            .distinctUntilChanged { old, new -> old.orientationWhenPowerIsConnected == new.orientationWhenPowerIsConnected },
+            .distinctUntilChangedBy { it.orientationWhenPowerIsConnected },
         powerPluggedFlow
     ) { orientation, plugged ->
         OrientationRequest(if (plugged) orientation.orientationWhenPowerIsConnected else Orientation.INVALID)
