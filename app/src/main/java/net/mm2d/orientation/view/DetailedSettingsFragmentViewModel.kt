@@ -34,7 +34,7 @@ class DetailedSettingsFragmentViewModel : ViewModel() {
 
     fun updateOrientation(orientation: Orientation) {
         viewModelScope.launch {
-            orientationPreferenceRepository.updateOrientation(orientation)
+            orientationPreferenceRepository.updateOrientationManually(orientation)
         }
     }
 

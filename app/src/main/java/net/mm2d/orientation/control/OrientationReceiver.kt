@@ -21,7 +21,7 @@ class OrientationReceiver : BroadcastReceiver() {
             EXTRA_ORIENTATION,
             Orientation.UNSPECIFIED.value
         ).toOrientation()
-        PreferenceRepository.get().enableAndOrientation(orientation)
+        PreferenceRepository.get().updateOrientationManually(orientation)
     }
 
     companion object {

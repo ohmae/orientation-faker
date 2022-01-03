@@ -6,6 +6,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.toOrientation
@@ -29,15 +30,29 @@ class OrientationPreferenceRepository(context: Context) {
                     ?.toOrientation() ?: Orientation.INVALID,
             )
         }
+    val manuallyOrientationFlow: MutableStateFlow<OrientationRequest> = MutableStateFlow(OrientationRequest(Orientation.INVALID))
 
     suspend fun updateEnabled(enabled: Boolean) {
         dataStore.edit {
             it[ENABLED] = enabled
+            if (enabled) {
+                val orientation = it[ORIENTATION]
+                    ?.toOrientation() ?: Orientation.UNSPECIFIED
+                manuallyOrientationFlow.emit(OrientationRequest(orientation))
+            }
         }
     }
 
     suspend fun updateOrientation(orientation: Orientation) {
         dataStore.edit {
+            it[ORIENTATION] = orientation.value
+        }
+    }
+
+    suspend fun updateOrientationManually(orientation: Orientation) {
+        manuallyOrientationFlow.emit(OrientationRequest(orientation))
+        dataStore.edit {
+            it[ENABLED] = true
             it[ORIENTATION] = orientation.value
         }
     }

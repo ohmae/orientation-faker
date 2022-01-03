@@ -12,9 +12,11 @@ import net.mm2d.orientation.settings.PreferenceRepository
 class PowerConnectionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
-            Intent.ACTION_POWER_CONNECTED,
+            Intent.ACTION_POWER_CONNECTED -> {
+                PreferenceRepository.get().updatePowerPlugged(true)
+            }
             Intent.ACTION_POWER_DISCONNECTED -> {
-                updateConnectedStatus()
+                PreferenceRepository.get().updatePowerPlugged(false)
             }
         }
     }

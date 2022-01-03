@@ -144,9 +144,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         notificationSample.buttonList.forEach { view ->
             view.button.setOnClickListener {
                 viewModel.updateOrientation(view.orientation)
-                if (!MainService.isStarted && SystemSettings.canDrawOverlays(requireContext())) {
-                    viewModel.updateEnabled(true)
-                }
             }
         }
     }

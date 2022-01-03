@@ -116,8 +116,8 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         registerDialogListener()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onStop() {
+        super.onStop()
         PreferenceRepository.get().adjustOrientation()
     }
 
