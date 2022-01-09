@@ -143,13 +143,13 @@ class MainService : Service() {
                     .flow
                     .collect {
                         if (it.enabled && !isStarted) {
-                            start(context)
+                            runCatching { start(context) }
                         }
                     }
             }
         }
 
-        fun start(context: Context) {
+        private fun start(context: Context) {
             val intent = Intent(context, MainService::class.java)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.startForegroundService(intent)

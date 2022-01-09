@@ -89,9 +89,11 @@ class ForegroundPackageChecker(
         }
 
     private fun getLatestForegroundPackage(before: Long, after: Long): String? =
-        usageStatsManager.queryEvents(before, after)
-            .asResumedPackageSequence()
-            .lastOrNull()
+        runCatching {
+            usageStatsManager.queryEvents(before, after)
+                .asResumedPackageSequence()
+                .lastOrNull()
+        }.getOrNull()
 
     @SuppressLint("InlinedApi")
     private fun UsageEvents.asResumedPackageSequence(): Sequence<String> =

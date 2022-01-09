@@ -28,6 +28,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -115,6 +116,9 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
     }
 
     private fun search(word: String) {
+        if (!lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED)) {
+            return
+        }
         adapter.search(word)
         binding.noAppCaution.isGone = adapter.isNotEmpty()
         binding.recyclerView.scrollToPosition(0)
