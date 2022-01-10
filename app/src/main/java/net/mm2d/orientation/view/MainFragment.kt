@@ -20,6 +20,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle.State
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionManager
 import dagger.hilt.android.AndroidEntryPoint
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
@@ -104,6 +105,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             binding.content.caution.visibility = View.GONE
             return
         }
+        TransitionManager.beginDelayedTransition(binding.content.contentsContainer)
         binding.content.caution.visibility =
             if (SystemSettings.rotationIsFixed(requireContext())) View.VISIBLE else View.GONE
         handler.postDelayed(checkSystemSettingsTask, CHECK_INTERVAL)

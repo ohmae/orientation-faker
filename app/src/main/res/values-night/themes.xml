@@ -2,7 +2,7 @@
 <resources>
     <style name="Theme.OrientationBase" parent="Theme.OrientationCommon">
         <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorPrimaryVariant">@color/gray_800</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/blue_500</item>
         <item name="colorSecondaryVariant">@color/blue_500</item>

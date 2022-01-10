@@ -15,6 +15,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.gridlayout.widget.GridLayout
+import androidx.transition.TransitionManager
 import dagger.hilt.android.AndroidEntryPoint
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.FragmentDetailedSettingsBinding
@@ -59,6 +60,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             binding.content.useBlankIconForNotification.isChecked = it.shouldUseBlankIcon
         }
         viewModel.design.observe(viewLifecycleOwner) { design ->
+            TransitionManager.beginDelayedTransition(binding.content.contentsContainer)
             binding.content.sampleForeground.setImageColor(design.foreground)
             binding.content.foreground.setOnClickListener {
                 ColorChooserDialog.show(this, REQUEST_KEY_FOREGROUND, design.foreground, true)

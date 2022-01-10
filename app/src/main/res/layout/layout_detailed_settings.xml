@@ -6,7 +6,6 @@
     android:id="@+id/contents_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:animateLayoutChanges="true"
     android:orientation="vertical"
     >
 
@@ -21,13 +20,14 @@
         android:paddingBottom="@dimen/margin_sample_vertical"
         >
 
-        <include layout="@layout/layout_remote_views" />
+        <include
+            layout="@layout/layout_remote_views"
+            />
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
         android:baselineAligned="false"
         android:orientation="horizontal"
         >
