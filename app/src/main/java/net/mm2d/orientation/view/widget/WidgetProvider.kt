@@ -15,7 +15,9 @@ import androidx.core.content.getSystemService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import net.mm2d.orientation.control.Orientation
@@ -36,7 +38,7 @@ class WidgetProvider : AppWidgetProvider() {
         ) { orientation, desing ->
             val o = if (orientation.enabled) orientation.orientation else Orientation.INVALID
             orientation.copy(orientation = o) to desing
-        }
+        }.shareIn(scope, SharingStarted.Eagerly, 1)
 
         fun initialize(context: Context) {
             val widgetManager: AppWidgetManager = context.getSystemService()!!
