@@ -17,8 +17,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import net.mm2d.orientation.room.database.PackageSettingsDatabase
-import net.mm2d.orientation.room.entity.PackageSettingEntity
+import net.mm2d.orientation.room.PackageSettingEntity
+import net.mm2d.orientation.room.PackageSettingsDatabase
 
 object ForegroundPackageSettings {
     private const val DB_NAME = "package_settings.db"
@@ -46,7 +46,7 @@ object ForegroundPackageSettings {
         val list = map.keys.toMutableList()
         scope.launch {
             list.removeAll(packages)
-            withContext(Dispatchers.IO) {
+            withContext(Dispatchers.Main) {
                 list.forEach { map.remove(it) }
             }
             list.forEach { database.packageSettingsDao().delete(it) }

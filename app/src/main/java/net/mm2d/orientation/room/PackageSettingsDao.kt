@@ -5,13 +5,12 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.orientation.room.dao
+package net.mm2d.orientation.room
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import net.mm2d.orientation.room.entity.PackageSettingEntity
 
 @Dao
 interface PackageSettingsDao {

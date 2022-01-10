@@ -5,7 +5,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.orientation.room.entity
+package net.mm2d.orientation.room
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
