@@ -88,7 +88,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
     implementation("net.mm2d.color-chooser:color-chooser:0.4.1")
 
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.8.1")
     debugImplementation("com.facebook.flipper:flipper:0.127.0")
     debugImplementation("com.facebook.soloader:soloader:0.10.3")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:0.127.0")
