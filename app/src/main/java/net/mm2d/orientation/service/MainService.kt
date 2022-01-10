@@ -12,9 +12,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -23,20 +25,32 @@ import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.ForegroundPackageChecker
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.OrientationHelper
+import net.mm2d.orientation.settings.ControlPreference
+import net.mm2d.orientation.settings.DesignPreference
 import net.mm2d.orientation.settings.OrientationPreference
 import net.mm2d.orientation.settings.PreferenceRepository
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.Toaster
 import net.mm2d.orientation.view.notification.NotificationHelper
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainService : Service() {
+    @Inject
+    lateinit var preferenceRepository: PreferenceRepository
+    private val controlPreferenceFlow: Flow<ControlPreference> by lazy {
+        preferenceRepository.controlPreferenceRepository.flow
+    }
+    private val designPreferenceFlow: Flow<DesignPreference> by lazy {
+        preferenceRepository.designPreferenceRepository.flow
+    }
+    private val orientationPreferenceFlow: Flow<OrientationPreference> by lazy {
+        preferenceRepository.orientationPreferenceFlow
+    }
+    private val packageNameFlow: MutableStateFlow<String> = MutableStateFlow("")
     private var checker: ForegroundPackageChecker? = null
     private val job = SupervisorJob()
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + job)
-    private val controlPreferenceFlow = PreferenceRepository.get().controlPreferenceRepository.flow
-    private val designPreferenceFlow = PreferenceRepository.get().designPreferenceRepository.flow
-    private val orientationPreferenceFlow = PreferenceRepository.get().orientationPreferenceFlow
-    private val packageNameFlow: MutableStateFlow<String> = MutableStateFlow("")
 
     override fun onBind(intent: Intent): IBinder? {
         throw UnsupportedOperationException("Not yet implemented")
@@ -64,7 +78,7 @@ class MainService : Service() {
             packageNameFlow
                 .map { ForegroundPackageSettings.get(it) }
                 .collect {
-                    PreferenceRepository.get().updatePackageOrientation(it)
+                    preferenceRepository.updatePackageOrientation(it)
                 }
         }
         scope.launch {
@@ -78,7 +92,7 @@ class MainService : Service() {
         }
         scope.launch {
             combine(
-                PreferenceRepository.get().orientationPreferenceRepository.flow,
+                preferenceRepository.orientationPreferenceRepository.flow,
                 ForegroundPackageSettings.emptyFlow(),
             ) { orientation: OrientationPreference, empty: Boolean ->
                 orientation.enabled && orientation.shouldControlByForegroundApp && !empty
@@ -131,14 +145,13 @@ class MainService : Service() {
     }
 
     companion object {
-        private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
         var isStarted: Boolean = false
             private set
 
-        fun initialize(c: Context) {
+        fun initialize(c: Context, preferenceRepository: PreferenceRepository) {
             val context = c.applicationContext
-            scope.launch {
-                PreferenceRepository.get()
+            preferenceRepository.scope.launch {
+                preferenceRepository
                     .orientationPreferenceRepository
                     .flow
                     .collect {

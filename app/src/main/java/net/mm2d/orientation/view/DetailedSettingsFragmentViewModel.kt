@@ -3,23 +3,29 @@ package net.mm2d.orientation.view
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.settings.IconShape
 import net.mm2d.orientation.settings.PreferenceRepository
+import javax.inject.Inject
 
-class DetailedSettingsFragmentViewModel : ViewModel() {
+@HiltViewModel
+class DetailedSettingsFragmentViewModel @Inject constructor(
+    private val preferenceRepository: PreferenceRepository
+) : ViewModel() {
     private val orientationPreferenceRepository =
-        PreferenceRepository.get().orientationPreferenceRepository
+        preferenceRepository.orientationPreferenceRepository
     private val orientationPreferenceFlow =
-        PreferenceRepository.get().orientationPreferenceFlow
+        preferenceRepository.orientationPreferenceFlow
     private val controlPreferenceRepository =
-        PreferenceRepository.get().controlPreferenceRepository
+        preferenceRepository.controlPreferenceRepository
     private val designPreferenceRepository =
-        PreferenceRepository.get().designPreferenceRepository
+        preferenceRepository.designPreferenceRepository
     private val menuPreferenceRepository =
-        PreferenceRepository.get().menuPreferenceRepository
+        preferenceRepository.menuPreferenceRepository
 
     val menu = menuPreferenceRepository.flow
         .asLiveData()
@@ -119,6 +125,20 @@ class DetailedSettingsFragmentViewModel : ViewModel() {
     fun updateOrientationWhenPowerIsConnected(orientation: Orientation) {
         viewModelScope.launch {
             orientationPreferenceRepository.updateOrientationWhenPowerIsConnected(orientation)
+        }
+    }
+
+    fun adjustOrientation() {
+        preferenceRepository.scope.launch {
+            combine(
+                orientationPreferenceRepository.flow,
+                designPreferenceRepository.flow,
+                ::Pair
+            ).take(1).collect { (orientation, design) ->
+                if (!design.orientations.contains(orientation.orientation)) {
+                    orientationPreferenceRepository.updateOrientation(design.orientations[0])
+                }
+            }
         }
     }
 }

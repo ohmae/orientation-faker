@@ -20,20 +20,26 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle.State
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.FragmentMainBinding
 import net.mm2d.orientation.review.ReviewRequest
 import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.NightModes
+import net.mm2d.orientation.settings.PreferenceRepository
 import net.mm2d.orientation.util.Launcher
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.Updater
 import net.mm2d.orientation.util.autoCleared
 import net.mm2d.orientation.view.dialog.NightModeDialog
 import net.mm2d.orientation.view.dialog.OverlayPermissionDialog
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main) {
+    @Inject
+    lateinit var preferenceRepository: PreferenceRepository
     private val handler = Handler(Looper.getMainLooper())
     private val checkSystemSettingsTask = Runnable { checkSystemSettings() }
     private var notificationSample: NotificationSample by autoCleared()
@@ -79,7 +85,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         super.onResume()
         handler.removeCallbacks(checkSystemSettingsTask)
         handler.post(checkSystemSettingsTask)
-        ReviewRequest.requestReviewIfNeed(this)
+        ReviewRequest.requestReviewIfNeed(this, preferenceRepository)
         if (!SystemSettings.canDrawOverlays(requireContext())) {
             OverlayPermissionDialog.show(this)
         }

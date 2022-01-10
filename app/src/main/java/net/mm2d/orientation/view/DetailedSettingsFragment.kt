@@ -15,6 +15,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.gridlayout.widget.GridLayout
+import dagger.hilt.android.AndroidEntryPoint
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.FragmentDetailedSettingsBinding
 import net.mm2d.color.chooser.ColorChooserDialog
@@ -22,7 +23,6 @@ import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.Orientations
 import net.mm2d.orientation.settings.Default
 import net.mm2d.orientation.settings.OrientationList
-import net.mm2d.orientation.settings.PreferenceRepository
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.Toaster
 import net.mm2d.orientation.util.alpha
@@ -36,6 +36,7 @@ import net.mm2d.orientation.view.dialog.ResetThemeDialog
 import net.mm2d.orientation.view.view.CheckItemView
 import net.mm2d.orientation.view.view.SwitchMenuView
 
+@AndroidEntryPoint
 class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
     private lateinit var notificationSample: NotificationSample
     private lateinit var checkList: List<CheckItemView>
@@ -118,7 +119,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
 
     override fun onStop() {
         super.onStop()
-        PreferenceRepository.get().adjustOrientation()
+        viewModel.adjustOrientation()
     }
 
     private fun setUpViews() {

@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -51,6 +52,7 @@ import net.mm2d.orientation.view.dialog.EachAppOrientationDialog
 import net.mm2d.orientation.view.dialog.UsageAppPermissionDialog
 import java.util.*
 
+@AndroidEntryPoint
 class EachAppFragment : Fragment(R.layout.fragment_each_app) {
     private var adapter: EachAppAdapter by autoCleared()
     private var binding: FragmentEachAppBinding by autoCleared()

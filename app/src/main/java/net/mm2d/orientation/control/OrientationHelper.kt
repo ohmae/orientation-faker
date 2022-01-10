@@ -15,6 +15,7 @@ import net.mm2d.orientation.control.OrientationHelper.Rotation.ROTATION_180
 import net.mm2d.orientation.control.OrientationHelper.Rotation.ROTATION_270
 import net.mm2d.orientation.control.OrientationHelper.Rotation.ROTATION_90
 import net.mm2d.orientation.review.ReviewRequest
+import net.mm2d.orientation.settings.PreferenceRepository
 import net.mm2d.orientation.util.Powers
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.Toaster
@@ -24,14 +25,16 @@ import kotlin.math.atan
 @SuppressLint("StaticFieldLeak")
 object OrientationHelper {
     private lateinit var context: Context
+    private lateinit var preferenceRepository: PreferenceRepository
     private lateinit var controller: OrientationController
     private lateinit var sensorHelper: SensorHelper
     private var requestedOrientation: Orientation = Orientation.INVALID
     private var isLandscapeDevice: Boolean = false
     private var warnSystemRotate: Boolean = false
 
-    fun initialize(c: Context) {
+    fun initialize(c: Context, repository: PreferenceRepository) {
         context = c.applicationContext
+        preferenceRepository = repository
         controller = OrientationController(context)
         sensorHelper = SensorHelper(
             context,
@@ -48,7 +51,7 @@ object OrientationHelper {
             return
         }
         requestedOrientation = orientation
-        ReviewRequest.updateOrientation(orientation)
+        ReviewRequest.updateOrientation(orientation, preferenceRepository)
         notifySystemSettingsIfNeed(orientation)
         isLandscapeDevice = landscapeDevice
         if (orientation.usesSensor()) {

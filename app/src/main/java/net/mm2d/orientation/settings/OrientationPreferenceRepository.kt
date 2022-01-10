@@ -30,7 +30,8 @@ class OrientationPreferenceRepository(context: Context) {
                     ?.toOrientation() ?: Orientation.INVALID,
             )
         }
-    val manuallyOrientationFlow: MutableStateFlow<OrientationRequest> = MutableStateFlow(OrientationRequest(Orientation.INVALID))
+    val manuallyOrientationFlow: MutableStateFlow<OrientationRequest> =
+        MutableStateFlow(OrientationRequest(Orientation.INVALID))
 
     suspend fun updateEnabled(enabled: Boolean) {
         dataStore.edit {

@@ -23,22 +23,22 @@ object ReviewRequest {
     private val INTERVAL_FIRST_REVIEW = TimeUnit.DAYS.toMillis(21)
     private val INTERVAL_SECOND_REVIEW = TimeUnit.DAYS.toMillis(42)
 
-    suspend fun updateOrientation(orientation: Orientation) {
-        val reviewPreferenceRepository = PreferenceRepository.get().reviewPreferenceRepository
+    suspend fun updateOrientation(orientation: Orientation, preferenceRepository: PreferenceRepository) {
+        val reviewPreferenceRepository = preferenceRepository.reviewPreferenceRepository
         reviewPreferenceRepository.updateFirstUseTimeIfZero(System.currentTimeMillis())
         if (orientation != Orientation.UNSPECIFIED) {
             reviewPreferenceRepository.inclementOrientationChangeCount()
         }
     }
 
-    fun requestReviewIfNeed(fragment: Fragment) {
+    fun requestReviewIfNeed(fragment: Fragment, preferenceRepository: PreferenceRepository) {
         fragment.lifecycleScope.launchWhenResumed {
-            val orientationFlow = PreferenceRepository.get().orientationPreferenceRepository.flow
-            val reviewFlow = PreferenceRepository.get().reviewPreferenceRepository.flow
+            val orientationFlow = preferenceRepository.orientationPreferenceRepository.flow
+            val reviewFlow = preferenceRepository.reviewPreferenceRepository.flow
             combine(orientationFlow, reviewFlow, ::Pair)
                 .take(1)
                 .collect { (orientation, review) ->
-                    requestReviewIfNeed(fragment, orientation, review)
+                    requestReviewIfNeed(fragment, orientation, review, preferenceRepository)
                 }
         }
     }
@@ -46,7 +46,8 @@ object ReviewRequest {
     private suspend fun requestReviewIfNeed(
         fragment: Fragment,
         orientation: OrientationPreference,
-        review: ReviewPreference
+        review: ReviewPreference,
+        preferenceRepository: PreferenceRepository
     ) {
         if (!orientation.enabled) {
             return
@@ -72,7 +73,7 @@ object ReviewRequest {
             return
         }
         if (ReviewDialog.show(fragment) && review.cancelCount == 0) {
-            PreferenceRepository.get()
+            preferenceRepository
                 .reviewPreferenceRepository
                 .updateFirstReviewTime(now)
         }

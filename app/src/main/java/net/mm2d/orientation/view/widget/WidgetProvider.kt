@@ -12,9 +12,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import androidx.core.content.getSystemService
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.shareIn
@@ -31,18 +29,21 @@ class WidgetProvider : AppWidgetProvider() {
     }
 
     companion object {
-        private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
-        private val preferenceFlow = combine(
-            PreferenceRepository.get().orientationPreferenceFlow,
-            PreferenceRepository.get().designPreferenceRepository.flow,
-        ) { orientation, desing ->
-            val o = if (orientation.enabled) orientation.orientation else Orientation.INVALID
-            orientation.copy(orientation = o) to desing
-        }.shareIn(scope, SharingStarted.Eagerly, 1)
+        private lateinit var preferenceRepository: PreferenceRepository
+        private lateinit var preferenceFlow: Flow<Pair<OrientationPreference, DesignPreference>>
 
-        fun initialize(context: Context) {
+        fun initialize(context: Context, repository: PreferenceRepository) {
+            preferenceRepository = repository
+            preferenceFlow = combine(
+                repository.orientationPreferenceFlow,
+                repository.designPreferenceRepository.flow,
+            ) { orientation, design ->
+                val o = if (orientation.enabled) orientation.orientation else Orientation.INVALID
+                orientation.copy(orientation = o) to design
+            }.shareIn(repository.scope, SharingStarted.Eagerly, 1)
+
             val widgetManager: AppWidgetManager = context.getSystemService()!!
-            scope.launch {
+            repository.scope.launch {
                 preferenceFlow.collect { (orientation, design) ->
                     widgetManager.getAppWidgetIds(ComponentName(context, WidgetProvider::class.java))?.forEach {
                         updateAppWidget(context, widgetManager, it, orientation, design)
@@ -56,7 +57,7 @@ class WidgetProvider : AppWidgetProvider() {
             widgetManager: AppWidgetManager,
             widgetIds: IntArray
         ) {
-            scope.launch {
+            preferenceRepository.scope.launch {
                 preferenceFlow.take(1).collect { (orientation, design) ->
                     widgetIds.forEach {
                         updateAppWidget(context, widgetManager, it, orientation, design)

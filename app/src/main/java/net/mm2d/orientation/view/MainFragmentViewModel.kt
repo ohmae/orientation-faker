@@ -3,23 +3,28 @@ package net.mm2d.orientation.view
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.settings.PreferenceRepository
+import javax.inject.Inject
 
-class MainFragmentViewModel : ViewModel() {
+@HiltViewModel
+class MainFragmentViewModel @Inject constructor(
+    preferenceRepository: PreferenceRepository
+) : ViewModel() {
     private val orientationPreferenceRepository =
-        PreferenceRepository.get().orientationPreferenceRepository
+        preferenceRepository.orientationPreferenceRepository
     private val menuPreferenceRepository =
-        PreferenceRepository.get().menuPreferenceRepository
+        preferenceRepository.menuPreferenceRepository
 
     val menu = menuPreferenceRepository.flow
         .asLiveData()
 
     val sample = combine(
-        PreferenceRepository.get().orientationPreferenceFlow,
-        PreferenceRepository.get().designPreferenceRepository.flow,
+        preferenceRepository.orientationPreferenceFlow,
+        preferenceRepository.designPreferenceRepository.flow,
         ::Pair
     ).asLiveData()
 

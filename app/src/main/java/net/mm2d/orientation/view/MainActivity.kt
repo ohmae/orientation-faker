@@ -15,11 +15,18 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
+import dagger.hilt.android.AndroidEntryPoint
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.ActivityMainBinding
+import net.mm2d.orientation.settings.PreferenceRepository
 import net.mm2d.orientation.util.DeviceOrientationChecker
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    @Inject
+    lateinit var preferenceRepository: PreferenceRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -35,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         }
         setSupportActionBar(binding.toolbar)
         lifecycleScope.launchWhenCreated {
-            DeviceOrientationChecker.check(this@MainActivity)
+            DeviceOrientationChecker.check(this@MainActivity, preferenceRepository)
         }
     }
 

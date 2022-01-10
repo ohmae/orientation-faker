@@ -25,8 +25,8 @@ import kotlinx.coroutines.launch
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationHelper
 
-class PreferenceRepository private constructor(context: Context) {
-    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+class PreferenceRepository(context: Context) {
+    val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     val packagePreferenceRepository = PackagePreferenceRepository(context)
     val orientationPreferenceRepository = OrientationPreferenceRepository(context)
@@ -68,16 +68,16 @@ class PreferenceRepository private constructor(context: Context) {
 
     init {
         scope.launch {
-            packagePreferenceRepository.flow.collect()
+            packagePreferenceRepository.flow.take(1).collect()
         }
         scope.launch {
-            orientationPreferenceRepository.flow.collect()
+            orientationPreferenceRepository.flow.take(1).collect()
         }
         scope.launch {
-            controlPreferenceRepository.flow.collect()
+            controlPreferenceRepository.flow.take(1).collect()
         }
         scope.launch {
-            designPreferenceRepository.flow.collect()
+            designPreferenceRepository.flow.take(1).collect()
         }
         scope.launch {
             menuPreferenceRepository.flow.collect {
@@ -86,68 +86,15 @@ class PreferenceRepository private constructor(context: Context) {
             }
         }
         scope.launch {
-            reviewPreferenceRepository.flow.collect()
+            reviewPreferenceRepository.flow.take(1).collect()
         }
     }
 
-    fun updateOrientationManually(orientation: Orientation) {
-        scope.launch {
-            orientationPreferenceRepository.updateOrientationManually(orientation)
-        }
+    suspend fun updatePackageOrientation(orientation: Orientation) {
+        packageOrientationFlow.emit(OrientationRequest(orientation))
     }
 
-    fun adjustOrientation() {
-        scope.launch {
-            combine(
-                orientationPreferenceRepository.flow,
-                designPreferenceRepository.flow,
-                ::Pair
-            ).take(1).collect { (orientation, design) ->
-                if (!design.orientations.contains(orientation.orientation)) {
-                    orientationPreferenceRepository.updateOrientation(design.orientations[0])
-                }
-            }
-        }
-    }
-
-    fun inclementCancelCount() {
-        scope.launch {
-            reviewPreferenceRepository.inclementCancelCount()
-        }
-    }
-
-    fun updateReviewed(reviewed: Boolean) {
-        scope.launch {
-            reviewPreferenceRepository.updateReviewed(reviewed)
-        }
-    }
-
-    fun updateReported(reported: Boolean) {
-        scope.launch {
-            reviewPreferenceRepository.updateReported(reported)
-        }
-    }
-
-    fun updatePackageOrientation(orientation: Orientation) {
-        scope.launch {
-            packageOrientationFlow.emit(OrientationRequest(orientation))
-        }
-    }
-
-    fun updatePowerPlugged(plugged: Boolean) {
-        scope.launch {
-            powerPluggedFlow.emit(plugged)
-        }
-    }
-
-    companion object {
-        private lateinit var INSTANCE: PreferenceRepository
-
-        fun initialize(context: Context) {
-            Default.initialize(context)
-            INSTANCE = PreferenceRepository(context.applicationContext)
-        }
-
-        fun get(): PreferenceRepository = INSTANCE
+    suspend fun updatePowerPlugged(plugged: Boolean) {
+        powerPluggedFlow.emit(plugged)
     }
 }

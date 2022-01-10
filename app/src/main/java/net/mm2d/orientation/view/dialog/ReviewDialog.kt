@@ -14,12 +14,16 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.LayoutReviewBinding
-import net.mm2d.orientation.settings.PreferenceRepository
 import net.mm2d.orientation.util.Launcher
 
+@AndroidEntryPoint
 class ReviewDialog : DialogFragment() {
+    private val viewModel: ReviewDialogViewModel by viewModels()
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val activity = requireActivity()
         val parent = activity.window.decorView as ViewGroup
@@ -30,11 +34,11 @@ class ReviewDialog : DialogFragment() {
             .setView(view)
             .setPositiveButton(R.string.dialog_button_review) { _, _ ->
                 Launcher.openGooglePlay(activity)
-                PreferenceRepository.get().updateReviewed(true)
+                viewModel.onReview()
             }
             .setNeutralButton(R.string.dialog_button_send_mail) { _, _ ->
                 Launcher.sendMailToDeveloper(activity)
-                PreferenceRepository.get().updateReported(true)
+                viewModel.onReport()
             }
             .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.cancel()
@@ -44,7 +48,7 @@ class ReviewDialog : DialogFragment() {
 
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
-        PreferenceRepository.get().inclementCancelCount()
+        viewModel.onCancel()
     }
 
     companion object {

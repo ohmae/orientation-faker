@@ -15,7 +15,7 @@ import android.view.Surface
 import net.mm2d.orientation.settings.PreferenceRepository
 
 object DeviceOrientationChecker {
-    suspend fun check(activity: Activity) {
+    suspend fun check(activity: Activity, preferenceRepository: PreferenceRepository) {
         val display = getDisplay(activity) ?: return
         val rotation = display.rotation
         val orientation = activity.resources.configuration.orientation
@@ -24,7 +24,7 @@ object DeviceOrientationChecker {
         } else {
             orientation == Configuration.ORIENTATION_PORTRAIT
         }
-        PreferenceRepository.get()
+        preferenceRepository
             .orientationPreferenceRepository
             .updateLandscapeDevice(isLandscapeDevice)
     }
