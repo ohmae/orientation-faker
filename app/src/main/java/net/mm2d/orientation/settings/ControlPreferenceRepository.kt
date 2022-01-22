@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.map
 class ControlPreferenceRepository(context: Context) {
     private val Context.dataStoreField: DataStore<Preferences> by preferences(
         file = DataStoreFile.CONTROL,
-        migrations = listOf(MigrationFromOldPreference(OldPreference(context)))
+        migrations = listOf(MigrationFromOldPreference(context))
     )
     private val dataStore = context.dataStoreField
 
@@ -43,8 +43,10 @@ class ControlPreferenceRepository(context: Context) {
     }
 
     private class MigrationFromOldPreference(
-        private val old: OldPreference
+        private val context: Context
     ) : DataMigration<Preferences> {
+        private val old: OldPreference by lazy { OldPreference(context) }
+
         override suspend fun shouldMigrate(currentData: Preferences): Boolean =
             currentData[DATA_VERSION] != VERSION
 

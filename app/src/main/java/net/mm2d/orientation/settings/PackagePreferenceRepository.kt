@@ -19,7 +19,7 @@ class PackagePreferenceRepository(context: Context) {
     private val Context.dataStoreField: DataStore<Preferences> by preferences(
         file = DataStoreFile.PACKAGE,
         migrations = listOf(
-            MigrationFromOldPreference(OldPreference(context)),
+            MigrationFromOldPreference(context),
             MigrationForUpdate(),
         )
     )
@@ -35,8 +35,10 @@ class PackagePreferenceRepository(context: Context) {
         }
 
     private class MigrationFromOldPreference(
-        private val old: OldPreference
+        private val context: Context
     ) : DataMigration<Preferences> {
+        private val old: OldPreference by lazy { OldPreference(context) }
+
         override suspend fun shouldMigrate(currentData: Preferences): Boolean =
             currentData[DATA_VERSION] != VERSION
 

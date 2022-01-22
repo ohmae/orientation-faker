@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -28,7 +29,7 @@ import net.mm2d.orientation.control.OrientationHelper
 class PreferenceRepository(context: Context) {
     val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
-    val packagePreferenceRepository = PackagePreferenceRepository(context)
+    private val packagePreferenceRepository = PackagePreferenceRepository(context)
     val orientationPreferenceRepository = OrientationPreferenceRepository(context)
     val controlPreferenceRepository = ControlPreferenceRepository(context)
     val designPreferenceRepository = DesignPreferenceRepository(context)
@@ -87,6 +88,10 @@ class PreferenceRepository(context: Context) {
         }
         scope.launch {
             reviewPreferenceRepository.flow.take(1).collect()
+        }
+        scope.launch(Dispatchers.IO) {
+            delay(1000)
+            OldPreference(context).deleteIfEmpty()
         }
     }
 

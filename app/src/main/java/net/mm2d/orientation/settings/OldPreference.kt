@@ -19,8 +19,22 @@ class OldPreference(
     private val context: Context
 ) {
     private val fileName = BuildConfig.APPLICATION_ID + "." + Main.FILE_NAME
-    private val sharedPreferences: SharedPreferences =
-        context.getSharedPreferences(fileName, Context.MODE_PRIVATE)
+    private val sharedPreferences: SharedPreferences?
+
+    init {
+        sharedPreferences = if (makeSharedPreferenceFile(fileName).exists()) {
+            context.getSharedPreferences(fileName, Context.MODE_PRIVATE)
+        } else null
+    }
+
+    fun deleteIfEmpty() {
+        sharedPreferences?.let {
+            val keys = sharedPreferences.all.keys
+            if (keys.size == 0 || keys.size == 1 && keys.contains(Main.PREFERENCES_VERSION_INT.name)) {
+                deleteSharedPreferences(fileName)
+            }
+        }
+    }
 
     fun deleteOldSharedPreferences() {
         deleteSharedPreferences(context.packageName + "_preferences")
@@ -28,12 +42,16 @@ class OldPreference(
         deleteSharedPreferences(context.packageName + ".b")
     }
 
+    private fun makeSharedPreferenceFile(name: String): File {
+        val prefsDir = File(context.applicationInfo.dataDir, "shared_prefs")
+        return File(prefsDir, "$name.xml")
+    }
+
     private fun deleteSharedPreferences(name: String) {
         if (Build.VERSION.SDK_INT >= 24) {
             context.deleteSharedPreferences(name)
         } else {
-            val prefsDir = File(context.applicationInfo.dataDir, "shared_prefs")
-            val prefsFile = File(prefsDir, "$name.xml")
+            val prefsFile = makeSharedPreferenceFile(name)
             val prefsBackup = File(prefsFile.path + ".bak")
             prefsFile.delete()
             prefsBackup.delete()
@@ -55,36 +73,35 @@ class OldPreference(
         }
     }
 
-    fun remove(vararg keys: Main): Unit =
-        sharedPreferences.edit(true) {
+    fun remove(vararg keys: Main) {
+        sharedPreferences?.edit(true) {
             keys.forEach { remove(it.name) }
         }
+    }
 
-    fun clear(): Unit =
-        sharedPreferences.edit(true) {
+    fun clear() {
+        sharedPreferences?.edit(true) {
             clear()
         }
-
-    operator fun contains(key: Main): Boolean =
-        sharedPreferences.contains(key.name)
+    }
 
     fun getBoolean(key: Main): Boolean? =
-        if (contains(key))
+        if (sharedPreferences?.contains(key.name) == true)
             sharedPreferences.getBoolean(key.name, false)
         else null
 
     fun getInt(key: Main): Int? =
-        if (contains(key))
+        if (sharedPreferences?.contains(key.name) == true)
             sharedPreferences.getInt(key.name, 0)
         else null
 
     fun getLong(key: Main): Long? =
-        if (contains(key))
+        if (sharedPreferences?.contains(key.name) == true)
             sharedPreferences.getLong(key.name, 0L)
         else null
 
     fun getString(key: Main): String? =
-        if (contains(key))
+        if (sharedPreferences?.contains(key.name) == true)
             sharedPreferences.getString(key.name, null)
         else null
 }
