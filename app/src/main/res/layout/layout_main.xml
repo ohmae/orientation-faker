@@ -73,7 +73,7 @@
         android:id="@+id/caution"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSecondary"
+        android:background="?attr/colorSecondaryVariant"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:paddingStart="16dp"
