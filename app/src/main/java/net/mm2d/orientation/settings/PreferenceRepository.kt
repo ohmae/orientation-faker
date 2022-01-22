@@ -36,38 +36,8 @@ class PreferenceRepository(context: Context) {
     val menuPreferenceRepository = MenuPreferenceRepository(context)
     val reviewPreferenceRepository = ReviewPreferenceRepository(context)
 
-    private val powerPluggedFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val manuallyOrientationFlow: Flow<OrientationRequest> =
-        orientationPreferenceRepository.manuallyOrientationFlow
-    private val packageOrientationFlow: MutableStateFlow<OrientationRequest> = MutableStateFlow(OrientationRequest())
-    private val powerOrientationFlow: Flow<OrientationRequest> = combine(
-        orientationPreferenceRepository.flow
-            .distinctUntilChangedBy { it.orientationWhenPowerIsConnected },
-        powerPluggedFlow
-    ) { orientation, plugged ->
-        OrientationRequest(if (plugged) orientation.orientationWhenPowerIsConnected else Orientation.INVALID)
-    }
-    private val preferredOrientationFlow: Flow<Orientation> = combine(
-        manuallyOrientationFlow,
-        packageOrientationFlow,
-        powerOrientationFlow,
-    ) { o1, o2, o3 ->
-        listOf(o1, o2, o3)
-            .sortedByDescending { it.timestamp }
-            .firstOrNull { it.orientation != Orientation.INVALID }
-            ?.orientation ?: Orientation.INVALID
-    }.shareIn(scope, SharingStarted.Eagerly, 1)
-        .distinctUntilChanged()
-
-    val orientationPreferenceFlow = combine(
-        orientationPreferenceRepository.flow,
-        preferredOrientationFlow
-    ) { preferences, preferred ->
-        if (!preferences.enabled || preferred == Orientation.INVALID) preferences else preferences.copy(orientation = preferred)
-    }.shareIn(scope, SharingStarted.Eagerly, 1)
-        .distinctUntilChanged()
-
     init {
+        Default.initialize(context)
         scope.launch {
             packagePreferenceRepository.flow.take(1).collect()
         }
@@ -94,6 +64,39 @@ class PreferenceRepository(context: Context) {
             OldPreference(context).deleteIfEmpty()
         }
     }
+
+    private val powerPluggedFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val manuallyOrientationFlow: Flow<OrientationRequest> =
+        orientationPreferenceRepository.manuallyOrientationFlow
+    private val packageOrientationFlow: MutableStateFlow<OrientationRequest> = MutableStateFlow(OrientationRequest())
+
+    private val powerOrientationFlow: Flow<OrientationRequest> = combine(
+        orientationPreferenceRepository.flow
+            .distinctUntilChangedBy { it.orientationWhenPowerIsConnected },
+        powerPluggedFlow
+    ) { orientation, plugged ->
+        OrientationRequest(if (plugged) orientation.orientationWhenPowerIsConnected else Orientation.INVALID)
+    }
+
+    private val preferredOrientationFlow: Flow<Orientation> = combine(
+        manuallyOrientationFlow,
+        packageOrientationFlow,
+        powerOrientationFlow,
+    ) { o1, o2, o3 ->
+        listOf(o1, o2, o3)
+            .sortedByDescending { it.timestamp }
+            .firstOrNull { it.orientation != Orientation.INVALID }
+            ?.orientation ?: Orientation.INVALID
+    }.shareIn(scope, SharingStarted.Eagerly, 1)
+        .distinctUntilChanged()
+
+    val orientationPreferenceFlow = combine(
+        orientationPreferenceRepository.flow,
+        preferredOrientationFlow
+    ) { preferences, preferred ->
+        if (!preferences.enabled || preferred == Orientation.INVALID) preferences else preferences.copy(orientation = preferred)
+    }.shareIn(scope, SharingStarted.Eagerly, 1)
+        .distinctUntilChanged()
 
     suspend fun updatePackageOrientation(orientation: Orientation) {
         packageOrientationFlow.emit(OrientationRequest(orientation))
