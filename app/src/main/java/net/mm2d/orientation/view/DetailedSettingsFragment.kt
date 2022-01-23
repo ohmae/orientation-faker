@@ -53,6 +53,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             binding.content.autoRotateWarning.isChecked = it.warnSystemRotate
         }
         viewModel.sample.observe(viewLifecycleOwner) { (orientation, design) ->
+            TransitionManager.beginDelayedTransition(binding.notificationSample)
             notificationSample.update(orientation, design)
         }
         viewModel.control.observe(viewLifecycleOwner) {
@@ -60,7 +61,6 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             binding.content.useBlankIconForNotification.isChecked = it.shouldUseBlankIcon
         }
         viewModel.design.observe(viewLifecycleOwner) { design ->
-            TransitionManager.beginDelayedTransition(binding.content.contentsContainer)
             binding.content.sampleForeground.setImageColor(design.foreground)
             binding.content.foreground.setOnClickListener {
                 ColorChooserDialog.show(this, REQUEST_KEY_FOREGROUND, design.foreground, true)
@@ -81,7 +81,10 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             binding.content.base.setOnClickListener {
                 ColorChooserDialog.show(this, REQUEST_KEY_BASE, design.base ?: 0, true)
             }
-            binding.content.base.isVisible = design.iconize
+            if (binding.content.base.isVisible != design.iconize) {
+                TransitionManager.beginDelayedTransition(binding.content.colorSettings)
+                binding.content.base.isVisible = design.iconize
+            }
             binding.content.useIconBackground.isChecked = design.iconize
 
             if (design.iconize) {
@@ -96,10 +99,10 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             checkList.forEach { view ->
                 view.isChecked = design.orientations.contains(view.orientation)
             }
-            if (design.orientations.any { it.isExperimental() }) {
-                binding.content.caution.visibility = View.VISIBLE
-            } else {
-                binding.content.caution.visibility = View.GONE
+            val experimental = design.orientations.any { it.isExperimental() }
+            if (binding.content.caution.isVisible != experimental) {
+                TransitionManager.beginDelayedTransition(binding.content.contentsContainer)
+                binding.content.caution.isVisible = experimental
             }
             orientationList.clear()
             orientationList.addAll(design.orientations)
@@ -125,7 +128,7 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
     }
 
     private fun setUpViews() {
-        notificationSample = NotificationSample(binding.content.notificationSample)
+        notificationSample = NotificationSample(binding.notificationSample)
         setUpSample()
         setUpLayoutSelector()
         setUpUseIconBackground()

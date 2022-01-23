@@ -15,6 +15,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle.State
@@ -105,9 +106,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             binding.content.caution.visibility = View.GONE
             return
         }
-        TransitionManager.beginDelayedTransition(binding.content.contentsContainer)
-        binding.content.caution.visibility =
-            if (SystemSettings.rotationIsFixed(requireContext())) View.VISIBLE else View.GONE
+        val shouldWarning = SystemSettings.rotationIsFixed(requireContext())
+        if (binding.content.caution.isVisible != shouldWarning) {
+            TransitionManager.beginDelayedTransition(binding.content.contentsContainer)
+            binding.content.caution.isVisible = shouldWarning
+        }
         handler.postDelayed(checkSystemSettingsTask, CHECK_INTERVAL)
     }
 
@@ -129,7 +132,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun setUpViews() {
-        notificationSample = NotificationSample(binding.content.notificationSample)
+        notificationSample = NotificationSample(binding.notificationSample)
         binding.content.status.setOnClickListener { toggleStatus() }
         binding.content.detailedSetting.setOnClickListener {
             navigate(MainFragmentDirections.actionMainFragmentToDetailedSettingsFragment())

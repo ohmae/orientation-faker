@@ -8,10 +8,25 @@
     android:orientation="vertical"
     >
 
+    <FrameLayout
+        android:id="@+id/notification_sample"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimaryVariant"
+        android:paddingStart="@dimen/margin_sample_horizontal"
+        android:paddingTop="@dimen/margin_sample_vertical"
+        android:paddingEnd="@dimen/margin_sample_horizontal"
+        android:paddingBottom="@dimen/margin_sample_vertical"
+        >
+
+        <include layout="@layout/layout_remote_views" />
+    </FrameLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:elevation="8dp"
         tools:ignore="UselessParent"
         >
 
