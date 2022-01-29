@@ -77,7 +77,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-common-java8:2.4.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.3")
     implementation("androidx.gridlayout:gridlayout:1.0.0")
-    implementation("androidx.preference:preference-ktx:1.1.1")
+    implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.webkit:webkit:1.4.0")
     implementation("com.google.android.material:material:1.5.0")
@@ -95,10 +95,10 @@ dependencies {
     implementation("net.mm2d.color-chooser:color-chooser:0.4.1")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.8.1")
-    debugImplementation("com.facebook.flipper:flipper:0.129.0")
+    debugImplementation("com.facebook.flipper:flipper:0.131.0")
     debugImplementation("com.facebook.soloader:soloader:0.10.3")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.129.0")
-    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.129.0")
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.131.0")
+    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.131.0")
 }
 
 fun isStable(version: String): Boolean {
