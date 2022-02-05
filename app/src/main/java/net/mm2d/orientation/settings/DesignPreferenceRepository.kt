@@ -37,7 +37,7 @@ class DesignPreferenceRepository(context: Context) {
                 shape = IconShape.of(it[SHAPE]),
                 shouldShowSettings = it[SHOW_SETTINGS] ?: !overS,
                 orientations = OrientationList.toList(it[ORIENTATION_LIST]).let { list ->
-                    if (list.isEmpty()) Default.orientationList else list
+                    list.ifEmpty { Default.orientationList }
                 },
             )
         }

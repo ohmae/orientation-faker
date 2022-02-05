@@ -10,12 +10,15 @@ package net.mm2d.orientation.view
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.ActivityMainBinding
 import net.mm2d.orientation.settings.PreferenceRepository
@@ -41,8 +44,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
         setSupportActionBar(binding.toolbar)
-        lifecycleScope.launchWhenCreated {
-            DeviceOrientationChecker.check(this@MainActivity, preferenceRepository)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                DeviceOrientationChecker.check(this@MainActivity, preferenceRepository)
+            }
         }
     }
 
