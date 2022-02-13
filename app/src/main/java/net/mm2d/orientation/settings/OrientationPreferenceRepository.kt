@@ -16,9 +16,10 @@ class OrientationPreferenceRepository(context: Context) {
         file = DataStoreFile.ORIENTATION,
         migrations = listOf(MigrationFromOldPreference(context))
     )
-    private val dataStore = context.dataStoreField
+    private val dataStore: DataStore<Preferences> = context.dataStoreField
 
     val flow: Flow<OrientationPreference> = dataStore.data
+        .onErrorResumeEmpty()
         .map {
             OrientationPreference(
                 enabled = it[ENABLED] ?: false,

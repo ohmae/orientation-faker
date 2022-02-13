@@ -20,9 +20,10 @@ class ControlPreferenceRepository(context: Context) {
         file = DataStoreFile.CONTROL,
         migrations = listOf(MigrationFromOldPreference(context))
     )
-    private val dataStore = context.dataStoreField
+    private val dataStore: DataStore<Preferences> = context.dataStoreField
 
     val flow: Flow<ControlPreference> = dataStore.data
+        .onErrorResumeEmpty()
         .map {
             ControlPreference(
                 shouldNotifySecret = it[NOTIFY_SECRET] ?: false,

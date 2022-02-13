@@ -13,9 +13,10 @@ class MenuPreferenceRepository(context: Context) {
         file = DataStoreFile.MENU,
         migrations = listOf(MigrationFromOldPreference(context))
     )
-    private val dataStore = context.dataStoreField
+    private val dataStore: DataStore<Preferences> = context.dataStoreField
 
     val flow: Flow<MenuPreference> = dataStore.data
+        .onErrorResumeEmpty()
         .map {
             MenuPreference(
                 warnSystemRotate = it[WARN_SYSTEM_ROTATE] ?: true,

@@ -23,9 +23,10 @@ class PackagePreferenceRepository(context: Context) {
             MigrationForUpdate(),
         )
     )
-    private val dataStore = context.dataStoreField
+    private val dataStore: DataStore<Preferences> = context.dataStoreField
 
     val flow: Flow<PackagePreference> = dataStore.data
+        .onErrorResumeEmpty()
         .map {
             PackagePreference(
                 versionAtInstall = it[VERSION_AT_INSTALL] ?: 0,

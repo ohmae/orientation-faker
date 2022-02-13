@@ -22,9 +22,10 @@ class DesignPreferenceRepository(context: Context) {
         file = DataStoreFile.DESIGN,
         migrations = listOf(MigrationFromOldPreference(context))
     )
-    private val dataStore = context.dataStoreField
+    private val dataStore: DataStore<Preferences> = context.dataStoreField
 
     val flow: Flow<DesignPreference> = dataStore.data
+        .onErrorResumeEmpty()
         .map {
             val overS = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
             DesignPreference(

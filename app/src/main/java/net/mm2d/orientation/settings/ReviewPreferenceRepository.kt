@@ -22,9 +22,10 @@ class ReviewPreferenceRepository(context: Context) {
         file = DataStoreFile.REVIEW,
         migrations = listOf(MigrationFromOldPreference(OldPreference(context)))
     )
-    private val dataStore = context.dataStoreField
+    private val dataStore: DataStore<Preferences> = context.dataStoreField
 
     val flow: Flow<ReviewPreference> = dataStore.data
+        .onErrorResumeEmpty()
         .map {
             ReviewPreference(
                 intervalRandomFactor = it[INTERVAL_RANDOM_FACTOR] ?: 0L,
