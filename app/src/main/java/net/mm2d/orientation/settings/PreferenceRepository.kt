@@ -98,11 +98,11 @@ class PreferenceRepository(context: Context) {
     }.shareIn(scope, SharingStarted.Eagerly, 1)
         .distinctUntilChanged()
 
-    suspend fun updatePackageOrientation(orientation: Orientation) {
-        packageOrientationFlow.emit(OrientationRequest(orientation))
+    fun updatePackageOrientation(orientation: Orientation) {
+        packageOrientationFlow.value = OrientationRequest(orientation)
     }
 
-    suspend fun updatePowerPlugged(plugged: Boolean) {
-        powerPluggedFlow.emit(plugged)
+    fun updatePowerPlugged(plugged: Boolean) {
+        powerPluggedFlow.value = plugged
     }
 }

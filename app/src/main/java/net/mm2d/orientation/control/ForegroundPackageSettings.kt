@@ -37,7 +37,7 @@ object ForegroundPackageSettings {
                 all.forEach {
                     map[it.packageName] = it.orientation.toOrientation()
                 }
-                emptyFlow.emit(map.isEmpty())
+                emptyFlow.value = map.isEmpty()
             }
         }
     }
@@ -70,9 +70,7 @@ object ForegroundPackageSettings {
                 database.packageSettingsDao().insert(entity)
             }
         }
-        scope.launch {
-            emptyFlow.emit(map.isEmpty())
-        }
+        emptyFlow.value = map.isEmpty()
     }
 
     fun reset() {
@@ -80,8 +78,6 @@ object ForegroundPackageSettings {
         scope.launch {
             database.packageSettingsDao().deleteAll()
         }
-        scope.launch {
-            emptyFlow.emit(map.isEmpty())
-        }
+        emptyFlow.value = map.isEmpty()
     }
 }

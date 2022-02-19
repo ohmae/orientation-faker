@@ -7,15 +7,12 @@
 
 package net.mm2d.orientation.service
 
-import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.os.IBinder
+import androidx.lifecycle.LifecycleService
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -35,7 +32,7 @@ import net.mm2d.orientation.view.notification.NotificationHelper
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainService : Service() {
+class MainService : LifecycleService() {
     @Inject
     lateinit var preferenceRepository: PreferenceRepository
     private val controlPreferenceFlow: Flow<ControlPreference> by lazy {
@@ -49,14 +46,24 @@ class MainService : Service() {
     }
     private val packageNameFlow: MutableStateFlow<String> = MutableStateFlow("")
     private var checker: ForegroundPackageChecker? = null
-    private val job = SupervisorJob()
-    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + job)
 
-    override fun onBind(intent: Intent): IBinder? {
-        throw UnsupportedOperationException("Not yet implemented")
+    override fun onCreate() {
+        super.onCreate()
+        lifecycleScope.launch {
+            startedFlow.collect {
+                notifyTileService()
+            }
+        }
+    }
+
+    private fun notifyTileService() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            startService(Intent(this, TileStateService::class.java))
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        super.onStartCommand(intent, flags, startId)
         NotificationHelper.startForegroundEmpty(this)
         if (!SystemSettings.canDrawOverlays(this)) {
             stop()
@@ -67,21 +74,20 @@ class MainService : Service() {
     }
 
     override fun onDestroy() {
+        startedFlow.value = false
         super.onDestroy()
-        isStarted = false
-        job.cancel()
     }
 
     private fun start() {
-        isStarted = true
-        scope.launch {
+        startedFlow.value = true
+        lifecycleScope.launch {
             packageNameFlow
                 .map { ForegroundPackageSettings.get(it) }
                 .collect {
                     preferenceRepository.updatePackageOrientation(it)
                 }
         }
-        scope.launch {
+        lifecycleScope.launch {
             orientationPreferenceFlow.collect { preferences ->
                 if (preferences.enabled) {
                     OrientationHelper.update(preferences.orientation, preferences.isLandscapeDevice)
@@ -90,7 +96,7 @@ class MainService : Service() {
                 }
             }
         }
-        scope.launch {
+        lifecycleScope.launch {
             combine(
                 preferenceRepository.orientationPreferenceRepository.flow,
                 ForegroundPackageSettings.emptyFlow(),
@@ -100,7 +106,7 @@ class MainService : Service() {
                 startForegroundChecker(it)
             }
         }
-        scope.launch {
+        lifecycleScope.launch {
             combine(
                 orientationPreferenceFlow,
                 controlPreferenceFlow,
@@ -113,7 +119,7 @@ class MainService : Service() {
     }
 
     private fun stop() {
-        isStarted = false
+        startedFlow.value = false
         NotificationHelper.stopForeground(this)
         OrientationHelper.cancel()
         stopForegroundChecker()
@@ -133,7 +139,7 @@ class MainService : Service() {
             return
         }
         checker = ForegroundPackageChecker(this) {
-            scope.launch { packageNameFlow.emit(it) }
+            packageNameFlow.value = it
         }.also { checker ->
             checker.start()
         }
@@ -145,8 +151,9 @@ class MainService : Service() {
     }
 
     companion object {
-        var isStarted: Boolean = false
-            private set
+        val startedFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+        val isStarted: Boolean
+            get() = startedFlow.value
 
         fun initialize(c: Context, preferenceRepository: PreferenceRepository) {
             val context = c.applicationContext

@@ -8,7 +8,6 @@ import android.content.IntentFilter
 import android.os.BatteryManager
 import android.os.Build
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import net.mm2d.orientation.settings.PreferenceRepository
 import javax.inject.Inject
 
@@ -20,14 +19,10 @@ class PowerConnectionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
             Intent.ACTION_POWER_CONNECTED -> {
-                preferenceRepository.scope.launch {
-                    preferenceRepository.updatePowerPlugged(true)
-                }
+                preferenceRepository.updatePowerPlugged(true)
             }
             Intent.ACTION_POWER_DISCONNECTED -> {
-                preferenceRepository.scope.launch {
-                    preferenceRepository.updatePowerPlugged(false)
-                }
+                preferenceRepository.updatePowerPlugged(false)
             }
         }
     }
@@ -45,9 +40,7 @@ class PowerConnectionReceiver : BroadcastReceiver() {
                 context.registerReceiver(null, it)
             }?.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) ?: 0
             val plugged = pluggedState and BATTERY_PLUGGED_ANY != 0
-            preferenceRepository.scope.launch {
-                preferenceRepository.updatePowerPlugged(plugged)
-            }
+            preferenceRepository.updatePowerPlugged(plugged)
         }
 
         fun initialize(c: Context, preferenceRepository: PreferenceRepository) {
