@@ -10,7 +10,6 @@ package net.mm2d.orientation.review
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
@@ -35,18 +34,14 @@ object ReviewRequest {
     }
 
     fun requestReviewIfNeed(fragment: Fragment, preferenceRepository: PreferenceRepository) {
-        fragment.viewLifecycleOwner.apply {
-            lifecycleScope.launch {
-                val orientationFlow = preferenceRepository.orientationPreferenceRepository.flow
-                val reviewFlow = preferenceRepository.reviewPreferenceRepository.flow
-                repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                    combine(orientationFlow, reviewFlow, ::Pair)
-                        .take(1)
-                        .collect { (orientation, review) ->
-                            requestReviewIfNeed(fragment, orientation, review, preferenceRepository)
-                        }
+        fragment.viewLifecycleOwner.lifecycleScope.launch {
+            val orientationFlow = preferenceRepository.orientationPreferenceRepository.flow
+            val reviewFlow = preferenceRepository.reviewPreferenceRepository.flow
+            combine(orientationFlow, reviewFlow, ::Pair)
+                .take(1)
+                .collect { (orientation, review) ->
+                    requestReviewIfNeed(fragment, orientation, review, preferenceRepository)
                 }
-            }
         }
     }
 
@@ -56,6 +51,9 @@ object ReviewRequest {
         review: ReviewPreference,
         preferenceRepository: PreferenceRepository
     ) {
+        if (!fragment.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            return
+        }
         if (!orientation.enabled) {
             return
         }
