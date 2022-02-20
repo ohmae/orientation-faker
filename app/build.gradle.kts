@@ -13,7 +13,7 @@ plugins {
 val applicationName = "OrientationFaker"
 val versionMajor = 5
 val versionMinor = 2
-val versionPatch = 0
+val versionPatch = 1
 
 android {
     compileSdk = 31
