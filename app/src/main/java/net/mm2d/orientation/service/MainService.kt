@@ -47,21 +47,6 @@ class MainService : LifecycleService() {
     private val packageNameFlow: MutableStateFlow<String> = MutableStateFlow("")
     private var checker: ForegroundPackageChecker? = null
 
-    override fun onCreate() {
-        super.onCreate()
-        lifecycleScope.launch {
-            startedFlow.collect {
-                notifyTileService()
-            }
-        }
-    }
-
-    private fun notifyTileService() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            startService(Intent(this, TileStateService::class.java))
-        }
-    }
-
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
         NotificationHelper.startForegroundEmpty(this)
