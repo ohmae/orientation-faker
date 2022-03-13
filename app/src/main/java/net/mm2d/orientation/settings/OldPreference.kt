@@ -79,7 +79,7 @@ class OldPreference(
         }
     }
 
-    fun clear() {
+    private fun clear() {
         sharedPreferences?.edit(true) {
             clear()
         }

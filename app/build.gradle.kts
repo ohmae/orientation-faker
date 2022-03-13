@@ -3,8 +3,8 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    kotlin("android")
+    kotlin("kapt")
     id("androidx.navigation.safeargs.kotlin")
     id("dagger.hilt.android.plugin")
     id("com.github.ben-manes.versions")
@@ -96,10 +96,10 @@ dependencies {
     implementation("net.mm2d.color-chooser:color-chooser:0.4.1")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.8.1")
-    debugImplementation("com.facebook.flipper:flipper:0.136.0")
+    debugImplementation("com.facebook.flipper:flipper:0.138.0")
     debugImplementation("com.facebook.soloader:soloader:0.10.3")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.136.0")
-    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.136.0")
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.138.0")
+    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.138.0")
 }
 
 fun isStable(version: String): Boolean {

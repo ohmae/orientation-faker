@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             if (destination.id == R.id.EachAppFragment) {
                 binding.appBar.elevation = 0f
             } else {
-                binding.appBar.elevation = resources.getDimension(R.dimen.design_appbar_elevation)
+                binding.appBar.elevation = resources.getDimension(R.dimen.appbar_elevation)
             }
         }
         setSupportActionBar(binding.toolbar)
