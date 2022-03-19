@@ -19,12 +19,12 @@ class MainFragmentViewModel @Inject constructor(
     private val menuPreferenceRepository =
         preferenceRepository.menuPreferenceRepository
 
-    val menu = menuPreferenceRepository.flow
+    val menu = preferenceRepository.menuPreferenceFlow
         .asLiveData()
 
     val sample = combine(
-        preferenceRepository.orientationPreferenceFlow,
-        preferenceRepository.designPreferenceRepository.flow,
+        preferenceRepository.actualOrientationPreferenceFlow,
+        preferenceRepository.designPreferenceFlow,
         ::Pair
     ).asLiveData()
 

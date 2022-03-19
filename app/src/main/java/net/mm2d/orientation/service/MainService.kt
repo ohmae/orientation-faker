@@ -36,13 +36,13 @@ class MainService : LifecycleService() {
     @Inject
     lateinit var preferenceRepository: PreferenceRepository
     private val controlPreferenceFlow: Flow<ControlPreference> by lazy {
-        preferenceRepository.controlPreferenceRepository.flow
+        preferenceRepository.controlPreferenceFlow
     }
     private val designPreferenceFlow: Flow<DesignPreference> by lazy {
-        preferenceRepository.designPreferenceRepository.flow
+        preferenceRepository.designPreferenceFlow
     }
     private val orientationPreferenceFlow: Flow<OrientationPreference> by lazy {
-        preferenceRepository.orientationPreferenceFlow
+        preferenceRepository.actualOrientationPreferenceFlow
     }
     private val packageNameFlow: MutableStateFlow<String> = MutableStateFlow("")
     private var checker: ForegroundPackageChecker? = null
@@ -83,7 +83,7 @@ class MainService : LifecycleService() {
         }
         lifecycleScope.launch {
             combine(
-                preferenceRepository.orientationPreferenceRepository.flow,
+                preferenceRepository.orientationPreferenceFlow,
                 ForegroundPackageSettings.emptyFlow(),
             ) { orientation: OrientationPreference, empty: Boolean ->
                 orientation.enabled && orientation.shouldControlByForegroundApp && !empty

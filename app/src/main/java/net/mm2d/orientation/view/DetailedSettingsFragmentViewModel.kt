@@ -18,8 +18,6 @@ class DetailedSettingsFragmentViewModel @Inject constructor(
 ) : ViewModel() {
     private val orientationPreferenceRepository =
         preferenceRepository.orientationPreferenceRepository
-    private val orientationPreferenceFlow =
-        preferenceRepository.orientationPreferenceFlow
     private val controlPreferenceRepository =
         preferenceRepository.controlPreferenceRepository
     private val designPreferenceRepository =
@@ -27,16 +25,16 @@ class DetailedSettingsFragmentViewModel @Inject constructor(
     private val menuPreferenceRepository =
         preferenceRepository.menuPreferenceRepository
 
-    val menu = menuPreferenceRepository.flow
+    val menu = preferenceRepository.menuPreferenceFlow
         .asLiveData()
     val sample = combine(
-        orientationPreferenceFlow,
-        designPreferenceRepository.flow,
+        preferenceRepository.actualOrientationPreferenceFlow,
+        preferenceRepository.designPreferenceFlow,
         ::Pair
     ).asLiveData()
-    val orientation = orientationPreferenceRepository.flow.asLiveData()
-    val control = controlPreferenceRepository.flow.asLiveData()
-    val design = designPreferenceRepository.flow.asLiveData()
+    val orientation = preferenceRepository.orientationPreferenceFlow.asLiveData()
+    val control = preferenceRepository.controlPreferenceFlow.asLiveData()
+    val design = preferenceRepository.designPreferenceFlow.asLiveData()
 
     fun updateOrientation(orientation: Orientation) {
         viewModelScope.launch {
@@ -131,8 +129,8 @@ class DetailedSettingsFragmentViewModel @Inject constructor(
     fun adjustOrientation() {
         preferenceRepository.scope.launch {
             combine(
-                orientationPreferenceRepository.flow,
-                designPreferenceRepository.flow,
+                preferenceRepository.orientationPreferenceFlow,
+                preferenceRepository.designPreferenceFlow,
                 ::Pair
             ).take(1).collect { (orientation, design) ->
                 if (!design.orientations.contains(orientation.orientation)) {

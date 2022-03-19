@@ -15,13 +15,12 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.shareIn
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.OrientationHelper
@@ -35,29 +34,33 @@ class PreferenceRepository(context: Context) {
     val designPreferenceRepository = DesignPreferenceRepository(context)
     val menuPreferenceRepository = MenuPreferenceRepository(context)
     val reviewPreferenceRepository = ReviewPreferenceRepository(context)
+    private val packagePreferenceFlow: SharedFlow<PackagePreference>
+    val orientationPreferenceFlow: SharedFlow<OrientationPreference>
+    val controlPreferenceFlow: SharedFlow<ControlPreference>
+    val designPreferenceFlow: SharedFlow<DesignPreference>
+    val menuPreferenceFlow: SharedFlow<MenuPreference>
+    val reviewPreferenceFlow: SharedFlow<ReviewPreference>
 
     init {
         Default.initialize(context)
+        packagePreferenceFlow = packagePreferenceRepository.flow
+            .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
+        orientationPreferenceFlow = orientationPreferenceRepository.flow
+            .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
+        controlPreferenceFlow = controlPreferenceRepository.flow
+            .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
+        designPreferenceFlow = designPreferenceRepository.flow
+            .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
+        menuPreferenceFlow = menuPreferenceRepository.flow
+            .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
+        reviewPreferenceFlow = reviewPreferenceRepository.flow
+            .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
+
         scope.launch {
-            packagePreferenceRepository.flow.take(1).collect()
-        }
-        scope.launch {
-            orientationPreferenceRepository.flow.take(1).collect()
-        }
-        scope.launch {
-            controlPreferenceRepository.flow.take(1).collect()
-        }
-        scope.launch {
-            designPreferenceRepository.flow.take(1).collect()
-        }
-        scope.launch {
-            menuPreferenceRepository.flow.collect {
+            menuPreferenceFlow.collect {
                 AppCompatDelegate.setDefaultNightMode(it.nightMode)
                 OrientationHelper.setWarnSystemRotate(it.warnSystemRotate)
             }
-        }
-        scope.launch {
-            reviewPreferenceRepository.flow.take(1).collect()
         }
         scope.launch(Dispatchers.IO) {
             delay(1000)
@@ -71,7 +74,7 @@ class PreferenceRepository(context: Context) {
     private val packageOrientationFlow: MutableStateFlow<OrientationRequest> = MutableStateFlow(OrientationRequest())
 
     private val powerOrientationFlow: Flow<OrientationRequest> = combine(
-        orientationPreferenceRepository.flow
+        orientationPreferenceFlow
             .distinctUntilChangedBy { it.orientationWhenPowerIsConnected },
         powerPluggedFlow
     ) { orientation, plugged ->
@@ -90,8 +93,8 @@ class PreferenceRepository(context: Context) {
     }.shareIn(scope, SharingStarted.Eagerly, 1)
         .distinctUntilChanged()
 
-    val orientationPreferenceFlow = combine(
-        orientationPreferenceRepository.flow,
+    val actualOrientationPreferenceFlow = combine(
+        orientationPreferenceFlow,
         preferredOrientationFlow
     ) { preferences, preferred ->
         if (!preferences.enabled || preferred == Orientation.INVALID) preferences else preferences.copy(orientation = preferred)

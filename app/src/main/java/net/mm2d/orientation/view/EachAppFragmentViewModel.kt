@@ -10,28 +10,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EachAppFragmentViewModel @Inject constructor(
-    preferenceRepository: PreferenceRepository
+    private val preferenceRepository: PreferenceRepository
 ) : ViewModel() {
-    private val orientationPreferenceRepository =
-        preferenceRepository.orientationPreferenceRepository
-    private val menuPreferenceRepository =
-        preferenceRepository.menuPreferenceRepository
-
-    val orientation = orientationPreferenceRepository.flow
+    val orientation = preferenceRepository.orientationPreferenceFlow
         .asLiveData()
 
-    val menu = menuPreferenceRepository.flow
+    val menu = preferenceRepository.menuPreferenceFlow
         .asLiveData()
 
     fun updateControlByForegroundApp(enable: Boolean) {
         viewModelScope.launch {
-            orientationPreferenceRepository.updateControlByForegroundApp(enable)
+            preferenceRepository.orientationPreferenceRepository
+                .updateControlByForegroundApp(enable)
         }
     }
 
     fun updateShowAllApps(show: Boolean) {
         viewModelScope.launch {
-            menuPreferenceRepository.updateShowAllApps(show)
+            preferenceRepository.menuPreferenceRepository
+                .updateShowAllApps(show)
         }
     }
 }

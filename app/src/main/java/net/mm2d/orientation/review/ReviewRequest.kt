@@ -35,8 +35,8 @@ object ReviewRequest {
 
     fun requestReviewIfNeed(fragment: Fragment, preferenceRepository: PreferenceRepository) {
         fragment.viewLifecycleOwner.lifecycleScope.launch {
-            val orientationFlow = preferenceRepository.orientationPreferenceRepository.flow
-            val reviewFlow = preferenceRepository.reviewPreferenceRepository.flow
+            val orientationFlow = preferenceRepository.orientationPreferenceFlow
+            val reviewFlow = preferenceRepository.reviewPreferenceFlow
             combine(orientationFlow, reviewFlow, ::Pair)
                 .take(1)
                 .collect { (orientation, review) ->

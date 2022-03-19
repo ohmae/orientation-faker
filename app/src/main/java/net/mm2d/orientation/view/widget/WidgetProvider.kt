@@ -35,8 +35,8 @@ class WidgetProvider : AppWidgetProvider() {
         fun initialize(context: Context, repository: PreferenceRepository) {
             preferenceRepository = repository
             preferenceFlow = combine(
-                repository.orientationPreferenceFlow,
-                repository.designPreferenceRepository.flow,
+                repository.actualOrientationPreferenceFlow,
+                repository.designPreferenceFlow,
             ) { orientation, design ->
                 val o = if (orientation.enabled) orientation.orientation else Orientation.INVALID
                 orientation.copy(orientation = o) to design
