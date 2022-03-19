@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.control.OrientationHelper
 
 class PreferenceRepository(context: Context) {
     val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
@@ -59,7 +58,6 @@ class PreferenceRepository(context: Context) {
         scope.launch {
             menuPreferenceFlow.collect {
                 AppCompatDelegate.setDefaultNightMode(it.nightMode)
-                OrientationHelper.setWarnSystemRotate(it.warnSystemRotate)
             }
         }
         scope.launch(Dispatchers.IO) {

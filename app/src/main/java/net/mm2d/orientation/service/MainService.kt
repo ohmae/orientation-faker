@@ -14,14 +14,14 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.ForegroundPackageChecker
+import net.mm2d.orientation.control.ForegroundPackageReceiver
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.OrientationHelper
+import net.mm2d.orientation.entity.Quadruple
 import net.mm2d.orientation.settings.ControlPreference
 import net.mm2d.orientation.settings.DesignPreference
 import net.mm2d.orientation.settings.OrientationPreference
@@ -34,26 +34,21 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainService : LifecycleService() {
     @Inject
-    lateinit var preferenceRepository: PreferenceRepository
+    lateinit var orientationHelper: OrientationHelper
+
     private val controlPreferenceFlow: MutableSharedFlow<ControlPreference> = MutableSharedFlow(replay = 1)
     private val designPreferenceFlow: MutableSharedFlow<DesignPreference> = MutableSharedFlow(replay = 1)
     private val orientationPreferenceFlow: MutableSharedFlow<OrientationPreference> = MutableSharedFlow(replay = 1)
-    private val packageNameFlow: MutableStateFlow<String> = MutableStateFlow("")
+    private val foregroundPackageEmptyFlow: MutableSharedFlow<Boolean> = MutableSharedFlow(replay = 1)
     private var checker: ForegroundPackageChecker? = null
 
     override fun onCreate() {
         super.onCreate()
-        lifecycleScope.launch {
-            packageNameFlow
-                .map { ForegroundPackageSettings.get(it) }
-                .collect {
-                    preferenceRepository.updatePackageOrientation(it)
-                }
-        }
+        NotificationHelper.startForegroundEmpty(this)
         lifecycleScope.launch {
             orientationPreferenceFlow.collect { preferences ->
                 if (preferences.enabled) {
-                    OrientationHelper.update(preferences.orientation, preferences.isLandscapeDevice)
+                    orientationHelper.update(preferences.orientation, preferences.isLandscapeDevice)
                 } else {
                     stop()
                 }
@@ -61,8 +56,8 @@ class MainService : LifecycleService() {
         }
         lifecycleScope.launch {
             combine(
-                preferenceRepository.orientationPreferenceFlow,
-                ForegroundPackageSettings.emptyFlow(),
+                orientationPreferenceFlow,
+                foregroundPackageEmptyFlow,
             ) { orientation: OrientationPreference, empty: Boolean ->
                 orientation.enabled && orientation.shouldControlByForegroundApp && !empty
             }.collect {
@@ -83,7 +78,6 @@ class MainService : LifecycleService() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
-        NotificationHelper.startForegroundEmpty(this)
         val orientation = intent?.getParcelableExtra<OrientationPreference>(EXTRA_ORIENTATION)?.also {
             orientationPreferenceFlow.tryEmit(it)
         }
@@ -93,23 +87,19 @@ class MainService : LifecycleService() {
         intent?.getParcelableExtra<DesignPreference>(EXTRA_DESIGN)?.also {
             designPreferenceFlow.tryEmit(it)
         }
+        intent?.getBooleanExtra(EXTRA_FOREGROUND_SETTING_EMPTY, false)?.let {
+            foregroundPackageEmptyFlow.tryEmit(it)
+        }
         if (!SystemSettings.canDrawOverlays(this) || orientation?.enabled == false) {
             stop()
             return START_NOT_STICKY
         }
-        startedFlow.value = true
         return START_STICKY
     }
 
-    override fun onDestroy() {
-        startedFlow.value = false
-        super.onDestroy()
-    }
-
     private fun stop() {
-        startedFlow.value = false
         NotificationHelper.stopForeground(this)
-        OrientationHelper.cancel()
+        orientationHelper.cancel()
         stopForegroundChecker()
         stopSelf()
     }
@@ -127,7 +117,7 @@ class MainService : LifecycleService() {
             return
         }
         checker = ForegroundPackageChecker(this) {
-            packageNameFlow.value = it
+            ForegroundPackageReceiver.update(this, it)
         }.also { checker ->
             checker.start()
         }
@@ -142,21 +132,19 @@ class MainService : LifecycleService() {
         private const val EXTRA_ORIENTATION = "EXTRA_ORIENTATION"
         private const val EXTRA_CONTROL = "EXTRA_CONTROL"
         private const val EXTRA_DESIGN = "EXTRA_DESIGN"
-
-        val startedFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
-        val isStarted: Boolean
-            get() = startedFlow.value
+        private const val EXTRA_FOREGROUND_SETTING_EMPTY = "EXTRA_FOREGROUND_SETTING_EMPTY"
 
         fun initialize(c: Context, preferenceRepository: PreferenceRepository) {
             val context = c.applicationContext
             preferenceRepository.scope.launch {
                 combine(
                     preferenceRepository.actualOrientationPreferenceFlow,
-                    preferenceRepository.controlPreferenceRepository.flow,
-                    preferenceRepository.designPreferenceRepository.flow,
-                    ::Triple
-                ).collect { (orientation, control, design) ->
-                    runCatching { start(context, orientation, control, design) }
+                    preferenceRepository.controlPreferenceFlow,
+                    preferenceRepository.designPreferenceFlow,
+                    ForegroundPackageSettings.emptyFlow(),
+                    ::Quadruple
+                ).collect { (orientation, control, design, empty) ->
+                    runCatching { start(context, orientation, control, design, empty) }
                 }
             }
         }
@@ -166,11 +154,13 @@ class MainService : LifecycleService() {
             orientation: OrientationPreference,
             control: ControlPreference,
             design: DesignPreference,
+            empty: Boolean,
         ) {
             val intent = Intent(context, MainService::class.java).also {
                 it.putExtra(EXTRA_ORIENTATION, orientation)
                 it.putExtra(EXTRA_CONTROL, control)
                 it.putExtra(EXTRA_DESIGN, design)
+                it.putExtra(EXTRA_FOREGROUND_SETTING_EMPTY, empty)
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.startForegroundService(intent)

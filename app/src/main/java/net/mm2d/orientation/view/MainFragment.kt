@@ -48,6 +48,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private var binding: FragmentMainBinding by autoCleared()
     private val viewModel: MainFragmentViewModel by viewModels()
     private var warnSystemRotate: Boolean = false
+    private var enable: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentMainBinding.bind(view)
@@ -70,6 +71,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
         viewModel.sample.observe(viewLifecycleOwner) { (orientation, design) ->
             notificationSample.update(orientation, design)
+            enable = orientation.enabled
             if (orientation.enabled) {
                 binding.content.statusButton.setText(R.string.button_status_stop)
                 binding.content.statusButton.setBackgroundResource(R.drawable.bg_stop_button)
@@ -161,7 +163,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     @SuppressLint("NewApi")
     private fun toggleStatus() {
-        if (MainService.isStarted) {
+        if (enable) {
             viewModel.updateEnabled(false)
         } else {
             if (SystemSettings.canDrawOverlays(requireContext())) {

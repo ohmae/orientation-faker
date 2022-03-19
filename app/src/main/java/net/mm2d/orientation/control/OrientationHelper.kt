@@ -9,41 +9,24 @@ package net.mm2d.orientation.control
 
 import android.annotation.SuppressLint
 import android.content.Context
-import net.mm2d.android.orientationfaker.R
-import net.mm2d.orientation.control.OrientationHelper.Rotation.ROTATION_0
-import net.mm2d.orientation.control.OrientationHelper.Rotation.ROTATION_180
-import net.mm2d.orientation.control.OrientationHelper.Rotation.ROTATION_270
-import net.mm2d.orientation.control.OrientationHelper.Rotation.ROTATION_90
-import net.mm2d.orientation.review.ReviewRequest
-import net.mm2d.orientation.settings.PreferenceRepository
 import net.mm2d.orientation.util.Powers
-import net.mm2d.orientation.util.SystemSettings
-import net.mm2d.orientation.util.Toaster
 import kotlin.math.abs
 import kotlin.math.atan
 
 @SuppressLint("StaticFieldLeak")
-object OrientationHelper {
-    private lateinit var context: Context
-    private lateinit var preferenceRepository: PreferenceRepository
-    private lateinit var controller: OrientationController
-    private lateinit var sensorHelper: SensorHelper
+class OrientationHelper(
+    private val context: Context
+) {
+    private val controller: OrientationController = OrientationController(context)
+    private val sensorHelper: SensorHelper = SensorHelper(
+        context,
+        { controller.isEnabled && requestedOrientation.usesSensor() },
+        this::sensorResult
+    )
     private var requestedOrientation: Orientation = Orientation.INVALID
     private var isLandscapeDevice: Boolean = false
-    private var warnSystemRotate: Boolean = false
 
-    fun initialize(c: Context, repository: PreferenceRepository) {
-        context = c.applicationContext
-        preferenceRepository = repository
-        controller = OrientationController(context)
-        sensorHelper = SensorHelper(
-            context,
-            { controller.isEnabled && requestedOrientation.usesSensor() },
-            this::sensorResult
-        )
-    }
-
-    suspend fun update(orientation: Orientation, landscapeDevice: Boolean) {
+    fun update(orientation: Orientation, landscapeDevice: Boolean) {
         if (requestedOrientation == orientation &&
             controller.isEnabled &&
             isLandscapeDevice == landscapeDevice
@@ -51,8 +34,7 @@ object OrientationHelper {
             return
         }
         requestedOrientation = orientation
-        ReviewRequest.updateOrientation(orientation, preferenceRepository)
-        notifySystemSettingsIfNeed(orientation)
+        ControlStatusReceiver.updateOrientation(context, orientation)
         isLandscapeDevice = landscapeDevice
         if (orientation.usesSensor()) {
             if (!controller.isEnabled) {
@@ -70,10 +52,6 @@ object OrientationHelper {
     fun cancel() {
         controller.stop()
         sensorHelper.stopSensor()
-    }
-
-    fun setWarnSystemRotate(warn: Boolean) {
-        warnSystemRotate = warn
     }
 
     private fun minimumCoercion(x: Float, y: Float): Boolean {
@@ -122,10 +100,10 @@ object OrientationHelper {
 
     private fun sensorUpSideDown(rotation: Rotation) {
         val targetOrientation = when (rotation) {
-            ROTATION_0 -> Orientation.PORTRAIT
-            ROTATION_90 -> Orientation.LANDSCAPE
-            ROTATION_180 -> Orientation.REVERSE_PORTRAIT
-            ROTATION_270 -> Orientation.REVERSE_LANDSCAPE
+            Rotation.ROTATION_0 -> Orientation.PORTRAIT
+            Rotation.ROTATION_90 -> Orientation.LANDSCAPE
+            Rotation.ROTATION_180 -> Orientation.REVERSE_PORTRAIT
+            Rotation.ROTATION_270 -> Orientation.REVERSE_LANDSCAPE
         }
         if (controller.orientation == targetOrientation) return
         if (requestedOrientation == Orientation.SENSOR_PORTRAIT) {
@@ -141,10 +119,10 @@ object OrientationHelper {
 
     private fun sensorLieLeft(rotation: Rotation) {
         val targetOrientation = when (rotation) {
-            ROTATION_0 -> Orientation.REVERSE_LANDSCAPE
-            ROTATION_90 -> Orientation.PORTRAIT
-            ROTATION_180 -> Orientation.LANDSCAPE
-            ROTATION_270 -> Orientation.REVERSE_PORTRAIT
+            Rotation.ROTATION_0 -> Orientation.REVERSE_LANDSCAPE
+            Rotation.ROTATION_90 -> Orientation.PORTRAIT
+            Rotation.ROTATION_180 -> Orientation.LANDSCAPE
+            Rotation.ROTATION_270 -> Orientation.REVERSE_PORTRAIT
         }
         if (controller.orientation == targetOrientation) return
         controller.setOrientation(targetOrientation)
@@ -152,10 +130,10 @@ object OrientationHelper {
 
     private fun sensorLieRight(rotation: Rotation) {
         val targetOrientation = when (rotation) {
-            ROTATION_0 -> Orientation.LANDSCAPE
-            ROTATION_90 -> Orientation.REVERSE_PORTRAIT
-            ROTATION_180 -> Orientation.REVERSE_LANDSCAPE
-            ROTATION_270 -> Orientation.PORTRAIT
+            Rotation.ROTATION_0 -> Orientation.LANDSCAPE
+            Rotation.ROTATION_90 -> Orientation.REVERSE_PORTRAIT
+            Rotation.ROTATION_180 -> Orientation.REVERSE_LANDSCAPE
+            Rotation.ROTATION_270 -> Orientation.PORTRAIT
         }
         if (controller.orientation == targetOrientation) return
         controller.setOrientation(targetOrientation)
@@ -163,10 +141,10 @@ object OrientationHelper {
 
     private fun sensorHeadstand(rotation: Rotation) {
         val targetOrientation = when (rotation) {
-            ROTATION_0 -> Orientation.REVERSE_PORTRAIT
-            ROTATION_90 -> Orientation.REVERSE_LANDSCAPE
-            ROTATION_180 -> Orientation.PORTRAIT
-            ROTATION_270 -> Orientation.LANDSCAPE
+            Rotation.ROTATION_0 -> Orientation.REVERSE_PORTRAIT
+            Rotation.ROTATION_90 -> Orientation.REVERSE_LANDSCAPE
+            Rotation.ROTATION_180 -> Orientation.PORTRAIT
+            Rotation.ROTATION_270 -> Orientation.LANDSCAPE
         }
         if (controller.orientation == targetOrientation) return
         controller.setOrientation(targetOrientation)
@@ -181,11 +159,11 @@ object OrientationHelper {
 
     private fun Double.toRotation(): Rotation =
         when {
-            this < 1 / 8.0 -> ROTATION_0
-            this < 3 / 8.0 -> ROTATION_90
-            this < 5 / 8.0 -> ROTATION_180
-            this < 7 / 8.0 -> ROTATION_270
-            else -> ROTATION_0
+            this < 1 / 8.0 -> Rotation.ROTATION_0
+            this < 3 / 8.0 -> Rotation.ROTATION_90
+            this < 5 / 8.0 -> Rotation.ROTATION_180
+            this < 7 / 8.0 -> Rotation.ROTATION_270
+            else -> Rotation.ROTATION_0
         }
 
     // 角度を[0-1]で表現
@@ -195,16 +173,4 @@ object OrientationHelper {
         (atan(x / y) / (2 * Math.PI)).let {
             if (y > 0) (if (it > 0) it else 1 + it) else 0.5 + it
         }
-
-    private fun notifySystemSettingsIfNeed(orientation: Orientation) {
-        if (!orientation.requestsSystemSettings()) {
-            return
-        }
-        if (!warnSystemRotate) {
-            return
-        }
-        if (SystemSettings.rotationIsFixed(context)) {
-            Toaster.showLong(context, R.string.toast_system_settings)
-        }
-    }
 }
