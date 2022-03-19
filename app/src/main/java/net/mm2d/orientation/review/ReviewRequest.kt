@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.settings.OrientationPreference
 import net.mm2d.orientation.settings.PreferenceRepository
@@ -35,6 +36,7 @@ object ReviewRequest {
 
     fun requestReviewIfNeed(fragment: Fragment, preferenceRepository: PreferenceRepository) {
         fragment.viewLifecycleOwner.lifecycleScope.launch {
+            yield()
             val orientationFlow = preferenceRepository.orientationPreferenceFlow
             val reviewFlow = preferenceRepository.reviewPreferenceFlow
             combine(orientationFlow, reviewFlow, ::Pair)
