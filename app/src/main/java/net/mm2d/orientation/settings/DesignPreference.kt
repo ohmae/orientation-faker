@@ -7,8 +7,11 @@
 
 package net.mm2d.orientation.settings
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import net.mm2d.orientation.control.Orientation
 
+@Parcelize
 data class DesignPreference(
     val foreground: Int,
     val background: Int,
@@ -19,4 +22,4 @@ data class DesignPreference(
     val shape: IconShape,
     val shouldShowSettings: Boolean,
     val orientations: List<Orientation>
-)
+): Parcelable

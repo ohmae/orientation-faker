@@ -7,7 +7,11 @@
 
 package net.mm2d.orientation.settings
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class ControlPreference(
     val shouldNotifySecret: Boolean,
     val shouldUseBlankIcon: Boolean,
-)
+): Parcelable
