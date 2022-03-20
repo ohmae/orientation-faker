@@ -62,7 +62,6 @@
             android:enabled="true"
             android:exported="false"
             android:permission="${applicationId}.permission"
-            android:process=":controlService"
             />
 
         <receiver

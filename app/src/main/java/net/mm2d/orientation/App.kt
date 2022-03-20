@@ -7,13 +7,10 @@
 
 package net.mm2d.orientation
 
-import android.app.ActivityManager
 import android.app.Application
-import android.os.Build
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
-import androidx.core.content.getSystemService
 import dagger.hilt.android.HiltAndroidApp
 import net.mm2d.orientation.control.ControlStatusReceiver
 import net.mm2d.orientation.control.ForegroundPackageReceiver
@@ -34,7 +31,6 @@ open class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        if (!isMainProcess()) return
         initializeOverrideWhenDebug()
         MainService.initialize(this, preferenceRepository)
         NotificationHelper.createChannel(this)
@@ -54,17 +50,4 @@ open class App : Application() {
         StrictMode.setThreadPolicy(ThreadPolicy.LAX)
         StrictMode.setVmPolicy(VmPolicy.LAX)
     }
-
-    private fun isMainProcess(): Boolean = getCurrentProcessName() == packageName
-
-    private fun getCurrentProcessName(): String =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            getProcessName()
-        } else {
-            getSystemService<ActivityManager>()?.let {
-                it.runningAppProcesses.find { processInfo ->
-                    processInfo.pid == android.os.Process.myPid()
-                }
-            }?.processName ?: ""
-        }
 }
