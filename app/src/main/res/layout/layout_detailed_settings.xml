@@ -28,18 +28,6 @@
             >
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:contentDescription="@null"
-                android:scaleType="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bg_sample"
-                />
-
-            <ImageView
                 android:id="@+id/sample_foreground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,18 +63,6 @@
             android:paddingTop="@dimen/margin_menu_sample"
             android:paddingBottom="@dimen/margin_menu_sample"
             >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:contentDescription="@null"
-                android:scaleType="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bg_sample"
-                />
 
             <ImageView
                 android:id="@+id/sample_background"
@@ -126,18 +102,6 @@
             >
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:contentDescription="@null"
-                android:scaleType="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bg_sample"
-                />
-
-            <ImageView
                 android:id="@+id/sample_foreground_selected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -173,18 +137,6 @@
             android:paddingTop="@dimen/margin_menu_sample"
             android:paddingBottom="@dimen/margin_menu_sample"
             >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:contentDescription="@null"
-                android:scaleType="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bg_sample"
-                />
 
             <ImageView
                 android:id="@+id/sample_background_selected"
@@ -223,18 +175,6 @@
             android:paddingBottom="@dimen/margin_menu_sample"
             android:visibility="gone"
             >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:contentDescription="@null"
-                android:scaleType="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bg_sample"
-                />
 
             <ImageView
                 android:id="@+id/sample_base"
