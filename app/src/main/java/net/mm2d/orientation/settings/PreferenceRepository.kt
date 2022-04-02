@@ -9,6 +9,7 @@ package net.mm2d.orientation.settings
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -23,8 +24,13 @@ import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import net.mm2d.orientation.control.Orientation
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class PreferenceRepository(context: Context) {
+@Singleton
+class PreferenceRepository @Inject constructor(
+    @ApplicationContext context: Context
+) {
     val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     private val packagePreferenceRepository = PackagePreferenceRepository(context)

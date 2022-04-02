@@ -7,15 +7,17 @@
 
 package net.mm2d.orientation.control
 
-import android.annotation.SuppressLint
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import net.mm2d.orientation.util.Powers
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.math.abs
 import kotlin.math.atan
 
-@SuppressLint("StaticFieldLeak")
-class OrientationHelper(
-    private val context: Context
+@Singleton
+class OrientationHelper @Inject constructor(
+    @ApplicationContext private val context: Context
 ) {
     private val controller: OrientationController = OrientationController(context)
     private val sensorHelper: SensorHelper = SensorHelper(
