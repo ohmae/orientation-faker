@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.distinctUntilChangedBy
@@ -29,44 +30,37 @@ import javax.inject.Singleton
 
 @Singleton
 class PreferenceRepository @Inject constructor(
-    @ApplicationContext context: Context
+    @ApplicationContext context: Context,
+    packagePreferenceRepository: PackagePreferenceRepository,
+    val orientationPreferenceRepository: OrientationPreferenceRepository,
+    val controlPreferenceRepository: ControlPreferenceRepository,
+    val designPreferenceRepository: DesignPreferenceRepository,
+    val menuPreferenceRepository: MenuPreferenceRepository,
+    val reviewPreferenceRepository: ReviewPreferenceRepository,
 ) {
     val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
-    private val packagePreferenceRepository = PackagePreferenceRepository(context)
-    val orientationPreferenceRepository = OrientationPreferenceRepository(context)
-    val controlPreferenceRepository = ControlPreferenceRepository(context)
-    val designPreferenceRepository = DesignPreferenceRepository(context)
-    val menuPreferenceRepository = MenuPreferenceRepository(context)
-    val reviewPreferenceRepository = ReviewPreferenceRepository(context)
-    private val packagePreferenceFlow: SharedFlow<PackagePreference>
-    val orientationPreferenceFlow: SharedFlow<OrientationPreference>
-    val controlPreferenceFlow: SharedFlow<ControlPreference>
-    val designPreferenceFlow: SharedFlow<DesignPreference>
-    val menuPreferenceFlow: SharedFlow<MenuPreference>
-    val reviewPreferenceFlow: SharedFlow<ReviewPreference>
+    private val packagePreferenceFlow: SharedFlow<PackagePreference> = packagePreferenceRepository.flow
+        .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
+    val orientationPreferenceFlow: SharedFlow<OrientationPreference> = orientationPreferenceRepository.flow
+        .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
+    val controlPreferenceFlow: SharedFlow<ControlPreference> = controlPreferenceRepository.flow
+        .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
+    val designPreferenceFlow: SharedFlow<DesignPreference> = designPreferenceRepository.flow
+        .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
+    val menuPreferenceFlow: SharedFlow<MenuPreference> = menuPreferenceRepository.flow
+        .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
+    val reviewPreferenceFlow: SharedFlow<ReviewPreference> = reviewPreferenceRepository.flow
+        .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
 
     init {
-        Default.initialize(context)
-        packagePreferenceFlow = packagePreferenceRepository.flow
-            .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
-        orientationPreferenceFlow = orientationPreferenceRepository.flow
-            .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
-        controlPreferenceFlow = controlPreferenceRepository.flow
-            .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
-        designPreferenceFlow = designPreferenceRepository.flow
-            .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
-        menuPreferenceFlow = menuPreferenceRepository.flow
-            .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
-        reviewPreferenceFlow = reviewPreferenceRepository.flow
-            .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
-
         scope.launch {
             menuPreferenceFlow.collect {
                 AppCompatDelegate.setDefaultNightMode(it.nightMode)
             }
         }
         scope.launch(Dispatchers.IO) {
+            packagePreferenceFlow.collect()
             delay(1000)
             OldPreference(context).deleteIfEmpty()
         }

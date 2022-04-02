@@ -13,14 +13,21 @@ import androidx.datastore.core.DataMigration
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import net.mm2d.orientation.control.Orientation
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DesignPreferenceRepository(context: Context) {
+@Singleton
+class DesignPreferenceRepository @Inject constructor(
+    @ApplicationContext context: Context,
+    private val defaults: Default,
+) {
     private val Context.dataStoreField: DataStore<Preferences> by preferences(
         file = DataStoreFile.DESIGN,
-        migrations = listOf(MigrationFromOldPreference(context))
+        migrations = listOf(MigrationFromOldPreference(context, defaults))
     )
     private val dataStore: DataStore<Preferences> = context.dataStoreField
 
@@ -29,11 +36,11 @@ class DesignPreferenceRepository(context: Context) {
         .map {
             val overS = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
             DesignPreference(
-                foreground = it[FOREGROUND] ?: Default.color.foreground,
-                background = it[BACKGROUND] ?: Default.color.background,
-                foregroundSelected = it[FOREGROUND_SELECTED] ?: Default.color.foregroundSelected,
-                backgroundSelected = it[BACKGROUND_SELECTED] ?: Default.color.backgroundSelected,
-                base = it[BASE] ?: Default.color.base,
+                foreground = it[FOREGROUND] ?: defaults.color.foreground,
+                background = it[BACKGROUND] ?: defaults.color.background,
+                foregroundSelected = it[FOREGROUND_SELECTED] ?: defaults.color.foregroundSelected,
+                backgroundSelected = it[BACKGROUND_SELECTED] ?: defaults.color.backgroundSelected,
+                base = it[BASE] ?: defaults.color.base,
                 iconize = it[ICONIZE] ?: overS,
                 shape = IconShape.of(it[SHAPE]),
                 shouldShowSettings = it[SHOW_SETTINGS] ?: !overS,
@@ -87,7 +94,7 @@ class DesignPreferenceRepository(context: Context) {
         dataStore.edit {
             it[ICONIZE] = iconize
             if (iconize && it[BASE] == null) {
-                it[BASE] = it[BACKGROUND] ?: Default.color.background
+                it[BASE] = it[BACKGROUND] ?: defaults.color.background
             }
         }
     }
@@ -111,7 +118,8 @@ class DesignPreferenceRepository(context: Context) {
     }
 
     private class MigrationFromOldPreference(
-        private val context: Context
+        private val context: Context,
+        private val defaults: Default,
     ) : DataMigration<Preferences> {
         private val old: OldPreference by lazy { OldPreference(context) }
 
@@ -131,11 +139,11 @@ class DesignPreferenceRepository(context: Context) {
                     int(Key.Main.COLOR_FOREGROUND_SELECTED_INT, FOREGROUND_SELECTED)
                     int(Key.Main.COLOR_BACKGROUND_SELECTED_INT, BACKGROUND_SELECTED)
                     if (oldVersion == 4 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        it[BASE] = Default.color.base
+                        it[BASE] = defaults.color.base
                     } else {
                         int(
                             Key.Main.COLOR_BASE_INT, BASE,
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) Default.color.base else null
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) defaults.color.base else null
                         )
                         boolean(Key.Main.USE_ROUND_BACKGROUND_BOOLEAN, ICONIZE)
                         boolean(Key.Main.SHOW_SETTINGS_ON_NOTIFICATION_BOOLEAN, SHOW_SETTINGS)

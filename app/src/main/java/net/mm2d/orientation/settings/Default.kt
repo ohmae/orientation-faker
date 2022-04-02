@@ -10,32 +10,21 @@ package net.mm2d.orientation.settings
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import dagger.hilt.android.qualifiers.ApplicationContext
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.Orientation
+import javax.inject.Inject
 
-internal object Default {
-    lateinit var color: Color
-        private set
-
-    val orientationList: List<Orientation> = listOf(
-        Orientation.UNSPECIFIED,
-        Orientation.PORTRAIT,
-        Orientation.LANDSCAPE,
-        Orientation.REVERSE_PORTRAIT,
-        Orientation.REVERSE_LANDSCAPE,
+class Default @Inject constructor(
+    @ApplicationContext context: Context
+) {
+    val color: Color = Color(
+        ContextCompat.getColor(context, R.color.fg_notification),
+        ContextCompat.getColor(context, R.color.bg_notification),
+        ContextCompat.getColor(context, R.color.fg_notification),
+        ContextCompat.getColor(context, R.color.bg_notification_selected),
+        ContextCompat.getColor(context, R.color.bg_notification_base),
     )
-
-    const val nightMode: Int = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-
-    fun initialize(context: Context) {
-        color = Color(
-            ContextCompat.getColor(context, R.color.fg_notification),
-            ContextCompat.getColor(context, R.color.bg_notification),
-            ContextCompat.getColor(context, R.color.fg_notification),
-            ContextCompat.getColor(context, R.color.bg_notification_selected),
-            ContextCompat.getColor(context, R.color.bg_notification_base),
-        )
-    }
 
     class Color(
         val foreground: Int,
@@ -44,4 +33,16 @@ internal object Default {
         val backgroundSelected: Int,
         val base: Int,
     )
+
+    companion object {
+        const val nightMode: Int = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+
+        val orientationList: List<Orientation> = listOf(
+            Orientation.UNSPECIFIED,
+            Orientation.PORTRAIT,
+            Orientation.LANDSCAPE,
+            Orientation.REVERSE_PORTRAIT,
+            Orientation.REVERSE_LANDSCAPE,
+        )
+    }
 }

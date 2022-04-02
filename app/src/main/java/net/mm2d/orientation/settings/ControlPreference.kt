@@ -14,4 +14,4 @@ import kotlinx.parcelize.Parcelize
 data class ControlPreference(
     val shouldNotifySecret: Boolean,
     val shouldUseBlankIcon: Boolean,
-): Parcelable
+) : Parcelable

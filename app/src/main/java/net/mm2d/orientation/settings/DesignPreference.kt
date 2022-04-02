@@ -22,4 +22,4 @@ data class DesignPreference(
     val shape: IconShape,
     val shouldShowSettings: Boolean,
     val orientations: List<Orientation>
-): Parcelable
+) : Parcelable

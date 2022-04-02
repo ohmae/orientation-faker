@@ -11,4 +11,4 @@ data class OrientationPreference(
     val isLandscapeDevice: Boolean,
     val shouldControlByForegroundApp: Boolean,
     val orientationWhenPowerIsConnected: Orientation,
-): Parcelable
+) : Parcelable

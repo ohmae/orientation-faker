@@ -11,11 +11,17 @@ import android.content.Context
 import androidx.datastore.core.DataMigration
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import net.mm2d.android.orientationfaker.BuildConfig
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class PackagePreferenceRepository(context: Context) {
+@Singleton
+class PackagePreferenceRepository @Inject constructor(
+    @ApplicationContext context: Context
+) {
     private val Context.dataStoreField: DataStore<Preferences> by preferences(
         file = DataStoreFile.PACKAGE,
         migrations = listOf(

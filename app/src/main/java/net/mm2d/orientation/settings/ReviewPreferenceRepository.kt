@@ -12,12 +12,18 @@ import androidx.datastore.core.DataMigration
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.random.Random
 
-class ReviewPreferenceRepository(context: Context) {
+@Singleton
+class ReviewPreferenceRepository @Inject constructor(
+    @ApplicationContext context: Context
+) {
     private val Context.dataStoreField: DataStore<Preferences> by preferences(
         file = DataStoreFile.REVIEW,
         migrations = listOf(MigrationFromOldPreference(OldPreference(context)))
