@@ -9,6 +9,8 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("dagger.hilt.android.plugin")
     id("com.github.ben-manes.versions")
+
+    // for release
 }
 
 val applicationName = "OrientationFaker"
@@ -101,6 +103,8 @@ dependencies {
     debugImplementation("com.facebook.soloader:soloader:0.10.3")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:0.143.0")
     debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.143.0")
+
+    // for release
 }
 
 fun isStable(version: String): Boolean {
