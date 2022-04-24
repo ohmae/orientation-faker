@@ -23,7 +23,7 @@ import net.mm2d.orientation.tabs.CustomTabsHelper
 object Launcher {
     private const val PACKAGE_NAME = "net.mm2d.android.orientationfaker"
     private const val PRIVACY_POLICY_URL =
-        "https://github.com/ohmae/orientation-faker/blob/develop/PRIVACY-POLICY.md"
+        "https://ohmae.github.io/app/orientation-faker/privacy-policy.html"
     private const val GITHUB_URL =
         "https://github.com/ohmae/orientation-faker/"
     private const val EMAIL_ADDRESS = "ryo@mm2d.net"
