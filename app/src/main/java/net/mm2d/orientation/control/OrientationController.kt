@@ -33,7 +33,9 @@ class OrientationController(context: Context) {
         val displayContext = context.createDisplayContext(display)
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             displayContext.createWindowContext(LayoutParams.TYPE_APPLICATION_OVERLAY, null)
-        } else displayContext
+        } else {
+            displayContext
+        }
     }
 
     private val layoutParams: LayoutParams = LayoutParams(
@@ -59,8 +61,11 @@ class OrientationController(context: Context) {
     @Suppress("DEPRECATION")
     private val type: Int
         get() =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) LayoutParams.TYPE_APPLICATION_OVERLAY
-            else LayoutParams.TYPE_SYSTEM_ALERT
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                LayoutParams.TYPE_APPLICATION_OVERLAY
+            } else {
+                LayoutParams.TYPE_SYSTEM_ALERT
+            }
 
     fun setOrientation(orientation: Orientation) {
         isEnabled = true

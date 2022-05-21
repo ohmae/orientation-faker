@@ -38,14 +38,15 @@ class PowerConnectionReceiver : BroadcastReceiver() {
         @SuppressLint("StaticFieldLeak")
         private lateinit var context: Context
 
-        private const val BATTERY_PLUGGED_ANY = BatteryManager.BATTERY_PLUGGED_AC or
-            BatteryManager.BATTERY_PLUGGED_USB or
-            BatteryManager.BATTERY_PLUGGED_WIRELESS
+        private const val BATTERY_PLUGGED_ANY =
+            BatteryManager.BATTERY_PLUGGED_AC or
+                BatteryManager.BATTERY_PLUGGED_USB or
+                BatteryManager.BATTERY_PLUGGED_WIRELESS
 
         private fun updateConnectedStatus(preferenceRepository: PreferenceRepository) {
-            val pluggedState = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let {
-                context.registerReceiver(null, it)
-            }?.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) ?: 0
+            val intentFilter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+            val intent = context.registerReceiver(null, intentFilter)
+            val pluggedState = intent?.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) ?: 0
             val plugged = pluggedState and BATTERY_PLUGGED_ANY != 0
             preferenceRepository.updatePowerPlugged(plugged)
         }

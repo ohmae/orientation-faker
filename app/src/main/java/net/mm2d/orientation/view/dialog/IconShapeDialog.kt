@@ -34,7 +34,9 @@ class IconShapeDialog : DialogFragment() {
             }
             .create()
 
-    class IconShapeAdapter(context: Context) : BaseAdapter() {
+    class IconShapeAdapter(
+        context: Context
+    ) : BaseAdapter() {
         private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
         private val values = IconShape.values()
         override fun getCount(): Int = values.size

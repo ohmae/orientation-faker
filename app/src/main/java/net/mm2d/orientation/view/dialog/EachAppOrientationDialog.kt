@@ -82,7 +82,9 @@ class EachAppOrientationDialog : DialogFragment() {
         }
     }
 
-    class ViewHolder(private val binding: LayoutOrientationItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(
+        private val binding: LayoutOrientationItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(entity: Orientations.Entity?) {
             if (entity != null) {
                 binding.icon.setImageResource(entity.icon)
