@@ -14,7 +14,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.Orientation
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class Default @Inject constructor(
     @ApplicationContext context: Context
 ) {
