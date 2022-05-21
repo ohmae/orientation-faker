@@ -80,7 +80,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
     implementation("androidx.lifecycle:lifecycle-common-java8:2.4.1")
     implementation("androidx.lifecycle:lifecycle-service:2.4.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.3")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.gridlayout:gridlayout:1.0.0")
     implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
@@ -100,10 +100,10 @@ dependencies {
     implementation("net.mm2d.color-chooser:color-chooser:0.4.1")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.9.1")
-    debugImplementation("com.facebook.flipper:flipper:0.145.0")
+    debugImplementation("com.facebook.flipper:flipper:0.146.0")
     debugImplementation("com.facebook.soloader:soloader:0.10.3")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.145.0")
-    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.145.0")
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.146.0")
+    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.146.0")
 
     // for release
 }
