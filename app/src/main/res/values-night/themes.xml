@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="Theme.OrientationBase" parent="Theme.OrientationCommon">
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryVariant">@color/gray_800</item>
@@ -22,12 +23,15 @@
 
         <item name="alertDialogTheme">@style/Theme.Orientation.Dialog</item>
     </style>
+
     <style name="Theme.Orientation.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
         <item name="colorPrimary">@color/black</item>
     </style>
+
     <style name="Theme.Orientation.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Dark">
         <item name="colorSurface">@color/black</item>
     </style>
+
     <style name="Theme.Orientation.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="colorPrimary">@color/blue_500</item>
         <item name="colorSecondary">@color/blue_500</item>

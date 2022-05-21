@@ -22,7 +22,7 @@ import net.mm2d.orientation.util.Toaster
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ControlStatusReceiver: BroadcastReceiver() {
+class ControlStatusReceiver : BroadcastReceiver() {
     @Inject
     lateinit var preferenceRepository: PreferenceRepository
 

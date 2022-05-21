@@ -27,7 +27,6 @@ import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.FragmentMainBinding
 import net.mm2d.orientation.review.ReviewRequest
-import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.settings.NightModes
 import net.mm2d.orientation.settings.PreferenceRepository
 import net.mm2d.orientation.util.Launcher

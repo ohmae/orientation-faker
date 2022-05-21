@@ -10,8 +10,8 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.Orientation.AppBarOverlay"
         android:stateListAnimator="@null"
+        android:theme="@style/Theme.Orientation.AppBarOverlay"
         >
 
         <androidx.appcompat.widget.Toolbar

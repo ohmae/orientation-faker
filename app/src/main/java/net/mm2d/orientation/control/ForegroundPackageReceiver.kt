@@ -17,7 +17,7 @@ import net.mm2d.orientation.settings.PreferenceRepository
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ForegroundPackageReceiver: BroadcastReceiver() {
+class ForegroundPackageReceiver : BroadcastReceiver() {
     @Inject
     lateinit var preferenceRepository: PreferenceRepository
 
