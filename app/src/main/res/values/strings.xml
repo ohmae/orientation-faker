@@ -50,7 +50,7 @@
     <string name="menu_description_app_theme_dark">Dark</string>
     <string name="menu_title_version">Version</string>
     <string name="caution_auto_rotate">Please change the system setting to auto-rotate. Reverse setting may not be possible</string>
-    <string name="caution_experimental_orientation">\"sensor port\", \"sensor land\", \"lie left\", \"lie right\" and \"headstand\" are experimental features. Some problems may occur</string>
+    <string name="caution_experimental_orientation">\"sensor port\", \"sensor land\", \"lie left\", \"lie right\" and \"headstand\" will monitor the accelerometer. Therefore, power consumption may increase</string>
 
     <string name="package_check_disabled">Please turn on the switch to enable this function</string>
     <string name="search_apps">Search apps</string>

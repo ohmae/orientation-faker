@@ -50,7 +50,7 @@
     <string name="menu_description_app_theme_dark">黑暗</string>
     <string name="menu_title_version">版本</string>
     <string name="caution_auto_rotate">请将系统设置更改为自动旋转.</string>
-    <string name="caution_experimental_orientation">\"竖屏自动\", \"横屏自动\", \"左侧躺\", \"右侧躺\" 和 \"倒立\" 是实验性功能.</string>
+    <string name="caution_experimental_orientation">\"竖屏自动\", \"横屏自动\", \"左侧躺\", \"右侧躺\" 和 \"倒立\" 监控加速度计. 功耗可能会增加.</string>
 
     <string name="package_check_disabled">请打开开关启用此功能</string>
     <string name="search_apps">搜索应用</string>
