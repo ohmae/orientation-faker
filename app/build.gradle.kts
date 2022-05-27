@@ -100,10 +100,10 @@ dependencies {
     implementation("net.mm2d.color-chooser:color-chooser:0.4.1")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.9.1")
-    debugImplementation("com.facebook.flipper:flipper:0.146.0")
+    debugImplementation("com.facebook.flipper:flipper:0.147.0")
     debugImplementation("com.facebook.soloader:soloader:0.10.3")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.146.0")
-    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.146.0")
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.147.0")
+    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.147.0")
 
     // for release
 }
