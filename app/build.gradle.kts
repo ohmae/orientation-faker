@@ -8,6 +8,7 @@ plugins {
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
     id("dagger.hilt.android.plugin")
+    jacoco
     id("com.github.ben-manes.versions")
 
     // for release
@@ -106,13 +107,42 @@ dependencies {
 
     implementation("net.mm2d.color-chooser:color-chooser:0.4.1")
 
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("io.mockk:mockk:1.12.4")
+    testImplementation("com.google.truth:truth:1.1.3")
+    testImplementation("org.robolectric:robolectric:4.8.1")
+    testImplementation("androidx.test.ext:junit:1.1.3")
+
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.9.1")
-    debugImplementation("com.facebook.flipper:flipper:0.148.0")
+    debugImplementation("com.facebook.flipper:flipper:0.149.0")
     debugImplementation("com.facebook.soloader:soloader:0.10.3")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.148.0")
-    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.148.0")
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.149.0")
+    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.149.0")
 
     // for release
+}
+
+jacoco {
+    toolVersion = "0.8.8"
+}
+
+tasks.withType<Test> {
+    configure<JacocoTaskExtension> {
+        isIncludeNoLocationClasses = true
+        excludes = listOf("jdk.internal.*")
+    }
+}
+
+tasks.create<JacocoReport>("jacocoTestReport") {
+    group = "verification"
+    dependsOn("testDebugUnitTest")
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+    sourceDirectories.setFrom("${projectDir}/src/main/java")
+    classDirectories.setFrom(fileTree("${buildDir}/tmp/kotlin-classes/debug"))
+    executionData.setFrom("${buildDir}/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec")
 }
 
 fun isStable(version: String): Boolean {
