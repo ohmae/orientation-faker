@@ -141,7 +141,7 @@ tasks.create<JacocoReport>("jacocoTestReport") {
         html.required.set(true)
     }
     sourceDirectories.setFrom("${projectDir}/src/main/java")
-    classDirectories.setFrom(fileTree("${buildDir}/tmp/kotlin-classes/debug"))
+    classDirectories.setFrom("${buildDir}/tmp/kotlin-classes/debug")
     executionData.setFrom("${buildDir}/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec")
 }
 
