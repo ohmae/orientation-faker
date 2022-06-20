@@ -110,6 +110,12 @@
     <string name="dialog_button_review">Review</string>
     <string name="dialog_button_send_mail">Report</string>
 
+    <string name="dialog_notification_permission_title">Please allow notification</string>
+    <string name="dialog_notification_permission_message">Please allow notification from \"App Info\", to show control panel</string>
+    <string name="app_info">App info</string>
+    <string name="caution_notification">Notification is not allowed. Please allow permission to display the control panel.</string>
+    <string name="button_setting_notification">SETTING</string>
+
     <string name="toast_could_not_open_setting">Could not open system setting</string>
     <string name="toast_system_settings">Please change the system setting to auto-rotate</string>
     <string name="toast_select_item_max">Cannot add more than 6</string>

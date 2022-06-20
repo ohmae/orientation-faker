@@ -12,6 +12,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.settings.PreferenceRepository
@@ -25,8 +26,11 @@ class MainFragmentViewModel @Inject constructor(
         preferenceRepository.orientationPreferenceRepository
     private val menuPreferenceRepository =
         preferenceRepository.menuPreferenceRepository
+    var notificationPermissionRequested: Boolean = false
+        private set
 
     val menu = preferenceRepository.menuPreferenceFlow
+        .onEach { notificationPermissionRequested = it.notificationPermissionRequested }
         .asLiveData()
 
     val sample = combine(
@@ -50,6 +54,12 @@ class MainFragmentViewModel @Inject constructor(
     fun updateNightMode(nightMode: Int) {
         viewModelScope.launch {
             menuPreferenceRepository.updateNightMode(nightMode)
+        }
+    }
+
+    fun updateNotificationPermissionRequested() {
+        viewModelScope.launch {
+            menuPreferenceRepository.updateNotificationPermissionRequested(true)
         }
     }
 }
