@@ -20,11 +20,13 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -62,7 +64,6 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentEachAppBinding.bind(view)
-        setHasOptionsMenu(true)
         binding.recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         val adapter = EachAppAdapter(requireContext()) { position, packageName ->
             hideKeyboard()
@@ -73,6 +74,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
 
         setUpSearch()
         setUpBottom()
+        setUpMenu()
         EachAppOrientationDialog.registerListener(this, REQUEST_KEY_ORIENTATION)
         { position, packageName, orientation ->
             ForegroundPackageSettings.put(packageName, orientation)
@@ -158,16 +160,22 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.each_app, menu)
-        (menu.findItem(R.id.package_check).actionView as SwitchCompat).also {
-            menuSwitch = it
-            it.isChecked = shouldControlByForegroundApp
-            it.setOnCheckedChangeListener { _, isChecked ->
-                hideKeyboard()
-                viewModel.updateControlByForegroundApp(isChecked)
+    private fun setUpMenu() {
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.each_app, menu)
+                (menu.findItem(R.id.package_check).actionView as SwitchCompat).also {
+                    menuSwitch = it
+                    it.isChecked = shouldControlByForegroundApp
+                    it.setOnCheckedChangeListener { _, isChecked ->
+                        hideKeyboard()
+                        viewModel.updateControlByForegroundApp(isChecked)
+                    }
+                }
             }
-        }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean = true
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     @SuppressLint("QueryPermissionsNeeded")

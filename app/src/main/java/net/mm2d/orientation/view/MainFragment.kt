@@ -15,10 +15,11 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle.State
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionManager
@@ -51,8 +52,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentMainBinding.bind(view)
-        setHasOptionsMenu(true)
         setUpViews()
+        setUpMenu()
         if (!SystemSettings.canDrawOverlays(requireContext())) {
             viewModel.updateEnabled(false)
         } else {
@@ -100,7 +101,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun checkSystemSettings() {
-        if (lifecycle.currentState != State.RESUMED) {
+        if (lifecycle.currentState != Lifecycle.State.RESUMED) {
             return
         }
         if (!warnSystemRotate) {
@@ -115,23 +116,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         handler.postDelayed(checkSystemSettingsTask, CHECK_INTERVAL)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val context = requireContext()
-        when (item.itemId) {
-            R.id.license -> LicenseActivity.start(context)
-            R.id.source_code -> Launcher.openSourceCode(context)
-            R.id.privacy_policy -> Launcher.openPrivacyPolicy(context)
-            R.id.mail_to_developer -> Launcher.sendMailToDeveloper(context)
-            R.id.share_this_app -> Launcher.shareThisApp(requireActivity())
-            R.id.play_store -> Launcher.openGooglePlay(context)
-        }
-        return true
-    }
-
     private fun setUpViews() {
         notificationSample = NotificationSample(binding.notificationSample)
         binding.content.status.setOnClickListener { toggleStatus() }
@@ -143,6 +127,27 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding.content.eachApp.setOnClickListener {
             navigate(MainFragmentDirections.actionMainFragmentToEachAppFragment())
         }
+    }
+
+    private fun setUpMenu() {
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.main, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                val context = requireContext()
+                when (menuItem.itemId) {
+                    R.id.license -> LicenseActivity.start(context)
+                    R.id.source_code -> Launcher.openSourceCode(context)
+                    R.id.privacy_policy -> Launcher.openPrivacyPolicy(context)
+                    R.id.mail_to_developer -> Launcher.sendMailToDeveloper(context)
+                    R.id.share_this_app -> Launcher.shareThisApp(requireActivity())
+                    R.id.play_store -> Launcher.openGooglePlay(context)
+                }
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun navigate(directions: NavDirections) {

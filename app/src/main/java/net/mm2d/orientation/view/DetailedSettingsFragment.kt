@@ -48,7 +48,6 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentDetailedSettingsBinding.bind(view)
-        setHasOptionsMenu(false)
         setUpViews()
         viewModel.menu.observe(viewLifecycleOwner) {
             binding.content.autoRotateWarning.isChecked = it.warnSystemRotate
