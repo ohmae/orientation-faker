@@ -57,16 +57,16 @@ class DebugApp : App() {
         LeakCanary.config = LeakCanary.config.copy(
             onHeapAnalyzedListener = FlipperLeakListener()
         )
-//        SoLoader.init(this, false)
-//        if (!FlipperUtils.shouldEnableFlipper(this)) return
-//        val client = AndroidFlipperClient.getInstance(this)
-//        client.addPlugin(InspectorFlipperPlugin(this, DescriptorMapping.withDefaults()))
-//        client.addPlugin(NavigationFlipperPlugin.getInstance())
-//        client.addPlugin(NetworkFlipperPlugin())
-//        client.addPlugin(DatabasesFlipperPlugin(this))
-//        client.addPlugin(SharedPreferencesFlipperPlugin(this))
-//        client.addPlugin(LeakCanary2FlipperPlugin())
-//        client.addPlugin(CrashReporterPlugin.getInstance())
-//        client.start()
+        SoLoader.init(this, false)
+        if (!FlipperUtils.shouldEnableFlipper(this)) return
+        val client = AndroidFlipperClient.getInstance(this)
+        client.addPlugin(InspectorFlipperPlugin(this, DescriptorMapping.withDefaults()))
+        client.addPlugin(NavigationFlipperPlugin.getInstance())
+        client.addPlugin(NetworkFlipperPlugin())
+        client.addPlugin(DatabasesFlipperPlugin(this))
+        client.addPlugin(SharedPreferencesFlipperPlugin(this))
+        client.addPlugin(LeakCanary2FlipperPlugin())
+        client.addPlugin(CrashReporterPlugin.getInstance())
+        client.start()
     }
 }
