@@ -148,21 +148,21 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
     }
 
     private fun registerDialogListener() {
-        ColorChooserDialog.registerListener(this, REQUEST_KEY_FOREGROUND) {
+        ColorChooserDialog.registerListener(this, REQUEST_KEY_FOREGROUND, {
             viewModel.updateForeground(it)
-        }
-        ColorChooserDialog.registerListener(this, REQUEST_KEY_BACKGROUND) {
+        }, null)
+        ColorChooserDialog.registerListener(this, REQUEST_KEY_BACKGROUND, {
             viewModel.updateBackground(it)
-        }
-        ColorChooserDialog.registerListener(this, REQUEST_KEY_FOREGROUND_SELECTED) {
+        }, null)
+        ColorChooserDialog.registerListener(this, REQUEST_KEY_FOREGROUND_SELECTED, {
             viewModel.updateForegroundSelected(it)
-        }
-        ColorChooserDialog.registerListener(this, REQUEST_KEY_BACKGROUND_SELECTED) {
+        }, null)
+        ColorChooserDialog.registerListener(this, REQUEST_KEY_BACKGROUND_SELECTED, {
             viewModel.updateBackgroundSelected(it)
-        }
-        ColorChooserDialog.registerListener(this, REQUEST_KEY_BASE) {
+        }, null)
+        ColorChooserDialog.registerListener(this, REQUEST_KEY_BASE, {
             viewModel.updateBase(it)
-        }
+        }, null)
         ResetThemeDialog.registerListener(this, REQUEST_KEY_RESET_THEME) {
             viewModel.resetTheme()
         }

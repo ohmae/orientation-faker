@@ -105,7 +105,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.42")
     kapt("com.google.dagger:hilt-android-compiler:2.42")
 
-    implementation("net.mm2d.color-chooser:color-chooser:0.4.1")
+    implementation("net.mm2d.color-chooser:color-chooser:0.5.0")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("io.mockk:mockk:1.12.4")
@@ -114,10 +114,10 @@ dependencies {
     testImplementation("androidx.test.ext:junit:1.1.3")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.9.1")
-    debugImplementation("com.facebook.flipper:flipper:0.152.0")
+    debugImplementation("com.facebook.flipper:flipper:0.153.0")
     debugImplementation("com.facebook.soloader:soloader:0.10.4")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.152.0")
-    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.152.0")
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.153.0")
+    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.153.0")
 
     // for release
 }
