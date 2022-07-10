@@ -16,6 +16,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.core.view.MenuProvider
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -35,7 +36,9 @@ import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.Updater
 import net.mm2d.orientation.util.autoCleared
 import net.mm2d.orientation.view.dialog.NightModeDialog
+import net.mm2d.orientation.view.dialog.NotificationPermissionDialog
 import net.mm2d.orientation.view.dialog.OverlayPermissionDialog
+import net.mm2d.orientation.view.notification.NotificationPermission
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -49,6 +52,20 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private val viewModel: MainFragmentViewModel by viewModels()
     private var warnSystemRotate: Boolean = false
     private var enable: Boolean = false
+
+    private val notificationPermissionRequest =
+        NotificationPermission.register(this) { granted, failedToShowDialog ->
+            if (granted) return@register
+            if (failedToShowDialog) {
+                NotificationPermissionDialog.show(this)
+            }
+        }
+    private val notificationPermissionRequestForStart =
+        NotificationPermission.register(this) { granted, _ ->
+            if (granted) {
+                viewModel.updateEnabled(true)
+            }
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentMainBinding.bind(view)
@@ -68,6 +85,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 NightModeDialog.show(this, REQUEST_KEY_NIGHT_MODE, menu.nightMode)
             }
             warnSystemRotate = menu.warnSystemRotate
+            startCheckSystemSettings()
         }
         viewModel.sample.observe(viewLifecycleOwner) { (orientation, design) ->
             notificationSample.update(orientation, design)
@@ -82,16 +100,27 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 binding.content.statusDescription.setText(R.string.menu_description_status_waiting)
             }
         }
+        binding.content.notificationCaution.setOnClickListener {
+            notificationPermissionRequest.launch(requireActivity())
+        }
     }
 
     @SuppressLint("NewApi")
-    override fun onResume() {
-        super.onResume()
-        handler.removeCallbacks(checkSystemSettingsTask)
-        handler.post(checkSystemSettingsTask)
-        ReviewRequest.requestReviewIfNeed(this, preferenceRepository)
+    override fun onStart() {
+        super.onStart()
         if (!SystemSettings.canDrawOverlays(requireContext())) {
             OverlayPermissionDialog.show(this)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startCheckSystemSettings()
+        ReviewRequest.requestReviewIfNeed(this, preferenceRepository)
+        val granted = NotificationPermission.isGranted(requireContext())
+        if (binding.content.notificationCaution.isGone != granted) {
+            TransitionManager.beginDelayedTransition(binding.content.root)
+            binding.content.notificationCaution.isGone = granted
         }
     }
 
@@ -100,18 +129,23 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         handler.removeCallbacks(checkSystemSettingsTask)
     }
 
+    private fun startCheckSystemSettings() {
+        handler.removeCallbacks(checkSystemSettingsTask)
+        handler.post(checkSystemSettingsTask)
+    }
+
     private fun checkSystemSettings() {
         if (lifecycle.currentState != Lifecycle.State.RESUMED) {
             return
         }
         if (!warnSystemRotate) {
-            binding.content.caution.visibility = View.GONE
+            binding.content.autoRotateCaution.visibility = View.GONE
             return
         }
         val shouldWarning = SystemSettings.rotationIsFixed(requireContext())
-        if (binding.content.caution.isVisible != shouldWarning) {
+        if (binding.content.autoRotateCaution.isVisible != shouldWarning) {
             TransitionManager.beginDelayedTransition(binding.content.contentsContainer)
-            binding.content.caution.isVisible = shouldWarning
+            binding.content.autoRotateCaution.isVisible = shouldWarning
         }
         handler.postDelayed(checkSystemSettingsTask, CHECK_INTERVAL)
     }
@@ -170,10 +204,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         if (enable) {
             viewModel.updateEnabled(false)
         } else {
-            if (SystemSettings.canDrawOverlays(requireContext())) {
-                viewModel.updateEnabled(true)
-            } else {
+            val context = requireContext()
+            if (!SystemSettings.canDrawOverlays(context)) {
                 OverlayPermissionDialog.show(this)
+            } else if (!viewModel.notificationPermissionRequested && !NotificationPermission.isGranted(context)) {
+                notificationPermissionRequestForStart.launch(requireActivity())
+                viewModel.updateNotificationPermissionRequested()
+            } else {
+                viewModel.updateEnabled(true)
             }
         }
     }

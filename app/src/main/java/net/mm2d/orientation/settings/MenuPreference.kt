@@ -11,4 +11,5 @@ data class MenuPreference(
     val warnSystemRotate: Boolean,
     val nightMode: Int,
     val shouldShowAllApp: Boolean,
+    val notificationPermissionRequested: Boolean,
 )

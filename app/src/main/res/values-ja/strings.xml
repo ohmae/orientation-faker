@@ -109,6 +109,12 @@
     <string name="dialog_button_review">評価する</string>
     <string name="dialog_button_send_mail">問題報告</string>
 
+    <string name="dialog_notification_permission_title">通知の許可</string>
+    <string name="dialog_notification_permission_message">コントールパネルを表示するため「アプリ情報」から通知を許可してください</string>
+    <string name="app_info">アプリ情報</string>
+    <string name="caution_notification">通知が許可されていません。コントロールパネルの表示のため、通知の許可をお願いします。</string>
+    <string name="button_setting_notification">設定</string>
+
     <string name="toast_could_not_open_setting">システムの設定画面を開けません</string>
     <string name="toast_system_settings">システム設定を自動回転に変更してください</string>
     <string name="toast_select_item_max">6つ以上追加できません</string>

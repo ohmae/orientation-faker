@@ -110,6 +110,12 @@
     <string name="dialog_button_review">评论</string>
     <string name="dialog_button_send_mail">报告</string>
 
+    <string name="dialog_notification_permission_title">请允许通知</string>
+    <string name="dialog_notification_permission_message">无法显示控制面板, \n请允许来自\“应用信息\”的通知，以显示控制面板</string>
+    <string name="app_info">应用信息</string>
+    <string name="caution_notification">不允许通知, 请允许显示控制面板的权限</string>
+    <string name="button_setting_notification">设置</string>
+
     <string name="toast_could_not_open_setting">无法打开系统设置</string>
     <string name="toast_system_settings">请将系统设置为自动旋转</string>
     <string name="toast_select_item_max">不能增加超过6个</string>

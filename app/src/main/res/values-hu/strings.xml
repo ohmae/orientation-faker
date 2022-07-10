@@ -110,6 +110,12 @@
     <string name="dialog_button_review">Értékelés</string>
     <string name="dialog_button_send_mail">Jelentés</string>
 
+    <string name="dialog_notification_permission_title">Kérem, engedélyezze az értesítést</string>
+    <string name="dialog_notification_permission_message">A vezérlőpult megjelenítéséhez engedélyezze az \"Alkalmazás részletek\" értesítést</string>
+    <string name="app_info">Alkalmazás részletek</string>
+    <string name="caution_notification">Az értesítés nem megengedett. Kérjük, engedélyezze a vezérlőpult megjelenítését.</string>
+    <string name="button_setting_notification">BEÁLLÍTÁS</string>
+
     <string name="toast_could_not_open_setting">A rendszerbeállításokat nem lehetett megnyitni</string>
     <string name="toast_system_settings">Kérjük, állítsd be a rendszerbeállítást automatikus forgatásra</string>
     <string name="toast_select_item_max">6-nál több nem adható hozzá</string>

@@ -20,13 +20,13 @@ val versionMinor = 2
 val versionPatch = 5
 
 android {
-    compileSdk = 31
+    compileSdk = 33
 
     namespace = "net.mm2d.android.orientationfaker"
     defaultConfig {
         applicationId = "net.mm2d.android.orientationfaker"
         minSdk = 21
-        targetSdk = 31
+        targetSdk = 33
         versionCode = versionMajor * 10000 + versionMinor * 100 + versionPatch
         versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
         vectorDrawables.useSupportLibrary = true

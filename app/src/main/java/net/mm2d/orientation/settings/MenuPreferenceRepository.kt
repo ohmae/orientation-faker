@@ -35,6 +35,7 @@ class MenuPreferenceRepository @Inject constructor(
                 warnSystemRotate = it[WARN_SYSTEM_ROTATE] ?: true,
                 nightMode = it[NIGHT_MODE] ?: Default.nightMode,
                 shouldShowAllApp = it[SHOW_ALL_APPS] ?: false,
+                notificationPermissionRequested = it[NOTIFICATION_PERMISSION_REQUESTED] ?: false
             )
         }
 
@@ -53,6 +54,12 @@ class MenuPreferenceRepository @Inject constructor(
     suspend fun updateShowAllApps(show: Boolean) {
         dataStore.edit {
             it[SHOW_ALL_APPS] = show
+        }
+    }
+
+    suspend fun updateNotificationPermissionRequested(requested: Boolean) {
+        dataStore.edit {
+            it[NOTIFICATION_PERMISSION_REQUESTED] = requested
         }
     }
 
@@ -95,5 +102,7 @@ class MenuPreferenceRepository @Inject constructor(
             Key.Menu.NIGHT_MODE_INT.intKey()
         private val SHOW_ALL_APPS =
             Key.Menu.SHOW_ALL_APPS_BOOLEAN.booleanKey()
+        private val NOTIFICATION_PERMISSION_REQUESTED =
+            Key.Menu.NOTIFICATION_PERMISSION_REQUESTED_BOOLEAN.booleanKey()
     }
 }
