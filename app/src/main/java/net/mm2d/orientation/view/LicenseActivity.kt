@@ -10,7 +10,6 @@ package net.mm2d.orientation.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -53,12 +52,9 @@ class LicenseActivity : AppCompatActivity() {
         binding.webView.loadUrl("file:///android_asset/license.html")
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     companion object {
