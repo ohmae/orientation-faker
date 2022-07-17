@@ -27,6 +27,8 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.MenuProvider
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -149,8 +151,8 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
     }
 
     private fun hideKeyboard() {
-        (requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
-            .hideSoftInputFromWindow(binding.searchWindow.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+        WindowInsetsControllerCompat(requireActivity().window, binding.searchWindow)
+            .hide(WindowInsetsCompat.Type.ime())
     }
 
     override fun onResume() {
