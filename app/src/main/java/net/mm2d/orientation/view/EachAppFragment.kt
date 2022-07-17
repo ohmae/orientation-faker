@@ -142,7 +142,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
     }
 
     private fun setAppList(list: List<AppInfo>) {
-        ForegroundPackageSettings.updateInstalledPackages(list.map { it.packageName })
+        ForegroundPackageSettings.updateInstalledPackages(list.mapTo(LinkedHashSet(list.size)) { it.packageName })
         adapter.updateList(list)
         binding.noAppCaution.isGone = adapter.isNotEmpty()
         binding.progressBar.visibility = View.GONE

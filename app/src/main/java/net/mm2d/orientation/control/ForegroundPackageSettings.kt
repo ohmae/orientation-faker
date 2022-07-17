@@ -42,7 +42,7 @@ object ForegroundPackageSettings {
         }
     }
 
-    fun updateInstalledPackages(packages: List<String>) {
+    fun updateInstalledPackages(packages: Set<String>) {
         val list = map.keys.toMutableList()
         scope.launch {
             list.removeAll(packages)
