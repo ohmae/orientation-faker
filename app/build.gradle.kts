@@ -79,9 +79,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
-    implementation("androidx.appcompat:appcompat:1.4.2")
+    implementation("androidx.appcompat:appcompat:1.5.0")
     implementation("androidx.activity:activity-ktx:1.5.1")
-    implementation("androidx.fragment:fragment-ktx:1.5.1")
+    implementation("androidx.fragment:fragment-ktx:1.5.2")
     implementation("androidx.core:core-ktx:1.8.0")
     implementation("androidx.browser:browser:1.4.0")
     implementation("androidx.legacy:legacy-support-v13:1.0.0")
@@ -94,7 +94,7 @@ dependencies {
     implementation("androidx.gridlayout:gridlayout:1.0.0")
     implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
-    implementation("androidx.webkit:webkit:1.4.0")
+    implementation("androidx.webkit:webkit:1.5.0")
     implementation("com.google.android.material:material:1.6.1")
     implementation("com.google.android.play:core:1.10.3")
     implementation("com.google.android.play:core-ktx:1.8.1")
@@ -107,19 +107,19 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.43.2")
     kapt("com.google.dagger:hilt-android-compiler:2.43.2")
 
-    implementation("net.mm2d.color-chooser:color-chooser:0.5.0")
+    implementation("net.mm2d.color-chooser:color-chooser:0.5.2")
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation("io.mockk:mockk:1.12.5")
+    testImplementation("io.mockk:mockk:1.12.7")
     testImplementation("com.google.truth:truth:1.1.3")
-    testImplementation("org.robolectric:robolectric:4.8.1")
+    testImplementation("org.robolectric:robolectric:4.8.2")
     testImplementation("androidx.test.ext:junit:1.1.3")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.9.1")
-    debugImplementation("com.facebook.flipper:flipper:0.157.0")
+    debugImplementation("com.facebook.flipper:flipper:0.162.0")
     debugImplementation("com.facebook.soloader:soloader:0.10.4")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.157.0")
-    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.157.0")
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.162.0")
+    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.162.0")
 
     // for release
 }
