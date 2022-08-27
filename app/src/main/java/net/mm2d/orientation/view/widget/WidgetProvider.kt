@@ -42,7 +42,7 @@ class WidgetProvider : AppWidgetProvider() {
                 orientation.copy(orientation = o) to design
             }.shareIn(repository.scope, SharingStarted.Eagerly, 1)
 
-            val widgetManager: AppWidgetManager = context.getSystemService()!!
+            val widgetManager: AppWidgetManager = AppWidgetManager.getInstance(context)
             repository.scope.launch {
                 preferenceFlow.collect { (orientation, design) ->
                     widgetManager.getAppWidgetIds(ComponentName(context, WidgetProvider::class.java))?.forEach {

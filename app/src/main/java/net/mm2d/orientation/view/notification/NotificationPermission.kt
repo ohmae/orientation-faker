@@ -17,7 +17,11 @@ object NotificationPermission {
         fragment: Fragment,
         callback: (granted: Boolean, failedToShowDialog: Boolean) -> Unit
     ): PermissionRequestLauncher =
-        fragment.registerForPermissionRequest(PERMISSION, callback)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            fragment.registerForPermissionRequest(PERMISSION, callback)
+        } else {
+            PermissionRequestLauncher.EMPTY
+        }
 
     fun isGranted(context: Context): Boolean =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

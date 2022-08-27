@@ -8,6 +8,12 @@ import androidx.fragment.app.Fragment
 
 interface PermissionRequestLauncher {
     fun launch(activity: Activity)
+
+    companion object {
+        val EMPTY = object : PermissionRequestLauncher {
+            override fun launch(activity: Activity) = Unit
+        }
+    }
 }
 
 fun Fragment.registerForPermissionRequest(

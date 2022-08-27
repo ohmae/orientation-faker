@@ -53,21 +53,12 @@ object ReviewRequest {
         review: ReviewPreference,
         preferenceRepository: PreferenceRepository
     ) {
-        if (!fragment.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-            return
-        }
-        if (!orientation.enabled) {
-            return
-        }
-        if (review.reported || review.reviewed) {
-            return
-        }
-        if (review.cancelCount >= 2) {
-            return
-        }
-        if (review.orientationChangeCount < ORIENTATION_CHANGE_COUNT) {
-            return
-        }
+        if (!fragment.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) return
+        if (!orientation.enabled) return
+        if (review.reported) return
+        if (review.reviewed) return
+        if (review.cancelCount >= 2) return
+        if (review.orientationChangeCount < ORIENTATION_CHANGE_COUNT) return
         val now = System.currentTimeMillis()
         if (review.cancelCount == 0 &&
             now - review.firstUseTime < INTERVAL_FIRST_REVIEW + review.intervalRandomFactor

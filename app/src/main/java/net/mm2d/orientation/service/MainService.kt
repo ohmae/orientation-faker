@@ -28,6 +28,7 @@ import net.mm2d.orientation.settings.OrientationPreference
 import net.mm2d.orientation.settings.PreferenceRepository
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.Toaster
+import net.mm2d.orientation.util.getParcelableExtraSafely
 import net.mm2d.orientation.view.notification.NotificationHelper
 import javax.inject.Inject
 
@@ -78,13 +79,13 @@ class MainService : LifecycleService() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
-        val orientation = intent?.getParcelableExtra<OrientationPreference>(EXTRA_ORIENTATION)?.also {
+        val orientation = intent?.getParcelableExtraSafely<OrientationPreference>(EXTRA_ORIENTATION)?.also {
             orientationPreferenceFlow.tryEmit(it)
         }
-        intent?.getParcelableExtra<ControlPreference>(EXTRA_CONTROL)?.also {
+        intent?.getParcelableExtraSafely<ControlPreference>(EXTRA_CONTROL)?.also {
             controlPreferenceFlow.tryEmit(it)
         }
-        intent?.getParcelableExtra<DesignPreference>(EXTRA_DESIGN)?.also {
+        intent?.getParcelableExtraSafely<DesignPreference>(EXTRA_DESIGN)?.also {
             designPreferenceFlow.tryEmit(it)
         }
         intent?.getBooleanExtra(EXTRA_FOREGROUND_SETTING_EMPTY, false)?.let {
