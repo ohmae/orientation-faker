@@ -17,6 +17,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -37,6 +38,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Fade
+import androidx.transition.SidePropagation
+import androidx.transition.TransitionManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -70,6 +74,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
             hideKeyboard()
             EachAppOrientationDialog.show(this, REQUEST_KEY_ORIENTATION, position, packageName)
         }
+        adapter.setParent(binding.recyclerView)
         this.adapter = adapter
         binding.recyclerView.adapter = adapter
 
@@ -232,6 +237,11 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
         private var shouldShowAllApps: Boolean = false
         private var allList: List<AppInfo> = emptyList()
         private var filteredList: List<AppInfo> = emptyList()
+        private var parent: ViewGroup? = null
+
+        fun setParent(viewGroup: ViewGroup) {
+            parent = viewGroup
+        }
 
         fun search(word: String) {
             val w = word.lowercase(Locale.ENGLISH)
@@ -252,7 +262,16 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
 
         private fun update() {
             filteredList = filter()
-            submitList(filteredList)
+            submitList(filteredList) {
+                val parent = parent ?: return@submitList
+                val transition = Fade(Fade.IN).apply {
+                    propagation = SidePropagation().also {
+                        it.setSide(Gravity.BOTTOM)
+                        it.setPropagationSpeed(1f)
+                    }
+                }
+                TransitionManager.beginDelayedTransition(parent, transition)
+            }
         }
 
         fun isNotEmpty(): Boolean = filteredList.isNotEmpty()
