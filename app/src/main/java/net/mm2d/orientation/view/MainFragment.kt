@@ -115,6 +115,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     override fun onResume() {
         super.onResume()
+        Updater.onResume(requireActivity())
         startCheckSystemSettings()
         ReviewRequest.requestReviewIfNeed(this, preferenceRepository)
         val granted = NotificationPermission.isGranted(requireContext())
