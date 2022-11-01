@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.ItemIconShapeBinding
 import net.mm2d.orientation.settings.IconShape
+import net.mm2d.orientation.util.getSerializableSafely
 
 class IconShapeDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
@@ -63,7 +64,9 @@ class IconShapeDialog : DialogFragment() {
         fun registerListener(fragment: Fragment, requestKey: String, listener: (IconShape) -> Unit) {
             fragment.childFragmentManager
                 .setFragmentResultListener(requestKey, fragment) { _, result ->
-                    listener(result.getSerializable(RESULT_SHAPE) as IconShape)
+                    val icon = result.getSerializableSafely<IconShape>(RESULT_SHAPE)
+                        ?: return@setFragmentResultListener
+                    listener(icon)
                 }
         }
 

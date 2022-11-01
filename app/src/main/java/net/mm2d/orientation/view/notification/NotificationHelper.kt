@@ -55,7 +55,12 @@ object NotificationHelper {
     }
 
     fun stopForeground(service: Service) {
-        service.stopForeground(true)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            service.stopForeground(Service.STOP_FOREGROUND_REMOVE)
+        } else {
+            @Suppress("DEPRECATION")
+            service.stopForeground(true)
+        }
     }
 
     private fun makeEmptyNotification(context: Context): Notification =

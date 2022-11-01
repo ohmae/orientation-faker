@@ -25,6 +25,7 @@ import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.LayoutOrientationItemBinding
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.Orientations
+import net.mm2d.orientation.util.getSerializableSafely
 
 class OrientationSelectDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -102,9 +103,9 @@ class OrientationSelectDialog : DialogFragment() {
         fun registerListener(fragment: Fragment, requestKey: String, listener: (Orientation) -> Unit) {
             val manager = fragment.childFragmentManager
             manager.setFragmentResultListener(requestKey, fragment) { _, result ->
-                listener(
-                    result.getSerializable(RESULT_ORIENTATION) as Orientation
-                )
+                val orientation = result.getSerializableSafely<Orientation>(RESULT_ORIENTATION)
+                    ?: return@setFragmentResultListener
+                listener(orientation)
             }
         }
 

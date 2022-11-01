@@ -57,7 +57,7 @@ class NightModeDialog : DialogFragment() {
         fun registerListener(fragment: Fragment, requestKey: String, listener: (Int) -> Unit) {
             fragment.childFragmentManager
                 .setFragmentResultListener(requestKey, fragment) { _, result ->
-                    listener(result.getSerializable(RESULT_MODE) as Int)
+                    listener(result.getInt(RESULT_MODE))
                 }
         }
 

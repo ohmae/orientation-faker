@@ -11,11 +11,13 @@ import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.browser.customtabs.CustomTabsCallback
 import androidx.browser.customtabs.CustomTabsClient
 import androidx.browser.customtabs.CustomTabsServiceConnection
 import androidx.browser.customtabs.CustomTabsSession
 import androidx.lifecycle.ProcessLifecycleOwner
+import net.mm2d.orientation.util.queryIntentServicesCompat
 
 @SuppressLint("StaticFieldLeak")
 object CustomTabsHelper : CustomTabsServiceConnection() {
@@ -37,7 +39,7 @@ object CustomTabsHelper : CustomTabsServiceConnection() {
     private fun findPackageNameToUseInner(context: Context): String? {
         val browsers = OpenUriUtils.getBrowserPackages(context)
         val candidate = context.packageManager
-            .queryIntentServices(Intent(ACTION_CUSTOM_TABS_CONNECTION), 0)
+            .queryIntentServicesCompat(Intent(ACTION_CUSTOM_TABS_CONNECTION), PackageManager.MATCH_DEFAULT_ONLY)
             .mapNotNull { it.serviceInfo?.packageName }
             .filter { browsers.contains(it) }
         if (candidate.isEmpty()) {

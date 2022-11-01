@@ -55,6 +55,8 @@ import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.Orientations
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.autoCleared
+import net.mm2d.orientation.util.getInstalledPackagesCompat
+import net.mm2d.orientation.util.queryIntentActivitiesCompat
 import net.mm2d.orientation.view.dialog.EachAppOrientationDialog
 import net.mm2d.orientation.view.dialog.UsageAppPermissionDialog
 import java.util.*
@@ -186,15 +188,15 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
 
     @SuppressLint("QueryPermissionsNeeded")
     private fun makeAppList(context: Context): List<AppInfo> {
-        val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PackageManager.MATCH_ALL else 0
+        val flag = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PackageManager.MATCH_ALL else 0) or PackageManager.MATCH_DEFAULT_ONLY
         val pm = context.packageManager
-        val allApps = pm.getInstalledPackages(PackageManager.GET_ACTIVITIES)
+        val allApps = pm.getInstalledPackagesCompat(PackageManager.GET_ACTIVITIES)
             .mapNotNull { it.applicationInfo }
             .map { it to false }
-        val launcherApps = pm.queryIntentActivities(categoryIntent(Intent.CATEGORY_LAUNCHER), flag)
+        val launcherApps = pm.queryIntentActivitiesCompat(categoryIntent(Intent.CATEGORY_LAUNCHER), flag)
             .mapNotNull { it.activityInfo }
             .map { it to true }
-        val launcher = pm.queryIntentActivities(categoryIntent(Intent.CATEGORY_HOME), flag)
+        val launcher = pm.queryIntentActivitiesCompat(categoryIntent(Intent.CATEGORY_HOME), flag)
             .mapNotNull { it.activityInfo }
             .map { it to true }
         return (launcherApps + launcher + allApps)
