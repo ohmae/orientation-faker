@@ -27,7 +27,7 @@ class OrientationPreferenceRepository @Inject constructor(
 ) {
     private val Context.dataStoreField: DataStore<Preferences> by preferences(
         file = DataStoreFile.ORIENTATION,
-        migrations = listOf(MigrationFromOldPreference(context))
+        migrations = listOf(WriteFirstValue())
     )
     private val dataStore: DataStore<Preferences> = context.dataStoreField
 
@@ -90,36 +90,16 @@ class OrientationPreferenceRepository @Inject constructor(
         }
     }
 
-    private class MigrationFromOldPreference(
-        private val context: Context
-    ) : DataMigration<Preferences> {
-        private val old: OldPreference by lazy { OldPreference(context) }
-
+    private class WriteFirstValue : DataMigration<Preferences> {
         override suspend fun shouldMigrate(currentData: Preferences): Boolean =
             currentData[DATA_VERSION] != VERSION
 
         override suspend fun migrate(currentData: Preferences): Preferences =
             currentData.edit {
-                old.deleteIfTooOld()
                 it[DATA_VERSION] = VERSION
-                Migrator(old, it).apply {
-                    boolean(Key.Main.RESIDENT_BOOLEAN, ENABLED)
-                    int(Key.Main.ORIENTATION_INT, ORIENTATION)
-                    boolean(Key.Main.LANDSCAPE_DEVICE_BOOLEAN, LANDSCAPE_DEVICE)
-                    boolean(Key.Main.FOREGROUND_PACKAGE_ENABLED_BOOLEAN, CONTROL_BY_FOREGROUND_APP)
-                }
             }
 
-        override suspend fun cleanUp() {
-            old.remove(
-                Key.Main.RESIDENT_BOOLEAN,
-                Key.Main.ORIENTATION_INT,
-                Key.Main.LANDSCAPE_DEVICE_BOOLEAN,
-                Key.Main.FOREGROUND_PACKAGE_STRING,
-                Key.Main.FOREGROUND_PACKAGE_CHECK_TIME_LONG,
-                Key.Main.FOREGROUND_PACKAGE_ENABLED_BOOLEAN,
-            )
-        }
+        override suspend fun cleanUp() = Unit
     }
 
     companion object {

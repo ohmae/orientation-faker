@@ -40,11 +40,12 @@ class ControlStatusReceiver : BroadcastReceiver() {
         if (!orientation.requestsSystemSettings()) {
             return
         }
-        if (preferenceRepository.menuPreferenceFlow.replayCache.getOrNull(0)?.warnSystemRotate != false) {
-            return
-        }
-        if (SystemSettings.rotationIsFixed(context)) {
-            Toaster.showLong(context, R.string.toast_system_settings)
+        preferenceRepository.scope.launch {
+            preferenceRepository.menuPreferenceFlow.collect {
+                if (it.warnSystemRotate && SystemSettings.rotationIsFixed(context)) {
+                    Toaster.showLong(context, R.string.toast_system_settings)
+                }
+            }
         }
     }
 

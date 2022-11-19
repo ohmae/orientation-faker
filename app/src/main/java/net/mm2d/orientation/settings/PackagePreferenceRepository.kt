@@ -25,7 +25,7 @@ class PackagePreferenceRepository @Inject constructor(
     private val Context.dataStoreField: DataStore<Preferences> by preferences(
         file = DataStoreFile.PACKAGE,
         migrations = listOf(
-            MigrationFromOldPreference(context),
+            WriteFirstValue(),
             MigrationForUpdate(),
         )
     )
@@ -41,31 +41,17 @@ class PackagePreferenceRepository @Inject constructor(
             )
         }
 
-    private class MigrationFromOldPreference(
-        private val context: Context
-    ) : DataMigration<Preferences> {
-        private val old: OldPreference by lazy { OldPreference(context) }
-
+    private class WriteFirstValue : DataMigration<Preferences> {
         override suspend fun shouldMigrate(currentData: Preferences): Boolean =
             currentData[DATA_VERSION] != VERSION
 
         override suspend fun migrate(currentData: Preferences): Preferences =
             currentData.edit {
-                old.deleteIfTooOld()
                 it[DATA_VERSION] = VERSION
-                Migrator(old, it).apply {
-                    int(Key.Main.APP_VERSION_AT_INSTALL_INT, VERSION_AT_INSTALL, BuildConfig.VERSION_CODE)
-                    int(Key.Main.APP_VERSION_AT_LAST_LAUNCHED_INT, VERSION_AT_LAST_LAUNCHED)
-                }
+                it[VERSION_AT_INSTALL] = BuildConfig.VERSION_CODE
             }
 
-        override suspend fun cleanUp() {
-            old.remove(
-                Key.Main.APP_VERSION_AT_INSTALL_INT,
-                Key.Main.APP_VERSION_AT_LAST_LAUNCHED_INT,
-            )
-            old.deleteOldSharedPreferences()
-        }
+        override suspend fun cleanUp() = Unit
     }
 
     private class MigrationForUpdate : DataMigration<Preferences> {

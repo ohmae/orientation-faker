@@ -13,10 +13,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
@@ -40,18 +38,12 @@ class PreferenceRepository @Inject constructor(
 ) {
     val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
-    private val packagePreferenceFlow: SharedFlow<PackagePreference> = packagePreferenceRepository.flow
-        .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
-    val orientationPreferenceFlow: SharedFlow<OrientationPreference> = orientationPreferenceRepository.flow
-        .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
-    val controlPreferenceFlow: SharedFlow<ControlPreference> = controlPreferenceRepository.flow
-        .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
-    val designPreferenceFlow: SharedFlow<DesignPreference> = designPreferenceRepository.flow
-        .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
-    val menuPreferenceFlow: SharedFlow<MenuPreference> = menuPreferenceRepository.flow
-        .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
-    val reviewPreferenceFlow: SharedFlow<ReviewPreference> = reviewPreferenceRepository.flow
-        .shareIn(scope, replay = 1, started = SharingStarted.Eagerly)
+    private val packagePreferenceFlow: Flow<PackagePreference> = packagePreferenceRepository.flow
+    val orientationPreferenceFlow: Flow<OrientationPreference> = orientationPreferenceRepository.flow
+    val controlPreferenceFlow: Flow<ControlPreference> = controlPreferenceRepository.flow
+    val designPreferenceFlow: Flow<DesignPreference> = designPreferenceRepository.flow
+    val menuPreferenceFlow: Flow<MenuPreference> = menuPreferenceRepository.flow
+    val reviewPreferenceFlow: Flow<ReviewPreference> = reviewPreferenceRepository.flow
 
     init {
         scope.launch {
@@ -61,7 +53,6 @@ class PreferenceRepository @Inject constructor(
         }
         scope.launch(Dispatchers.IO) {
             packagePreferenceFlow.collect()
-            delay(1000)
             OldPreference(context).deleteIfEmpty()
         }
     }

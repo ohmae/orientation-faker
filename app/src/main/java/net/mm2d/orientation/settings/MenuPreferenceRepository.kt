@@ -24,7 +24,7 @@ class MenuPreferenceRepository @Inject constructor(
 ) {
     private val Context.dataStoreField: DataStore<Preferences> by preferences(
         file = DataStoreFile.MENU,
-        migrations = listOf(MigrationFromOldPreference(context))
+        migrations = listOf(WriteFirstValue())
     )
     private val dataStore: DataStore<Preferences> = context.dataStoreField
 
@@ -63,32 +63,16 @@ class MenuPreferenceRepository @Inject constructor(
         }
     }
 
-    private class MigrationFromOldPreference(
-        private val context: Context
-    ) : DataMigration<Preferences> {
-        private val old: OldPreference by lazy { OldPreference(context) }
-
+    private class WriteFirstValue : DataMigration<Preferences> {
         override suspend fun shouldMigrate(currentData: Preferences): Boolean =
             currentData[DATA_VERSION] != VERSION
 
         override suspend fun migrate(currentData: Preferences): Preferences =
             currentData.edit {
-                old.deleteIfTooOld()
                 it[DATA_VERSION] = VERSION
-                Migrator(old, it).apply {
-                    boolean(Key.Main.AUTO_ROTATE_WARNING_BOOLEAN, WARN_SYSTEM_ROTATE)
-                    int(Key.Main.NIGHT_MODE_INT, NIGHT_MODE)
-                    boolean(Key.Main.SHOW_ALL_APPS_BOOLEAN, SHOW_ALL_APPS)
-                }
             }
 
-        override suspend fun cleanUp() {
-            old.remove(
-                Key.Main.AUTO_ROTATE_WARNING_BOOLEAN,
-                Key.Main.NIGHT_MODE_INT,
-                Key.Main.SHOW_ALL_APPS_BOOLEAN,
-            )
-        }
+        override suspend fun cleanUp() = Unit
     }
 
     companion object {

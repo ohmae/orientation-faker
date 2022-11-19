@@ -27,7 +27,7 @@ class DesignPreferenceRepository @Inject constructor(
 ) {
     private val Context.dataStoreField: DataStore<Preferences> by preferences(
         file = DataStoreFile.DESIGN,
-        migrations = listOf(MigrationFromOldPreference(context, defaults))
+        migrations = listOf(WriteFirstValue())
     )
     private val dataStore: DataStore<Preferences> = context.dataStoreField
 
@@ -117,55 +117,16 @@ class DesignPreferenceRepository @Inject constructor(
         }
     }
 
-    private class MigrationFromOldPreference(
-        private val context: Context,
-        private val defaults: Default,
-    ) : DataMigration<Preferences> {
-        private val old: OldPreference by lazy { OldPreference(context) }
-
+    private class WriteFirstValue : DataMigration<Preferences> {
         override suspend fun shouldMigrate(currentData: Preferences): Boolean =
             currentData[DATA_VERSION] != VERSION
 
         override suspend fun migrate(currentData: Preferences): Preferences =
             currentData.edit {
-                old.deleteIfTooOld()
-                // 4 : 2020/12/05 : 4.7.0-
-                // 5 : 2021/09/19 : 5.0.0-
-                val oldVersion = old.getInt(Key.Main.PREFERENCES_VERSION_INT)
                 it[DATA_VERSION] = VERSION
-                Migrator(old, it).apply {
-                    int(Key.Main.COLOR_FOREGROUND_INT, FOREGROUND)
-                    int(Key.Main.COLOR_BACKGROUND_INT, BACKGROUND)
-                    int(Key.Main.COLOR_FOREGROUND_SELECTED_INT, FOREGROUND_SELECTED)
-                    int(Key.Main.COLOR_BACKGROUND_SELECTED_INT, BACKGROUND_SELECTED)
-                    if (oldVersion == 4 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        it[BASE] = defaults.color.base
-                    } else {
-                        int(
-                            Key.Main.COLOR_BASE_INT, BASE,
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) defaults.color.base else null
-                        )
-                        boolean(Key.Main.USE_ROUND_BACKGROUND_BOOLEAN, ICONIZE)
-                        boolean(Key.Main.SHOW_SETTINGS_ON_NOTIFICATION_BOOLEAN, SHOW_SETTINGS)
-                    }
-                    string(Key.Main.ICON_SHAPE_STRING, SHAPE)
-                    string(Key.Main.ORIENTATION_LIST_STRING, ORIENTATION_LIST)
-                }
             }
 
-        override suspend fun cleanUp() {
-            old.remove(
-                Key.Main.COLOR_FOREGROUND_INT,
-                Key.Main.COLOR_BACKGROUND_INT,
-                Key.Main.COLOR_FOREGROUND_SELECTED_INT,
-                Key.Main.COLOR_BACKGROUND_SELECTED_INT,
-                Key.Main.COLOR_BASE_INT,
-                Key.Main.USE_ROUND_BACKGROUND_BOOLEAN,
-                Key.Main.ICON_SHAPE_STRING,
-                Key.Main.SHOW_SETTINGS_ON_NOTIFICATION_BOOLEAN,
-                Key.Main.ORIENTATION_LIST_STRING,
-            )
-        }
+        override suspend fun cleanUp() = Unit
     }
 
     companion object {

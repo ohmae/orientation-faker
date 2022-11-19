@@ -26,7 +26,7 @@ class ReviewPreferenceRepository @Inject constructor(
 ) {
     private val Context.dataStoreField: DataStore<Preferences> by preferences(
         file = DataStoreFile.REVIEW,
-        migrations = listOf(MigrationFromOldPreference(OldPreference(context)))
+        migrations = listOf(WriteFirstValue())
     )
     private val dataStore: DataStore<Preferences> = context.dataStoreField
 
@@ -84,42 +84,17 @@ class ReviewPreferenceRepository @Inject constructor(
         }
     }
 
-    private class MigrationFromOldPreference(
-        private val old: OldPreference
-    ) : DataMigration<Preferences> {
+    private class WriteFirstValue : DataMigration<Preferences> {
         override suspend fun shouldMigrate(currentData: Preferences): Boolean =
             currentData[DATA_VERSION] != VERSION
 
         override suspend fun migrate(currentData: Preferences): Preferences =
             currentData.edit {
-                old.deleteIfTooOld()
                 it[DATA_VERSION] = VERSION
-                Migrator(old, it).apply {
-                    long(
-                        Key.Main.REVIEW_INTERVAL_RANDOM_FACTOR_LONG,
-                        INTERVAL_RANDOM_FACTOR,
-                        Random.nextLong(INTERVAL_RANDOM_RANGE)
-                    )
-                    long(Key.Main.TIME_FIRST_USE_LONG, FIRST_USE_TIME)
-                    long(Key.Main.TIME_FIRST_REVIEW_LONG, FIRST_REVIEW_TIME)
-                    int(Key.Main.COUNT_ORIENTATION_CHANGED_INT, ORIENTATION_CHANGE_COUNT)
-                    int(Key.Main.COUNT_REVIEW_DIALOG_CANCELED_INT, CANCEL_COUNT)
-                    boolean(Key.Main.REVIEW_REPORTED_BOOLEAN, REPORTED)
-                    boolean(Key.Main.REVIEW_REVIEWED_BOOLEAN, REVIEWED)
-                }
+                it[INTERVAL_RANDOM_FACTOR] = Random.nextLong(INTERVAL_RANDOM_RANGE)
             }
 
-        override suspend fun cleanUp() {
-            old.remove(
-                Key.Main.REVIEW_INTERVAL_RANDOM_FACTOR_LONG,
-                Key.Main.TIME_FIRST_USE_LONG,
-                Key.Main.TIME_FIRST_REVIEW_LONG,
-                Key.Main.COUNT_ORIENTATION_CHANGED_INT,
-                Key.Main.COUNT_REVIEW_DIALOG_CANCELED_INT,
-                Key.Main.REVIEW_REPORTED_BOOLEAN,
-                Key.Main.REVIEW_REVIEWED_BOOLEAN,
-            )
-        }
+        override suspend fun cleanUp() = Unit
     }
 
     companion object {
