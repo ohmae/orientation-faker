@@ -104,10 +104,10 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
 
-    implementation("com.google.dagger:hilt-android:2.44.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.44.1")
+    implementation("com.google.dagger:hilt-android:2.44.2")
+    kapt("com.google.dagger:hilt-android-compiler:2.44.2")
 
-    implementation("net.mm2d.color-chooser:color-chooser:0.5.2")
+    implementation("net.mm2d.color-chooser:color-chooser:0.6.0")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("io.mockk:mockk:1.13.2")

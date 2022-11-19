@@ -8,6 +8,7 @@
 package net.mm2d.orientation.view
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -56,7 +57,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private val notificationPermissionRequest =
         NotificationPermission.register(this) { granted, failedToShowDialog ->
             if (granted) return@register
-            if (failedToShowDialog) {
+            if (failedToShowDialog && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationPermissionDialog.show(this)
             }
         }
