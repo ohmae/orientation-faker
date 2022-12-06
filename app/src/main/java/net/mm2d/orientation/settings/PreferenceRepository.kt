@@ -53,7 +53,7 @@ class PreferenceRepository @Inject constructor(
         }
         scope.launch(Dispatchers.IO) {
             packagePreferenceFlow.collect()
-            OldPreference(context).deleteIfEmpty()
+            OldPreference(context).deleteAll()
         }
     }
 

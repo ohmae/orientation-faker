@@ -15,7 +15,7 @@ import java.io.File
 class OldPreference(
     private val context: Context
 ) {
-    fun deleteIfEmpty() {
+    fun deleteAll() {
         deleteSharedPreferences(BuildConfig.APPLICATION_ID + ".Main")
         deleteSharedPreferences(BuildConfig.APPLICATION_ID + "_preferences")
         deleteSharedPreferences(BuildConfig.APPLICATION_ID + ".b")
