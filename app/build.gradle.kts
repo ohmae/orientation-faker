@@ -81,7 +81,7 @@ dependencies {
 
     implementation("androidx.appcompat:appcompat:1.5.1")
     implementation("androidx.activity:activity-ktx:1.6.1")
-    implementation("androidx.fragment:fragment-ktx:1.5.4")
+    implementation("androidx.fragment:fragment-ktx:1.5.5")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.browser:browser:1.4.0")
     implementation("androidx.legacy:legacy-support-v13:1.0.0")
@@ -112,14 +112,14 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     testImplementation("io.mockk:mockk:1.13.3")
     testImplementation("com.google.truth:truth:1.1.3")
-    testImplementation("org.robolectric:robolectric:4.9")
+    testImplementation("org.robolectric:robolectric:4.9.1")
     testImplementation("androidx.test.ext:junit:1.1.4")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.10")
-    debugImplementation("com.facebook.flipper:flipper:0.176.0")
+    debugImplementation("com.facebook.flipper:flipper:0.176.1")
     debugImplementation("com.facebook.soloader:soloader:0.10.5")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.176.0")
-    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.176.0")
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.176.1")
+    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.176.1")
 
     // for release
 }
