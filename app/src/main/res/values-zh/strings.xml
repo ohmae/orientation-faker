@@ -130,4 +130,6 @@
     <string name="options_menu_share_this_app">分享这个App</string>
     <string name="options_menu_play_store">Google Play 商店</string>
     <string name="options_menu_relevant_ads">相关广告</string>
+    <string name="description_settings">启动设置</string>
+    <string name="label_setting">设置</string>
 </resources>

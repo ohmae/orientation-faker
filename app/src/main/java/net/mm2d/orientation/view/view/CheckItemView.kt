@@ -12,7 +12,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import net.mm2d.android.orientationfaker.databinding.ViewCheckItemBinding
-import net.mm2d.orientation.control.Orientation
+import net.mm2d.orientation.control.FunctionButton
+import net.mm2d.orientation.control.FunctionButton.OrientationButton
 
 class CheckItemView @JvmOverloads constructor(
     context: Context,
@@ -22,7 +23,7 @@ class CheckItemView @JvmOverloads constructor(
     private val binding: ViewCheckItemBinding =
         ViewCheckItemBinding.inflate(LayoutInflater.from(context), this)
 
-    var orientation: Orientation = Orientation.UNSPECIFIED
+    var funciton: FunctionButton = OrientationButton.UNSPECIFIED
 
     fun setText(id: Int) {
         binding.name.setText(id)

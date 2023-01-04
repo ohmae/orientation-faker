@@ -17,7 +17,7 @@ import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.orientation.control.Orientations
+import net.mm2d.orientation.control.Functions
 import net.mm2d.orientation.control.PendingIntentCreator
 import net.mm2d.orientation.settings.ControlPreference
 import net.mm2d.orientation.settings.DesignPreference
@@ -82,7 +82,7 @@ object NotificationHelper {
             else NotificationCompat.VISIBILITY_PUBLIC
         val icon =
             if (control.shouldUseBlankIcon) R.drawable.ic_blank
-            else Orientations.find(orientation.orientation)?.icon ?: R.drawable.ic_blank
+            else Functions.find(orientation.orientation)?.icon ?: R.drawable.ic_blank
         val views = RemoteViewsCreator.create(context, orientation, design)
         return NotificationCompat.Builder(context, CHANNEL_ID)
             .setDefaults(0)

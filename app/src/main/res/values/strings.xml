@@ -21,6 +21,7 @@
     <string name="label_sensor_lie_right">lie right</string>
     <string name="label_sensor_headstand">headstand</string>
     <string name="label_clear">clear</string>
+    <string name="label_setting">setting</string>
 
     <string name="description_unspecified">Unspecified orientation from this app. Device will be the original orientation of the displayed app</string>
     <string name="description_force_sensor">Rotate based on sensor information</string>
@@ -34,6 +35,7 @@
     <string name="description_sensor_lie_right">Rotate 90 degrees to the right with respect to the sensor. If you lie on right lateral and use this, the top and bottom will match.</string>
     <string name="description_sensor_headstand">Rotate 180 degrees with respect to the sensor. If you use this by headstand, the top and bottom will match.</string>
     <string name="description_clear">Clear each app setting, follow global setting</string>
+    <string name="description_settings">Launch settings</string>
 
     <string name="menu_title_status">Status</string>
     <string name="menu_description_status_running">Running</string>

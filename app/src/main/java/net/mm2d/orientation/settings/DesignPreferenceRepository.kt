@@ -16,7 +16,7 @@ import androidx.datastore.preferences.core.edit
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import net.mm2d.orientation.control.Orientation
+import net.mm2d.orientation.control.FunctionButton
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -44,9 +44,9 @@ class DesignPreferenceRepository @Inject constructor(
                 iconize = it[ICONIZE] ?: overS,
                 shape = IconShape.of(it[SHAPE]),
                 shouldShowSettings = it[SHOW_SETTINGS] ?: !overS,
-                orientations = OrientationList.toList(it[ORIENTATION_LIST]).let { list ->
-                    list.ifEmpty { Default.orientationList }
-                },
+                functions = FunctionButton
+                    .run { it[FUNCTION_BUTTONS].toFunctionButtons() }
+                    .ifEmpty { Default.functions },
             )
         }
 
@@ -111,9 +111,9 @@ class DesignPreferenceRepository @Inject constructor(
         }
     }
 
-    suspend fun updateOrientations(orientations: List<Orientation>) {
+    suspend fun updateFunctions(functions: List<FunctionButton>) {
         dataStore.edit {
-            it[ORIENTATION_LIST] = OrientationList.toString(orientations)
+            it[FUNCTION_BUTTONS] = FunctionButton.run { functions.toSerializedString() }
         }
     }
 
@@ -123,6 +123,12 @@ class DesignPreferenceRepository @Inject constructor(
 
         override suspend fun migrate(currentData: Preferences): Preferences =
             currentData.edit {
+                if (it[DATA_VERSION] == 1) {
+                    it[FUNCTION_BUTTONS] = FunctionButton.run {
+                        @Suppress("DEPRECATION")
+                        it[ORIENTATION_LIST].migrateFromOrientations()
+                    }
+                }
                 it[DATA_VERSION] = VERSION
             }
 
@@ -131,7 +137,8 @@ class DesignPreferenceRepository @Inject constructor(
 
     companion object {
         // 1 : 2022/01/02 : 5.1.0-
-        private const val VERSION = 1
+        // 2 : 2023/01/0X : 6.0.0-
+        private const val VERSION = 2
         private val DATA_VERSION =
             Key.Design.DATA_VERSION_INT.intKey()
         private val FOREGROUND =
@@ -150,7 +157,12 @@ class DesignPreferenceRepository @Inject constructor(
             Key.Design.SHAPE_STRING.stringKey()
         private val SHOW_SETTINGS =
             Key.Design.SHOW_SETTINGS_BOOLEAN.booleanKey()
+        private val FUNCTION_BUTTONS =
+            Key.Design.FUNCTION_BUTTONS_STRING.stringKey()
+
+        @Deprecated("removed: 6.0.0")
         private val ORIENTATION_LIST =
+            @Suppress("DEPRECATION")
             Key.Design.ORIENTATION_LIST_STRING.stringKey()
     }
 }

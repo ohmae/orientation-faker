@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.LayoutOrientationItemBinding
 import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.control.Orientations
+import net.mm2d.orientation.control.Functions
 import net.mm2d.orientation.util.getSerializableSafely
 
 class EachAppOrientationDialog : DialogFragment() {
@@ -65,19 +65,19 @@ class EachAppOrientationDialog : DialogFragment() {
             ViewHolder(LayoutOrientationItemBinding.inflate(layoutInflater, parent, false))
 
         override fun getItemCount(): Int =
-            Orientations.entries.size + 1
+            Functions.orientations.size + 1
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            if (position == Orientations.entries.size) {
+            if (position == Functions.orientations.size) {
                 holder.bind(null)
                 holder.itemView.setOnClickListener {
                     onClickListener(Orientation.INVALID)
                 }
             } else {
-                val entity = Orientations.entries[position]
+                val entity = Functions.orientations[position]
                 holder.bind(entity)
                 holder.itemView.setOnClickListener {
-                    onClickListener(entity.orientation)
+                    entity.function.orientation?.let(onClickListener)
                 }
             }
         }
@@ -86,7 +86,7 @@ class EachAppOrientationDialog : DialogFragment() {
     class ViewHolder(
         private val binding: LayoutOrientationItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(entity: Orientations.Entity?) {
+        fun bind(entity: Functions.Entity?) {
             if (entity != null) {
                 binding.icon.setImageResource(entity.icon)
                 binding.name.setText(entity.label)

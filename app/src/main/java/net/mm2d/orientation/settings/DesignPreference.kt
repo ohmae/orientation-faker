@@ -9,7 +9,7 @@ package net.mm2d.orientation.settings
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import net.mm2d.orientation.control.Orientation
+import net.mm2d.orientation.control.FunctionButton
 
 @Parcelize
 data class DesignPreference(
@@ -21,5 +21,5 @@ data class DesignPreference(
     val iconize: Boolean,
     val shape: IconShape,
     val shouldShowSettings: Boolean,
-    val orientations: List<Orientation>
+    val functions: List<FunctionButton>
 ) : Parcelable

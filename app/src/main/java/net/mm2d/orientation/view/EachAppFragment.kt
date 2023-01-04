@@ -52,7 +52,7 @@ import net.mm2d.android.orientationfaker.databinding.FragmentEachAppBinding
 import net.mm2d.android.orientationfaker.databinding.ItemEachAppBinding
 import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.control.Orientations
+import net.mm2d.orientation.control.Functions
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.autoCleared
 import net.mm2d.orientation.util.getInstalledPackagesCompat
@@ -83,8 +83,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
         setUpSearch()
         setUpBottom()
         setUpMenu()
-        EachAppOrientationDialog.registerListener(this, REQUEST_KEY_ORIENTATION)
-        { position, packageName, orientation ->
+        EachAppOrientationDialog.registerListener(this, REQUEST_KEY_ORIENTATION) { position, packageName, orientation ->
             ForegroundPackageSettings.put(packageName, orientation)
             adapter.notifyItemChanged(position)
         }
@@ -318,7 +317,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
             binding.appPackage.text = info.packageName
             val orientation = ForegroundPackageSettings.get(info.packageName)
             if (orientation != Orientation.INVALID) {
-                Orientations.find(orientation)?.let {
+                Functions.find(orientation)?.let {
                     binding.orientationIcon.setImageResource(it.icon)
                     binding.orientationName.setText(it.label)
                 }

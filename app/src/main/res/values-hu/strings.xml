@@ -130,4 +130,6 @@
     <string name="options_menu_share_this_app">Az app megosztása</string>
     <string name="options_menu_play_store">Google Play Áruház</string>
     <string name="options_menu_relevant_ads">Személyre szabott hirdetések</string>
+    <string name="label_setting">beállítás</string>
+    <string name="description_settings">indítási beállítások</string>
 </resources>

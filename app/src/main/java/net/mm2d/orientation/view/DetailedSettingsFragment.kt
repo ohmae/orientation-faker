@@ -21,10 +21,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.FragmentDetailedSettingsBinding
 import net.mm2d.color.chooser.ColorChooserDialog
+import net.mm2d.orientation.control.FunctionButton
 import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.control.Orientations
+import net.mm2d.orientation.control.Functions
+import net.mm2d.orientation.control.mapOrientation
 import net.mm2d.orientation.settings.Default
-import net.mm2d.orientation.settings.OrientationList
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.Toaster
 import net.mm2d.orientation.util.alpha
@@ -42,7 +43,7 @@ import net.mm2d.orientation.view.view.SwitchMenuView
 class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
     private lateinit var notificationSample: NotificationSample
     private lateinit var checkList: List<CheckItemView>
-    private val orientationList: MutableList<Orientation> = mutableListOf()
+    private val functions: MutableList<FunctionButton> = mutableListOf()
     private var binding: FragmentDetailedSettingsBinding by autoCleared()
     private val viewModel: DetailedSettingsFragmentViewModel by viewModels()
 
@@ -103,20 +104,23 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             binding.content.iconShapeIcon.setImageResource(design.shape.iconId)
             binding.content.iconShapeDescription.setText(design.shape.textId)
             checkList.forEach { view ->
-                view.isChecked = design.orientations.contains(view.orientation)
+                view.isChecked = design.functions
+                    .contains(view.funciton)
             }
-            val experimental = design.orientations.any { it.isExperimental() }
+            val experimental = design.functions
+                .mapOrientation()
+                .any { it.isExperimental() }
             if (binding.content.caution.isVisible != experimental) {
                 TransitionManager.beginDelayedTransition(binding.content.contentsContainer)
                 binding.content.caution.isVisible = experimental
             }
-            orientationList.clear()
-            orientationList.addAll(design.orientations)
+            functions.clear()
+            functions.addAll(design.functions)
             binding.content.showSettingsOnNotification.isChecked = design.shouldShowSettings
         }
         viewModel.orientation.observe(viewLifecycleOwner) {
             if (it.orientationWhenPowerIsConnected != Orientation.INVALID) {
-                Orientations.find(it.orientationWhenPowerIsConnected)?.let { entity ->
+                Functions.find(it.orientationWhenPowerIsConnected)?.let { entity ->
                     binding.content.pluggedOrientationIcon.setImageResource(entity.icon)
                     binding.content.pluggedOrientationName.setText(entity.label)
                 }
@@ -182,7 +186,11 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             ResetThemeDialog.show(this, REQUEST_KEY_RESET_THEME)
         }
         notificationSample.buttonList.forEach { view ->
-            view.button.setOnClickListener { viewModel.updateOrientation(view.orientation) }
+            view.button.setOnClickListener {
+                view.function.orientation?.let {
+                    viewModel.updateOrientation(it)
+                }
+            }
         }
     }
 
@@ -192,11 +200,11 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
     }
 
     private fun setUpLayoutSelector() {
-        checkList = Orientations.entries.map { orientation ->
+        checkList = Functions.functions.map { function ->
             CheckItemView(requireContext()).also { view ->
-                view.orientation = orientation.orientation
-                view.setIcon(orientation.icon)
-                view.setText(orientation.label)
+                view.funciton = function.function
+                view.setIcon(function.icon)
+                view.setText(function.label)
                 view.setOnClickListener {
                     onClickCheckItem(view)
                 }
@@ -218,26 +226,26 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
 
     private fun onClickCheckItem(view: CheckItemView) {
         if (view.isChecked) {
-            if (orientationList.size <= OrientationList.MIN) {
+            if (functions.size <= FunctionButton.MIN) {
                 Toaster.showLong(requireContext(), R.string.toast_select_item_min)
             } else {
-                orientationList.remove(view.orientation)
+                functions.remove(view.funciton)
                 view.isChecked = false
-                viewModel.updateOrientations(orientationList)
+                viewModel.updateFunctions(functions)
             }
         } else {
-            if (orientationList.size >= OrientationList.MAX) {
+            if (functions.size >= FunctionButton.MAX) {
                 Toaster.showLong(requireContext(), R.string.toast_select_item_max)
             } else {
-                orientationList.add(view.orientation)
+                functions.add(view.funciton)
                 view.isChecked = true
-                viewModel.updateOrientations(orientationList)
+                viewModel.updateFunctions(functions)
             }
         }
     }
 
     private fun resetLayout() {
-        viewModel.updateOrientations(Default.orientationList)
+        viewModel.updateFunctions(Default.functions)
     }
 
     private fun setUpUseIconBackground() {

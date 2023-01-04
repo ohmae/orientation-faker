@@ -14,7 +14,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
+import net.mm2d.orientation.control.FunctionButton
 import net.mm2d.orientation.control.Orientation
+import net.mm2d.orientation.control.mapOrientation
 import net.mm2d.orientation.settings.IconShape
 import net.mm2d.orientation.settings.PreferenceRepository
 import javax.inject.Inject
@@ -115,9 +117,9 @@ class DetailedSettingsFragmentViewModel @Inject constructor(
         }
     }
 
-    fun updateOrientations(orientations: List<Orientation>) {
+    fun updateFunctions(functions: List<FunctionButton>) {
         viewModelScope.launch {
-            designPreferenceRepository.updateOrientations(orientations)
+            designPreferenceRepository.updateFunctions(functions)
         }
     }
 
@@ -140,8 +142,8 @@ class DetailedSettingsFragmentViewModel @Inject constructor(
                 preferenceRepository.designPreferenceFlow,
                 ::Pair
             ).take(1).collect { (orientation, design) ->
-                if (!design.orientations.contains(orientation.orientation)) {
-                    orientationPreferenceRepository.updateOrientation(design.orientations[0])
+                if (!design.functions.mapOrientation().contains(orientation.orientation)) {
+                    orientationPreferenceRepository.updateOrientation(design.functions.mapOrientation().first())
                 }
             }
         }

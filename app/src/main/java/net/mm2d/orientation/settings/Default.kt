@@ -12,7 +12,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.orientation.control.Orientation
+import net.mm2d.orientation.control.FunctionButton
+import net.mm2d.orientation.control.FunctionButton.OrientationButton
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -39,12 +40,12 @@ class Default @Inject constructor(
     companion object {
         const val nightMode: Int = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 
-        val orientationList: List<Orientation> = listOf(
-            Orientation.UNSPECIFIED,
-            Orientation.PORTRAIT,
-            Orientation.LANDSCAPE,
-            Orientation.REVERSE_PORTRAIT,
-            Orientation.REVERSE_LANDSCAPE,
+        val functions: List<FunctionButton> = listOf(
+            OrientationButton.UNSPECIFIED,
+            OrientationButton.PORTRAIT,
+            OrientationButton.LANDSCAPE,
+            OrientationButton.REVERSE_PORTRAIT,
+            OrientationButton.REVERSE_LANDSCAPE,
         )
     }
 }

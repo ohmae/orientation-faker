@@ -11,6 +11,8 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import net.mm2d.orientation.control.FunctionButton.LauncherButton
+import net.mm2d.orientation.control.FunctionButton.OrientationButton
 import net.mm2d.orientation.view.MainActivity
 
 object PendingIntentCreator {
@@ -27,6 +29,12 @@ object PendingIntentCreator {
         }
         return PendingIntent.getBroadcast(context, orientation.value + 1000, intent, FLAGS)
     }
+
+    fun function(context: Context, function: FunctionButton): PendingIntent =
+        when (function) {
+            is OrientationButton -> orientation(context, function.orientation)
+            is LauncherButton -> activity(context)
+        }
 
     fun activity(context: Context): PendingIntent {
         val intent = Intent(context, MainActivity::class.java).also {

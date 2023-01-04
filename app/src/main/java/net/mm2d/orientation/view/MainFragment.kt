@@ -196,7 +196,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private fun setUpOrientationIcons() {
         notificationSample.buttonList.forEach { view ->
             view.button.setOnClickListener {
-                viewModel.updateOrientation(view.orientation)
+                view.function.orientation?.let {
+                    viewModel.updateOrientation(it)
+                }
             }
         }
     }

@@ -14,8 +14,9 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.view.isVisible
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.orientation.control.Orientation
-import net.mm2d.orientation.control.Orientations
+import net.mm2d.orientation.control.FunctionButton
+import net.mm2d.orientation.control.FunctionButton.OrientationButton
+import net.mm2d.orientation.control.Functions
 import net.mm2d.orientation.settings.DesignPreference
 import net.mm2d.orientation.settings.OrientationPreference
 import net.mm2d.orientation.util.alpha
@@ -29,6 +30,7 @@ class NotificationSample(view: View) {
             view.findViewById(it.iconId),
             view.findViewById(it.labelId),
             view.findViewById(it.shapeId),
+            OrientationButton.UNSPECIFIED,
         )
     }
     private val base = view.findViewById<View>(R.id.notification)
@@ -40,20 +42,20 @@ class NotificationSample(view: View) {
     fun update(orientation: OrientationPreference, design: DesignPreference) {
         val baseColor = if (design.iconize) design.base ?: 0 else design.background
         base.setBackgroundColor(baseColor)
-        val orientationList = design.orientations
-        orientationList.forEachIndexed { index, value ->
+        val functions = design.functions
+        functions.forEachIndexed { index, value ->
             val button = buttonList[index]
-            Orientations.find(value)?.let {
+            Functions.find(value)?.let {
                 button.icon.setImageResource(it.icon)
                 button.label.setText(it.label)
-                button.orientation = value
+                button.function = value
             }
         }
         val iconShape = design.shape
-        val selectedIndex = orientationList.indexOf(orientation.orientation)
+        val selectedOrientation = orientation.orientation
         buttonList.forEachIndexed { index, it ->
             it.shape.setImageResource(iconShape.iconId)
-            if (index == selectedIndex) {
+            if (it.function.orientation == selectedOrientation) {
                 if (design.iconize) {
                     it.button.setBackgroundColor(Color.TRANSPARENT)
                     it.shape.isVisible = true
@@ -76,7 +78,7 @@ class NotificationSample(view: View) {
                 it.label.setTextColor(design.foreground)
             }
             it.label.isVisible = !design.iconize
-            it.button.isVisible = index < orientationList.size
+            it.button.isVisible = index < functions.size
         }
     }
 
@@ -90,6 +92,6 @@ class NotificationSample(view: View) {
         val icon: ImageView,
         val label: TextView,
         val shape: ImageView,
-        var orientation: Orientation = Orientation.INVALID
+        var function: FunctionButton,
     )
 }

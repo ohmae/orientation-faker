@@ -17,8 +17,9 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import net.mm2d.android.orientationfaker.R
-import net.mm2d.orientation.control.Orientations
+import net.mm2d.orientation.control.Functions
 import net.mm2d.orientation.control.PendingIntentCreator
+import net.mm2d.orientation.control.mapOrientation
 import net.mm2d.orientation.settings.DesignPreference
 import net.mm2d.orientation.settings.OrientationPreference
 import net.mm2d.orientation.util.alpha
@@ -36,16 +37,16 @@ object RemoteViewsCreator {
         RemoteViews(context.packageName, R.layout.notification).also { views ->
             val baseColor = if (design.iconize) design.base ?: 0 else design.background
             views.helper(R.id.notification).setBackgroundColor(baseColor)
-            design.orientations.forEachIndexed { index, value ->
+            design.functions.forEachIndexed { index, value ->
                 val button = ViewIds.list[index]
-                Orientations.find(value)?.let {
+                Functions.find(value)?.let {
                     val helpers = RemoteViewHelpers(views, button)
                     helpers.icon.setImageResource(it.icon)
                     helpers.label.setText(it.label)
-                    helpers.button.setOnClickPendingIntent(PendingIntentCreator.orientation(context, it.orientation))
+                    helpers.button.setOnClickPendingIntent(PendingIntentCreator.function(context, it.function))
                 }
             }
-            val selectedIndex = design.orientations.indexOf(orientation.orientation)
+            val selectedIndex = design.functions.mapOrientation().indexOf(orientation.orientation)
             ViewIds.list.forEachIndexed { index, it ->
                 val helpers = RemoteViewHelpers(views, it)
                 helpers.shape.setImageResource(design.shape.iconId)
@@ -72,7 +73,7 @@ object RemoteViewsCreator {
                     helpers.label.setTextColor(design.foreground)
                 }
                 helpers.label.setVisible(!design.iconize)
-                helpers.button.setVisible(index < design.orientations.size)
+                helpers.button.setVisible(index < design.functions.size)
             }
             val whiteForeground = baseColor.shouldUseWhiteForeground()
             val settingsColor = if (design.iconize) {

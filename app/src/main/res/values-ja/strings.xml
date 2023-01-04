@@ -129,4 +129,6 @@
     <string name="options_menu_share_this_app">アプリをシェア</string>
     <string name="options_menu_play_store">Google Playストア</string>
     <string name="options_menu_relevant_ads">広告の関連性</string>
+    <string name="description_settings">設定を起動</string>
+    <string name="label_setting">設定</string>
 </resources>
