@@ -16,7 +16,6 @@ import android.os.Build
 import android.os.Process
 import android.provider.Settings
 import android.provider.Settings.System
-import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
@@ -56,12 +55,8 @@ object SystemSettings {
         System.getInt(context.contentResolver, System.ACCELEROMETER_ROTATION) == 0
     }.getOrNull() ?: false
 
-    fun canDrawOverlays(context: Context): Boolean {
-        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) true
-        else Settings.canDrawOverlays(context)
-    }
+    fun canDrawOverlays(context: Context): Boolean = Settings.canDrawOverlays(context)
 
-    @RequiresApi(Build.VERSION_CODES.M)
     fun requestOverlayPermission(activity: Activity) {
         startSystemSettings(activity, Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
     }

@@ -9,7 +9,6 @@ package net.mm2d.orientation.service
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -163,11 +162,7 @@ class MainService : LifecycleService() {
                 it.putExtra(EXTRA_DESIGN, design)
                 it.putExtra(EXTRA_FOREGROUND_SETTING_EMPTY, empty)
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(intent)
-            } else {
-                context.startService(intent)
-            }
+            context.startForegroundService(intent)
         }
     }
 }

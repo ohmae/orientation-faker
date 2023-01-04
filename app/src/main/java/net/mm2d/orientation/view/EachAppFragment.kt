@@ -13,7 +13,6 @@ import android.content.Intent
 import android.content.pm.PackageItemInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -51,8 +50,8 @@ import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.FragmentEachAppBinding
 import net.mm2d.android.orientationfaker.databinding.ItemEachAppBinding
 import net.mm2d.orientation.control.ForegroundPackageSettings
-import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.Functions
+import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.util.SystemSettings
 import net.mm2d.orientation.util.autoCleared
 import net.mm2d.orientation.util.getInstalledPackagesCompat
@@ -187,7 +186,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
 
     @SuppressLint("QueryPermissionsNeeded")
     private fun makeAppList(context: Context): List<AppInfo> {
-        val flag = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PackageManager.MATCH_ALL else 0) or PackageManager.MATCH_DEFAULT_ONLY
+        val flag = PackageManager.MATCH_ALL or PackageManager.MATCH_DEFAULT_ONLY
         val pm = context.packageManager
         val allApps = pm.getInstalledPackagesCompat(PackageManager.GET_ACTIVITIES)
             .mapNotNull { it.applicationInfo }

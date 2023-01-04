@@ -8,32 +8,12 @@
 package net.mm2d.orientation.settings
 
 import android.content.Context
-import android.os.Build
 import net.mm2d.android.orientationfaker.BuildConfig
-import java.io.File
 
-class OldPreference(
-    private val context: Context
-) {
-    fun deleteAll() {
-        deleteSharedPreferences(BuildConfig.APPLICATION_ID + ".Main")
-        deleteSharedPreferences(BuildConfig.APPLICATION_ID + "_preferences")
-        deleteSharedPreferences(BuildConfig.APPLICATION_ID + ".b")
-    }
-
-    private fun makeSharedPreferenceFile(name: String): File {
-        val prefsDir = File(context.applicationInfo.dataDir, "shared_prefs")
-        return File(prefsDir, "$name.xml")
-    }
-
-    private fun deleteSharedPreferences(name: String) {
-        if (Build.VERSION.SDK_INT >= 24) {
-            context.deleteSharedPreferences(name)
-        } else {
-            val prefsFile = makeSharedPreferenceFile(name)
-            val prefsBackup = File(prefsFile.path + ".bak")
-            prefsFile.delete()
-            prefsBackup.delete()
-        }
+object OldPreference {
+    fun deleteAll(context: Context) {
+        context.deleteSharedPreferences(BuildConfig.APPLICATION_ID + ".Main")
+        context.deleteSharedPreferences(BuildConfig.APPLICATION_ID + "_preferences")
+        context.deleteSharedPreferences(BuildConfig.APPLICATION_ID + ".b")
     }
 }

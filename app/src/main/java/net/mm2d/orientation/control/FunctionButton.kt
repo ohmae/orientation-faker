@@ -1,9 +1,16 @@
+/*
+ * Copyright (c) 2023 大前良介 (OHMAE Ryosuke)
+ *
+ * This software is released under the MIT License.
+ * http://opensource.org/licenses/MIT
+ */
+
 package net.mm2d.orientation.control
 
 import net.mm2d.orientation.control.FunctionButton.OrientationButton
 import java.io.Serializable
 
-sealed interface FunctionButton: Serializable {
+sealed interface FunctionButton : Serializable {
     val orientation: Orientation?
 
     enum class OrientationButton(
@@ -36,6 +43,7 @@ sealed interface FunctionButton: Serializable {
 
         override val orientation: Orientation? = null
         override fun toString(): String = PREFIX + PREFIX_DELIMITER + name
+
         companion object {
             const val PREFIX = "L"
             fun of(name: String): LauncherButton? = values().find { it.name == name }

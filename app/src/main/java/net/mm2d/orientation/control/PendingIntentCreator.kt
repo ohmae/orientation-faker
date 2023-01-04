@@ -10,17 +10,12 @@ package net.mm2d.orientation.control
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import net.mm2d.orientation.control.FunctionButton.LauncherButton
 import net.mm2d.orientation.control.FunctionButton.OrientationButton
 import net.mm2d.orientation.view.MainActivity
 
 object PendingIntentCreator {
-    private val FLAGS = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    } else {
-        PendingIntent.FLAG_UPDATE_CURRENT
-    }
+    private const val FLAGS = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
 
     fun orientation(context: Context, orientation: Orientation): PendingIntent {
         val intent = Intent(OrientationReceiver.ACTION_ORIENTATION).also {

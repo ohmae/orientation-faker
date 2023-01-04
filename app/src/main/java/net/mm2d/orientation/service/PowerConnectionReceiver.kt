@@ -7,13 +7,11 @@
 
 package net.mm2d.orientation.service
 
-import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
-import android.os.Build
 import dagger.hilt.android.AndroidEntryPoint
 import net.mm2d.orientation.settings.PreferenceRepository
 import javax.inject.Inject
@@ -35,15 +33,12 @@ class PowerConnectionReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        @SuppressLint("StaticFieldLeak")
-        private lateinit var context: Context
-
         private const val BATTERY_PLUGGED_ANY =
             BatteryManager.BATTERY_PLUGGED_AC or
                 BatteryManager.BATTERY_PLUGGED_USB or
                 BatteryManager.BATTERY_PLUGGED_WIRELESS
 
-        private fun updateConnectedStatus(preferenceRepository: PreferenceRepository) {
+        private fun updateConnectedStatus(context: Context, preferenceRepository: PreferenceRepository) {
             val intentFilter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
             val intent = context.registerReceiver(null, intentFilter)
             val pluggedState = intent?.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) ?: 0
@@ -52,11 +47,8 @@ class PowerConnectionReceiver : BroadcastReceiver() {
         }
 
         fun initialize(c: Context, preferenceRepository: PreferenceRepository) {
-            context = c.applicationContext
-            updateConnectedStatus(preferenceRepository)
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                return
-            }
+            val context = c.applicationContext
+            updateConnectedStatus(context, preferenceRepository)
             val intentFilter = IntentFilter().also {
                 it.addAction(Intent.ACTION_POWER_CONNECTED)
                 it.addAction(Intent.ACTION_POWER_DISCONNECTED)

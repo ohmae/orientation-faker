@@ -67,6 +67,7 @@ interface Key {
         SHAPE_STRING,
         SHOW_SETTINGS_BOOLEAN,
         FUNCTION_BUTTONS_STRING,
+
         @Deprecated("removed: 6.0.0")
         ORIENTATION_LIST_STRING,
     }

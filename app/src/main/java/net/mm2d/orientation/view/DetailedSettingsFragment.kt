@@ -22,8 +22,8 @@ import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.FragmentDetailedSettingsBinding
 import net.mm2d.color.chooser.ColorChooserDialog
 import net.mm2d.orientation.control.FunctionButton
-import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.Functions
+import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.mapOrientation
 import net.mm2d.orientation.settings.Default
 import net.mm2d.orientation.util.SystemSettings

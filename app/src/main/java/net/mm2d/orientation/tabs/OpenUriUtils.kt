@@ -11,7 +11,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import net.mm2d.orientation.util.queryIntentActivitiesCompat
 import net.mm2d.orientation.util.resolveActivityCompat
 
@@ -29,8 +28,7 @@ object OpenUriUtils {
     }
 
     private fun getBrowserPackagesInner(context: Context): Set<String> {
-        val flags =
-            (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PackageManager.MATCH_ALL else 0) or PackageManager.MATCH_DEFAULT_ONLY
+        val flags = PackageManager.MATCH_ALL or PackageManager.MATCH_DEFAULT_ONLY
         return context.packageManager
             .queryIntentActivitiesCompat(makeBrowserTestIntent(), flags)
             .mapNotNull { it.activityInfo?.packageName }

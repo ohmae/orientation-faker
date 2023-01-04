@@ -24,6 +24,10 @@
         <item name="alertDialogTheme">@style/Theme.Orientation.Dialog</item>
     </style>
 
+    <style name="Theme.Orientation" parent="Theme.OrientationBase">
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
     <style name="Theme.Orientation.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
         <item name="colorPrimary">@color/black</item>
     </style>

@@ -2,17 +2,14 @@ package net.mm2d.orientation.view.dialog
 
 import android.app.Dialog
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 
-@RequiresApi(Build.VERSION_CODES.O)
 class NotificationPermissionDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         AlertDialog.Builder(requireContext())

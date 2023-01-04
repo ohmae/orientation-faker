@@ -12,7 +12,6 @@ import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -20,7 +19,6 @@ import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.util.SystemSettings
 
 class OverlayPermissionDialog : DialogFragment() {
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val activity = requireActivity()
         val message = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q ||
@@ -49,7 +47,6 @@ class OverlayPermissionDialog : DialogFragment() {
     companion object {
         private const val TAG = "OverlayPermissionDialog"
 
-        @RequiresApi(Build.VERSION_CODES.M)
         fun show(activity: Fragment) {
             val manager = activity.childFragmentManager
             if (manager.isStateSaved || manager.findFragmentByTag(TAG) != null) return

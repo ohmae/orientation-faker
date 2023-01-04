@@ -40,7 +40,7 @@ class OrientationController(context: Context) {
 
     private val layoutParams: LayoutParams = LayoutParams(
         0, 0, 0, 0,
-        type,
+        LayoutParams.TYPE_APPLICATION_OVERLAY,
         LayoutParams.FLAG_NOT_FOCUSABLE
             or LayoutParams.FLAG_NOT_TOUCHABLE
             or LayoutParams.FLAG_NOT_TOUCH_MODAL
@@ -57,15 +57,6 @@ class OrientationController(context: Context) {
         get() = layoutParams.screenOrientation.toOrientation()
 
     private var attached: Boolean = false
-
-    @Suppress("DEPRECATION")
-    private val type: Int
-        get() =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                LayoutParams.TYPE_APPLICATION_OVERLAY
-            } else {
-                LayoutParams.TYPE_SYSTEM_ALERT
-            }
 
     fun setOrientation(orientation: Orientation) {
         isEnabled = true

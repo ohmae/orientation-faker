@@ -23,8 +23,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.LayoutOrientationItemBinding
-import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.control.Functions
+import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.util.getSerializableSafely
 
 class OrientationSelectDialog : DialogFragment() {

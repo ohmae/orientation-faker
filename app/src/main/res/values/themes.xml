@@ -30,7 +30,9 @@
         <item name="alertDialogTheme">@style/Theme.Orientation.Dialog</item>
     </style>
 
-    <style name="Theme.Orientation" parent="Theme.OrientationBase" />
+    <style name="Theme.Orientation" parent="Theme.OrientationBase">
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
 
     <style name="Theme.Orientation.NoActionBar">
         <item name="windowActionBar">false</item>

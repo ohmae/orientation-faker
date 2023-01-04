@@ -24,7 +24,7 @@ object Functions {
         override val icon: Int,
         override val label: Int,
         override val description: Int,
-    ): Entity
+    ) : Entity
 
 
     data class FunctionEntity(
@@ -32,7 +32,7 @@ object Functions {
         override val icon: Int,
         override val label: Int,
         override val description: Int,
-    ): Entity
+    ) : Entity
 
     val orientations: List<OrientationEntity> = listOf(
         OrientationEntity(

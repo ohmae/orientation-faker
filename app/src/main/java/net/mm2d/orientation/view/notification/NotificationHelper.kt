@@ -29,7 +29,6 @@ object NotificationHelper {
     private const val NOTIFICATION_ID = 10
 
     fun createChannel(context: Context) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
         val name = context.getString(R.string.notification_channel_name)
         val importance = NotificationManager.IMPORTANCE_LOW
         val channel = NotificationChannel(CHANNEL_ID, name, importance).also {
@@ -55,12 +54,7 @@ object NotificationHelper {
     }
 
     fun stopForeground(service: Service) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            service.stopForeground(Service.STOP_FOREGROUND_REMOVE)
-        } else {
-            @Suppress("DEPRECATION")
-            service.stopForeground(true)
-        }
+        service.stopForeground(Service.STOP_FOREGROUND_REMOVE)
     }
 
     private fun makeEmptyNotification(context: Context): Notification =
