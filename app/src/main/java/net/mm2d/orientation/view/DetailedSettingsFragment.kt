@@ -103,7 +103,6 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             }
             functions.clear()
             functions.addAll(design.functions)
-            binding.content.showSettingsOnNotification.isChecked = design.shouldShowSettings
         }
         viewModel.orientation.observe(viewLifecycleOwner) {
             if (it.orientationWhenPowerIsConnected != Orientation.INVALID) {
@@ -130,7 +129,6 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         setUpLayoutSelector()
         setUpIconShape()
         setUpUseBlankIcon()
-        setUpSettingsOnNotification()
         setUpOrientationWhenPowerIsConnected()
         setUpAutoRotateWarning()
         setUpNotificationPrivacy()
@@ -243,12 +241,6 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
     private fun setUpUseBlankIcon() {
         binding.content.useBlankIconForNotification.setOnClickListener {
             viewModel.updateUseBlankIcon(!(it as SwitchMenuView).isChecked)
-        }
-    }
-
-    private fun setUpSettingsOnNotification() {
-        binding.content.showSettingsOnNotification.setOnClickListener {
-            viewModel.updateShowSettings(!(it as SwitchMenuView).isChecked)
         }
     }
 

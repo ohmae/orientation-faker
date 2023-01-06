@@ -72,7 +72,7 @@ class WidgetProvider : AppWidgetProvider() {
             orientation: OrientationPreference,
             design: DesignPreference
         ) {
-            val views = RemoteViewsCreator.create(context, orientation, design, true)
+            val views = RemoteViewsCreator.create(context, orientation, design)
             appWidgetManager.updateAppWidget(id, views)
         }
     }

@@ -9,7 +9,6 @@ package net.mm2d.orientation.view.widget
 
 import android.app.PendingIntent
 import android.content.Context
-import android.graphics.Color
 import android.view.View
 import android.widget.RemoteViews
 import androidx.annotation.ColorInt
@@ -23,7 +22,6 @@ import net.mm2d.orientation.settings.DesignPreference
 import net.mm2d.orientation.settings.OrientationPreference
 import net.mm2d.orientation.util.alpha
 import net.mm2d.orientation.util.opaque
-import net.mm2d.orientation.util.shouldUseWhiteForeground
 import net.mm2d.orientation.view.widget.ViewIds.ViewId
 
 object RemoteViewsCreator {
@@ -31,7 +29,6 @@ object RemoteViewsCreator {
         context: Context,
         orientation: OrientationPreference,
         design: DesignPreference,
-        forWidget: Boolean = false
     ): RemoteViews =
         RemoteViews(context.packageName, R.layout.notification).also { views ->
             val baseColor = design.base ?: 0
@@ -56,14 +53,6 @@ object RemoteViewsCreator {
                     helpers.icon.setImageColor(design.foreground)
                 }
                 helpers.button.setVisible(index < design.functions.size)
-            }
-            val whiteForeground = baseColor.shouldUseWhiteForeground()
-            val settingsColor = if (whiteForeground) Color.WHITE else Color.BLACK
-            views.helper(R.id.remote_views_icon_settings).setImageColor(settingsColor)
-            views.helper(R.id.remote_views_button_settings).also {
-                it.setBackgroundColor(Color.TRANSPARENT)
-                it.setOnClickPendingIntent(PendingIntentCreator.activity(context))
-                it.setVisible(!forWidget && design.shouldShowSettings)
             }
         }
 

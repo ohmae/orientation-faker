@@ -56,12 +56,11 @@ sealed interface FunctionButton : Serializable {
         private const val VALUE_DELIMITER = ","
         private const val PREFIX_DELIMITER = ":"
 
-        fun String?.migrateFromOrientations(): String =
+        fun String?.migrateFromOrientations(): List<FunctionButton> =
             orEmpty()
                 .split(VALUE_DELIMITER)
                 .mapNotNull { it.toIntOrNull() }
                 .mapNotNull { it.toOrientation().toFunctionButton() }
-                .toSerializedString()
 
         private fun Orientation.toFunctionButton(): FunctionButton? =
             OrientationButton.values().find { it.orientation == this }

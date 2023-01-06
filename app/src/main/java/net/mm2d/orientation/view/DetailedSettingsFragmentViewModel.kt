@@ -105,12 +105,6 @@ class DetailedSettingsFragmentViewModel @Inject constructor(
         }
     }
 
-    fun updateShowSettings(show: Boolean) {
-        viewModelScope.launch {
-            designPreferenceRepository.updateShowSettings(show)
-        }
-    }
-
     fun updateFunctions(functions: List<FunctionButton>) {
         viewModelScope.launch {
             designPreferenceRepository.updateFunctions(functions)

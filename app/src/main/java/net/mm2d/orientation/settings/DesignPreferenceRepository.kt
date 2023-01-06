@@ -16,6 +16,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import net.mm2d.orientation.control.FunctionButton
+import net.mm2d.orientation.control.FunctionButton.LauncherButton
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -40,7 +41,6 @@ class DesignPreferenceRepository @Inject constructor(
                 backgroundSelected = it[BACKGROUND_SELECTED] ?: defaults.color.backgroundSelected,
                 base = it[BASE] ?: defaults.color.base,
                 shape = IconShape.of(it[SHAPE]),
-                shouldShowSettings = it[SHOW_SETTINGS] ?: false,
                 functions = FunctionButton
                     .run { it[FUNCTION_BUTTONS].toFunctionButtons() }
                     .ifEmpty { Default.functions },
@@ -93,12 +93,6 @@ class DesignPreferenceRepository @Inject constructor(
         }
     }
 
-    suspend fun updateShowSettings(show: Boolean) {
-        dataStore.edit {
-            it[SHOW_SETTINGS] = show
-        }
-    }
-
     suspend fun updateFunctions(functions: List<FunctionButton>) {
         dataStore.edit {
             it[FUNCTION_BUTTONS] = FunctionButton.run { functions.toSerializedString() }
@@ -109,16 +103,22 @@ class DesignPreferenceRepository @Inject constructor(
         override suspend fun shouldMigrate(currentData: Preferences): Boolean =
             currentData[DATA_VERSION] != VERSION
 
+        @Suppress("DEPRECATION")
         override suspend fun migrate(currentData: Preferences): Preferences =
             currentData.edit {
                 if (it[DATA_VERSION] == 1) {
                     it[FUNCTION_BUTTONS] = FunctionButton.run {
-                        @Suppress("DEPRECATION")
-                        it[ORIENTATION_LIST].migrateFromOrientations()
+                        val functions = it[ORIENTATION_LIST].migrateFromOrientations()
+                        if (functions.size < MAX &&
+                            it[SHOW_SETTINGS] == true &&
+                            !functions.contains(LauncherButton.SETTINGS)
+                        ) {
+                            functions + LauncherButton.SETTINGS
+                        } else {
+                            functions
+                        }.toSerializedString()
                     }
-                    @Suppress("DEPRECATION")
                     it.remove(ORIENTATION_LIST)
-                    @Suppress("DEPRECATION")
                     it.remove(ICONIZE)
                 }
                 it[DATA_VERSION] = VERSION
@@ -145,8 +145,6 @@ class DesignPreferenceRepository @Inject constructor(
             Key.Design.BASE_INT.intKey()
         private val SHAPE =
             Key.Design.SHAPE_STRING.stringKey()
-        private val SHOW_SETTINGS =
-            Key.Design.SHOW_SETTINGS_BOOLEAN.booleanKey()
         private val FUNCTION_BUTTONS =
             Key.Design.FUNCTION_BUTTONS_STRING.stringKey()
 
@@ -154,9 +152,15 @@ class DesignPreferenceRepository @Inject constructor(
         private val ORIENTATION_LIST =
             @Suppress("DEPRECATION")
             Key.Design.ORIENTATION_LIST_STRING.stringKey()
+
         @Deprecated("removed: 6.0.0")
         private val ICONIZE =
             @Suppress("DEPRECATION")
             Key.Design.ICONIZE_BOOLEAN.booleanKey()
+
+        @Deprecated("removed: 6.0.0")
+        private val SHOW_SETTINGS =
+            @Suppress("DEPRECATION")
+            Key.Design.SHOW_SETTINGS_BOOLEAN.booleanKey()
     }
 }

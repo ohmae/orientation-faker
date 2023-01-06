@@ -32,10 +32,6 @@ class NotificationSample(view: View) {
     }
     private val base = view.findViewById<View>(R.id.notification)
 
-    init {
-        view.findViewById<View>(R.id.remote_views_button_settings).visibility = View.GONE
-    }
-
     fun update(orientation: OrientationPreference, design: DesignPreference) {
         val baseColor = design.base ?: 0
         base.setBackgroundColor(baseColor)

@@ -71,9 +71,6 @@
     <string name="menu_title_use_blank_icon_for_notification">Make the status bar icon transparent</string>
     <string name="menu_description_use_blank_icon_for_notification_on">Display transparent icon in the status bar</string>
     <string name="menu_description_use_blank_icon_for_notification_off">Display icon that reflects the status in the status bar</string>
-    <string name="menu_title_settings_button_on_notification">Show settings button on notification UI</string>
-    <string name="menu_description_settings_button_on_notification_on">Show settings button</string>
-    <string name="menu_description_settings_button_on_notification_off">Don\'t show settings button</string>
     <string name="menu_title_auto_rotate_warning">System setting warning</string>
     <string name="menu_description_auto_rotate_warning_on">Show warning if system setting is not auto-rotate</string>
     <string name="menu_description_auto_rotate_warning_off">Don\'t show warning if system setting is not auto-rotate</string>
