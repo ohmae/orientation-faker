@@ -88,19 +88,6 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             binding.content.base.setOnClickListener {
                 ColorChooserDialog.show(this, REQUEST_KEY_BASE, design.base ?: 0, true)
             }
-            if (binding.content.base.isVisible != design.iconize) {
-                TransitionManager.beginDelayedTransition(binding.content.colorSettings)
-                binding.content.base.isVisible = design.iconize
-            }
-            binding.content.useIconBackground.isChecked = design.iconize
-
-            if (design.iconize) {
-                binding.content.iconShape.isEnabled = true
-                binding.content.iconShape.alpha = 1.0f
-            } else {
-                binding.content.iconShape.isEnabled = false
-                binding.content.iconShape.alpha = 0.5f
-            }
             binding.content.iconShapeIcon.setImageResource(design.shape.iconId)
             binding.content.iconShapeDescription.setText(design.shape.textId)
             checkList.forEach { view ->
@@ -141,7 +128,6 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
         notificationSample = NotificationSample(binding.notificationSample)
         setUpSample()
         setUpLayoutSelector()
-        setUpUseIconBackground()
         setUpIconShape()
         setUpUseBlankIcon()
         setUpSettingsOnNotification()
@@ -246,12 +232,6 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
 
     private fun resetLayout() {
         viewModel.updateFunctions(Default.functions)
-    }
-
-    private fun setUpUseIconBackground() {
-        binding.content.useIconBackground.setOnClickListener {
-            viewModel.updateIconize(!binding.content.useIconBackground.isChecked)
-        }
     }
 
     private fun setUpIconShape() {

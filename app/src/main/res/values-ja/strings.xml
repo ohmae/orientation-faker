@@ -65,9 +65,6 @@
     <string name="button_selected_background_color">選択背景</string>
     <string name="button_base_color">ベース</string>
 
-    <string name="menu_title_use_icon_background">アイコン背景</string>
-    <string name="menu_description_use_icon_background_on">説明テキストを表示しないでアイコンを表示します</string>
-    <string name="menu_description_use_icon_background_off">アイコンと説明テキストを表示します</string>
     <string name="menu_title_use_blank_icon_for_notification">ステータスバーのアイコンを透明にする</string>
     <string name="menu_description_use_blank_icon_for_notification_on">ステータスバーに透明なアイコンを表示します</string>
     <string name="menu_description_use_blank_icon_for_notification_off">ステータスバーに状態を表すアイコンを表示します</string>

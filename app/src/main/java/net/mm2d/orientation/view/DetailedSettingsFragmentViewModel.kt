@@ -99,12 +99,6 @@ class DetailedSettingsFragmentViewModel @Inject constructor(
         }
     }
 
-    fun updateIconize(iconize: Boolean) {
-        viewModelScope.launch {
-            designPreferenceRepository.updateIconize(iconize)
-        }
-    }
-
     fun updateShape(shape: IconShape) {
         viewModelScope.launch {
             designPreferenceRepository.updateShape(shape)

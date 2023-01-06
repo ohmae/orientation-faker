@@ -7,10 +7,8 @@
 
 package net.mm2d.orientation.view
 
-import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.view.isVisible
 import net.mm2d.android.orientationfaker.R
@@ -28,7 +26,6 @@ class NotificationSample(view: View) {
         ButtonViews(
             view.findViewById(it.buttonId),
             view.findViewById(it.iconId),
-            view.findViewById(it.labelId),
             view.findViewById(it.shapeId),
             OrientationButton.UNSPECIFIED,
         )
@@ -40,14 +37,13 @@ class NotificationSample(view: View) {
     }
 
     fun update(orientation: OrientationPreference, design: DesignPreference) {
-        val baseColor = if (design.iconize) design.base ?: 0 else design.background
+        val baseColor = design.base ?: 0
         base.setBackgroundColor(baseColor)
         val functions = design.functions
         functions.forEachIndexed { index, value ->
             val button = buttonList[index]
             Functions.find(value)?.let {
                 button.icon.setImageResource(it.icon)
-                button.label.setText(it.label)
                 button.function = value
             }
         }
@@ -56,28 +52,12 @@ class NotificationSample(view: View) {
         buttonList.forEachIndexed { index, it ->
             it.shape.setImageResource(iconShape.iconId)
             if (it.function.orientation == selectedOrientation) {
-                if (design.iconize) {
-                    it.button.setBackgroundColor(Color.TRANSPARENT)
-                    it.shape.isVisible = true
-                    it.shape.setImageColor(design.backgroundSelected)
-                } else {
-                    it.button.setBackgroundColor(design.backgroundSelected)
-                    it.shape.isVisible = false
-                }
+                it.shape.setImageColor(design.backgroundSelected)
                 it.icon.setImageColor(design.foregroundSelected)
-                it.label.setTextColor(design.foregroundSelected)
             } else {
-                if (design.iconize) {
-                    it.shape.isVisible = true
-                    it.shape.setImageColor(design.background)
-                } else {
-                    it.shape.isVisible = false
-                }
-                it.button.setBackgroundColor(Color.TRANSPARENT)
+                it.shape.setImageColor(design.background)
                 it.icon.setImageColor(design.foreground)
-                it.label.setTextColor(design.foreground)
             }
-            it.label.isVisible = !design.iconize
             it.button.isVisible = index < functions.size
         }
     }
@@ -90,7 +70,6 @@ class NotificationSample(view: View) {
     class ButtonViews(
         val button: View,
         val icon: ImageView,
-        val label: TextView,
         val shape: ImageView,
         var function: FunctionButton,
     )

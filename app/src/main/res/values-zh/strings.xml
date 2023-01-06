@@ -66,9 +66,6 @@
     <string name="button_selected_background_color">选择的背景色</string>
     <string name="button_base_color">基色</string>
 
-    <string name="menu_title_use_icon_background">图标背景</string>
-    <string name="menu_description_use_icon_background_on">仅显示没有描述性文本的图标,带有图标背景</string>
-    <string name="menu_description_use_icon_background_off">显示图标和描述，带方形背景框</string>
     <string name="menu_title_use_blank_icon_for_notification">状态栏透明</string>
     <string name="menu_description_use_blank_icon_for_notification_on">状态栏显示透明图标</string>
     <string name="menu_description_use_blank_icon_for_notification_off">在状态栏显示反应状态的图标</string>

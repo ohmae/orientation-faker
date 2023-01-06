@@ -63,11 +63,12 @@ interface Key {
         FOREGROUND_SELECTED_INT,
         BACKGROUND_SELECTED_INT,
         BASE_INT,
-        ICONIZE_BOOLEAN,
         SHAPE_STRING,
         SHOW_SETTINGS_BOOLEAN,
         FUNCTION_BUTTONS_STRING,
 
+        @Deprecated("removed: 6.0.0")
+        ICONIZE_BOOLEAN,
         @Deprecated("removed: 6.0.0")
         ORIENTATION_LIST_STRING,
     }

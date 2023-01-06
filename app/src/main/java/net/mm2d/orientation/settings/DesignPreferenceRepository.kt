@@ -8,7 +8,6 @@
 package net.mm2d.orientation.settings
 
 import android.content.Context
-import android.os.Build
 import androidx.datastore.core.DataMigration
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -34,16 +33,14 @@ class DesignPreferenceRepository @Inject constructor(
     val flow: Flow<DesignPreference> = dataStore.data
         .onErrorResumeEmpty()
         .map {
-            val overS = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
             DesignPreference(
                 foreground = it[FOREGROUND] ?: defaults.color.foreground,
                 background = it[BACKGROUND] ?: defaults.color.background,
                 foregroundSelected = it[FOREGROUND_SELECTED] ?: defaults.color.foregroundSelected,
                 backgroundSelected = it[BACKGROUND_SELECTED] ?: defaults.color.backgroundSelected,
                 base = it[BASE] ?: defaults.color.base,
-                iconize = it[ICONIZE] ?: overS,
                 shape = IconShape.of(it[SHAPE]),
-                shouldShowSettings = it[SHOW_SETTINGS] ?: !overS,
+                shouldShowSettings = it[SHOW_SETTINGS] ?: false,
                 functions = FunctionButton
                     .run { it[FUNCTION_BUTTONS].toFunctionButtons() }
                     .ifEmpty { Default.functions },
@@ -90,15 +87,6 @@ class DesignPreferenceRepository @Inject constructor(
         }
     }
 
-    suspend fun updateIconize(iconize: Boolean) {
-        dataStore.edit {
-            it[ICONIZE] = iconize
-            if (iconize && it[BASE] == null) {
-                it[BASE] = it[BACKGROUND] ?: defaults.color.background
-            }
-        }
-    }
-
     suspend fun updateShape(shape: IconShape) {
         dataStore.edit {
             it[SHAPE] = shape.name
@@ -128,6 +116,10 @@ class DesignPreferenceRepository @Inject constructor(
                         @Suppress("DEPRECATION")
                         it[ORIENTATION_LIST].migrateFromOrientations()
                     }
+                    @Suppress("DEPRECATION")
+                    it.remove(ORIENTATION_LIST)
+                    @Suppress("DEPRECATION")
+                    it.remove(ICONIZE)
                 }
                 it[DATA_VERSION] = VERSION
             }
@@ -151,8 +143,6 @@ class DesignPreferenceRepository @Inject constructor(
             Key.Design.BACKGROUND_SELECTED_INT.intKey()
         private val BASE =
             Key.Design.BASE_INT.intKey()
-        private val ICONIZE =
-            Key.Design.ICONIZE_BOOLEAN.booleanKey()
         private val SHAPE =
             Key.Design.SHAPE_STRING.stringKey()
         private val SHOW_SETTINGS =
@@ -164,5 +154,9 @@ class DesignPreferenceRepository @Inject constructor(
         private val ORIENTATION_LIST =
             @Suppress("DEPRECATION")
             Key.Design.ORIENTATION_LIST_STRING.stringKey()
+        @Deprecated("removed: 6.0.0")
+        private val ICONIZE =
+            @Suppress("DEPRECATION")
+            Key.Design.ICONIZE_BOOLEAN.booleanKey()
     }
 }

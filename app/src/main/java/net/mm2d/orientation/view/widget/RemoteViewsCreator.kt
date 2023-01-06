@@ -15,7 +15,6 @@ import android.widget.RemoteViews
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
-import androidx.annotation.StringRes
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.Functions
 import net.mm2d.orientation.control.PendingIntentCreator
@@ -35,14 +34,13 @@ object RemoteViewsCreator {
         forWidget: Boolean = false
     ): RemoteViews =
         RemoteViews(context.packageName, R.layout.notification).also { views ->
-            val baseColor = if (design.iconize) design.base ?: 0 else design.background
+            val baseColor = design.base ?: 0
             views.helper(R.id.notification).setBackgroundColor(baseColor)
             design.functions.forEachIndexed { index, value ->
                 val button = ViewIds.list[index]
                 Functions.find(value)?.let {
                     val helpers = RemoteViewHelpers(views, button)
                     helpers.icon.setImageResource(it.icon)
-                    helpers.label.setText(it.label)
                     helpers.button.setOnClickPendingIntent(PendingIntentCreator.function(context, it.function))
                 }
             }
@@ -51,34 +49,16 @@ object RemoteViewsCreator {
                 val helpers = RemoteViewHelpers(views, it)
                 helpers.shape.setImageResource(design.shape.iconId)
                 if (index == selectedIndex) {
-                    if (design.iconize) {
-                        helpers.button.setBackgroundColor(Color.TRANSPARENT)
-                        helpers.shape.setVisible(true)
-                        helpers.shape.setImageColor(design.backgroundSelected)
-                    } else {
-                        helpers.button.setBackgroundColor(design.backgroundSelected)
-                        helpers.shape.setVisible(false)
-                    }
+                    helpers.shape.setImageColor(design.backgroundSelected)
                     helpers.icon.setImageColor(design.foregroundSelected)
-                    helpers.label.setTextColor(design.foregroundSelected)
                 } else {
-                    if (design.iconize) {
-                        helpers.shape.setVisible(true)
-                        helpers.shape.setImageColor(design.background)
-                    } else {
-                        helpers.shape.setVisible(false)
-                    }
-                    helpers.button.setBackgroundColor(Color.TRANSPARENT)
+                    helpers.shape.setImageColor(design.background)
                     helpers.icon.setImageColor(design.foreground)
-                    helpers.label.setTextColor(design.foreground)
                 }
-                helpers.label.setVisible(!design.iconize)
                 helpers.button.setVisible(index < design.functions.size)
             }
             val whiteForeground = baseColor.shouldUseWhiteForeground()
-            val settingsColor = if (design.iconize) {
-                if (whiteForeground) Color.WHITE else Color.BLACK
-            } else design.foreground
+            val settingsColor = if (whiteForeground) Color.WHITE else Color.BLACK
             views.helper(R.id.remote_views_icon_settings).setImageColor(settingsColor)
             views.helper(R.id.remote_views_button_settings).also {
                 it.setBackgroundColor(Color.TRANSPARENT)
@@ -90,7 +70,6 @@ object RemoteViewsCreator {
     private class RemoteViewHelpers(views: RemoteViews, viewId: ViewId) {
         val button = views.helper(viewId.buttonId)
         val icon = views.helper(viewId.iconId)
-        val label = views.helper(viewId.labelId)
         val shape = views.helper(viewId.shapeId)
     }
 
@@ -104,14 +83,6 @@ object RemoteViewsCreator {
 
         fun setImageResource(@DrawableRes resourceId: Int) {
             views.setImageViewResource(id, resourceId)
-        }
-
-        fun setText(@StringRes text: Int) {
-            views.setInt(id, "setText", text)
-        }
-
-        fun setTextColor(@ColorInt color: Int) {
-            views.setTextColor(id, color)
         }
 
         fun setImageColor(@ColorInt color: Int) {

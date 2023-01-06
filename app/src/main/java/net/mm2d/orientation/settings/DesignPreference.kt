@@ -18,7 +18,6 @@ data class DesignPreference(
     val foregroundSelected: Int,
     val backgroundSelected: Int,
     val base: Int?,
-    val iconize: Boolean,
     val shape: IconShape,
     val shouldShowSettings: Boolean,
     val functions: List<FunctionButton>

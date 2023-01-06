@@ -68,9 +68,6 @@
     <string name="button_selected_background_color">sel. bg</string>
     <string name="button_base_color">base</string>
 
-    <string name="menu_title_use_icon_background">Icon background</string>
-    <string name="menu_description_use_icon_background_on">Show only icon without descriptive text, with icon background</string>
-    <string name="menu_description_use_icon_background_off">Show icon and descriptive text, with rectangular background</string>
     <string name="menu_title_use_blank_icon_for_notification">Make the status bar icon transparent</string>
     <string name="menu_description_use_blank_icon_for_notification_on">Display transparent icon in the status bar</string>
     <string name="menu_description_use_blank_icon_for_notification_off">Display icon that reflects the status in the status bar</string>

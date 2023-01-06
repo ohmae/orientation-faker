@@ -26,38 +26,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/bg_circle"
-            android:visibility="gone"
             />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/remote_views_icon1"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center"
-            android:orientation="vertical"
-            tools:ignore="UseCompoundDrawables"
-            >
-
-            <ImageView
-                android:id="@+id/remote_views_icon1"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_horizontal"
-                tools:ignore="ContentDescription,VectorDrawableCompat"
-                tools:src="@drawable/ic_unspecified"
-                />
-
-            <TextView
-                android:id="@+id/remote_views_label1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:textColor="@color/fg_notification"
-                android:textSize="@dimen/text_icon"
-                tools:ignore="SmallSp,SpUsage"
-                tools:text="@string/label_unspecified"
-                />
-        </LinearLayout>
+            tools:ignore="ContentDescription,VectorDrawableCompat"
+            tools:src="@drawable/ic_unspecified"
+            />
     </FrameLayout>
 
     <FrameLayout
@@ -75,38 +53,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/bg_circle"
-            android:visibility="gone"
             />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/remote_views_icon2"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center"
-            android:orientation="vertical"
-            tools:ignore="UseCompoundDrawables"
-            >
-
-            <ImageView
-                android:id="@+id/remote_views_icon2"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_horizontal"
-                tools:ignore="ContentDescription,VectorDrawableCompat"
-                tools:src="@drawable/ic_portrait"
-                />
-
-            <TextView
-                android:id="@+id/remote_views_label2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:textColor="@color/fg_notification"
-                android:textSize="@dimen/text_icon"
-                tools:ignore="SmallSp,SpUsage"
-                tools:text="@string/label_portrait"
-                />
-        </LinearLayout>
+            tools:ignore="ContentDescription,VectorDrawableCompat"
+            tools:src="@drawable/ic_portrait"
+            />
     </FrameLayout>
 
     <FrameLayout
@@ -124,38 +80,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/bg_circle"
-            android:visibility="gone"
             />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/remote_views_icon3"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center"
-            android:orientation="vertical"
-            tools:ignore="UseCompoundDrawables"
-            >
-
-            <ImageView
-                android:id="@+id/remote_views_icon3"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_horizontal"
-                tools:ignore="ContentDescription,VectorDrawableCompat"
-                tools:src="@drawable/ic_landscape"
-                />
-
-            <TextView
-                android:id="@+id/remote_views_label3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:textColor="@color/fg_notification"
-                android:textSize="@dimen/text_icon"
-                tools:ignore="SmallSp,SpUsage"
-                tools:text="@string/label_landscape"
-                />
-        </LinearLayout>
+            tools:ignore="ContentDescription,VectorDrawableCompat"
+            tools:src="@drawable/ic_landscape"
+            />
     </FrameLayout>
 
     <FrameLayout
@@ -173,38 +107,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/bg_circle"
-            android:visibility="gone"
             />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/remote_views_icon4"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center"
-            android:orientation="vertical"
-            tools:ignore="UseCompoundDrawables"
-            >
-
-            <ImageView
-                android:id="@+id/remote_views_icon4"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_horizontal"
-                tools:ignore="ContentDescription,VectorDrawableCompat"
-                tools:src="@drawable/ic_reverse_portrait"
-                />
-
-            <TextView
-                android:id="@+id/remote_views_label4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:textColor="@color/fg_notification"
-                android:textSize="@dimen/text_icon"
-                tools:ignore="SmallSp,SpUsage"
-                tools:text="@string/label_reverse_portrait"
-                />
-        </LinearLayout>
+            tools:ignore="ContentDescription,VectorDrawableCompat"
+            tools:src="@drawable/ic_reverse_portrait"
+            />
     </FrameLayout>
 
     <FrameLayout
@@ -222,38 +134,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/bg_circle"
-            android:visibility="gone"
             />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/remote_views_icon5"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center"
-            android:orientation="vertical"
-            tools:ignore="UseCompoundDrawables"
-            >
-
-            <ImageView
-                android:id="@+id/remote_views_icon5"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_horizontal"
-                tools:ignore="ContentDescription,VectorDrawableCompat"
-                tools:src="@drawable/ic_reverse_landscape"
-                />
-
-            <TextView
-                android:id="@+id/remote_views_label5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:textColor="@color/fg_notification"
-                android:textSize="@dimen/text_icon"
-                tools:ignore="SmallSp,SpUsage"
-                tools:text="@string/label_reverse_landscape"
-                />
-        </LinearLayout>
+            tools:ignore="ContentDescription,VectorDrawableCompat"
+            tools:src="@drawable/ic_reverse_landscape"
+            />
     </FrameLayout>
 
     <FrameLayout
@@ -271,38 +161,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/bg_circle"
-            android:visibility="gone"
             />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/remote_views_icon6"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center"
-            android:orientation="vertical"
-            tools:ignore="UseCompoundDrawables"
-            >
-
-            <ImageView
-                android:id="@+id/remote_views_icon6"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_horizontal"
-                tools:ignore="ContentDescription,VectorDrawableCompat"
-                tools:src="@drawable/ic_force_sensor"
-                />
-
-            <TextView
-                android:id="@+id/remote_views_label6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:textColor="@color/fg_notification"
-                android:textSize="@dimen/text_icon"
-                tools:ignore="SmallSp,SpUsage"
-                tools:text="@string/label_force_sensor"
-                />
-        </LinearLayout>
+            tools:ignore="ContentDescription,VectorDrawableCompat"
+            tools:src="@drawable/ic_force_sensor"
+            />
     </FrameLayout>
 
     <FrameLayout

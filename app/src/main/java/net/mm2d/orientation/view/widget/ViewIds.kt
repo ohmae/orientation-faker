@@ -13,7 +13,6 @@ object ViewIds {
     data class ViewId(
         val buttonId: Int,
         val iconId: Int,
-        val labelId: Int,
         val shapeId: Int,
     )
 
@@ -21,37 +20,31 @@ object ViewIds {
         ViewId(
             R.id.remote_views_button1,
             R.id.remote_views_icon1,
-            R.id.remote_views_label1,
             R.id.remote_views_shape1,
         ),
         ViewId(
             R.id.remote_views_button2,
             R.id.remote_views_icon2,
-            R.id.remote_views_label2,
             R.id.remote_views_shape2,
         ),
         ViewId(
             R.id.remote_views_button3,
             R.id.remote_views_icon3,
-            R.id.remote_views_label3,
             R.id.remote_views_shape3,
         ),
         ViewId(
             R.id.remote_views_button4,
             R.id.remote_views_icon4,
-            R.id.remote_views_label4,
             R.id.remote_views_shape4,
         ),
         ViewId(
             R.id.remote_views_button5,
             R.id.remote_views_icon5,
-            R.id.remote_views_label5,
             R.id.remote_views_shape5,
         ),
         ViewId(
             R.id.remote_views_button6,
             R.id.remote_views_icon6,
-            R.id.remote_views_label6,
             R.id.remote_views_shape6,
         ),
     )

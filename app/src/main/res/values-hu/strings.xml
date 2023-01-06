@@ -66,9 +66,6 @@
     <string name="button_selected_background_color">kijelölés háttere</string>
     <string name="button_base_color">alap</string>
 
-    <string name="menu_title_use_icon_background">Ikon háttere</string>
-    <string name="menu_description_use_icon_background_on">Csak ikon megjelenítése leíró szöveg nélkül, ikon háttérrel</string>
-    <string name="menu_description_use_icon_background_off">Ikon és leíró szöveg megjelenítése téglalap alakú háttérrel</string>
     <string name="menu_title_use_blank_icon_for_notification">Az állapotsor ikonja legyen átlátszó</string>
     <string name="menu_description_use_blank_icon_for_notification_on">Átlátszó állapotsori ikon</string>
     <string name="menu_description_use_blank_icon_for_notification_off">Állapotsori ikon, ami mutatja a kijelző tájolását</string>
