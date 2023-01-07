@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.orientation.control.FunctionButton
+import net.mm2d.orientation.control.FunctionButton.LauncherButton
 import net.mm2d.orientation.control.FunctionButton.OrientationButton
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -46,6 +47,7 @@ class Default @Inject constructor(
             OrientationButton.LANDSCAPE,
             OrientationButton.REVERSE_PORTRAIT,
             OrientationButton.REVERSE_LANDSCAPE,
+            LauncherButton.SETTINGS,
         )
     }
 }
