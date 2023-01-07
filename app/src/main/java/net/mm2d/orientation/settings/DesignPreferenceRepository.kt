@@ -16,6 +16,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import net.mm2d.orientation.control.FunctionButton
+import net.mm2d.orientation.control.FunctionButton.Companion.migrateFromOrientations
+import net.mm2d.orientation.control.FunctionButton.Companion.toSerializedString
 import net.mm2d.orientation.control.FunctionButton.LauncherButton
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -95,7 +97,7 @@ class DesignPreferenceRepository @Inject constructor(
 
     suspend fun updateFunctions(functions: List<FunctionButton>) {
         dataStore.edit {
-            it[FUNCTION_BUTTONS] = FunctionButton.run { functions.toSerializedString() }
+            it[FUNCTION_BUTTONS] = functions.toSerializedString()
         }
     }
 
@@ -107,17 +109,16 @@ class DesignPreferenceRepository @Inject constructor(
         override suspend fun migrate(currentData: Preferences): Preferences =
             currentData.edit {
                 if (it[DATA_VERSION] == 1) {
-                    it[FUNCTION_BUTTONS] = FunctionButton.run {
-                        val functions = it[ORIENTATION_LIST].migrateFromOrientations()
-                        if (functions.size < MAX &&
-                            it[SHOW_SETTINGS] == true &&
-                            !functions.contains(LauncherButton.SETTINGS)
-                        ) {
+                    val functions = it[ORIENTATION_LIST].migrateFromOrientations()
+                    val addSettings = functions.size < FunctionButton.MAX &&
+                        !functions.contains(LauncherButton.SETTINGS) &&
+                        it[SHOW_SETTINGS] == true
+                    it[FUNCTION_BUTTONS] =
+                        if (addSettings) {
                             functions + LauncherButton.SETTINGS
                         } else {
                             functions
                         }.toSerializedString()
-                    }
                     it.remove(ORIENTATION_LIST)
                     it.remove(ICONIZE)
                 }

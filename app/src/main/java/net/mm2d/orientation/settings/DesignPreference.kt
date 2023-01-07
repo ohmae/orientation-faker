@@ -17,7 +17,7 @@ data class DesignPreference(
     val background: Int,
     val foregroundSelected: Int,
     val backgroundSelected: Int,
-    val base: Int?,
+    val base: Int,
     val shape: IconShape,
     val functions: List<FunctionButton>,
 ) : Parcelable

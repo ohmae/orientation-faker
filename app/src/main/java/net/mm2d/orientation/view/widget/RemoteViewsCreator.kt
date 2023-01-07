@@ -31,8 +31,7 @@ object RemoteViewsCreator {
         design: DesignPreference,
     ): RemoteViews =
         RemoteViews(context.packageName, R.layout.notification).also { views ->
-            val baseColor = design.base ?: 0
-            views.helper(R.id.notification).setBackgroundColor(baseColor)
+            views.helper(R.id.notification).setBackgroundColor(design.base)
             design.functions.forEachIndexed { index, value ->
                 val button = ViewIds.list[index]
                 Functions.find(value)?.let {

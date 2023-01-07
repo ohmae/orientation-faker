@@ -33,8 +33,7 @@ class NotificationSample(view: View) {
     private val base = view.findViewById<View>(R.id.notification)
 
     fun update(orientation: OrientationPreference, design: DesignPreference) {
-        val baseColor = design.base ?: 0
-        base.setBackgroundColor(baseColor)
+        base.setBackgroundColor(design.base)
         val functions = design.functions
         functions.forEachIndexed { index, value ->
             val button = buttonList[index]
