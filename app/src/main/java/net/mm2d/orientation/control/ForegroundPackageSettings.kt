@@ -9,6 +9,7 @@ package net.mm2d.orientation.control
 
 import android.content.Context
 import androidx.room.Room
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,18 +20,22 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.mm2d.orientation.room.PackageSettingEntity
 import net.mm2d.orientation.room.PackageSettingsDatabase
+import javax.inject.Inject
+import javax.inject.Singleton
 
-object ForegroundPackageSettings {
-    private const val DB_NAME = "package_settings.db"
-    private lateinit var database: PackageSettingsDatabase
+@Singleton
+class ForegroundPackageSettings @Inject constructor(
+    @ApplicationContext context: Context
+) {
+    private val database: PackageSettingsDatabase =
+        Room.databaseBuilder(context, PackageSettingsDatabase::class.java, DB_NAME).build()
     private val map: MutableMap<String, Orientation> = mutableMapOf()
     private val exceptionHandler = CoroutineExceptionHandler { _, _ -> }
     private val job = SupervisorJob()
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + job + exceptionHandler)
     private val emptyFlow: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
-    fun initialize(context: Context) {
-        database = Room.databaseBuilder(context, PackageSettingsDatabase::class.java, DB_NAME).build()
+    init {
         scope.launch {
             val all = database.packageSettingsDao().getAll()
             withContext(Dispatchers.Main) {
@@ -79,5 +84,9 @@ object ForegroundPackageSettings {
             database.packageSettingsDao().deleteAll()
         }
         emptyFlow.value = map.isEmpty()
+    }
+
+    companion object {
+        private const val DB_NAME = "package_settings.db"
     }
 }

@@ -134,14 +134,18 @@ class MainService : LifecycleService() {
         private const val EXTRA_DESIGN = "EXTRA_DESIGN"
         private const val EXTRA_FOREGROUND_SETTING_EMPTY = "EXTRA_FOREGROUND_SETTING_EMPTY"
 
-        fun initialize(c: Context, preferenceRepository: PreferenceRepository) {
+        fun initialize(
+            c: Context,
+            preferenceRepository: PreferenceRepository,
+            foregroundPackageSettings: ForegroundPackageSettings
+        ) {
             val context = c.applicationContext
             preferenceRepository.scope.launch {
                 combine(
                     preferenceRepository.actualOrientationPreferenceFlow,
                     preferenceRepository.controlPreferenceFlow,
                     preferenceRepository.designPreferenceFlow,
-                    ForegroundPackageSettings.emptyFlow(),
+                    foregroundPackageSettings.emptyFlow(),
                     ::Quadruple
                 ).collect { (orientation, control, design, empty) ->
                     runCatching { start(context, orientation, control, design, empty) }

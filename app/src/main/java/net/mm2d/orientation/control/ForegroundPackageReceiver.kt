@@ -20,10 +20,12 @@ import javax.inject.Inject
 class ForegroundPackageReceiver : BroadcastReceiver() {
     @Inject
     lateinit var preferenceRepository: PreferenceRepository
+    @Inject
+    lateinit var foregroundPackageSettings: ForegroundPackageSettings
 
     override fun onReceive(context: Context, intent: Intent) {
         val name = intent.getStringExtra(EXTRA_FOREGROUND_PACKAGE) ?: return
-        preferenceRepository.updatePackageOrientation(ForegroundPackageSettings.get(name))
+        preferenceRepository.updatePackageOrientation(foregroundPackageSettings.get(name))
     }
 
     companion object {

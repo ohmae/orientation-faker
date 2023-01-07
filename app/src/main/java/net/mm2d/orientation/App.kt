@@ -28,13 +28,14 @@ import javax.inject.Inject
 open class App : Application() {
     @Inject
     lateinit var preferenceRepository: PreferenceRepository
+    @Inject
+    lateinit var foregroundPackageSettings: ForegroundPackageSettings
 
     override fun onCreate() {
         super.onCreate()
         initializeOverrideWhenDebug()
-        MainService.initialize(this, preferenceRepository)
+        MainService.initialize(this, preferenceRepository, foregroundPackageSettings)
         NotificationHelper.createChannel(this)
-        ForegroundPackageSettings.initialize(this)
         CustomTabsHelper.initialize(this)
         WidgetProvider.initialize(this, preferenceRepository)
         PowerConnectionReceiver.initialize(this, preferenceRepository)

@@ -59,9 +59,12 @@ import net.mm2d.orientation.util.queryIntentActivitiesCompat
 import net.mm2d.orientation.view.dialog.EachAppOrientationDialog
 import net.mm2d.orientation.view.dialog.UsageAppPermissionDialog
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class EachAppFragment : Fragment(R.layout.fragment_each_app) {
+    @Inject
+    lateinit var foregroundPackageSettings: ForegroundPackageSettings
     private var adapter: EachAppAdapter by autoCleared()
     private var binding: FragmentEachAppBinding by autoCleared()
     private val viewModel: EachAppFragmentViewModel by viewModels()
@@ -71,7 +74,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentEachAppBinding.bind(view)
         binding.recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
-        val adapter = EachAppAdapter(requireContext()) { position, packageName ->
+        val adapter = EachAppAdapter(requireContext(), foregroundPackageSettings) { position, packageName ->
             hideKeyboard()
             EachAppOrientationDialog.show(this, REQUEST_KEY_ORIENTATION, position, packageName)
         }
@@ -83,7 +86,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
         setUpBottom()
         setUpMenu()
         EachAppOrientationDialog.registerListener(this, REQUEST_KEY_ORIENTATION) { position, packageName, orientation ->
-            ForegroundPackageSettings.put(packageName, orientation)
+            foregroundPackageSettings.put(packageName, orientation)
             adapter.notifyItemChanged(position)
         }
         viewModel.menu.observe(viewLifecycleOwner) {
@@ -142,13 +145,13 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
             binding.recyclerView.scrollToPosition(0)
         }
         binding.resetButton.setOnClickListener {
-            ForegroundPackageSettings.reset()
+            foregroundPackageSettings.reset()
             adapter.notifyDataSetChanged()
         }
     }
 
     private fun setAppList(list: List<AppInfo>) {
-        ForegroundPackageSettings.updateInstalledPackages(list.mapTo(LinkedHashSet(list.size)) { it.packageName })
+        foregroundPackageSettings.updateInstalledPackages(list.mapTo(LinkedHashSet(list.size)) { it.packageName })
         adapter.updateList(list)
         binding.noAppCaution.isGone = adapter.isNotEmpty()
         binding.progressBar.visibility = View.GONE
@@ -220,6 +223,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
 
     private class EachAppAdapter(
         private val context: Context,
+        private val foregroundPackageSettings: ForegroundPackageSettings,
         private val listener: (position: Int, packageName: String) -> Unit
     ) : ListAdapter<AppInfo, ViewHolder>(object : DiffUtil.ItemCallback<AppInfo>() {
         override fun areItemsTheSame(oldItem: AppInfo, newItem: AppInfo): Boolean =
@@ -314,7 +318,7 @@ class EachAppFragment : Fragment(R.layout.fragment_each_app) {
             }
             binding.appName.text = info.label
             binding.appPackage.text = info.packageName
-            val orientation = ForegroundPackageSettings.get(info.packageName)
+            val orientation = foregroundPackageSettings.get(info.packageName)
             if (orientation != Orientation.INVALID) {
                 Functions.find(orientation)?.let {
                     binding.orientationIcon.setImageResource(it.icon)
