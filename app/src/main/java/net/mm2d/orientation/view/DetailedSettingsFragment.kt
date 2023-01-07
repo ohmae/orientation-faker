@@ -84,9 +84,9 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             binding.content.backgroundSelected.setOnClickListener {
                 ColorChooserDialog.show(this, REQUEST_KEY_BACKGROUND_SELECTED, design.backgroundSelected, true)
             }
-            binding.content.sampleBase.setImageColor(design.base ?: 0)
+            binding.content.sampleBase.setImageColor(design.base)
             binding.content.base.setOnClickListener {
-                ColorChooserDialog.show(this, REQUEST_KEY_BASE, design.base ?: 0, true)
+                ColorChooserDialog.show(this, REQUEST_KEY_BASE, design.base, true)
             }
             binding.content.iconShapeIcon.setImageResource(design.shape.iconId)
             binding.content.iconShapeDescription.setText(design.shape.textId)
