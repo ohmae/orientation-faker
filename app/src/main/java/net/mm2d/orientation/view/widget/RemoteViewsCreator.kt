@@ -32,16 +32,14 @@ object RemoteViewsCreator {
     ): RemoteViews =
         RemoteViews(context.packageName, R.layout.notification).also { views ->
             views.helper(R.id.notification).setBackgroundColor(design.base)
-            design.functions.forEachIndexed { index, value ->
-                val button = ViewIds.list[index]
-                Functions.find(value)?.let {
-                    val helpers = RemoteViewHelpers(views, button)
-                    helpers.icon.setImageResource(it.icon)
-                    helpers.button.setOnClickPendingIntent(PendingIntentCreator.function(context, it.function))
-                }
+            design.functions.forEachIndexed { index, function ->
+                val button = ViewIds.notification[index]
+                val helpers = RemoteViewHelpers(views, button)
+                helpers.button.setOnClickPendingIntent(PendingIntentCreator.function(context, function))
+                Functions.find(function)?.let { helpers.icon.setImageResource(it.icon) }
             }
             val selectedIndex = design.functions.mapOrientation().indexOf(orientation.orientation)
-            ViewIds.list.forEachIndexed { index, it ->
+            ViewIds.notification.forEachIndexed { index, it ->
                 val helpers = RemoteViewHelpers(views, it)
                 helpers.shape.setImageResource(design.shape.iconId)
                 if (index == selectedIndex) {

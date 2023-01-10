@@ -14,8 +14,8 @@ import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.shareIn
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import net.mm2d.orientation.control.Orientation
 import net.mm2d.orientation.settings.DesignPreference
@@ -57,10 +57,9 @@ class WidgetProvider : AppWidgetProvider() {
             widgetIds: IntArray
         ) {
             preferenceRepository.scope.launch {
-                preferenceFlow.take(1).collect { (orientation, design) ->
-                    widgetIds.forEach {
-                        updateAppWidget(context, widgetManager, it, orientation, design)
-                    }
+                val (orientation, design) = preferenceFlow.first()
+                widgetIds.forEach {
+                    updateAppWidget(context, widgetManager, it, orientation, design)
                 }
             }
         }

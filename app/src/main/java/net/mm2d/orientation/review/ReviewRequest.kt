@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.yield
 import net.mm2d.orientation.control.Orientation
@@ -39,11 +39,8 @@ object ReviewRequest {
             yield()
             val orientationFlow = preferenceRepository.orientationPreferenceFlow
             val reviewFlow = preferenceRepository.reviewPreferenceFlow
-            combine(orientationFlow, reviewFlow, ::Pair)
-                .take(1)
-                .collect { (orientation, review) ->
-                    requestReviewIfNeed(fragment, orientation, review, preferenceRepository)
-                }
+            val (orientation, review) = combine(orientationFlow, reviewFlow, ::Pair).first()
+            requestReviewIfNeed(fragment, orientation, review, preferenceRepository)
         }
     }
 

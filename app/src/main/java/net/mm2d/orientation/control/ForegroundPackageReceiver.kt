@@ -20,6 +20,7 @@ import javax.inject.Inject
 class ForegroundPackageReceiver : BroadcastReceiver() {
     @Inject
     lateinit var preferenceRepository: PreferenceRepository
+
     @Inject
     lateinit var foregroundPackageSettings: ForegroundPackageSettings
 

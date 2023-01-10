@@ -18,8 +18,10 @@ import net.mm2d.orientation.control.ForegroundPackageSettings
 import net.mm2d.orientation.service.MainService
 import net.mm2d.orientation.service.PowerConnectionReceiver
 import net.mm2d.orientation.settings.PreferenceRepository
+import net.mm2d.orientation.settings.WidgetSettingsRepository
 import net.mm2d.orientation.tabs.CustomTabsHelper
 import net.mm2d.orientation.view.notification.NotificationHelper
+import net.mm2d.orientation.view.widget.CustomWidgetProvider
 import net.mm2d.orientation.view.widget.WidgetProvider
 import javax.inject.Inject
 
@@ -28,8 +30,12 @@ import javax.inject.Inject
 open class App : Application() {
     @Inject
     lateinit var preferenceRepository: PreferenceRepository
+
     @Inject
     lateinit var foregroundPackageSettings: ForegroundPackageSettings
+
+    @Inject
+    lateinit var widgetSettingsRepository: WidgetSettingsRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -38,6 +44,7 @@ open class App : Application() {
         NotificationHelper.createChannel(this)
         CustomTabsHelper.initialize(this)
         WidgetProvider.initialize(this, preferenceRepository)
+        CustomWidgetProvider.initialize(this, preferenceRepository, widgetSettingsRepository)
         PowerConnectionReceiver.initialize(this, preferenceRepository)
         ControlStatusReceiver.register(this)
         ForegroundPackageReceiver.register(this)

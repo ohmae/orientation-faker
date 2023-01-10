@@ -22,7 +22,7 @@ import net.mm2d.orientation.util.opaque
 import net.mm2d.orientation.view.widget.ViewIds
 
 class NotificationSample(view: View) {
-    val buttonList: List<ButtonViews> = ViewIds.list.map {
+    val buttonList: List<ButtonViews> = ViewIds.notification.map {
         ButtonViews(
             view.findViewById(it.buttonId),
             view.findViewById(it.iconId),

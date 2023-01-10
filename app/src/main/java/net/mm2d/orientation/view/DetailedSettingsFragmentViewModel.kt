@@ -12,7 +12,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import net.mm2d.orientation.control.FunctionButton
 import net.mm2d.orientation.control.Orientation
@@ -125,14 +125,11 @@ class DetailedSettingsFragmentViewModel @Inject constructor(
 
     fun adjustOrientation() {
         preferenceRepository.scope.launch {
-            combine(
-                preferenceRepository.orientationPreferenceFlow,
-                preferenceRepository.designPreferenceFlow,
-                ::Pair
-            ).take(1).collect { (orientation, design) ->
-                if (!design.functions.mapOrientation().contains(orientation.orientation)) {
-                    orientationPreferenceRepository.updateOrientation(design.functions.mapOrientation().first())
-                }
+            val orientationFlow = preferenceRepository.orientationPreferenceFlow
+            val designFlow = preferenceRepository.designPreferenceFlow
+            val (orientation, design) = combine(orientationFlow, designFlow, ::Pair).first()
+            if (!design.functions.mapOrientation().contains(orientation.orientation)) {
+                orientationPreferenceRepository.updateOrientation(design.functions.mapOrientation().first())
             }
         }
     }

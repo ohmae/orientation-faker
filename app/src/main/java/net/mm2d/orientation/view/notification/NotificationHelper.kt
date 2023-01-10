@@ -17,6 +17,7 @@ import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
 import net.mm2d.android.orientationfaker.R
+import net.mm2d.orientation.control.FunctionButton.LauncherButton
 import net.mm2d.orientation.control.Functions
 import net.mm2d.orientation.control.PendingIntentCreator
 import net.mm2d.orientation.settings.ControlPreference
@@ -91,7 +92,7 @@ object NotificationHelper {
                 }
             }
             .setSmallIcon(icon)
-            .setContentIntent(PendingIntentCreator.activity(context))
+            .setContentIntent(PendingIntentCreator.function(context, LauncherButton.SETTINGS))
             .build()
     }
 }
