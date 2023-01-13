@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
@@ -29,14 +28,16 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var preferenceRepository: PreferenceRepository
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        binding.toolbar.setupWithNavController(navHostFragment.navController)
-        navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
+
+        val navController = binding.navHost.getFragment<NavHostFragment>().navController
+        binding.toolbar.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.EachAppFragment) {
                 binding.appBar.elevation = 0f
             } else {
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navController = binding.navHost.getFragment<NavHostFragment>().navController
         return item.onNavDestinationSelected(navController) || when (item.itemId) {
             android.R.id.home -> navController.popBackStack()
             else -> super.onOptionsItemSelected(item)
