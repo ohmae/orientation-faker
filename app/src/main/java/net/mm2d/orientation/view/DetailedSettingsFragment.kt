@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.ColorInt
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -61,12 +60,6 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
             binding.content.notificationPrivacy.isChecked = it.shouldNotifySecret
             binding.content.useBlankIconForNotification.isChecked = it.shouldUseBlankIcon
         }
-        val backgroundDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.bg_sample)
-        binding.content.sampleForeground.background = backgroundDrawable
-        binding.content.sampleBackground.background = backgroundDrawable
-        binding.content.sampleForegroundSelected.background = backgroundDrawable
-        binding.content.sampleBackgroundSelected.background = backgroundDrawable
-        binding.content.sampleBase.background = backgroundDrawable
         viewModel.design.observe(viewLifecycleOwner) { design ->
             binding.content.sampleForeground.setImageColor(design.foreground)
             binding.content.foreground.setOnClickListener {
