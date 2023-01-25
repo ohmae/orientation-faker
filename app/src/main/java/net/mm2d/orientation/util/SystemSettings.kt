@@ -21,9 +21,6 @@ import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 
 object SystemSettings {
-    private const val ACTION_APP_NOTIFICATION_SETTINGS =
-        "android.settings.APP_NOTIFICATION_SETTINGS"
-
     private fun startSystemSettings(activity: Activity, action: String, withPackage: Boolean = true) {
         if (!withPackage) {
             startSystemSettingsWithoutPackage(activity, action)
@@ -67,7 +64,7 @@ object SystemSettings {
 
     fun startAppNotificationSettings(activity: Activity) {
         try {
-            activity.startActivity(Intent(ACTION_APP_NOTIFICATION_SETTINGS).also {
+            activity.startActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).also {
                 it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 it.putExtra("app_package", BuildConfig.APPLICATION_ID)
                 it.putExtra("app_uid", activity.applicationInfo.uid)
