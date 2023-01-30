@@ -58,6 +58,12 @@
             android:label="@string/options_menu_license"
             />
 
+        <activity
+            android:name="net.mm2d.orientation.view.CustomWidgetConfigActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Orientation.NoActionBar"
+            />
+
         <service
             android:name="net.mm2d.orientation.service.MainService"
             android:enabled="true"

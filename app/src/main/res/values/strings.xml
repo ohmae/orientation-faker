@@ -126,4 +126,7 @@
     <string name="options_menu_share_this_app">Share this app</string>
     <string name="options_menu_play_store">Google Play store</string>
     <string name="options_menu_relevant_ads">Relevant Ads</string>
+
+    <string name="menu_title_widget_config">Widget Config</string>
+    <string name="menu_widget_config_divider">↑enabled icons\n↓disabled icons</string>
 </resources>

@@ -30,7 +30,7 @@ class WidgetSettingsRepository @Inject constructor(
     fun dao(): WidgetSettingsDao = dao
 
     suspend fun getOrDefault(id: Int, designPreference: DesignPreference): WidgetSettingEntity =
-        dao.get(id) ?: widgetEntityFromDesignPreference(id, designPreference)
+        dao.get(id) ?: widgetEntityFromDesignPreference(id, designPreference).also { dao.insert(it) }
 
     private fun widgetEntityFromDesignPreference(id: Int, designPreference: DesignPreference): WidgetSettingEntity =
         WidgetSettingEntity(

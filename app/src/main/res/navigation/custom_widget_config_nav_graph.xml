@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/custom_widget_config_nav_graph"
+    app:startDestination="@id/CustomWidgetConfigFragment"
+    >
+
+    <fragment
+        android:id="@+id/CustomWidgetConfigFragment"
+        android:name="net.mm2d.orientation.view.CustomWidgetConfigFragment"
+        android:label="@string/menu_title_widget_config"
+        tools:layout="@layout/fragment_custom_widget_config"
+        />
+</navigation>

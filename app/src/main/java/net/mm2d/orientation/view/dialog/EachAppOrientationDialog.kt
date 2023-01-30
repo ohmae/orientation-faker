@@ -77,7 +77,7 @@ class EachAppOrientationDialog : DialogFragment() {
                 val entity = Functions.orientations[position]
                 holder.bind(entity)
                 holder.itemView.setOnClickListener {
-                    entity.function.orientation?.let(onClickListener)
+                    onClickListener(entity.function.orientation)
                 }
             }
         }

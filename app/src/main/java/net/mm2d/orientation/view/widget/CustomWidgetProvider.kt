@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import net.mm2d.orientation.control.Orientation
@@ -47,7 +48,12 @@ class CustomWidgetProvider : AppWidgetProvider() {
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + job + exceptionHandler)
 
     private val orientationFlow: Flow<OrientationPreference> by lazy {
-        preference.orientationPreferenceFlow.shareIn(scope, SharingStarted.Eagerly, 1)
+        preference.orientationPreferenceFlow
+            .map {
+                val o = if (it.enabled) it.orientation else Orientation.INVALID
+                it.copy(orientation = o)
+            }
+            .shareIn(scope, SharingStarted.Eagerly, 1)
     }
     private val designFlow: Flow<DesignPreference> by lazy {
         preference.designPreferenceFlow.shareIn(scope, SharingStarted.Eagerly, 1)
@@ -59,9 +65,9 @@ class CustomWidgetProvider : AppWidgetProvider() {
             scope.launch {
                 delay(500)
                 val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
-                val (orientation, design) = combine(orientationFlow, designFlow, ::Pair).first()
+                val orientation = orientationFlow.first()
                 manager.getAppWidgetIds(ComponentName(context, CustomWidgetProvider::class.java)).forEach {
-                    launch { update(context, manager, it, orientation, design) }
+                    launch { update(context, manager, it, orientation) }
                 }
             }
         }
@@ -108,28 +114,29 @@ class CustomWidgetProvider : AppWidgetProvider() {
     }
 
     companion object {
+        private lateinit var preferenceRepository: PreferenceRepository
         private lateinit var widgetSettingsRepository: WidgetSettingsRepository
+        private lateinit var orientationFlow: Flow<OrientationPreference>
 
         fun initialize(
             context: Context,
             preference: PreferenceRepository,
             widgetSettings: WidgetSettingsRepository,
         ) {
+            preferenceRepository = preference
             widgetSettingsRepository = widgetSettings
-
-            val preferenceFlow = combine(
-                preference.orientationPreferenceFlow,
-                preference.designPreferenceFlow,
-            ) { orientation, design ->
-                val o = if (orientation.enabled) orientation.orientation else Orientation.INVALID
-                orientation.copy(orientation = o) to design
-            }.shareIn(preference.scope, SharingStarted.Eagerly, 1)
+            orientationFlow = preference.orientationPreferenceFlow
+                .map {
+                    val o = if (it.enabled) it.orientation else Orientation.INVALID
+                    it.copy(orientation = o)
+                }
+                .shareIn(preference.scope, SharingStarted.Eagerly, 1)
 
             val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
             preference.scope.launch {
-                preferenceFlow.collect { (orientation, design) ->
+                orientationFlow.collect { orientation ->
                     manager.getAppWidgetIds(ComponentName(context, CustomWidgetProvider::class.java)).forEach {
-                        launch { update(context, manager, it, orientation, design) }
+                        launch { update(context, manager, it, orientation) }
                     }
                 }
             }
@@ -150,11 +157,37 @@ class CustomWidgetProvider : AppWidgetProvider() {
             manager.updateAppWidget(id, views)
         }
 
+        private suspend fun update(
+            context: Context,
+            manager: AppWidgetManager,
+            id: Int,
+            orientation: OrientationPreference,
+        ) {
+            val setting = widgetSettingsRepository.dao().get(id) ?: return
+            val (width, height) = extractSize(context, manager, id)
+            val views = CustomWidgetRemoteViewsCreator(context, width, height, setting, orientation).create()
+            manager.updateAppWidget(id, views)
+        }
+
+        fun update(
+            context: Context,
+            id: Int,
+        ) {
+            preferenceRepository.scope.launch {
+                val setting = widgetSettingsRepository.dao().get(id) ?: return@launch
+                val orientation = orientationFlow.first()
+                val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
+                val (width, height) = extractSize(context, manager, id)
+                val views = CustomWidgetRemoteViewsCreator(context, width, height, setting, orientation).create()
+                manager.updateAppWidget(id, views)
+            }
+        }
+
         private fun extractSize(
             context: Context,
             manager: AppWidgetManager,
             id: Int,
-            options: Bundle?
+            options: Bundle? = null
         ): Pair<Int, Int> = (options ?: manager.getAppWidgetOptions(id)).let {
             if (context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 it.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH) to

@@ -11,6 +11,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WidgetSettingsDao {
@@ -20,8 +21,14 @@ interface WidgetSettingsDao {
     @Query("SELECT * FROM widget_settings")
     suspend fun getAll(): List<WidgetSettingEntity>
 
+    @Query("SELECT * FROM widget_settings")
+    fun getAllFlow(): Flow<List<WidgetSettingEntity>>
+
     @Query("SELECT * FROM widget_settings WHERE id=:id LIMIT 1")
     suspend fun get(id: Int): WidgetSettingEntity?
+
+    @Query("SELECT * FROM widget_settings WHERE id=:id LIMIT 1")
+    fun getFlow(id: Int): Flow<WidgetSettingEntity>
 
     @Query("DELETE FROM widget_settings WHERE id=:id")
     suspend fun delete(id: Int)

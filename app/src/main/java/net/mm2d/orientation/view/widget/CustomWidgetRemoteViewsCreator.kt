@@ -68,6 +68,7 @@ class CustomWidgetRemoteViewsCreator(
             val selected = function.orientation == orientation.orientation
             helpers.icon.setImageColor(if (selected) setting.foregroundSelected else setting.foreground)
             helpers.shape.setImageColor(if (selected) setting.backgroundSelected else setting.background)
+            helpers.shape.setImageResource(setting.shape.iconId)
             helpers.button.setOnClickPendingIntent(PendingIntentCreator.function(context, function))
             Functions.find(function)?.let { helpers.icon.setImageResource(it.icon) }
         } else {

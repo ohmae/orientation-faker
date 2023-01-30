@@ -12,6 +12,7 @@ import java.io.Serializable
 
 sealed interface FunctionButton : Serializable {
     val orientation: Orientation?
+    val index: Int
 
     enum class OrientationButton(
         override val orientation: Orientation
@@ -29,6 +30,7 @@ sealed interface FunctionButton : Serializable {
         SENSOR_HEADSTAND(Orientation.SENSOR_HEADSTAND),
         ;
 
+        override val index: Int = ordinal
         override fun toString(): String = PREFIX + PREFIX_DELIMITER + name
 
         companion object {
@@ -42,6 +44,7 @@ sealed interface FunctionButton : Serializable {
         ;
 
         override val orientation: Orientation? = null
+        override val index: Int = ordinal + OrientationButton.values().size
         override fun toString(): String = PREFIX + PREFIX_DELIMITER + name
 
         companion object {

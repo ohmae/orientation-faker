@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <ImageView
+        android:id="@+id/shape"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bg_circle"
+        app:tint="@color/black"
+        />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/shape"
+        app:layout_constraintEnd_toEndOf="@id/shape"
+        app:layout_constraintStart_toStartOf="@id/shape"
+        app:layout_constraintTop_toTopOf="@id/shape"
+        tools:ignore="ContentDescription,VectorDrawableCompat"
+        tools:src="@drawable/ic_unspecified"
+        />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="@dimen/text_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shape"
+        tools:ignore="SmallSp,SpUsage"
+        tools:text="@string/label_landscape"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

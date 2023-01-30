@@ -46,4 +46,17 @@
         >
 
     </fragment>
+
+    <fragment
+        android:id="@+id/CustomWidgetConfigFragment"
+        android:name="net.mm2d.orientation.view.CustomWidgetConfigFragment"
+        android:label="@string/menu_title_widget_config"
+        tools:layout="@layout/fragment_custom_widget_config"
+        >
+        <argument
+            android:name="appWidgetId"
+            android:defaultValue="-1"
+            app:argType="integer"
+            />
+    </fragment>
 </navigation>

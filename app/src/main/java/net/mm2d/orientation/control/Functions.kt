@@ -20,7 +20,7 @@ object Functions {
     }
 
     data class OrientationEntity(
-        override val function: FunctionButton,
+        override val function: OrientationButton,
         override val icon: Int,
         override val label: Int,
         override val description: Int,
