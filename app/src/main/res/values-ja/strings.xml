@@ -47,7 +47,6 @@
     <string name="menu_description_app_theme_system">システムに合わせる</string>
     <string name="menu_description_app_theme_light">ライト</string>
     <string name="menu_description_app_theme_dark">ダーク</string>
-    <string name="menu_title_version">バージョン</string>
     <string name="caution_auto_rotate">システム設定を自動回転に変更してください。逆向き設定ができない可能性があります</string>
     <string name="caution_experimental_orientation">「縦自動」「横自動」「左寝」「右寝」「逆立ち」は加速度センサーを監視します。消費電力が増加する可能性があります</string>
 

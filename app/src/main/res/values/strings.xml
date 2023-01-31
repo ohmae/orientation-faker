@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Orientation Control</string>
     <string name="app_hash_tag">#ScreenOrientationControl</string>
+    <string name="app_version_format" tools:ignore="MissingTranslation">v%1$s</string>
 
     <string name="notification_channel_name">@string/app_name</string>
 
@@ -50,7 +51,6 @@
     <string name="menu_description_app_theme_system">Follow system</string>
     <string name="menu_description_app_theme_light">Light</string>
     <string name="menu_description_app_theme_dark">Dark</string>
-    <string name="menu_title_version">Version</string>
     <string name="caution_auto_rotate">Please change the system setting to auto-rotate. Reverse setting may not be possible</string>
     <string name="caution_experimental_orientation">\"sensor port\", \"sensor land\", \"lie left\", \"lie right\" and \"headstand\" will monitor the accelerometer. Therefore, power consumption may increase</string>
 

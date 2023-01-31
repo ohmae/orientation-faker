@@ -48,7 +48,6 @@
     <string name="menu_description_app_theme_system">Rendszert követi</string>
     <string name="menu_description_app_theme_light">Világos</string>
     <string name="menu_description_app_theme_dark">Sötét</string>
-    <string name="menu_title_version">Verzió</string>
     <string name="caution_auto_rotate">Kérjük, állítsd a rendszer beállítását automatikus forgatásra, máskülönben előfordulhat, hogy a 180 fokos fordítás nem lesz lehetséges</string>
     <string name="caution_experimental_orientation">A \"szenzor álló\", \"szenzor fekvő\", \"balra fektet\", \"jobbra fektet\" és \"fejjel lefelé\" figyeli a gyorsulásmérőt. Ezért az energiafogyasztás növekedhet.</string>
 

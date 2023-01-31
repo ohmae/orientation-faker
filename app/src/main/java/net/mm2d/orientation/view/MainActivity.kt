@@ -10,6 +10,7 @@ package net.mm2d.orientation.view
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -18,6 +19,7 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.ActivityMainBinding
 import net.mm2d.orientation.settings.PreferenceRepository
@@ -29,6 +31,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var preferenceRepository: PreferenceRepository
     private lateinit var binding: ActivityMainBinding
+    private val appBarElevation: Float by lazy {
+        resources.getDimension(R.dimen.appbar_elevation)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,13 +42,12 @@ class MainActivity : AppCompatActivity() {
 
         val navController = binding.navHost.getFragment<NavHostFragment>().navController
         binding.toolbar.setupWithNavController(navController)
+        binding.version.text = getString(R.string.app_version_format, BuildConfig.VERSION_NAME)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.EachAppFragment) {
-                binding.appBar.elevation = 0f
-            } else {
-                binding.appBar.elevation = resources.getDimension(R.dimen.appbar_elevation)
-            }
+            binding.version.isVisible = destination.id == R.id.MainFragment
+            binding.appBar.elevation = if (destination.id == R.id.EachAppFragment) 0f else appBarElevation
         }
+
         setSupportActionBar(binding.toolbar)
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {

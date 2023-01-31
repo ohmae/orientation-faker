@@ -25,7 +25,6 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionManager
 import dagger.hilt.android.AndroidEntryPoint
-import net.mm2d.android.orientationfaker.BuildConfig
 import net.mm2d.android.orientationfaker.R
 import net.mm2d.android.orientationfaker.databinding.FragmentMainBinding
 import net.mm2d.orientation.review.ReviewRequest
@@ -157,7 +156,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding.content.detailedSetting.setOnClickListener {
             navigate(MainFragmentDirections.actionMainFragmentToDetailedSettingsFragment())
         }
-        binding.content.versionDescription.text = BuildConfig.VERSION_NAME
         setUpOrientationIcons()
         binding.content.eachApp.setOnClickListener {
             navigate(MainFragmentDirections.actionMainFragmentToEachAppFragment())

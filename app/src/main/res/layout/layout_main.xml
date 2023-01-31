@@ -235,42 +235,4 @@
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/version"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
-        >
-
-        <TextView
-            android:id="@+id/version_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_menu_horizontal"
-            android:layout_marginTop="@dimen/margin_menu_vertical"
-            android:text="@string/menu_title_version"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textColor="?android:attr/textColor"
-            android:textSize="@dimen/text_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-
-        <TextView
-            android:id="@+id/version_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_menu_horizontal"
-            android:layout_marginBottom="@dimen/margin_menu_vertical"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textColor="?android:attr/textColorSecondary"
-            android:textSize="@dimen/text_description"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/version_title"
-            tools:text="1.1.1"
-            />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
