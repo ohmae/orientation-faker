@@ -2,7 +2,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contents_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -155,7 +154,7 @@
             android:textSize="@dimen/text_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detailed_setting_title"
+            app:layout_constraintTop_toBottomOf="@id/detailed_setting_title"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -193,7 +192,7 @@
             android:textSize="@dimen/text_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/each_app_title"
+            app:layout_constraintTop_toBottomOf="@id/each_app_title"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -231,7 +230,46 @@
             android:textSize="@dimen/text_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/night_mode_title"
+            app:layout_constraintTop_toBottomOf="@id/night_mode_title"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/custom_widget_config"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/custom_widget_config_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_menu_horizontal"
+            android:layout_marginTop="@dimen/margin_menu_vertical"
+            android:text="@string/menu_title_custom_widget_config"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="?android:attr/textColor"
+            android:textSize="@dimen/text_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/custom_widget_config_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_menu_horizontal"
+            android:layout_marginBottom="@dimen/margin_menu_vertical"
+            android:text="@string/menu_description_custom_widget_config"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="@dimen/text_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/custom_widget_config_title"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,8 @@
 package net.mm2d.orientation.view
 
 import android.annotation.SuppressLint
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -38,6 +40,7 @@ import net.mm2d.orientation.view.dialog.NightModeDialog
 import net.mm2d.orientation.view.dialog.NotificationPermissionDialog
 import net.mm2d.orientation.view.dialog.OverlayPermissionDialog
 import net.mm2d.orientation.view.notification.NotificationPermission
+import net.mm2d.orientation.view.widget.CustomWidgetProvider
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -122,6 +125,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             TransitionManager.beginDelayedTransition(binding.content.root)
             binding.content.notificationCaution.isGone = granted
         }
+        val context = requireContext().applicationContext
+        binding.content.customWidgetConfig.isVisible =
+            AppWidgetManager.getInstance(context)
+                .getAppWidgetIds(ComponentName(context, CustomWidgetProvider::class.java))
+                .isNotEmpty()
     }
 
     override fun onPause() {
@@ -154,11 +162,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         notificationSample = NotificationSample(binding.notificationSample)
         binding.content.status.setOnClickListener { toggleStatus() }
         binding.content.detailedSetting.setOnClickListener {
-            navigate(MainFragmentDirections.actionMainFragmentToDetailedSettingsFragment())
+            navigate(MainFragmentDirections.actionMainToDetailedSettings())
         }
         setUpOrientationIcons()
         binding.content.eachApp.setOnClickListener {
-            navigate(MainFragmentDirections.actionMainFragmentToEachAppFragment())
+            navigate(MainFragmentDirections.actionMainToEachApp())
+        }
+        binding.content.customWidgetConfig.setOnClickListener {
+            navigate(MainFragmentDirections.actionMainToCustomWidgetList())
         }
     }
 

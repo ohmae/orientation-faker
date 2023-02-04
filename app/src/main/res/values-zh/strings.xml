@@ -4,6 +4,7 @@
     <string name="app_hash_tag">#屏幕旋转控制</string>
 
     <string name="notification_channel_name">@string/app_name</string>
+    <string name="custom_widget">Custom Widget</string>
 
     <string name="ok">确定</string>
     <string name="cancel">取消</string>
@@ -48,6 +49,8 @@
     <string name="menu_description_app_theme_system">跟随系统</string>
     <string name="menu_description_app_theme_light">明亮</string>
     <string name="menu_description_app_theme_dark">黑暗</string>
+    <string name="menu_title_custom_widget_config">Change custom widget settings</string>
+    <string name="menu_description_custom_widget_config">Reconfigure placed custom widgets</string>
     <string name="caution_auto_rotate">请将系统设置更改为自动旋转.</string>
     <string name="caution_experimental_orientation">\"竖屏自动\", \"横屏自动\", \"左侧躺\", \"右侧躺\" 和 \"倒立\" 监控加速度计. 功耗可能会增加.</string>
 
@@ -125,4 +128,8 @@
     <string name="options_menu_relevant_ads">相关广告</string>
     <string name="description_settings">启动设置</string>
     <string name="label_setting">设置</string>
+
+    <string name="menu_title_widget_config">Widget Config</string>
+    <string name="menu_widget_config_divider">↑enabled icons\n↓disabled icons</string>
+    <string name="menu_title_widget_list">Widget List</string>
 </resources>

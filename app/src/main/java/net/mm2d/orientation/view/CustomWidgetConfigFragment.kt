@@ -95,8 +95,8 @@ class CustomWidgetConfigFragment : Fragment(R.layout.fragment_custom_widget_conf
         registerDialogListener()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onStop() {
+        super.onStop()
         visibleAdapter?.let { adapter ->
             viewModel.updateFunctions(adapter.currentList.map { it.function })
             CustomWidgetProvider.update(requireContext(), args.appWidgetId)

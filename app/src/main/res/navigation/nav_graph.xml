@@ -14,7 +14,7 @@
         tools:layout="@layout/fragment_main"
         >
         <action
-            android:id="@+id/action_MainFragment_to_DetailedSettingsFragment"
+            android:id="@+id/action_Main_to_DetailedSettings"
             app:destination="@id/DetailedSettingsFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/fade_out"
@@ -22,8 +22,16 @@
             app:popExitAnim="@anim/slide_out_right"
             />
         <action
-            android:id="@+id/action_MainFragment_to_EachAppFragment"
+            android:id="@+id/action_Main_to_EachApp"
             app:destination="@id/EachAppFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+        <action
+            android:id="@+id/action_Main_to_CustomWidgetList"
+            app:destination="@id/CustomWidgetListFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
@@ -35,18 +43,28 @@
         android:name="net.mm2d.orientation.view.DetailedSettingsFragment"
         android:label="@string/menu_title_detailed_settings"
         tools:layout="@layout/fragment_detailed_settings"
-        >
-
-    </fragment>
+        />
     <fragment
         android:id="@+id/EachAppFragment"
         android:name="net.mm2d.orientation.view.EachAppFragment"
         android:label="@string/menu_title_setting_for_each_app"
         tools:layout="@layout/fragment_each_app"
+        />
+    <fragment
+        android:id="@+id/CustomWidgetListFragment"
+        android:name="net.mm2d.orientation.view.CustomWidgetListFragment"
+        android:label="@string/menu_title_widget_list"
+        tools:layout="@layout/fragment_custom_widget_list"
         >
-
+        <action
+            android:id="@+id/action_CustomWidgetList_to_CustomWidgetConfig"
+            app:destination="@id/CustomWidgetConfigFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right"
+            />
     </fragment>
-
     <fragment
         android:id="@+id/CustomWidgetConfigFragment"
         android:name="net.mm2d.orientation.view.CustomWidgetConfigFragment"

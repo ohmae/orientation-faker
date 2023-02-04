@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_menu_horizontal"
+        android:layout_marginTop="@dimen/margin_menu_vertical"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="?android:attr/textColor"
+        android:textSize="@dimen/text_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="ID:"
+        />
+
+    <LinearLayout
+        android:id="@+id/sample_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_menu_horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="@dimen/margin_menu_vertical"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        >
+
+        <FrameLayout
+            android:id="@+id/remote_views_button1"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:foreground="@drawable/fg_touch"
+            >
+
+            <ImageView
+                android:id="@+id/remote_views_shape1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/bg_circle"
+                />
+
+            <ImageView
+                android:id="@+id/remote_views_icon1"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_force_sensor"
+                tools:ignore="ContentDescription"
+                />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/remote_views_button2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:foreground="@drawable/fg_touch"
+            >
+
+            <ImageView
+                android:id="@+id/remote_views_shape2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/bg_circle"
+                />
+
+            <ImageView
+                android:id="@+id/remote_views_icon2"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_force_sensor"
+                tools:ignore="ContentDescription"
+                />
+        </FrameLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

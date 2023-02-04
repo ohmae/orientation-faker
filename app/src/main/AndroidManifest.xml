@@ -89,12 +89,10 @@
             android:name="net.mm2d.orientation.view.widget.CustomWidgetProvider"
             android:enabled="true"
             android:exported="false"
+            android:label="@string/custom_widget"
             >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="net.mm2d.orientation.ACTION_CLICK_CUSTOM_WIDGET"/>
             </intent-filter>
 
             <meta-data
