@@ -134,6 +134,13 @@ class CustomWidgetProvider : AppWidgetProvider() {
 
             val manager: AppWidgetManager = AppWidgetManager.getInstance(context)
             preference.scope.launch {
+                val ids = manager.getAppWidgetIds(ComponentName(context, CustomWidgetProvider::class.java)).toSet()
+                val dao = widgetSettings.dao()
+                dao.getAll().filter { !ids.contains(it.id) }.forEach { dao.delete(it.id) }
+                val design = preference.designPreferenceFlow.first()
+                ids.forEach { widgetSettings.getOrDefault(it, design) }
+            }
+            preference.scope.launch {
                 orientationFlow.collect { orientation ->
                     manager.getAppWidgetIds(ComponentName(context, CustomWidgetProvider::class.java)).forEach {
                         launch { update(context, manager, it, orientation) }
