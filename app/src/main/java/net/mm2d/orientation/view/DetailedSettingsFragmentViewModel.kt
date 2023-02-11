@@ -128,8 +128,10 @@ class DetailedSettingsFragmentViewModel @Inject constructor(
             val orientationFlow = preferenceRepository.orientationPreferenceFlow
             val designFlow = preferenceRepository.designPreferenceFlow
             val (orientation, design) = combine(orientationFlow, designFlow, ::Pair).first()
-            if (!design.functions.mapOrientation().contains(orientation.orientation)) {
-                orientationPreferenceRepository.updateOrientation(design.functions.mapOrientation().first())
+            val candidate = design.functions.mapOrientation()
+            if (!candidate.contains(orientation.orientation)) {
+                val adjusted = candidate.firstOrNull() ?: Orientation.UNSPECIFIED
+                orientationPreferenceRepository.updateOrientation(adjusted)
             }
         }
     }
