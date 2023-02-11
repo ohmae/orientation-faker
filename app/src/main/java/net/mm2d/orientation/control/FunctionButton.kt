@@ -28,6 +28,9 @@ sealed interface FunctionButton : Serializable {
         SENSOR_LIE_RIGHT(Orientation.SENSOR_LIE_RIGHT),
         SENSOR_LIE_LEFT(Orientation.SENSOR_LIE_LEFT),
         SENSOR_HEADSTAND(Orientation.SENSOR_HEADSTAND),
+        SENSOR_FULL(Orientation.SENSOR_FULL),
+        SENSOR_FORWARD(Orientation.SENSOR_FORWARD),
+        SENSOR_REVERSE(Orientation.SENSOR_REVERSE),
         ;
 
         override val index: Int = ordinal

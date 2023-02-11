@@ -60,7 +60,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_force_sensor"
+                app:srcCompat="@drawable/ic_sensor_full"
                 tools:ignore="ContentDescription"
                 />
         </FrameLayout>
@@ -88,7 +88,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_force_sensor"
+                app:srcCompat="@drawable/ic_sensor_full"
                 tools:ignore="ContentDescription"
                 />
         </FrameLayout>

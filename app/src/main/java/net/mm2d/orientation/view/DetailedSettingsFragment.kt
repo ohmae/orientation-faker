@@ -87,12 +87,12 @@ class DetailedSettingsFragment : Fragment(R.layout.fragment_detailed_settings) {
                 view.isChecked = design.functions
                     .contains(view.funciton)
             }
-            val experimental = design.functions
+            val consumesPower = design.functions
                 .mapOrientation()
-                .any { it.isExperimental() }
-            if (binding.content.caution.isVisible != experimental) {
+                .any { it.consumesPower() }
+            if (binding.content.caution.isVisible != consumesPower) {
                 TransitionManager.beginDelayedTransition(binding.content.contentsContainer)
-                binding.content.caution.isVisible = experimental
+                binding.content.caution.isVisible = consumesPower
             }
             functions.clear()
             functions.addAll(design.functions)

@@ -57,16 +57,38 @@ class OrientationHelper @Inject constructor(
     }
 
     private fun minimumCoercion(x: Float, y: Float): Boolean {
-        if (requestedOrientation == Orientation.SENSOR_PORTRAIT) {
-            if (!controller.orientation.isPortrait()) {
-                controller.setOrientation(if (y > 0) Orientation.PORTRAIT else Orientation.REVERSE_PORTRAIT)
-                return true
-            }
-        } else if (requestedOrientation == Orientation.SENSOR_LANDSCAPE) {
-            if (!controller.orientation.isLandscape()) {
-                controller.setOrientation(if (x > 0) Orientation.LANDSCAPE else Orientation.REVERSE_LANDSCAPE)
-                return true
-            }
+        when (requestedOrientation) {
+            Orientation.SENSOR_PORTRAIT ->
+                if (!controller.orientation.isPortrait()) {
+                    controller.setOrientation(if (y > 0) Orientation.PORTRAIT else Orientation.REVERSE_PORTRAIT)
+                    return true
+                }
+            Orientation.SENSOR_LANDSCAPE ->
+                if (!controller.orientation.isLandscape()) {
+                    controller.setOrientation(if (x > 0) Orientation.LANDSCAPE else Orientation.REVERSE_LANDSCAPE)
+                    return true
+                }
+            Orientation.SENSOR_FORWARD ->
+                if (!controller.orientation.isForward()) {
+                    val rotation = calculateAngle(x, y).toRotation()
+                    if (rotation == Rotation.ROTATION_0 || rotation == Rotation.ROTATION_180) {
+                        controller.setOrientation(Orientation.PORTRAIT)
+                    } else {
+                        controller.setOrientation(Orientation.LANDSCAPE)
+                    }
+                    return true
+                }
+            Orientation.SENSOR_REVERSE ->
+                if (!controller.orientation.isReverse()) {
+                    val rotation = calculateAngle(x, y).toRotation()
+                    if (rotation == Rotation.ROTATION_0 || rotation == Rotation.ROTATION_180) {
+                        controller.setOrientation(Orientation.REVERSE_PORTRAIT)
+                    } else {
+                        controller.setOrientation(Orientation.REVERSE_LANDSCAPE)
+                    }
+                    return true
+                }
+            else -> Unit
         }
         return false
     }
@@ -88,8 +110,11 @@ class OrientationHelper @Inject constructor(
         val rotation = calculateAngle(x, y).toRotation()
         when (requestedOrientation) {
             Orientation.SENSOR_PORTRAIT,
-            Orientation.SENSOR_LANDSCAPE ->
-                sensorUpSideDown(rotation)
+            Orientation.SENSOR_LANDSCAPE,
+            Orientation.SENSOR_FULL,
+            Orientation.SENSOR_FORWARD,
+            Orientation.SENSOR_REVERSE ->
+                sensorNormal(rotation)
             Orientation.SENSOR_LIE_LEFT ->
                 sensorLieLeft(rotation)
             Orientation.SENSOR_LIE_RIGHT ->
@@ -100,7 +125,7 @@ class OrientationHelper @Inject constructor(
         }
     }
 
-    private fun sensorUpSideDown(rotation: Rotation) {
+    private fun sensorNormal(rotation: Rotation) {
         val targetOrientation = when (rotation) {
             Rotation.ROTATION_0 -> Orientation.PORTRAIT
             Rotation.ROTATION_90 -> Orientation.LANDSCAPE
@@ -108,14 +133,26 @@ class OrientationHelper @Inject constructor(
             Rotation.ROTATION_270 -> Orientation.REVERSE_LANDSCAPE
         }
         if (controller.orientation == targetOrientation) return
-        if (requestedOrientation == Orientation.SENSOR_PORTRAIT) {
-            if (targetOrientation.isPortrait()) {
+        when (requestedOrientation) {
+            Orientation.SENSOR_PORTRAIT ->
+                if (targetOrientation.isPortrait()) {
+                    controller.setOrientation(targetOrientation)
+                }
+            Orientation.SENSOR_LANDSCAPE ->
+                if (targetOrientation.isLandscape()) {
+                    controller.setOrientation(targetOrientation)
+                }
+            Orientation.SENSOR_FULL ->
                 controller.setOrientation(targetOrientation)
-            }
-        } else if (requestedOrientation == Orientation.SENSOR_LANDSCAPE) {
-            if (targetOrientation.isLandscape()) {
-                controller.setOrientation(targetOrientation)
-            }
+            Orientation.SENSOR_FORWARD ->
+                if (targetOrientation.isForward()) {
+                    controller.setOrientation(targetOrientation)
+                }
+            Orientation.SENSOR_REVERSE ->
+                if (targetOrientation.isReverse()) {
+                    controller.setOrientation(targetOrientation)
+                }
+            else -> Unit
         }
     }
 

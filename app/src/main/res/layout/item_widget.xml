@@ -33,7 +33,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             tools:ignore="ContentDescription,VectorDrawableCompat"
-            tools:src="@drawable/ic_force_sensor"
+            tools:src="@drawable/ic_sensor_full"
             />
     </FrameLayout>
 
@@ -61,7 +61,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             tools:ignore="ContentDescription,VectorDrawableCompat"
-            tools:src="@drawable/ic_force_sensor"
+            tools:src="@drawable/ic_sensor_full"
             />
     </FrameLayout>
 
@@ -89,7 +89,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             tools:ignore="ContentDescription,VectorDrawableCompat"
-            tools:src="@drawable/ic_force_sensor"
+            tools:src="@drawable/ic_sensor_full"
             />
     </FrameLayout>
 
@@ -117,7 +117,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             tools:ignore="ContentDescription,VectorDrawableCompat"
-            tools:src="@drawable/ic_force_sensor"
+            tools:src="@drawable/ic_sensor_full"
             />
     </FrameLayout>
 
@@ -145,7 +145,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             tools:ignore="ContentDescription,VectorDrawableCompat"
-            tools:src="@drawable/ic_force_sensor"
+            tools:src="@drawable/ic_sensor_full"
             />
     </FrameLayout>
 
@@ -173,7 +173,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             tools:ignore="ContentDescription,VectorDrawableCompat"
-            tools:src="@drawable/ic_force_sensor"
+            tools:src="@drawable/ic_sensor_full"
             />
     </FrameLayout>
 
@@ -201,7 +201,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             tools:ignore="ContentDescription,VectorDrawableCompat"
-            tools:src="@drawable/ic_force_sensor"
+            tools:src="@drawable/ic_sensor_full"
             />
     </FrameLayout>
 
@@ -229,7 +229,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             tools:ignore="ContentDescription,VectorDrawableCompat"
-            tools:src="@drawable/ic_force_sensor"
+            tools:src="@drawable/ic_sensor_full"
             />
     </FrameLayout>
 
@@ -257,7 +257,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             tools:ignore="ContentDescription,VectorDrawableCompat"
-            tools:src="@drawable/ic_force_sensor"
+            tools:src="@drawable/ic_sensor_full"
             />
     </FrameLayout>
 
@@ -285,7 +285,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             tools:ignore="ContentDescription,VectorDrawableCompat"
-            tools:src="@drawable/ic_force_sensor"
+            tools:src="@drawable/ic_sensor_full"
             />
     </FrameLayout>
 </LinearLayout>

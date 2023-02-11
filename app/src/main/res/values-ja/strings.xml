@@ -10,30 +10,38 @@
     <string name="cancel">キャンセル</string>
 
     <string name="label_unspecified">未指定</string>
-    <string name="label_force_sensor">強制自動</string>
     <string name="label_portrait">縦</string>
     <string name="label_landscape">横</string>
     <string name="label_reverse_portrait">逆縦</string>
     <string name="label_reverse_landscape">逆横</string>
+    <string name="label_full_sensor">全自動</string>
     <string name="label_sensor_portrait">縦自動</string>
     <string name="label_sensor_landscape">横自動</string>
     <string name="label_sensor_lie_left">左寝</string>
     <string name="label_sensor_lie_right">右寝</string>
     <string name="label_sensor_headstand">逆立ち</string>
+    <string name="label_sensor_full">全方向</string>
+    <string name="label_sensor_forward">順方向</string>
+    <string name="label_sensor_reverse">逆方向</string>
     <string name="label_clear">設定削除</string>
+    <string name="label_setting">設定</string>
 
     <string name="description_unspecified">アプリからは画面の向きを指定しません。表示されているアプリ本来の向きになります</string>
-    <string name="description_force_sensor">センサーの情報を元に回転させます</string>
     <string name="description_portrait">縦方向に固定します</string>
     <string name="description_landscape">横方向に固定します</string>
     <string name="description_reverse_portrait">逆向きの縦方向に固定します</string>
     <string name="description_reverse_landscape">逆向きの横方向に固定します</string>
+    <string name="description_full_sensor">センサーによって全方向に回転させます（システム制御）</string>
     <string name="description_sensor_portrait">縦方向固定し、上下はセンサーによって反転させます</string>
     <string name="description_sensor_landscape">横方向固定し、上下はセンサーによって反転させます</string>
     <string name="description_sensor_lie_left">センサーに対して左に90°ずれた向きに回転させます。左側を下に横寝して使うと上下が一致します</string>
     <string name="description_sensor_lie_right">センサーに対して右に90°ずれた向きに回転させます。右側を下に横寝して使うと上下が一致します</string>
     <string name="description_sensor_headstand">センサーに対して180°ずれた向きに回転させます。逆立ちして使うと上下が一致します</string>
+    <string name="description_sensor_full">センサーによって全方向に回転させます（アプリ制御）</string>
+    <string name="description_sensor_forward">センサーによって縦横の順方向に回転させます。逆方向には回転しません</string>
+    <string name="description_sensor_reverse">センサーによって縦横の逆方向に回転させます。順方向には回転しません</string>
     <string name="description_clear">個別の設定を削除します。全体の設定に従います</string>
+    <string name="description_settings">設定を起動</string>
 
     <string name="menu_title_status">状態</string>
     <string name="menu_description_status_running">実行中</string>
@@ -51,7 +59,7 @@
     <string name="menu_title_custom_widget_config">カスタムウィジェットの設定</string>
     <string name="menu_description_custom_widget_config">設置済みのカスタムウィジェットを再設定します</string>
     <string name="caution_auto_rotate">システム設定を自動回転に変更してください。逆向き設定ができない可能性があります</string>
-    <string name="caution_experimental_orientation">「縦自動」「横自動」「左寝」「右寝」「逆立ち」は加速度センサーを監視します。消費電力が増加する可能性があります</string>
+    <string name="caution_consumes_power">「縦自動」「横自動」「左寝」「右寝」「逆立ち」「全方向」「順方向」「逆方向」は加速度センサーを監視します。消費電力が増加する可能性があります</string>
 
     <string name="package_check_disabled">機能を有効にするにはスイッチをONにしてください</string>
     <string name="search_apps">アプリを検索</string>
@@ -125,8 +133,6 @@
     <string name="options_menu_share_this_app">アプリをシェア</string>
     <string name="options_menu_play_store">Google Playストア</string>
     <string name="options_menu_relevant_ads">広告の関連性</string>
-    <string name="description_settings">設定を起動</string>
-    <string name="label_setting">設定</string>
 
     <string name="menu_title_widget_config">ウィジェット設定</string>
     <string name="menu_widget_config_divider">↑有効アイコン\n↓無効アイコン</string>

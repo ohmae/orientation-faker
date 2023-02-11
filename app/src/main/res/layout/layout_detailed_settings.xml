@@ -285,7 +285,7 @@
         android:paddingTop="8dp"
         android:paddingEnd="16dp"
         android:paddingBottom="8dp"
-        android:text="@string/caution_experimental_orientation"
+        android:text="@string/caution_consumes_power"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/text_caution"
         android:visibility="gone"

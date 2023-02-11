@@ -11,30 +11,38 @@
 
     <!-- icon label -->
     <string name="label_unspecified">不指定</string>
-    <string name="label_force_sensor">强制自动</string>
     <string name="label_portrait">竖屏</string>
     <string name="label_landscape">横屏</string>
     <string name="label_reverse_portrait">反向竖屏</string>
     <string name="label_reverse_landscape">反向横屏</string>
+    <string name="label_full_sensor">全自动</string>
     <string name="label_sensor_portrait">竖屏自动</string>
     <string name="label_sensor_landscape">横屏自动</string>
     <string name="label_sensor_lie_left">左侧躺</string>
     <string name="label_sensor_lie_right">右侧躺</string>
     <string name="label_sensor_headstand">倒立</string>
+    <string name="label_sensor_full">全向</string>
+    <string name="label_sensor_forward">前进方向</string>
+    <string name="label_sensor_reverse">反向</string>
     <string name="label_clear">清除</string>
+    <string name="label_setting">设置</string>
 
     <string name="description_unspecified">此应用未指定方向. 设备会使用原始的方向.</string>
-    <string name="description_force_sensor">根据传感器信息旋转</string>
     <string name="description_portrait">固定为竖屏</string>
     <string name="description_landscape">固定为横屏</string>
     <string name="description_reverse_portrait">固定为反向竖屏</string>
     <string name="description_reverse_landscape">固定以反向横屏</string>
+    <string name="description_full_sensor">通过传感器（系统控制）在所有方向上旋转</string>
     <string name="description_sensor_portrait">固定为竖屏, 通过传感器自动上下翻转</string>
     <string name="description_sensor_landscape">固定为横屏, 通过传感器自动上下翻转</string>
     <string name="description_sensor_lie_left">相对于传感器向左旋转 90 度. 和向左侧躺着时的上下一致.</string>
     <string name="description_sensor_lie_right">相对于传感器向右旋转 90 度. 和向右侧躺着时的上下一致.</string>
     <string name="description_sensor_headstand">相对于传感器旋转 180 度. 和把设备倒着拿的上下一致.</string>
+    <string name="description_sensor_full">通过传感器（应用程序控制）在所有方向上旋转</string>
+    <string name="description_sensor_forward">通过传感器向前旋转, 不反向旋转</string>
+    <string name="description_sensor_reverse">通过传感器反向旋转, 不向前旋转</string>
     <string name="description_clear">清除每个应用程序设置, 遵循全局设置</string>
+    <string name="description_settings">启动设置</string>
 
     <string name="menu_title_status">状态</string>
     <string name="menu_description_status_running">运行中</string>
@@ -52,7 +60,7 @@
     <string name="menu_title_custom_widget_config">Change custom widget settings</string>
     <string name="menu_description_custom_widget_config">Reconfigure placed custom widgets</string>
     <string name="caution_auto_rotate">请将系统设置更改为自动旋转.</string>
-    <string name="caution_experimental_orientation">\"竖屏自动\", \"横屏自动\", \"左侧躺\", \"右侧躺\" 和 \"倒立\" 监控加速度计. 功耗可能会增加.</string>
+    <string name="caution_consumes_power">\"竖屏自动\", \"横屏自动\", \"左侧躺\", \"右侧躺\", \"倒立\", \"全向\", \"前进方向\" 和 \"反向\" 监控加速度计. 功耗可能会增加.</string>
 
     <string name="package_check_disabled">请打开开关启用此功能</string>
     <string name="search_apps">搜索应用</string>
@@ -126,8 +134,6 @@
     <string name="options_menu_share_this_app">分享这个App</string>
     <string name="options_menu_play_store">Google Play 商店</string>
     <string name="options_menu_relevant_ads">相关广告</string>
-    <string name="description_settings">启动设置</string>
-    <string name="label_setting">设置</string>
 
     <string name="menu_title_widget_config">Widget Config</string>
     <string name="menu_widget_config_divider">↑enabled icons\n↓disabled icons</string>

@@ -11,30 +11,38 @@
 
     <!-- icon label -->
     <string name="label_unspecified">apptól függő</string>
-    <string name="label_force_sensor">szenzor</string>
     <string name="label_portrait">álló</string>
     <string name="label_landscape">fekvő</string>
     <string name="label_reverse_portrait">ford.fekvő</string>
     <string name="label_reverse_landscape">ford.álló</string>
+    <string name="label_full_sensor">szenzor</string>
     <string name="label_sensor_portrait">szenzor álló</string>
     <string name="label_sensor_landscape">szenzor fekvő</string>
     <string name="label_sensor_lie_left">balra fektet</string>
     <string name="label_sensor_lie_right">jobbra fektet</string>
     <string name="label_sensor_headstand">fejjel lefelé</string>
+    <string name="label_sensor_full">minden</string>
+    <string name="label_sensor_forward">előre</string>
+    <string name="label_sensor_reverse">fordított</string>
     <string name="label_clear">törlés</string>
+    <string name="label_setting">beállítás</string>
 
     <string name="description_unspecified">A futtatott alkalmazás határozza meg a tájolást, felülbírálva az Orientation Control beállítását.</string>
-    <string name="description_force_sensor">Forgatás a szenzor alapján</string>
     <string name="description_portrait">Mindig álló</string>
     <string name="description_landscape">Mindig fekvő</string>
     <string name="description_reverse_portrait">Mindig fordított álló</string>
     <string name="description_reverse_landscape">Mindig fordított fekvő</string>
+    <string name="description_full_sensor">Forgatás minden irányban érzékelővel (rendszervezérlés)</string>
     <string name="description_sensor_portrait">Álló helyzetben rögzítve, a szenzor 180 fokkal fordít</string>
     <string name="description_sensor_landscape">Fekvő helyzetben rögzítve, a szenzor 180 fokkal fordít</string>
     <string name="description_sensor_lie_left">90 fokkal balra forgat a szenzor alapján. Bal oldalon fekvő helyzetből forgatva a fent és a lent az eredeti lesz.</string>
     <string name="description_sensor_lie_right">90 fokkal jobbra forgat a szenzor alapján. Jobb oldalon fekvő helyzetből forgatva a fent és a lent az eredeti lesz.</string>
     <string name="description_sensor_headstand">180 fokkal forgat a szenzor alapján. Fejreállított helyzetből forgatva a fent és a lent az eredeti lesz.</string>
+    <string name="description_sensor_full">Forgatás minden irányban érzékelővel (alkalmazásvezérlés)</string>
+    <string name="description_sensor_forward">Forgassa előre az érzékelő által. Nem forog fordított irányban</string>
+    <string name="description_sensor_reverse">Forgassa el fordított irányban az érzékelő által. Nem forog előrefelé</string>
     <string name="description_clear">Az egyéni alkalmazás tájolás törlése</string>
+    <string name="description_settings">indítási beállítások</string>
 
     <string name="menu_title_status">Állapot</string>
     <string name="menu_description_status_running">Fut</string>
@@ -52,7 +60,7 @@
     <string name="menu_title_custom_widget_config">Change custom widget settings</string>
     <string name="menu_description_custom_widget_config">Reconfigure placed custom widgets</string>
     <string name="caution_auto_rotate">Kérjük, állítsd a rendszer beállítását automatikus forgatásra, máskülönben előfordulhat, hogy a 180 fokos fordítás nem lesz lehetséges</string>
-    <string name="caution_experimental_orientation">A \"szenzor álló\", \"szenzor fekvő\", \"balra fektet\", \"jobbra fektet\" és \"fejjel lefelé\" figyeli a gyorsulásmérőt. Ezért az energiafogyasztás növekedhet.</string>
+    <string name="caution_consumes_power">A \"szenzor álló\", \"szenzor fekvő\", \"balra fektet\", \"jobbra fektet\", \"fejjel lefelé\", \"minden\", \"előre\" és \"fordított\" figyeli a gyorsulásmérőt. Ezért az energiafogyasztás növekedhet.</string>
 
     <string name="package_check_disabled">A funkció engedélyezéséhez kapcsold be a kapcsolóval</string>
     <string name="search_apps">Alkalmazás keresése</string>
@@ -126,8 +134,6 @@
     <string name="options_menu_share_this_app">Az app megosztása</string>
     <string name="options_menu_play_store">Google Play Áruház</string>
     <string name="options_menu_relevant_ads">Személyre szabott hirdetések</string>
-    <string name="label_setting">beállítás</string>
-    <string name="description_settings">indítási beállítások</string>
 
     <string name="menu_title_widget_config">Widget Config</string>
     <string name="menu_widget_config_divider">↑enabled icons\n↓disabled icons</string>

@@ -12,30 +12,36 @@
 
     <!-- icon label -->
     <string name="label_unspecified">unspecified</string>
-    <string name="label_force_sensor">force sensor</string>
     <string name="label_portrait">portrait</string>
     <string name="label_landscape">landscape</string>
     <string name="label_reverse_portrait">rev port</string>
     <string name="label_reverse_landscape">rev land</string>
+    <string name="label_full_sensor">full sensor</string>
     <string name="label_sensor_portrait">sensor port</string>
     <string name="label_sensor_landscape">sensor land</string>
     <string name="label_sensor_lie_left">lie left</string>
     <string name="label_sensor_lie_right">lie right</string>
     <string name="label_sensor_headstand">headstand</string>
+    <string name="label_sensor_full">full</string>
+    <string name="label_sensor_forward">forward</string>
+    <string name="label_sensor_reverse">reverse</string>
     <string name="label_clear">clear</string>
     <string name="label_setting">setting</string>
 
     <string name="description_unspecified">Unspecified orientation from this app. Device will be the original orientation of the displayed app</string>
-    <string name="description_force_sensor">Rotate based on sensor information</string>
     <string name="description_portrait">Fixed to portrait</string>
     <string name="description_landscape">Fixed to landscape</string>
     <string name="description_reverse_portrait">Fixed to reverse portrait</string>
     <string name="description_reverse_landscape">Fixed to reverse landscape</string>
+    <string name="description_full_sensor">Rotate in all orientations by sensor (system control)</string>
     <string name="description_sensor_portrait">Fixed to portrait, automatically flip upside down by sensor</string>
     <string name="description_sensor_landscape">Fixed to landscape, automatically flip upside down by sensor</string>
     <string name="description_sensor_lie_left">Rotate 90 degrees to the left with respect to the sensor. If you lie on left lateral and use this, the top and bottom will match.</string>
     <string name="description_sensor_lie_right">Rotate 90 degrees to the right with respect to the sensor. If you lie on right lateral and use this, the top and bottom will match.</string>
     <string name="description_sensor_headstand">Rotate 180 degrees with respect to the sensor. If you use this by headstand, the top and bottom will match.</string>
+    <string name="description_sensor_full">Rotate in all orientations by sensor (app control)</string>
+    <string name="description_sensor_forward">Rotate in forward orientations by the sensor. Does not rotate in reverse orientations</string>
+    <string name="description_sensor_reverse">Rotate in reverse orientations by the sensor. Does not rotate in forward orientations</string>
     <string name="description_clear">Clear each app setting, follow global setting</string>
     <string name="description_settings">Launch settings</string>
 
@@ -55,7 +61,7 @@
     <string name="menu_title_custom_widget_config">Change custom widget settings</string>
     <string name="menu_description_custom_widget_config">Reconfigure placed custom widgets</string>
     <string name="caution_auto_rotate">Please change the system setting to auto-rotate. Reverse setting may not be possible</string>
-    <string name="caution_experimental_orientation">\"sensor port\", \"sensor land\", \"lie left\", \"lie right\" and \"headstand\" will monitor the accelerometer. Therefore, power consumption may increase</string>
+    <string name="caution_consumes_power">\"sensor port\", \"sensor land\", \"lie left\", \"lie right\", \"headstand\", \"full\", \"forward\" and \"reverse\" will monitor the accelerometer. Therefore, power consumption may increase</string>
 
     <string name="package_check_disabled">Please turn on the switch to enable this function</string>
     <string name="search_apps">Search apps</string>

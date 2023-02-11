@@ -24,6 +24,9 @@ enum class Orientation(
     SENSOR_LIE_RIGHT(101),
     SENSOR_LIE_LEFT(102),
     SENSOR_HEADSTAND(103),
+    SENSOR_FULL(104),
+    SENSOR_FORWARD(105),
+    SENSOR_REVERSE(107),
     ;
 
     fun usesSensor(): Boolean = when (this) {
@@ -32,6 +35,9 @@ enum class Orientation(
         SENSOR_LIE_RIGHT,
         SENSOR_LIE_LEFT,
         SENSOR_HEADSTAND,
+        SENSOR_FULL,
+        SENSOR_FORWARD,
+        SENSOR_REVERSE,
         -> true
         else -> false
     }
@@ -50,12 +56,29 @@ enum class Orientation(
         else -> false
     }
 
-    fun isExperimental(): Boolean = when (this) {
+    fun isForward(): Boolean = when (this) {
+        PORTRAIT,
+        LANDSCAPE,
+        -> true
+        else -> false
+    }
+
+    fun isReverse(): Boolean = when (this) {
+        REVERSE_PORTRAIT,
+        REVERSE_LANDSCAPE,
+        -> true
+        else -> false
+    }
+
+    fun consumesPower(): Boolean = when (this) {
         SENSOR_PORTRAIT,
         SENSOR_LANDSCAPE,
         SENSOR_LIE_RIGHT,
         SENSOR_LIE_LEFT,
         SENSOR_HEADSTAND,
+        SENSOR_FULL,
+        SENSOR_FORWARD,
+        SENSOR_REVERSE,
         -> true
         else -> false
     }
@@ -68,6 +91,8 @@ enum class Orientation(
         SENSOR_LIE_RIGHT,
         SENSOR_LIE_LEFT,
         SENSOR_HEADSTAND,
+        SENSOR_FULL,
+        SENSOR_REVERSE,
         -> true
         else -> false
     }
