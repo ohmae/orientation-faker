@@ -29,8 +29,6 @@ The following settings are possible
 
 - unspecified
   - Unspecified orientation from this app. Device will be the original orientation of the displayed app
-- force sensor
-  - Rotate based on sensor information
 - portrait
   - Fixed to portrait
 - landscape
@@ -39,6 +37,8 @@ The following settings are possible
   - Fixed to reverse portrait
 - rev land
   - Fixed to reverse landscape
+- full sensor
+  - Rotate in all orientations by sensor (system control)
 - sensor port
   - Fixed to portrait, automatically flip upside down by sensor
 - sensor land
@@ -49,6 +49,12 @@ The following settings are possible
   - Rotate 90 degrees to the right with respect to the sensor. If you lie on right lateral and use this, the top and bottom will match.
 - headstand
   - Rotate 180 degrees with respect to the sensor. If you use this by headstand, the top and bottom will match.
+- full
+  - Rotate in all orientations by sensor (app control)
+- forward
+  - Rotate in forward orientations by the sensor. Does not rotate in reverse orientations
+- reverse
+  - Rotate in reverse orientations by the sensor. Does not rotate in forward orientations
 
 ### Trouble shooting
 
