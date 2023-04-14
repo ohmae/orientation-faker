@@ -21,9 +21,9 @@ val versionMinor = 1
 val versionPatch = 2
 
 android {
+    namespace = "net.mm2d.android.orientationfaker"
     compileSdk = 33
 
-    namespace = "net.mm2d.android.orientationfaker"
     defaultConfig {
         applicationId = "net.mm2d.android.orientationfaker"
         minSdk = 26
@@ -53,6 +53,9 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+    kotlin {
+        jvmToolchain(11)
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -78,7 +81,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.activity:activity-ktx:1.7.0")
     implementation("androidx.fragment:fragment-ktx:1.5.6")
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.10.0")
     implementation("androidx.browser:browser:1.5.0")
     implementation("androidx.legacy:legacy-support-v13:1.0.0")
     implementation("androidx.lifecycle:lifecycle-process:2.6.1")
@@ -106,16 +109,16 @@ dependencies {
     implementation("net.mm2d.color-chooser:color-chooser:0.6.0")
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation("io.mockk:mockk:1.13.4")
+    testImplementation("io.mockk:mockk:1.13.5")
     testImplementation("com.google.truth:truth:1.1.3")
-    testImplementation("org.robolectric:robolectric:4.9.2")
+    testImplementation("org.robolectric:robolectric:4.10")
     testImplementation("androidx.test.ext:junit:1.1.5")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.10")
-    debugImplementation("com.facebook.flipper:flipper:0.187.0")
+    debugImplementation("com.facebook.flipper:flipper:0.189.0")
     debugImplementation("com.facebook.soloader:soloader:0.10.5")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.187.0")
-    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.187.0")
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:0.189.0")
+    debugImplementation("com.facebook.flipper:flipper-leakcanary2-plugin:0.189.0")
 
     // for release
 }
@@ -148,7 +151,7 @@ tasks.create<JacocoReport>("jacocoTestReport") {
 }
 
 fun isStable(version: String): Boolean {
-    val versionUpperCase = version.toUpperCase()
+    val versionUpperCase = version.uppercase()
     val hasStableKeyword = listOf("RELEASE", "FINAL", "GA").any { versionUpperCase.contains(it) }
     val regex = "^[0-9,.v-]+(-r)?$".toRegex()
     return hasStableKeyword || regex.matches(version)
