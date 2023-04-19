@@ -71,16 +71,20 @@ class PreferenceRepository @Inject constructor(
     }
 
     private val preferredOrientationFlow: Flow<Orientation> = combine(
-        manuallyOrientationFlow,
-        packageOrientationFlow,
-        powerOrientationFlow,
-    ) { o1, o2, o3 ->
-        listOf(o1, o2, o3)
-            .sortedByDescending { it.timestamp }
+        listOf(
+            manuallyOrientationFlow,
+            packageOrientationFlow,
+            powerOrientationFlow,
+        ),
+        ::selectLatestValidRequest
+    )
+        .shareIn(scope, SharingStarted.Eagerly, 1)
+        .distinctUntilChanged()
+
+    private fun selectLatestValidRequest(array: Array<OrientationRequest>): Orientation =
+        array.sortedByDescending { it.timestamp }
             .firstOrNull { it.orientation != Orientation.INVALID }
             ?.orientation ?: Orientation.INVALID
-    }.shareIn(scope, SharingStarted.Eagerly, 1)
-        .distinctUntilChanged()
 
     val actualOrientationPreferenceFlow = combine(
         orientationPreferenceFlow,
