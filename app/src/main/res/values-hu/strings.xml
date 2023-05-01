@@ -95,8 +95,10 @@
     <string name="menu_description_icon_shape_rounded_square">Lekerekített négyzet</string>
     <string name="menu_description_icon_shape_teardrop">Könycsepp</string>
     <string name="menu_description_icon_shape_hexagon">Hatszög</string>
-    <string name="menu_title_plugged_orientation">Orientation when power is connected</string>
-    <string name="menu_description_plugged_orientation">Changes to the orientation set when the power is connected</string>
+    <string name="menu_title_power_plugged_orientation">Orientation when power is connected</string>
+    <string name="menu_description_power_plugged_orientation">Changes to the orientation set when the power is connected</string>
+    <string name="menu_title_headset_plugged_orientation">Orientation when earphone is connected</string>
+    <string name="menu_description_headset_plugged_orientation">Changes to the orientation set when the earphone is connected</string>
 
     <string name="dialog_title_reset_theme">Megerősítés</string>
     <string name="dialog_message_reset_theme">A témát alaphelyzetbe állítod?</string>

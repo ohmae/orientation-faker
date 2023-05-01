@@ -95,8 +95,10 @@
     <string name="menu_description_icon_shape_rounded_square">圆角方形</string>
     <string name="menu_description_icon_shape_teardrop">泪滴</string>
     <string name="menu_description_icon_shape_hexagon">六边形</string>
-    <string name="menu_title_plugged_orientation">Orientation when power is connected</string>
-    <string name="menu_description_plugged_orientation">Changes to the orientation set when the power is connected</string>
+    <string name="menu_title_power_plugged_orientation">Orientation when power is connected</string>
+    <string name="menu_description_power_plugged_orientation">Changes to the orientation set when the power is connected</string>
+    <string name="menu_title_headset_plugged_orientation">Orientation when earphone is connected</string>
+    <string name="menu_description_headset_plugged_orientation">Changes to the orientation set when the earphone is connected</string>
 
     <string name="dialog_title_reset_theme">确认</string>
     <string name="dialog_message_reset_theme">您要重置主题吗?</string>
