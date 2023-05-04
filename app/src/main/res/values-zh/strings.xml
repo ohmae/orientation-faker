@@ -79,6 +79,9 @@
     <string name="menu_title_use_blank_icon_for_notification">状态栏透明</string>
     <string name="menu_description_use_blank_icon_for_notification_on">状态栏显示透明图标</string>
     <string name="menu_description_use_blank_icon_for_notification_off">在状态栏显示反应状态的图标</string>
+    <string name="menu_title_distinguish_power_source_type">Control by power source type</string>
+    <string name="menu_description_distinguish_power_source_type_on">Distinguish between power source types</string>
+    <string name="menu_description_distinguish_power_source_type_off">Does not distinguish between power source types</string>
     <string name="menu_title_auto_rotate_warning">系统设置警告</string>
     <string name="menu_description_auto_rotate_warning_on">系统未设置为自动旋转时警告</string>
     <string name="menu_description_auto_rotate_warning_off">系统未设置为自动旋转时不警告</string>
@@ -97,6 +100,12 @@
     <string name="menu_description_icon_shape_hexagon">六边形</string>
     <string name="menu_title_power_plugged_orientation">Orientation when power is connected</string>
     <string name="menu_description_power_plugged_orientation">Changes to the orientation set when the power is connected</string>
+    <string name="menu_title_wired_power_plugged_orientation">Orientation when wired power is connected</string>
+    <string name="menu_description_wired_power_plugged_orientation">Changes to the orientation set when the wired power is connected</string>
+    <string name="menu_title_wireless_power_plugged_orientation">Orientation when wireless power is connected</string>
+    <string name="menu_description_wireless_power_plugged_orientation">Changes to the orientation set when the wireless power is connected</string>
+    <string name="menu_title_dock_power_plugged_orientation">Orientation when dock power is connected</string>
+    <string name="menu_description_dock_power_plugged_orientation">Changes to the orientation set when the dock power is connected</string>
     <string name="menu_title_headset_plugged_orientation">Orientation when earphone is connected</string>
     <string name="menu_description_headset_plugged_orientation">Changes to the orientation set when the earphone is connected</string>
 

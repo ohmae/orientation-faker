@@ -80,6 +80,9 @@
     <string name="menu_title_use_blank_icon_for_notification">Make the status bar icon transparent</string>
     <string name="menu_description_use_blank_icon_for_notification_on">Display transparent icon in the status bar</string>
     <string name="menu_description_use_blank_icon_for_notification_off">Display icon that reflects the status in the status bar</string>
+    <string name="menu_title_distinguish_power_source_type">Control by power source type</string>
+    <string name="menu_description_distinguish_power_source_type_on">Distinguish between power source types</string>
+    <string name="menu_description_distinguish_power_source_type_off">Does not distinguish between power source types</string>
     <string name="menu_title_auto_rotate_warning">System setting warning</string>
     <string name="menu_description_auto_rotate_warning_on">Show warning if system setting is not auto-rotate</string>
     <string name="menu_description_auto_rotate_warning_off">Don\'t show warning if system setting is not auto-rotate</string>
@@ -98,6 +101,12 @@
     <string name="menu_description_icon_shape_hexagon">Hexagon</string>
     <string name="menu_title_power_plugged_orientation">Orientation when power is connected</string>
     <string name="menu_description_power_plugged_orientation">Changes to the orientation set when the power is connected</string>
+    <string name="menu_title_wired_power_plugged_orientation">Orientation when wired power is connected</string>
+    <string name="menu_description_wired_power_plugged_orientation">Changes to the orientation set when the wired power is connected</string>
+    <string name="menu_title_wireless_power_plugged_orientation">Orientation when wireless power is connected</string>
+    <string name="menu_description_wireless_power_plugged_orientation">Changes to the orientation set when the wireless power is connected</string>
+    <string name="menu_title_dock_power_plugged_orientation">Orientation when dock power is connected</string>
+    <string name="menu_description_dock_power_plugged_orientation">Changes to the orientation set when the dock power is connected</string>
     <string name="menu_title_headset_plugged_orientation">Orientation when earphone is connected</string>
     <string name="menu_description_headset_plugged_orientation">Changes to the orientation set when the earphone is connected</string>
 

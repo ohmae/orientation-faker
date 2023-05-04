@@ -79,6 +79,9 @@
     <string name="menu_title_use_blank_icon_for_notification">Az állapotsor ikonja legyen átlátszó</string>
     <string name="menu_description_use_blank_icon_for_notification_on">Átlátszó állapotsori ikon</string>
     <string name="menu_description_use_blank_icon_for_notification_off">Állapotsori ikon, ami mutatja a kijelző tájolását</string>
+    <string name="menu_title_distinguish_power_source_type">Control by power source type</string>
+    <string name="menu_description_distinguish_power_source_type_on">Distinguish between power source types</string>
+    <string name="menu_description_distinguish_power_source_type_off">Does not distinguish between power source types</string>
     <string name="menu_title_auto_rotate_warning">Rendszerbeállítás figyelmeztetés</string>
     <string name="menu_description_auto_rotate_warning_on">Mutasson figyelmeztetést, ha a rendszer beállítása nem az automatikus forgatás</string>
     <string name="menu_description_auto_rotate_warning_off">Ne mutasson figyelmeztetést, ha a rendszer beállítása nem az automatikus forgatás</string>
@@ -97,6 +100,12 @@
     <string name="menu_description_icon_shape_hexagon">Hatszög</string>
     <string name="menu_title_power_plugged_orientation">Orientation when power is connected</string>
     <string name="menu_description_power_plugged_orientation">Changes to the orientation set when the power is connected</string>
+    <string name="menu_title_wired_power_plugged_orientation">Orientation when wired power is connected</string>
+    <string name="menu_description_wired_power_plugged_orientation">Changes to the orientation set when the wired power is connected</string>
+    <string name="menu_title_wireless_power_plugged_orientation">Orientation when wireless power is connected</string>
+    <string name="menu_description_wireless_power_plugged_orientation">Changes to the orientation set when the wireless power is connected</string>
+    <string name="menu_title_dock_power_plugged_orientation">Orientation when dock power is connected</string>
+    <string name="menu_description_dock_power_plugged_orientation">Changes to the orientation set when the dock power is connected</string>
     <string name="menu_title_headset_plugged_orientation">Orientation when earphone is connected</string>
     <string name="menu_description_headset_plugged_orientation">Changes to the orientation set when the earphone is connected</string>
 

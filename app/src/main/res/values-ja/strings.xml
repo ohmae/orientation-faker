@@ -78,6 +78,9 @@
     <string name="menu_title_use_blank_icon_for_notification">ステータスバーのアイコンを透明にする</string>
     <string name="menu_description_use_blank_icon_for_notification_on">ステータスバーに透明なアイコンを表示します</string>
     <string name="menu_description_use_blank_icon_for_notification_off">ステータスバーに状態を表すアイコンを表示します</string>
+    <string name="menu_title_distinguish_power_source_type">電源種別による制御</string>
+    <string name="menu_description_distinguish_power_source_type_on">電源種別を区別します</string>
+    <string name="menu_description_distinguish_power_source_type_off">電源種別を区別しません</string>
     <string name="menu_title_auto_rotate_warning">システム設定警告</string>
     <string name="menu_description_auto_rotate_warning_on">システム設定が自動回転になっていない場合、警告を表示します</string>
     <string name="menu_description_auto_rotate_warning_off">システム設定が自動回転になっていなくても、警告を表示しません</string>
@@ -96,6 +99,12 @@
     <string name="menu_description_icon_shape_hexagon">六角形</string>
     <string name="menu_title_power_plugged_orientation">電源接続時の向き</string>
     <string name="menu_description_power_plugged_orientation">電源接続時に設定された向きに変更します</string>
+    <string name="menu_title_wired_power_plugged_orientation">有線電源接続時の向き</string>
+    <string name="menu_description_wired_power_plugged_orientation">有線電源接続時に設定された向きに変更します</string>
+    <string name="menu_title_wireless_power_plugged_orientation">無線電源接続時の向き</string>
+    <string name="menu_description_wireless_power_plugged_orientation">無線電源接続時に設定された向きに変更します</string>
+    <string name="menu_title_dock_power_plugged_orientation">ドック電源接続時の向き</string>
+    <string name="menu_description_dock_power_plugged_orientation">ドック電源接続時に設定された向きに変更します</string>
     <string name="menu_title_headset_plugged_orientation">イヤホン接続時の向き</string>
     <string name="menu_description_headset_plugged_orientation">イヤホン接続時に設定された向きに変更します</string>
 
